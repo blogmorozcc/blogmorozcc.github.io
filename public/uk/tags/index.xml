@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tags on Блог про IT</title>
+        <link>https://blog.moroz.cc/uk/tags/</link>
+        <description>Recent content in Tags on Блог про IT</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Wed, 20 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DASH</title>
+        <link>https://blog.moroz.cc/uk/tags/dash/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/dash/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>HLS</title>
+        <link>https://blog.moroz.cc/uk/tags/hls/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/hls/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/uk/tags/linux/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Nginx</title>
+        <link>https://blog.moroz.cc/uk/tags/nginx/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/nginx/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>RTMP</title>
+        <link>https://blog.moroz.cc/uk/tags/rtmp/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/rtmp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Сервер</title>
+        <link>https://blog.moroz.cc/uk/tags/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
+У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.'><title>Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP'>
+<meta property='og:description' content='Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
+У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.'>
+<meta property='og:url' content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/'>
+<meta property='og:site_name' content='Блог про IT'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Сервер' /><meta property='article:tag' content='RTMP' /><meta property='article:tag' content='Nginx' /><meta property='article:tag' content='HLS' /><meta property='article:tag' content='DASH' /><meta property='article:published_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.jpeg' />
+<meta name="twitter:title" content="Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP">
+<meta name="twitter:description" content="Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
+У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.jpeg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Показати меню">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/uk">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huf928305544e9523d1708c449c63954af_229975_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/uk">Блог про IT</a></h1>
+            
+            
+            
+            <h2 class="site-description">Дмитра Мороза</h2>
+            
+            
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/uk/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Головна</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Архіви</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Пошук</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" >English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" selected>Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Темна тема</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/">
+                <img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg"
+                        srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg 800w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_1600x0_resize_q75_box.jpeg 1600w"
+                        width="800" 
+                        height="600" 
+                        loading="lazy"
+                        alt="Featured image of post Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/uk/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/uk/categories/%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%B5%D0%B4%D1%96%D0%B0/" >
+                Мультимедіа
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/">Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">20.07.2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    Час читання: 4 хв
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="введення">Введення</h2>
+<p>Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.</p>
+<p>У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.</p>
+<h2 id="передумови">Передумови</h2>
+<p>Для реалізації RTMP сервісу, вам потрібно мати:</p>
+<ul>
+<li>Нову віртуальну машину або фізичний сервер на базі ОС Linux.</li>
+<li>Комп&rsquo;ютер для ведення трансляції.</li>
+</ul>
+<p>Для роботи поза локальною мережею, в глобальній мережі інтернет:</p>
+<ul>
+<li>Виділену IP адресу.</li>
+<li>Домен.</li>
+</ul>
+<p>В інструкції буде використано VPS на базі Debian 11.</p>
+<h2 id="робота-з-nginx-rtmp">Робота з Nginx-RTMP</h2>
+<h3 id="встановлення">Встановлення</h3>
+<p>Перш за все, необхідно встановити пакети <code>nginx</code> та <code>libnginx-mod-rtmp</code>. Для цього потрібно виконати команди:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt install nginx libnginx-mod-rtmp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="налаштування-rtmp">Налаштування RTMP</h3>
+<p>Після встановлення, потрібно сконфігурувати веб-сервер Nginx таким чином, щоб він прослуховував порт 1935 для отримання RTMP-потоку. Для цього потрібно відредагувати файл <code>/etc/nginx/nginx.conf</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/nginx/nginx.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>В кінці файла, потрібно дописати конфігурацію RTMP сервера:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">rtmp <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        listen 1935<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        chunk_size 4096<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        allow publish 127.0.0.1<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        allow publish 192.168.0.0/24<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        deny publish all<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        application live <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            live on<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            record off<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            hls on<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            hls_path /var/www/html/stream/hls<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            hls_fragment 3<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            hls_playlist_length 60<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            dash on<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            dash_path /var/www/html/stream/dash<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Тлумачення важливих аспектів цієї конфігурації:</p>
+<ul>
+<li><code>listen 1935</code> - задає порт, на якому працює RTMP сервер.</li>
+<li><code>chunk_size 4096</code> - задає розмір блоку, по 4 Кб.</li>
+<li><code>allow publish [IP / Subnet]</code> - кожна строка вказує IP або підмережу, яким дозволено відсилати RTMP потік на сервер.</li>
+<li><code>deny publish all</code> - забороняє приймати RTMP потік від всіх інших адрес/мереж.</li>
+<li><code>application live</code> - конфігурація для перетворення RTMP в формати HLS та DASH, де <code>hls_path</code> та <code>dash_path</code> вказують шляхи до каталогів для розміщення плейлистів.</li>
+<li><code>live on</code> - дозволяє приймати дані відеопотоком.</li>
+<li><code>record off</code> - вимикає запис відеопотоку у файл на диску.</li>
+</ul>
+<h3 id="налаштвання-hls-dash">Налаштвання HLS, DASH</h3>
+<p>Далі, необхідно розгорнути віртуальний хост, що дозволить отримувати доступ до HLS або DASH потоків через HTTP/HTTPS протокол.</p>
+<p>Спочатку треба створити дві директорії для зберігання фрагментів відеопотоку для HLS та DASH:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mkdir -p /var/www/html/stream/hls
+</span></span><span class="line"><span class="cl">sudo mkdir -p /var/www/html/stream/dash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Та також встановити власника та права:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chown -R www-data:www-data /var/www/html/stream
+</span></span><span class="line"><span class="cl">sudo chmod -R <span class="m">755</span> /var/www/html/stream
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Для роботи віртуального хоста, потрібно створити новий конфігураційний файл (наприклад <code>rtmp</code>) в каталозі <code>/etc/nginx/sites-available</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/nginx/sites-available/rtmp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Хост файл <code>rtmp</code> складається з наступного:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    listen <span class="m">443</span> ssl<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    listen 80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server_name rtmp.yourdomain.com<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ssl_certificate /etc/ssl/yourdomain.crt<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ssl_certificate_key /etc/ssl/yourdomain.key<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        add_header Access-Control-Allow-Origin *<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        root /var/www/html/stream<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">types <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    application/dash+xml mpd<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Пояснення до цієї конфігурації:</p>
+<ul>
+<li>Замініть <code>rtmp.yourdomain.com</code> на свій домен.</li>
+<li>Якщо ви хочете використовувати SSL, то також запишіть файли сертифікату та ключа за шляхами <code>/etc/ssl/yourdomain.crt</code> та <code>/etc/ssl/yourdomain.key</code>.</li>
+<li>Якщо ви не хочете використовувати SSL, то приберіть з файлу рядки що починаються з <code>ssl</code> та <code>listen 443 ssl</code>.</li>
+</ul>
+<p>Для того щоб всі зроблені конфігурації вступили в дію, треба увімкнути віртуальний хост та перезавантажити Nginx:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s /etc/nginx/sites-available/rtmp /etc/nginx/sites-enabled/
+</span></span><span class="line"><span class="cl">sudo service nginx restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ведення-трансляції-в-obs-studio">Ведення трансляції в OBS Studio</h2>
+<p>Для ведення трансляції найкраще за все підходить програма <a class="link" href="https://obsproject.com/uk"  target="_blank" rel="noopener"
+    >OBS Studio</a>.</p>
+<p>Першочергово необхідно створити сцену, налаштувати звук, та зовнішній вигляд трансляції.</p>
+<p>Для налаштування параметрів стримінгу, потрібно зайти в Налаштування та вибрати вкладку Stream. Там необхідно задати наступні параметри:</p>
+<ul>
+<li>Service: <strong>Custom</strong></li>
+<li>Server: <strong>rtmp://rtmp.yourdomain.com/live</strong> (замість домену можна вказати IP, наприклад <em>http://11.22.33.44/live</em>)</li>
+<li>Stream Key: <strong>obs_stream</strong></li>
+</ul>
+<p>Приклад налаштувань:</p>
+<p><img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_settings.png"
+	width="699"
+	height="544"
+	srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_480x0_resize_box_3.png 480w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Налаштування трансляції OBS"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="128"
+		data-flex-basis="308px"
+	
+></p>
+<p>Для запуску відеотрансляції, необхідно натиснути Start Streaming в головномі вікні програми:</p>
+<p><img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_start.png"
+	width="502"
+	height="230"
+	srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_480x0_resize_box_3.png 480w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Запуск трансляції OBS"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="218"
+		data-flex-basis="523px"
+	
+></p>
+<h2 id="перегляд-трансляції">Перегляд трансляції</h2>
+<p>Тепер трансляцію можна переглянути за допомогою будь-якої програми, що підтримує протоколи HLS та DASH. Найпростішим шляхом буде перегляд у програмі VLC, відкривши посилання на потік.</p>
+<p>Для початку, розберемося як формується посилання на потоки в сконфігурованому сервісі:</p>
+<ul>
+<li>HLS: <code>{protocol}://{domain}/hls/{stream key}.m3u8</code></li>
+<li>DASH: <code>{protocol}://{domain}/dash/{stream key}.mpd</code></li>
+</ul>
+<p>Наприлкад, якщо ви розгорнули сервіс за адресою <code>rtmp.yourdomain.com</code> що використовує SSL, та в налаштуваннях OBS вказали ключ <code>obs_stream</code>, то в такому випадку посилання будуть такими:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://rtmp.yourdomain.com/hls/obs_stream.m3u8
+</span></span><span class="line"><span class="cl">https://rtmp.yourdomain.com/dash/obs_stream.mpd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Для перегляду в VLC, потрібно натиснути Ctrl + N, або перейти в меню Media &gt; Open Network Stream, вказати посилання на один із форматів, та натиснути Play.</p>
+<p><img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/vlc_play_1.png"
+	width="521"
+	height="428"
+	srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_480x0_resize_box_3.png 480w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Перегляд мережевого джерела в VLC"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="121"
+		data-flex-basis="292px"
+	
+></p>
+<h2 id="висновки">Висновки</h2>
+<p>Таким чином можна створити свій сервіс для проведення трансляцій, що буде незалежним від популярних сервісів.</p>
+<p>Переваги такого рішення:</p>
+<ul>
+<li>Приватність та повний контроль над інфраструктурою, гарантія що дані потоку не зберігаються.</li>
+<li>Не потрібно дотримуватися правил сервісу (наприклад заборону транслювати певний контент).</li>
+</ul>
+<p>Але є і певні недоліки:</p>
+<ul>
+<li>Таке рішення вимагає певних ресурсів сервера.</li>
+<li>Власнику потрібно витрачати час та кошти на обслуговування та підтримку безпеки своєї інфраструктури.</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/uk/tags/linux/">Linux</a>
+        
+            <a href="/uk/tags/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80/">Сервер</a>
+        
+            <a href="/uk/tags/rtmp/">RTMP</a>
+        
+            <a href="/uk/tags/nginx/">Nginx</a>
+        
+            <a href="/uk/tags/hls/">HLS</a>
+        
+            <a href="/uk/tags/dash/">DASH</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2022 | Блог про IT
+    </section>
+    
+    <section class="powerby">
+        
+        Всі права захищено.
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Зміст</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#введення">Введення</a></li>
+    <li><a href="#передумови">Передумови</a></li>
+    <li><a href="#робота-з-nginx-rtmp">Робота з Nginx-RTMP</a>
+      <ol>
+        <li><a href="#встановлення">Встановлення</a></li>
+        <li><a href="#налаштування-rtmp">Налаштування RTMP</a></li>
+        <li><a href="#налаштвання-hls-dash">Налаштвання HLS, DASH</a></li>
+      </ol>
+    </li>
+    <li><a href="#ведення-трансляції-в-obs-studio">Ведення трансляції в OBS Studio</a></li>
+    <li><a href="#перегляд-трансляції">Перегляд трансляції</a></li>
+    <li><a href="#висновки">Висновки</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
