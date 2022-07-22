@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Встуа Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
 У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.'><title>Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP</title>
 
 <link rel='canonical' href='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/'>
 
 <link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP'>
-<meta property='og:description' content='Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
+<meta property='og:description' content='Встуа Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
 У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.'>
 <meta property='og:url' content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/'>
 <meta property='og:site_name' content='Блог про IT'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Сервер' /><meta property='article:tag' content='RTMP' /><meta property='article:tag' content='Nginx' /><meta property='article:tag' content='HLS' /><meta property='article:tag' content='DASH' /><meta property='article:published_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.jpeg' />
 <meta name="twitter:title" content="Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP">
-<meta name="twitter:description" content="Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
+<meta name="twitter:description" content="Встуа Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
 У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.jpeg' />
     </head>
@@ -293,7 +293,7 @@
     <section class="article-content">
     
     
-    <h2 id="введення">Введення</h2>
+    <h2 id="встуа">Встуа</h2>
 <p>Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.</p>
 <p>У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.</p>
 <h2 id="передумови">Передумови</h2>
@@ -605,6 +605,39 @@
 
     
 
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Схожі матеріали</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/">
+        
+        
+            <div class="article-image">
+                <img src="/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/header.6fcdff2349c66fdbb373f7d919c8734c_hue240bb946ab7e16adc3a9ae5a9bb2d15_513324_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Використання приватного поштового сервера на базі Mailcow"
+                        
+                        data-hash="md5-b83/I0nGb9uzc/fZGchzTA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Використання приватного поштового сервера на базі Mailcow</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
      
     
         
@@ -728,7 +761,7 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#введення">Введення</a></li>
+    <li><a href="#встуа">Встуа</a></li>
     <li><a href="#передумови">Передумови</a></li>
     <li><a href="#робота-з-nginx-rtmp">Робота з Nginx-RTMP</a>
       <ol>

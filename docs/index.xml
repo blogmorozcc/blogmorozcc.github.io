@@ -6,7 +6,15 @@
         <description>Recent content on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 20 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hosting private mail server with mailcow</title>
+        <link>https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/header.jpg" alt="Featured image of post Hosting private mail server with mailcow" /&gt;</description>
+        </item>
+        <item>
         <title>Deploying an RTMP server for streaming using Nginx RTMP</title>
         <link>https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/</link>
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>

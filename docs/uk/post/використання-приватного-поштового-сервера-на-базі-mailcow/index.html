@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Вступ Електронна пошта, або email - це технологія, що дозволяє користувачам обмінюватися інформацією за допомогою листів. Принцип та протоколи побудовано за аналогією роботи звичайної паперової пошти.
+Для роботи електронної пошти потрібен поштовий сервер з виділенним доменом (наприклад example.com), та кожному з користувачів виділяється адреса поштової скриньки (наприклад user@example.com).
+Наразі існує багато поштових провайдерів, що дозволяють створити адресу поштової скриньки безкоштовно, наприклад gmail, outlook, yahoo, та інші. Доступ до скриньки можливий як через веб-інтерфейс, так і через поштові протоколи SMTP, IMAP, POP3.'><title>Використання приватного поштового сервера на базі Mailcow</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Використання приватного поштового сервера на базі Mailcow'>
+<meta property='og:description' content='Вступ Електронна пошта, або email - це технологія, що дозволяє користувачам обмінюватися інформацією за допомогою листів. Принцип та протоколи побудовано за аналогією роботи звичайної паперової пошти.
+Для роботи електронної пошти потрібен поштовий сервер з виділенним доменом (наприклад example.com), та кожному з користувачів виділяється адреса поштової скриньки (наприклад user@example.com).
+Наразі існує багато поштових провайдерів, що дозволяють створити адресу поштової скриньки безкоштовно, наприклад gmail, outlook, yahoo, та інші. Доступ до скриньки можливий як через веб-інтерфейс, так і через поштові протоколи SMTP, IMAP, POP3.'>
+<meta property='og:url' content='https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/'>
+<meta property='og:site_name' content='Блог про IT'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Server' /><meta property='article:tag' content='Mailcow' /><meta property='article:tag' content='Docker' /><meta property='article:tag' content='SMTP' /><meta property='article:tag' content='IMAP' /><meta property='article:published_time' content='2022-07-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-22T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/header.jpg' />
+<meta name="twitter:title" content="Використання приватного поштового сервера на базі Mailcow">
+<meta name="twitter:description" content="Вступ Електронна пошта, або email - це технологія, що дозволяє користувачам обмінюватися інформацією за допомогою листів. Принцип та протоколи побудовано за аналогією роботи звичайної паперової пошти.
+Для роботи електронної пошти потрібен поштовий сервер з виділенним доменом (наприклад example.com), та кожному з користувачів виділяється адреса поштової скриньки (наприклад user@example.com).
+Наразі існує багато поштових провайдерів, що дозволяють створити адресу поштової скриньки безкоштовно, наприклад gmail, outlook, yahoo, та інші. Доступ до скриньки можливий як через веб-інтерфейс, так і через поштові протоколи SMTP, IMAP, POP3."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/header.jpg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Показати меню">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/uk">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huf928305544e9523d1708c449c63954af_229975_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/uk">Блог про IT</a></h1>
+            
+            
+            
+            <h2 class="site-description">Дмитра Мороза</h2>
+            
+            
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/uk/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Головна</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Архіви</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Пошук</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" >English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" selected>Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Темна тема</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/">
+                <img src="/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/header_hue240bb946ab7e16adc3a9ae5a9bb2d15_513324_800x0_resize_q75_box.jpg"
+                        srcset="/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/header_hue240bb946ab7e16adc3a9ae5a9bb2d15_513324_800x0_resize_q75_box.jpg 800w, /uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/header_hue240bb946ab7e16adc3a9ae5a9bb2d15_513324_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post Використання приватного поштового сервера на базі Mailcow" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/uk/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/uk/categories/selfhosted/" >
+                Selfhosted
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/">Використання приватного поштового сервера на базі Mailcow</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">22.07.2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    Час читання: 4 хв
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="вступ">Вступ</h2>
+<p>Електронна пошта, або email - це технологія, що дозволяє користувачам обмінюватися інформацією за допомогою листів. Принцип та протоколи побудовано за аналогією роботи звичайної паперової пошти.</p>
+<p>Для роботи електронної пошти потрібен поштовий сервер з виділенним доменом (наприклад example.com), та кожному з користувачів виділяється адреса поштової скриньки (наприклад <a class="link" href="mailto:user@example.com" >user@example.com</a>).</p>
+<p>Наразі існує багато поштових провайдерів, що дозволяють створити адресу поштової скриньки безкоштовно, наприклад gmail, outlook, yahoo, та інші. Доступ до скриньки можливий як через веб-інтерфейс, так і через поштові протоколи SMTP, IMAP, POP3. Кожен з провайдерів має ліміт на максимально можливий об&rsquo;єм для зберігання листів та файлів-вкладень.</p>
+<h2 id="причини-використання-власного-сервера">Причини використання власного сервера</h2>
+<p>Можна навести випадки, коли використовувння поштової скриньки, зареєстровану на сервері публічного поштового провайдеру не підходить через деякі причини. Використання влашного поштового сервера для листування має як свої переваги так і недоліки.</p>
+<h3 id="переваги">Переваги</h3>
+<p><strong>1. Використання своєї адреси.</strong></p>
+<p>Через дуже велику кількість уже зареєстрованих користувачів на серверах публічних поштових провайдерів, дуже велика імовірність того, що бажаний формат адреси поштової скриньки вже зареєстрований. І тому для реєстрації користувачам доводиться додавати деякі слова, цифри, та навіть спецсимволи, щоб знайти вільну адресу.</p>
+<p>Власний поштовий сервер дозволяє використовувати бажаний формат адреси, що може мати вигляд <code>user1@domain.com</code>, <code>user2@domain.com</code>, тощо. Також поштовий сервер може обслуговувати декілька доменів, наприклад <code>domain.com</code>, <code>brand.ua</code>.</p>
+<p>Такий підхід дуже часто використовують для корпоративної пошти, де для кожного працівника створюється скринька на домені компанії. Такі адреси краще запам&rsquo;ятовуються, що спонукає користувачів до комунікації.</p>
+<p><strong>2. Незалежність від правил поштового провайдера.</strong></p>
+<p>Кожний серівс має свої правила та обмеження, що можуть не задовільняти потреби користувача. Можна навести деякі приклади, це можуть бути:</p>
+<ul>
+<li>обмеження на об&rsquo;єм, що виділяється для зберігання пошти;</li>
+<li>заборона на використання протоколів POP3, IMAP, SMTP;</li>
+<li>нав&rsquo;язлива реклама, що додається у підписи до відправлених листів;</li>
+<li>політика блокування аккаунтів.</li>
+</ul>
+<p>Маючи свій поштовий сервер, ви не обтяжені правилами з використання, а об&rsquo;єм обмежено лише можливостями сервера.</p>
+<p><strong>3. Приватність та конфіденційність даних.</strong></p>
+<p>При користуванні сервісом, всі поштові листи та вкладення зберігаються на серверах провайдера. Немає жодних гарантій, що ваші персональні дані, та листування не передаються третім особам, або не аналізуються алгоритмами machine learning для перевірки вмісту на виявлення певної інформації.</p>
+<p>Деякі провайдери дозволяють користувачу видалити аккаунт, але це не означає фактичне видалення інформації про користувача та його листів.</p>
+<p>Маючи свій поштовий сервер можливо гнучко управляти своїми даними та листами, де кожна маніпуляція з даними є прозорою, та фактично виконується. У разі якщо для хостингу поштового сервера арендується VPS/VDS, то єдиним звеном що має доступ до ваших даних є провайдер хмарного хостингу.</p>
+<h3 id="недоліки">Недоліки</h3>
+<p><strong>1. Це не безкоштовно.</strong></p>
+<p>На відміну від скриньки що можна отримати у поштового провайдера безкоштовно, для хостингу власного поштовогу сервісу необхідно орендувати або мати свій VPS/VDS сервер та домен.</p>
+<p><strong>2. Безпека, обслуговування та адміністрування.</strong></p>
+<p>Будь яка інформаційна система потребує обслуговання. Популярні поштові провайдери мають відділи кваліфікованих спеціалістів для адміністрування та цілодобового моніторингу роботоздатності систем.</p>
+<p>У випадку використання власного сервера, вся робота з обслуговування й відповідальність за безпеку системи та її безперебійну роботу повністю лягає на користувача. Для цього необхідно володіти деякими технічними навичками, та розуміти схематику роботу системи хоча б на мінімальному рівні.</p>
+<p><strong>3. Спам.</strong></p>
+<p>Сервери що викорустовуються для обміну електронною поштою дуже часто стають жертвами хакерів, використовуються
+для розсилки спаму, або небажаної пошти. У разі якщо сервер буде дуже часто відсилати спам, то IP-адресу серверу буде занесено у числені спам-бази.</p>
+<p>У такому випадку, навіть листи що не підпадають під категорію спаму, при відправці з цього сервера будуть потрапляти у спам фільтри, або навіть не доходити до кінцевого адресата.</p>
+<h2 id="вимоги-до-сервера">Вимоги до сервера</h2>
+<p>Для того щоб сервер підходив для використання в якості поштового сервера, він повинен відповідати деяким критеріям:</p>
+<ul>
+<li>Мати виділену, білу IP-адресу;</li>
+<li>Мати відкриті порти для роботи поштових протоколів: 25, 110, 143, 465, 587, 993, 995;</li>
+<li>Мати відкриті порти для доступу через веб-інтерфейс: 80 або 443;</li>
+<li>Мати достатній обсяг оперативної пам&rsquo;яті: для персональної скриньки достатньо 1 Гб, але чим більше користувачів, тим більше пам&rsquo;яті потрібно.</li>
+</ul>
+<h2 id="вибір-програмного-забезпечення">Вибір програмного забезпечення</h2>
+<p>Для розгортання власного сервера існують стеки ПЗ на базі компонентів з відкритим вихідним кодом. Звичайно можна зібрати свою конфігурацію із цих компонентів, але це вимагає більш поглибленного вивчення кожного з них, та більше часу на відладку й тестування.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/uk/tags/linux/">Linux</a>
+        
+            <a href="/uk/tags/server/">Server</a>
+        
+            <a href="/uk/tags/mailcow/">Mailcow</a>
+        
+            <a href="/uk/tags/docker/">Docker</a>
+        
+            <a href="/uk/tags/smtp/">SMTP</a>
+        
+            <a href="/uk/tags/imap/">IMAP</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Схожі матеріали</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/">
+        
+        
+            <div class="article-image">
+                <img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.9cb92591c6d5a62cc38b529e04dc0703_hu41968337912a42023606e3de60723367_1230034_250x150_fill_q75_box_smart1.jpeg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP"
+                        
+                        data-hash="md5-nLklkcbVpizDi1KeBNwHAw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2022 | Блог про IT
+    </section>
+    
+    <section class="powerby">
+        
+        Всі права захищено.
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Зміст</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#вступ">Вступ</a></li>
+    <li><a href="#причини-використання-власного-сервера">Причини використання власного сервера</a>
+      <ol>
+        <li><a href="#переваги">Переваги</a></li>
+        <li><a href="#недоліки">Недоліки</a></li>
+      </ol>
+    </li>
+    <li><a href="#вимоги-до-сервера">Вимоги до сервера</a></li>
+    <li><a href="#вибір-програмного-забезпечення">Вибір програмного забезпечення</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
