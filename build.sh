@@ -5,4 +5,4 @@ siteurl="$protocol://$domain"
 rm -rf docs
 mkdir docs
 echo -n $domain >> docs/CNAME
-hugo -b $siteurl -d ./docs --gc -v
+hugo --config config.yaml -b $siteurl -d ./docs --gc -v
