@@ -6,7 +6,47 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 20 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>IMAP</title>
+        <link>https://blog.moroz.cc/tags/imap/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/imap/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/tags/linux/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Mailcow</title>
+        <link>https://blog.moroz.cc/tags/mailcow/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/mailcow/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Server</title>
+        <link>https://blog.moroz.cc/tags/server/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/server/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SMTP</title>
+        <link>https://blog.moroz.cc/tags/smtp/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/smtp/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>DASH</title>
         <link>https://blog.moroz.cc/tags/dash/</link>
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
@@ -23,14 +63,6 @@
         <description></description>
         </item>
         <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/tags/linux/</link>
-        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/linux/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Nginx</title>
         <link>https://blog.moroz.cc/tags/nginx/</link>
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
@@ -44,14 +76,6 @@
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/rtmp/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Server</title>
-        <link>https://blog.moroz.cc/tags/server/</link>
-        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/server/</guid>
         <description></description>
         </item>
         

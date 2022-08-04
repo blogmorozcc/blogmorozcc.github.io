@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>https://blog.moroz.cc/categories/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -26,6 +26,136 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/categories/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BE%D1%88%D1%82%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%BD%D0%B0-%D0%B1%D0%B0%D0%B7%D1%96-mailcow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/imap/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/imap/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/imap/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/linux/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/linux/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/mailcow/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/mailcow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/mailcow/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/post/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/selfhosted/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/selfhosted/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/selfhosted/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/server/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/server/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/server/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/smtp/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/smtp/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/smtp/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/</loc>
+    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/dash/</loc>
@@ -67,32 +197,6 @@
                 href="https://blog.moroz.cc/tags/hls/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/tags/linux/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/linux/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/linux/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/linux/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/categories/multimedia/</loc>
     <lastmod>2022-07-20T00:00:00+00:00</lastmod>
   </url><url>
@@ -109,19 +213,6 @@
                 href="https://blog.moroz.cc/tags/nginx/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/post/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/post/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/tags/rtmp/</loc>
     <lastmod>2022-07-20T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -133,22 +224,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/rtmp/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/server/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/</loc>
-    <lastmod>2022-07-20T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/archives/</loc>

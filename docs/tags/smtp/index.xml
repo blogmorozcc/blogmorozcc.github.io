@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>SMTP on The IT Blog</title>
+        <link>https://blog.moroz.cc/tags/smtp/</link>
+        <description>Recent content in SMTP on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/smtp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hosting private mail server with mailcow</title>
+        <link>https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/hosting-private-mail-server-with-mailcow/header.jpg" alt="Featured image of post Hosting private mail server with mailcow" /&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

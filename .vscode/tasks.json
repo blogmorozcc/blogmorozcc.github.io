@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "startlocalserver",
+            "command": "bash ${workspaceFolder}/scripts/debug.sh",
+            "type": "shell"
+        },
+        {
+            "label": "killlocalserver",
+            "command": "bash ${workspaceFolder}/scripts/kill.sh",
+            "type": "shell"
+        }
+    ]
+}
