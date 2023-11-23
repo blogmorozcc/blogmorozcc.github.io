@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" dir="ltr">
+<html lang="uk" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
 У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.'><title>Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP</title>
@@ -59,7 +59,7 @@
                     
                     
                         
-                        <img src="/img/avatar_huf928305544e9523d1708c449c63954af_229975_300x0_resize_box_3.png" width="300"
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -323,15 +323,8 @@
 </div>
 </div><h3 id="налаштування-rtmp">Налаштування RTMP</h3>
 <p>Після встановлення, потрібно сконфігурувати веб-сервер Nginx таким чином, щоб він прослуховував порт 1935 для отримання RTMP-потоку. Для цього потрібно відредагувати файл <code>/etc/nginx/nginx.conf</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/nginx/nginx.conf
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>В кінці файла, потрібно дописати конфігурацію RTMP сервера:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/nginx/nginx.conf</span></span></code></pre></div>
+<p>В кінці файла, потрібно дописати конфігурацію RTMP сервера:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -421,15 +414,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Для роботи віртуального хоста, потрібно створити новий конфігураційний файл (наприклад <code>rtmp</code>) в каталозі <code>/etc/nginx/sites-available</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/nginx/sites-available/rtmp
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Хост файл <code>rtmp</code> складається з наступного:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/nginx/sites-available/rtmp</span></span></code></pre></div>
+<p>Хост файл <code>rtmp</code> складається з наступного:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -605,6 +591,39 @@
 
     
 
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Схожі матеріали</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/">
+        
+        
+            <div class="article-image">
+                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції"
+                        
+                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
      
     
         
@@ -616,7 +635,7 @@
         
             2018 - 
         
-        2022 | Блог про IT
+        2023 | Блог про IT
     </section>
     
     <section class="powerby">

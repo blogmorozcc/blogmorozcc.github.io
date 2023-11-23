@@ -5,8 +5,42 @@
         <link>https://blog.moroz.cc/tags/linux/</link>
         <description>Recent content in Linux on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Wed, 20 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en</language>
+        <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to make systemd-boot remember the last selected entry</title>
+        <link>https://blog.moroz.cc/post/how-to-make-systemd-boot-remember-the-last-selected-entry/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/how-to-make-systemd-boot-remember-the-last-selected-entry/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.png" alt="Featured image of post How to make systemd-boot remember the last selected entry" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;When using systemd-boot as your bootloader, you may find it convenient to have the system remember the last selected entry on each subsequent boot. This is especially useful for users who frequently switch between different operating systems or kernels. By configuring systemd-boot to remember the last chosen boot entry, you can streamline the boot process and avoid having to manually select the desired option every time the system restarts.&lt;/p&gt;
+&lt;h2 id=&#34;modifying-the-configuration-file&#34;&gt;Modifying the Configuration File&lt;/h2&gt;
+&lt;p&gt;To achieve this functionality, you need to modify the loader.conf configuration file. The exact location of this file can vary depending on the Linux distribution you are using.&lt;/p&gt;
+&lt;p&gt;Personally, I have used several Linux distributions, and the path for &lt;code&gt;loader.conf&lt;/code&gt; was different in each of them, for example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For &lt;strong&gt;Ubuntu&lt;/strong&gt; it was &lt;code&gt;/boot/efi/loader/loader.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For &lt;strong&gt;Arch Linux&lt;/strong&gt; it was &lt;code&gt;/boot/loader/loader.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For &lt;strong&gt;EndeavourOS&lt;/strong&gt; it was &lt;code&gt;/efi/loader/loader.conf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To modify the file open the Terminal and follow this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the &lt;code&gt;loader.conf&lt;/code&gt; file for editing, for example:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /boot/loader/loader.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Modify the &lt;code&gt;default&lt;/code&gt; parameter like below:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;default @saved&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Save the file (In nano, this is done with the keyboard shortcut `Ctrl + O&amp;rsquo;).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;At the next boot, after you will select some entry it will be remembered as the default.&lt;/p&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;By configuring systemd-boot to remember the last selected entry, you can streamline your boot process and enhance the overall user experience. Whether you&amp;rsquo;re using Arch Linux, Ubuntu, or another distribution that employs systemd-boot, this simple modification can save you time and make your system startup more efficient.&lt;/p&gt;
+&lt;p&gt;Remember to adapt the file paths and commands based on the specifics of your distribution. With this configuration in place, your system will automatically boot into the last chosen entry, reducing the need for manual intervention during the boot process.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Deploying an RTMP server for streaming using Nginx RTMP</title>
         <link>https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/</link>
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
@@ -42,15 +76,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;set-up-rtmp-service&#34;&gt;Set up RTMP service&lt;/h3&gt;
 &lt;p&gt;Once installed, you need to configure the Nginx web server to listen on port 1935 to receive the RTMP stream. To do this, you need to edit the file &lt;code&gt;/etc/nginx/nginx.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/nginx/nginx.conf
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;At the end of the file, you need to add the configuration of the RTMP server:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/nginx/nginx.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;At the end of the file, you need to add the configuration of the RTMP server:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -140,15 +167,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;For the virtual host to work, you need to create a new configuration file (for example &lt;code&gt;rtmp&lt;/code&gt;) in the &lt;code&gt;/etc/nginx/sites-available&lt;/code&gt; directory:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/nginx/sites-available/rtmp
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;The &lt;code&gt;rtmp&lt;/code&gt; host file consists of the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/nginx/sites-available/rtmp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;rtmp&lt;/code&gt; host file consists of the following:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
