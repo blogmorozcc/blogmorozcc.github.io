@@ -50,9 +50,9 @@ sudo apt install nginx libnginx-mod-rtmp
 
 Після встановлення, потрібно сконфігурувати веб-сервер Nginx таким чином, щоб він прослуховував порт 1935 для отримання RTMP-потоку. Для цього потрібно відредагувати файл `/etc/nginx/nginx.conf`:
 
-```bash
+{{< highlight shell "linenos=false" >}}
 sudo nano /etc/nginx/nginx.conf
-```
+{{< / highlight >}}
 
 В кінці файла, потрібно дописати конфігурацію RTMP сервера:
 
@@ -113,9 +113,9 @@ sudo chmod -R 755 /var/www/html/stream
 
 Для роботи віртуального хоста, потрібно створити новий конфігураційний файл (наприклад `rtmp`) в каталозі `/etc/nginx/sites-available`:
 
-```bash
+{{< highlight shell "linenos=false" >}}
 sudo nano /etc/nginx/sites-available/rtmp
-```
+{{< / highlight >}}
 
 Хост файл `rtmp` складається з наступного:
 

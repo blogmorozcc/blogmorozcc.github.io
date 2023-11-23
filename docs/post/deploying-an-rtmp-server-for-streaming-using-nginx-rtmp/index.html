@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Currently, there are many platforms for online video content streaming, such as YouTube, Twitch, and others. They use the RTMP protocol (Real-Time Messaging Protocol) to broadcast streaming video over the Internet. While these platforms have powerful video streaming capabilities, in some cases independence from the streaming platform and its rules makes perfect sense.
 In this article, I will provide instructions on the deployment of the RTMP service based on Nginx-RTMP, which will allow receiving an RTMP stream from the streamer&amp;rsquo;s computer, and converting it to modern HLS and DASH formats for viewing in the receiver program.'><title>Deploying an RTMP server for streaming using Nginx RTMP</title>
@@ -59,7 +59,7 @@ In this article, I will provide instructions on the deployment of the RTMP servi
                     
                     
                         
-                        <img src="/img/avatar_huf928305544e9523d1708c449c63954af_229975_300x0_resize_box_3.png" width="300"
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -323,15 +323,8 @@ In this article, I will provide instructions on the deployment of the RTMP servi
 </div>
 </div><h3 id="set-up-rtmp-service">Set up RTMP service</h3>
 <p>Once installed, you need to configure the Nginx web server to listen on port 1935 to receive the RTMP stream. To do this, you need to edit the file <code>/etc/nginx/nginx.conf</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/nginx/nginx.conf
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>At the end of the file, you need to add the configuration of the RTMP server:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/nginx/nginx.conf</span></span></code></pre></div>
+<p>At the end of the file, you need to add the configuration of the RTMP server:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -421,15 +414,8 @@ In this article, I will provide instructions on the deployment of the RTMP servi
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>For the virtual host to work, you need to create a new configuration file (for example <code>rtmp</code>) in the <code>/etc/nginx/sites-available</code> directory:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/nginx/sites-available/rtmp
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The <code>rtmp</code> host file consists of the following:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/nginx/sites-available/rtmp</span></span></code></pre></div>
+<p>The <code>rtmp</code> host file consists of the following:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -605,6 +591,39 @@ In this article, I will provide instructions on the deployment of the RTMP servi
 
     
 
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make systemd-boot remember the last selected entry"
+                        
+                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make systemd-boot remember the last selected entry</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
      
     
         
@@ -616,7 +635,7 @@ In this article, I will provide instructions on the deployment of the RTMP servi
         
             2018 - 
         
-        2022 | The IT Blog
+        2023 | The IT Blog
     </section>
     
     <section class="powerby">

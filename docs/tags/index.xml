@@ -5,8 +5,32 @@
         <link>https://blog.moroz.cc/tags/</link>
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Wed, 20 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en</language>
+        <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Bootloader</title>
+        <link>https://blog.moroz.cc/tags/bootloader/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/bootloader/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/tags/linux/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>systemd-boot</title>
+        <link>https://blog.moroz.cc/tags/systemd-boot/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/systemd-boot/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>DASH</title>
         <link>https://blog.moroz.cc/tags/dash/</link>
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
@@ -20,14 +44,6 @@
         <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/hls/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/tags/linux/</link>
-        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/linux/</guid>
         <description></description>
         </item>
         <item>
