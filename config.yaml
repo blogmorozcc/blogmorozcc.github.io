@@ -60,8 +60,8 @@ params:
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: false
-        provider: disqus
+        enabled: true
+        provider: giscus
 
         disqusjs:
             shortname:
@@ -116,13 +116,13 @@ params:
             siteName: "" # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
 
         giscus:
-            repo:
-            repoID:
-            category:
-            categoryID:
-            mapping:
-            lightTheme:
-            darkTheme:
+            repo: blogmorozcc/blogmorozcc.github.io
+            repoID: R_kgDOHsfYjw
+            category: General
+            categoryID: DIC_kwDOHsfYj84CbRdO
+            mapping: url
+            lightTheme: 1
+            darkTheme: 1
             reactionsEnabled: 1
             emitMetadata: 0
 
