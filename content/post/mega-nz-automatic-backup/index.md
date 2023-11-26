@@ -91,8 +91,8 @@ SERVER="server"
 DAYS_TO_BACKUP=7
 WORKING_DIR="/root/tmp_dir"
 BACKUP_MYSQL="true"
-MYSQL_USER="{Ваш користувач MySQL}"
-MYSQL_PASSWORD="{Ваш пароль користувача MySQL}"
+MYSQL_USER="{Your MySQL user}"
+MYSQL_PASSWORD="{Your MySQL password}"
 DOMAINS_FOLDER="/var/www"
 ##################################
 # We create a temporary folder for creating archives
