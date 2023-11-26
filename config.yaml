@@ -121,8 +121,8 @@ params:
             category: General
             categoryID: DIC_kwDOHsfYj84CbRdO
             mapping: url
-            lightTheme: 1
-            darkTheme: 1
+            lightTheme: light
+            darkTheme: noborder_dark
             reactionsEnabled: 1
             emitMetadata: 0
 
