@@ -1022,6 +1022,54 @@ Command Line Editing: Zsh offers advanced command-line editing capabilities, all
      
     
         
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
     
 
     <footer class="site-footer">
