@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Mega.nz is one of the most affordable cloud storage in terms of volume, because it provides its new users with 50Gb of cloud disk space absolutely free. There are also paid plans that allow you to expand the cloud up to 4 terabytes. But even 50Gb is quite enough for backup copies of sites and MySQL databases. Also, there is a set of megatools console utilities for downloading and uploading files to a remote cloud.'><title>Automatic server backup to the Mega.nz cloud</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/post/automatic-server-backup-to-the-mega.nz-cloud/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Automatic server backup to the Mega.nz cloud'>
+<meta property='og:description' content='Introduction Mega.nz is one of the most affordable cloud storage in terms of volume, because it provides its new users with 50Gb of cloud disk space absolutely free. There are also paid plans that allow you to expand the cloud up to 4 terabytes. But even 50Gb is quite enough for backup copies of sites and MySQL databases. Also, there is a set of megatools console utilities for downloading and uploading files to a remote cloud.'>
+<meta property='og:url' content='https://blog.moroz.cc/post/automatic-server-backup-to-the-mega.nz-cloud/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Cloud' /><meta property='article:tag' content='Backup' /><meta property='article:published_time' content='2016-10-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2016-10-02T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/automatic-server-backup-to-the-mega.nz-cloud/header.jpg' />
+<meta name="twitter:title" content="Automatic server backup to the Mega.nz cloud">
+<meta name="twitter:description" content="Introduction Mega.nz is one of the most affordable cloud storage in terms of volume, because it provides its new users with 50Gb of cloud disk space absolutely free. There are also paid plans that allow you to expand the cloud up to 4 terabytes. But even 50Gb is quite enough for backup copies of sites and MySQL databases. Also, there is a set of megatools console utilities for downloading and uploading files to a remote cloud."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/automatic-server-backup-to-the-mega.nz-cloud/header.jpg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">Dmitriy Moroz</h2>
+            
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" selected>English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/automatic-server-backup-to-the-mega.nz-cloud/">
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_800x0_resize_q75_box.jpg"
+                        srcset="/post/automatic-server-backup-to-the-mega.nz-cloud/header_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_800x0_resize_q75_box.jpg 800w, /post/automatic-server-backup-to-the-mega.nz-cloud/header_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="571" 
+                        loading="lazy"
+                        alt="Featured image of post Automatic server backup to the Mega.nz cloud" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/categories/networking/" >
+                Networking
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/automatic-server-backup-to-the-mega.nz-cloud/">Automatic server backup to the Mega.nz cloud</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">02.10.2016</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<p>Mega.nz is one of the most affordable cloud storage in terms of volume, because it provides its new users with 50Gb of cloud disk space absolutely free. There are also paid plans that allow you to expand the cloud up to 4 terabytes. But even 50Gb is quite enough for backup copies of sites and MySQL databases. Also, there is a set of megatools console utilities for downloading and uploading files to a remote cloud.</p>
+<h2 id="solution-setup">Solution setup</h2>
+<h3 id="installing-megatools">Installing megatools</h3>
+<p>First, register and activate your mega.nz account if you don&rsquo;t already have one.</p>
+<p>Next, you need to connect to the server via SSH, and install the necessary packages for assembling megatools:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt-get -y install build-essential libglib2.0-dev libssl-dev libcurl4-openssl-dev libgirepository1.0-dev</span></span></code></pre></div>
+<p>After that, you should find a link to download megatools on the official website, which we then use to download with the wget command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt
+</span></span><span class="line"><span class="cl">wget https://megatools.megous.com/builds/megatools-1.9.97.tar.gz
+</span></span><span class="line"><span class="cl">tar -xvzf megatools-1.9.97.tar.gz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After we have downloaded and unzipped the source code, we need to compile it. This can be done using the following sequence of commands:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> megatools-1.9.97
+</span></span><span class="line"><span class="cl">./configure
+</span></span><span class="line"><span class="cl">make
+</span></span><span class="line"><span class="cl">make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If everything was compiled and installed without errors, you can proceed to the next stage, namely writing a script for creating and uploading backups to the cloud.</p>
+<h3 id="creating-a-backup-script">Creating a backup script</h3>
+<p>First, we create a file with data for logging into the account:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~
+</span></span><span class="line"><span class="cl">nano .megarc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The file should be filled as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>Login<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Username</span> <span class="o">=</span> <span class="o">{</span>Your login<span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Password</span> <span class="o">=</span> <span class="o">{</span>Your password<span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>As our login data is stored unencrypted, let&rsquo;s make it available only to root.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chmod <span class="m">640</span> .megarc</span></span></code></pre></div>
+<p>Now let&rsquo;s check the correctness of entering the login and password, for this we enter the command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">megals</span></span></code></pre></div>
+<p>If all settings are correct, it should display a list of files. If the command did not display a list of files, then we check the correctness of entering the password, if it did, then we proceed to the next step of creating a backup script. In this case, the scripts are stored in the /opt/scripts directory with modified permissions.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">nano /opt/scripts/do_backup.sh</span></span></code></pre></div>
+<p>The script looks like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">SERVER</span><span class="o">=</span><span class="s2">&#34;server&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DAYS_TO_BACKUP</span><span class="o">=</span><span class="m">7</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WORKING_DIR</span><span class="o">=</span><span class="s2">&#34;/root/tmp_dir&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BACKUP_MYSQL</span><span class="o">=</span><span class="s2">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MYSQL_USER</span><span class="o">=</span><span class="s2">&#34;{Ваш користувач MySQL}&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MYSQL_PASSWORD</span><span class="o">=</span><span class="s2">&#34;{Ваш пароль користувача MySQL}&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DOMAINS_FOLDER</span><span class="o">=</span><span class="s2">&#34;/var/www&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># We create a temporary folder for creating archives</span>
+</span></span><span class="line"><span class="cl">rm -rf <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">mkdir <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Archive /etc</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /
+</span></span><span class="line"><span class="cl">tar cJf <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>/etc.tar.gx etc
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> - &gt; /dev/null
+</span></span><span class="line"><span class="cl"><span class="c1"># Backup MySQL</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BACKUP_MYSQL</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span>
+</span></span><span class="line"><span class="cl"> mkdir <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>/mysql
+</span></span><span class="line"><span class="cl"> <span class="k">for</span> db in <span class="k">$(</span>mysql -u<span class="si">${</span><span class="nv">MYSQL_USER</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">MYSQL_PASSWORD</span><span class="si">}</span> -e <span class="s1">&#39;show databases;&#39;</span> <span class="p">|</span> grep -Ev <span class="s2">&#34;^(Database|mysql|information_schema|performance_schema|phpmyadmin)</span>$<span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"> <span class="k">do</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">#echo &#34;processing ${db}&#34;</span>
+</span></span><span class="line"><span class="cl"> mysqldump --opt -u<span class="si">${</span><span class="nv">MYSQL_USER</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">MYSQL_PASSWORD</span><span class="si">}</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">db</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> gzip &gt; <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>/mysql/<span class="si">${</span><span class="nv">db</span><span class="si">}</span>_<span class="k">$(</span>date +%F_%T<span class="k">)</span>.sql.gz
+</span></span><span class="line"><span class="cl"> <span class="k">done</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">#echo &#34;all db now&#34;</span>
+</span></span><span class="line"><span class="cl"> mysqldump --opt -u<span class="si">${</span><span class="nv">MYSQL_USER</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">MYSQL_PASSWORD</span><span class="si">}</span> --events --ignore-table<span class="o">=</span>mysql.event --all-databases <span class="p">|</span> gzip &gt; <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>/mysql/ALL_DATABASES_<span class="k">$(</span>date +%F_%T<span class="k">)</span>.sql.gz
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Backup websites</span>
+</span></span><span class="line"><span class="cl">mkdir <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>/domains
+</span></span><span class="line"><span class="cl"><span class="k">for</span> folder in <span class="k">$(</span>find <span class="si">${</span><span class="nv">DOMAINS_FOLDER</span><span class="si">}</span> -mindepth <span class="m">1</span> -maxdepth <span class="m">1</span> -type d<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">cd</span> <span class="k">$(</span>dirname <span class="si">${</span><span class="nv">folder</span><span class="si">}</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"> tar cJf <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>/domains/<span class="k">$(</span>basename <span class="si">${</span><span class="nv">folder</span><span class="si">}</span><span class="k">)</span>.tar.xz <span class="k">$(</span>basename <span class="si">${</span><span class="nv">folder</span><span class="si">}</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">cd</span> - &gt; /dev/null
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Handling possible dbus-errors</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="k">$(</span>dbus-launch<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a folder on the cloud with the name of the server, and in it another folder with today&#39;s date</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span> -z <span class="s2">&#34;</span><span class="k">$(</span>megals --reload /Root/backup_<span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> megamkdir /Root/backup_<span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Cleaning old unnecessary logs</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="o">[</span> <span class="k">$(</span>megals --reload /Root/backup_<span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span> <span class="p">|</span> grep -E <span class="s2">&#34;/Root/backup_</span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">/[0-9]{4}-[0-9]{2}-[0-9]{2}</span>$<span class="s2">&#34;</span> <span class="p">|</span> wc -l<span class="k">)</span> -gt <span class="si">${</span><span class="nv">DAYS_TO_BACKUP</span><span class="si">}</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl"> <span class="nv">TO_REMOVE</span><span class="o">=</span><span class="k">$(</span>megals --reload /Root/backup_<span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span> <span class="p">|</span> grep -E <span class="s2">&#34;/Root/backup_</span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">/[0-9]{4}-[0-9]{2}-[0-9]{2}</span>$<span class="s2">&#34;</span> <span class="p">|</span> sort <span class="p">|</span> head -n 1<span class="k">)</span>
+</span></span><span class="line"><span class="cl"> megarm <span class="si">${</span><span class="nv">TO_REMOVE</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a folder for backup</span>
+</span></span><span class="line"><span class="cl"><span class="nv">curday</span><span class="o">=</span><span class="k">$(</span>date +%F<span class="k">)</span>
+</span></span><span class="line"><span class="cl">megamkdir /Root/backup_<span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span>/<span class="si">${</span><span class="nv">curday</span><span class="si">}</span> 2&gt; /dev/null
+</span></span><span class="line"><span class="cl"><span class="c1"># Upload the files to cloud</span>
+</span></span><span class="line"><span class="cl">megacopy --reload --no-progress --local <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span> --remote /Root/backup_<span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span>/<span class="si">${</span><span class="nv">curday</span><span class="si">}</span> &gt; /dev/null
+</span></span><span class="line"><span class="cl"><span class="c1"># Kill DBUS-daemon</span>
+</span></span><span class="line"><span class="cl"><span class="nb">kill</span> <span class="si">${</span><span class="nv">DBUS_SESSION_BUS_PID</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">rm -f <span class="si">${</span><span class="nv">DBUS_SESSION_BUS_ADDRESS</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove temporary files</span>
+</span></span><span class="line"><span class="cl">rm -rf <span class="si">${</span><span class="nv">WORKING_DIR</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now you need to allow the execution of the script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chmod a+x /opt/scripts/do_backup.sh</span></span></code></pre></div>
+<p>Next, you need to test the script by directly executing it:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">/opt/scripts/do_backup.sh</span></span></code></pre></div>
+<p>After that, you can go to the mega account through the web interface and check that the necessary files have appeared there.</p>
+<h3 id="creating-a-script-autorun-rule-in-crontab">Creating a script autorun rule in crontab</h3>
+<p>In order for the script to run according to a certain time schedule, let&rsquo;s add it to the crontab.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="m">04</span> <span class="m">04</span> * * * root /opt/scripts/do_backup.sh</span></span></code></pre></div>
+<h2 id="is-it-optimal-to-use-">Is it optimal to use ?</h2>
+<p>In my case, the backup folder is <code>538.8 Mb</code> in size.</p>
+<p>A total of <code>50,000 Mb</code> of free space on the cloud. Let each backup weigh approximately <code>550 Mb</code>. We divide 50,000 by 550, we have:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="m">50000</span> / <span class="m">550</span> ≈ 90.9</span></span></code></pre></div>
+<p>This means that the cloud is enough for 90 backups, which is quite a large number, especially if you take into account the free service of Mega.</p>
+<p>But optimality as a whole depends on factors:</p>
+<ul>
+<li>Backup size</li>
+<li>Backup frequency</li>
+<li>Storage duration of each backup</li>
+</ul>
+<p>Therefore, it is advisable to evaluate the optimality separately for each individual case.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/cloud/">Cloud</a>
+        
+            <a href="/tags/backup/">Backup</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/port-forwarding-using-an-ssh-tunnel/">
+        
+        
+            <div class="article-image">
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Port forwarding using an SSH tunnel"
+                        
+                        data-hash="md5-uhvQM97BaXSmn9UTt9VaUQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Port forwarding using an SSH tunnel</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make systemd-boot remember the last selected entry"
+                        
+                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make systemd-boot remember the last selected entry</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/">
+        
+        
+            <div class="article-image">
+                <img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.9cb92591c6d5a62cc38b529e04dc0703_hu41968337912a42023606e3de60723367_1230034_250x150_fill_q75_box_smart1.jpeg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Deploying an RTMP server for streaming using Nginx RTMP"
+                        
+                        data-hash="md5-nLklkcbVpizDi1KeBNwHAw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Deploying an RTMP server for streaming using Nginx RTMP</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2023 | The IT Blog
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#solution-setup">Solution setup</a>
+      <ol>
+        <li><a href="#installing-megatools">Installing megatools</a></li>
+        <li><a href="#creating-a-backup-script">Creating a backup script</a></li>
+        <li><a href="#creating-a-script-autorun-rule-in-crontab">Creating a script autorun rule in crontab</a></li>
+      </ol>
+    </li>
+    <li><a href="#is-it-optimal-to-use-">Is it optimal to use ?</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
