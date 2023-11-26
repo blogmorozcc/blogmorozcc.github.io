@@ -6,7 +6,61 @@
         <description>Recent content in Networking on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Sun, 02 Oct 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/networking/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 07 Oct 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/networking/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How the Tor network actually works</title>
+        <link>https://blog.moroz.cc/post/how-the-tor-network-actually-works/</link>
+        <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/how-the-tor-network-actually-works/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/how-the-tor-network-actually-works/header.jpg" alt="Featured image of post How the Tor network actually works" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Tor is an open source software complex that connects certain computers around the world into a system of proxy servers, the connections between which are made according to the bulb routing scheme. This allows users of this network to establish an anonymous connection that is protected from eavesdropping.&lt;/p&gt;
+&lt;p&gt;The main purpose of the Tor network today is to provide anonymity for Internet users, allowing you to hide your identity while browsing sites from ISPs, site owners, advertising robots, automated traffic analysis systems, etc. This is achieved due to a large distributed system of servers - nodes, traffic between which is routed at the network level according to the OSI model.&lt;/p&gt;
+&lt;h2 id=&#34;roles-of-tor-network-subjects&#34;&gt;Roles of Tor network subjects&lt;/h2&gt;
+&lt;p&gt;Knowing that the network consists of server-nodes connected to the bulb network, let&amp;rsquo;s consider which nodes are in the Tor network:&lt;/p&gt;
+&lt;h3 id=&#34;entry-node-entry-node&#34;&gt;Entry Node (Entry Node)&lt;/h3&gt;
+&lt;p&gt;The input node is the first link in the connection chain. It initiates the establishment of a secure connection by accepting packets from a Tor user, encrypts them, and forwards them to the next node. Note that interception of data between the user and the input node is impossible, since each block is encrypted with a session key using hybrid encryption.&lt;/p&gt;
+&lt;h3 id=&#34;middle-node&#34;&gt;Middle Node&lt;/h3&gt;
+&lt;p&gt;The task of these nodes is reduced only to receiving data from the previous node, encrypting it and transmitting it to the next one. From such a site, it is impossible to go outside the Tor network to the Internet. From such a node, you can only get to the site of the intranet domain .onion, no more. But these nodes are very important to keep the network functioning: the more intermediaries in the chain, the higher the anonymity, and the probability of your connection being compromised decreases. In addition, it is impossible to establish through which intermediary nodes your chain passes, since the IP addresses of such nodes are not recorded in the log file.&lt;/p&gt;
+&lt;h3 id=&#34;exit-node&#34;&gt;Exit Node&lt;/h3&gt;
+&lt;p&gt;This is the last node in the Tor chain. It decodes the packets transmitted by the user along the entire chain and transmits the data to the requested remote server on the Internet. A connection from the IP address of the source node will be registered on the requested server. These types of nodes are the weakest point of the Tor network, as there are ways to intercept user data between the origin node and the remote server. Also, a volunteer who has launched an Exit Node exposes himself to the risk of problems, since it is his IP that is fixed by Internet resources.&lt;/p&gt;
+&lt;h3 id=&#34;bridge-relay&#34;&gt;Bridge Relay&lt;/h3&gt;
+&lt;p&gt;These are repeaters whose addresses are publicly available. They are used to initiate connections in places where Tor root server addresses are blocked. You can get the address of the bridge node by accepting an e-mail from TheTorProject with a special request. Thus, even a total blocking of all publicly known addresses of Tor network nodes will not give any result, since it will not affect the availability of classified relays.&lt;/p&gt;
+&lt;h3 id=&#34;exit-enclave&#34;&gt;Exit Enclave&lt;/h3&gt;
+&lt;p&gt;A relay used by site owners to create a mirror of their resource on the Tor network. This will allow users of some countries to bypass blocking, and the rest to maintain anonymity, protecting themselves again from interception of traffic from the source node.&lt;/p&gt;
+&lt;p&gt;What the chain between the user and the final Internet resource looks like is shown in the diagram below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-the-tor-network-actually-works/scheme.png&#34;
+	width=&#34;2048&#34;
+	height=&#34;968&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-the-tor-network-actually-works/scheme_hu62fd71bd449996ae9b2b7329843b6925_210272_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-the-tor-network-actually-works/scheme_hu62fd71bd449996ae9b2b7329843b6925_210272_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Principle diagram of the network of Tor nodes&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;211&#34;
+		data-flex-basis=&#34;507px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;features-of-tor&#34;&gt;Features of Tor&lt;/h2&gt;
+&lt;p&gt;Also, Tor, since 2004, can provide anonymity for servers as well. Each network user can host any service, the so-called .onion internal domain, which consists of a random set of characters. Such a service will be available only from the Tor network, and neither users will be able to find out about the public IP of the hidden site, nor the site administrator will be able to know who its visitors are. Only the fact of visiting the site and the specific directory visited by the user will be available in the server logs.&lt;/p&gt;
+&lt;p&gt;But you need to be careful when using Tor, because it has the following features that should be kept in mind when using Tor:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The input node knows the user&amp;rsquo;s IP address;&lt;/li&gt;
+&lt;li&gt;The message is fully decoded at the source node, but the sender is unknown;&lt;/li&gt;
+&lt;li&gt;On the requested remote server, some technical data about the sender is transmitted along with the package, although the sender is essentially unknown;&lt;/li&gt;
+&lt;li&gt;Packets with your message may pass through nodes that were launched by attackers in order to steal your data;&lt;/li&gt;
+&lt;li&gt;The Internet resource can obtain data about the user&amp;rsquo;s PC configuration and OS version, as well as his IP address by executing JavaScript, Flash, ActiveX scripts on the page;&lt;/li&gt;
+&lt;li&gt;On the way from the source node to the final server, data can be changed due to a Man-In-The-Middle attack, so if, for example, you download a file through Tor, always check its hash sums;&lt;/li&gt;
+&lt;li&gt;The owner of the source node can steal your session, cookies, and even logins and passwords by intercepting data using SSL Strip;&lt;/li&gt;
+&lt;li&gt;Since the IP addresses of the outgoing nodes are publicly available, some Internet providers and sites block them (for example, Google, VK);&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;We can conclude that the Tor network has great value for those who are subject to mass surveillance, for those who value freedom on the Internet, for those who do not want to put up with large-scale senseless blocking, for those who want at least a small island of anonymity .&lt;/p&gt;
+&lt;p&gt;Be careful on the internet, because it&amp;rsquo;s possible that right now, as you read this, someone is watching your traffic 😱.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Automatic server backup to the Mega.nz cloud</title>
         <link>https://blog.moroz.cc/post/automatic-server-backup-to-the-mega.nz-cloud/</link>
         <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
