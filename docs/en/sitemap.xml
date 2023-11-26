@@ -281,6 +281,51 @@
                 href="https://blog.moroz.cc/page/"
                 />
   </url><url>
+    <loc>https://blog.moroz.cc/tags/anonimity/</loc>
+    <lastmod>2016-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/dark-net/</loc>
+    <lastmod>2016-10-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/dark-net/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/dark-net/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/post/how-the-tor-network-actually-works/</loc>
+    <lastmod>2016-10-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/%D0%BE%D1%81%D0%BE%D0%B1%D0%BB%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D1%96-%D1%80%D0%BE%D0%B1%D0%BE%D1%82%D0%B8-tor/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/how-the-tor-network-actually-works/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/networking/</loc>
+    <lastmod>2016-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/tor/</loc>
+    <lastmod>2016-10-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/tor/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/tor/"
+                />
+  </url><url>
     <loc>https://blog.moroz.cc/post/automatic-server-backup-to-the-mega.nz-cloud/</loc>
     <lastmod>2016-10-02T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -319,9 +364,6 @@
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/cloud/"
                 />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/networking/</loc>
-    <lastmod>2016-10-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.moroz.cc/post/port-forwarding-using-an-ssh-tunnel/</loc>
     <lastmod>2016-09-26T00:00:00+00:00</lastmod>
