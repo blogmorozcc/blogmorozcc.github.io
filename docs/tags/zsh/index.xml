@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ZSH on The IT Blog</title>
+        <link>https://blog.moroz.cc/tags/zsh/</link>
+        <description>Recent content in ZSH on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Sun, 26 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/zsh/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to install and configure ZSH shell in Linux</title>
+        <link>https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/header.jpg" alt="Featured image of post How to install and configure ZSH shell in Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.zsh.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Zsh&lt;/a&gt;, or Z Shell, is a powerful and feature-rich command-line shell for Unix-like operating systems, including Linux and BSD (Berkeley Software Distribution). It is an extended version of the Bourne Shell (sh) with numerous improvements and additional features. Zsh aims to provide a more interactive and user-friendly experience for shell users.&lt;/p&gt;
+&lt;p&gt;Here are some reasons why Zsh is often considered one of the best shells for Unix/Linux/BSD systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Command Line Editing&lt;/strong&gt;: Zsh offers advanced command-line editing capabilities, allowing users to navigate and edit commands with ease. It supports features like history expansion, spelling correction, and advanced pattern matching.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Customization&lt;/strong&gt;: Zsh is highly customizable. Users can configure various aspects of the shell&amp;rsquo;s behavior, such as prompt appearance, key bindings, and completion options. The extensive configuration options make it adaptable to individual preferences and workflows.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Powerful Tab Completion&lt;/strong&gt;: Zsh provides powerful and context-aware tab completion, making it easier to navigate the file system and complete command names and arguments. It can complete not only commands but also file paths, variables, and more.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Plugins and Extensions&lt;/strong&gt;: Zsh supports plugins and extensions that enhance its functionality. Tools like Oh-My-Zsh and Prezto are popular frameworks that make it easy to manage Zsh configurations and add additional features through plugins.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Advanced Globbing&lt;/strong&gt;: Zsh supports advanced globbing patterns, which provide more flexibility and power when specifying file paths or matching patterns. This makes it easier to perform complex file operations directly from the command line.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Spelling Correction&lt;/strong&gt;: Zsh has a built-in spelling correction feature that helps users avoid typos. If you mistype a command or file path, Zsh can suggest corrections.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Interactive Features&lt;/strong&gt;: Zsh includes interactive features that improve the overall user experience, such as the ability to navigate command history easily, search through previous commands, and reuse or modify commands efficiently.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Compatibility with Bourne Shell&lt;/strong&gt;: Zsh is compatible with the Bourne Shell (sh) syntax, making it a suitable replacement for sh or Bash. Existing shell scripts are likely to work in Zsh without modification.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While Zsh offers a rich set of features, the choice of the &amp;ldquo;best&amp;rdquo; shell often depends on individual preferences and specific use cases. Other popular shells include Bash (Bourne Again SHell) and Fish (Friendly Interactive SHell), each with its own strengths and characteristics. Ultimately, the best shell is the one that aligns with your workflow and meets your specific requirements.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;h3 id=&#34;install-zsh-package&#34;&gt;Install ZSH package&lt;/h3&gt;
+&lt;p&gt;To install ZSH package in your Linux system consider using the package manager provided with your distribution. It is done differently depending on your distribution, for example:&lt;/p&gt;
+&lt;p&gt;For Arch Linux:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For Fedora, Red Hat:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dnf install zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For Debian, Ubuntu, Linux Mint, ElementaryOS:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case, I am installing it for Arch Linux, for example:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of installing ZSH on Arch Linux&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;make-zsh-your-default-shell&#34;&gt;Make ZSH your default shell&lt;/h3&gt;
+&lt;p&gt;To make the new installed ZSH the default for your user, type the command below, and enter your user password for confirmation:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chsh -s &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;which zsh&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Making ZSH the default shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After that it is recommended to reboot your system, on next reboot the ZSH shell will be used for your user. To reboot your Linux computer you can use command &lt;code&gt;sudo reboot&lt;/code&gt; or just use GUI of your desktop environment to perform reboot.&lt;/p&gt;
+&lt;h3 id=&#34;perform-the-initial-configuration&#34;&gt;Perform the initial configuration&lt;/h3&gt;
+&lt;p&gt;Once you open the terminal application after reboot zsh will prompt you to create the default configuration files. To apply the initial configuration press &amp;ldquo;0&amp;rdquo; on the keyboard.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Initial configuration of ZSH shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;install-oh-my-zsh&#34;&gt;Install Oh My ZSH&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; is an open-source framework and configuration manager for &lt;a class=&#34;link&#34; href=&#34;https://www.zsh.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Zsh&lt;/a&gt;, the Z Shell. It was created to make it easier for users to manage their Zsh configurations and enhance their command-line experience. Oh-My-Zsh provides a collection of plugins, themes, and helper functions that can be easily integrated into Zsh, allowing users to customize and extend the functionality of their shell environment.&lt;/p&gt;
+&lt;p&gt;To install ZSH the most easy way is to use installation script from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh GitHub Repository&lt;/a&gt;. It is possible to execute the installation script by downloading it, like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After script finishes, you should see &lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; installed like on screenshot below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Initial configuration of ZSH shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;modify-oh-my-zsh-theme&#34;&gt;Modify Oh My ZSH theme&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; has a plenty of pre-installed themes that are located in &lt;code&gt;~/.oh-my-zsh/themes/&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Initial configuration of ZSH shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;You can modify your &lt;code&gt;.zshrc&lt;/code&gt; file and use pre-installed theme.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And to change your theme to &lt;code&gt;agnoster&lt;/code&gt; for example, find &lt;code&gt;ZSH_THEME&lt;/code&gt; paramater and change it like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;agnoster&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;install-custom-oh-my-zsh-theme&#34;&gt;Install custom Oh My ZSH theme&lt;/h3&gt;
+&lt;p&gt;Personally for me &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Powerlevel10k&lt;/a&gt; is the most liked among the others, so in this example I will demonstrate how to install it.&lt;/p&gt;
+&lt;h4 id=&#34;install-compatible-terminal-font&#34;&gt;Install compatible terminal font&lt;/h4&gt;
+&lt;p&gt;In order for this custom theme to be able to correctly display some characters, your terminal should use a custom compatible fon Meslo LGS NF. To to this you can follow the &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k/blob/master/font.md&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;instructions from the GitHub repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The most simple way is download and 4 font files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Regular.ttf&#34; &gt;MesloLGS NF Regular.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Bold.ttf&#34; &gt;MesloLGS NF Bold.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Italic.ttf&#34; &gt;MesloLGS NF Italic.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Bold%20Italic.ttf&#34; &gt;MesloLGS NF Bold Italic.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To make them available system wide move those 4 files to &lt;code&gt;/usr/share/fonts&lt;/code&gt; folder:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Regular.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Bold.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Italic.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Bold Italic.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Finally, to flush the font cache, execute the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo fc-cache&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The last step is to change the font of your terminal. It can depend on the terminal you are using, but usually you can just modify it in the terminal graphical settings. In my case I set it up to use &lt;code&gt;Meslo LGS NF Regular 12&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings.png&#34;
+	width=&#34;1071&#34;
+	height=&#34;787&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Terminal font settings example&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;326px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;install-powerlevel10k-theme&#34;&gt;Install Powerlevel10k theme&lt;/h4&gt;
+&lt;p&gt;First download the &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Powerlevel10k&lt;/a&gt; theme to your custom themes directory, it can be done easily just with one command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;The process of cloning Powerlevel10k repository files&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then modify your &lt;code&gt;.zshrc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and set &lt;code&gt;ZSH_THEME&lt;/code&gt; parameter to be equal to &lt;code&gt;powerlevel10k/powerlevel10k&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;powerlevel10k/powerlevel10k&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Changing the theme in .zshrc&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After you saved the file, use the command below to apply the changes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;complete-powerlevel10k-configuration-wizard&#34;&gt;Complete Powerlevel10k configuration wizard&lt;/h4&gt;
+&lt;p&gt;The first time new custom Powerlevel10k is running, the Powerlevel10k theme configuration wizard will start. You can always start this wizard again by using &lt;code&gt;p10k configure&lt;/code&gt; terminal command. The wizard has several steps, just press corresponding keyboard keys to answer. I will show below how the configuration looks like in my case.&lt;/p&gt;
+&lt;h5 id=&#34;1-confirm-that-several-font-symbols-are-displayed-correctly&#34;&gt;1. Confirm that several font symbols are displayed correctly.&lt;/h5&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Diamond symbol&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Lock symbol&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Up arrow symbol&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Fit between symbols&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;I just answered yes to those questions (by pressing &amp;ldquo;y&amp;rdquo; on keyboard), because everything in terms of symbol rendering was displayed correctly.&lt;/p&gt;
+&lt;h5 id=&#34;2-setup-theme-style&#34;&gt;2. Setup theme style&lt;/h5&gt;
+&lt;p&gt;All the options in this section allow to modify the design of the theme according to your personal preferences. I will show what answers I typed into the wizard in case you want to replicate the exact theme behavior from this guide.&lt;/p&gt;
+&lt;p&gt;The prompt style setting will allow to setup the main look and feel, I answered &lt;code&gt;3&lt;/code&gt; here.
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt style&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The character set is important setting, and actually Unicode allows to display more symbols, so I highly recommend answer &lt;code&gt;1&lt;/code&gt; here.
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Character set&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This setting allows to show or hide current time in terminal. I see no practical use in this, so I answered &lt;code&gt;n&lt;/code&gt; here.
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Current time&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The next settings are all about the look and feel of the theme, you can choose whatever you personally like.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt separator&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt heads&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt tails&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt height&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt frame&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt spacing&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Icons&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt flow&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Transient prompt&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The instant prompt feature allows to reduce the loading times of the ZSH shell, so I highly recomment to enable it by answering &lt;code&gt;1&lt;/code&gt; here.
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Instant prompt&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The last step is to apply changes to &lt;code&gt;.zshrc&lt;/code&gt;, just answer &lt;code&gt;y&lt;/code&gt; here.
+&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Apply changes&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;If everything was set up right, you will see your new shell theme.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;451&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Installed p10k theme&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;539px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;enable-built-in-oh-my-zsh-plugins&#34;&gt;Enable built-in Oh My ZSH plugins&lt;/h3&gt;
+&lt;p&gt;Zsh supports plugins and extensions that enhance its functionality. Oh-My-Zsh makes it easy to manage Zsh configurations and add additional features through plugins.&lt;/p&gt;
+&lt;p&gt;To view a list of plugins that is bundeled with Oh My ZSH, you can type a command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -a ~/.oh-my-zsh/plugins/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case I have those plugins:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Plugins bundled with Oh My ZSH by default&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then you can modify your &lt;code&gt;.zshrc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and set &lt;code&gt;plugins&lt;/code&gt; parameter to load the plugins you need, in my case as an Android Developer I need &lt;code&gt;git&lt;/code&gt; and &lt;code&gt;adb&lt;/code&gt; plugins:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;git adb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Changing the plugins in .zshrc&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then apply the changes to your shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;installing-custom-plugins&#34;&gt;Installing custom plugins&lt;/h3&gt;
+&lt;p&gt;Also Oh My ZSH allows you to install and user third party plugins. For example let&amp;rsquo;s install &lt;code&gt;zsh-autosuggestions&lt;/code&gt; plugins to have some nice recommendations for input commands based on history.&lt;/p&gt;
+&lt;p&gt;Installing is very similar to installing a custom theme. First, clone the plugin into the custom plugins directory.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/zsh-users/zsh-autosuggestions &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;~/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/plugins/zsh-autosuggestions&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Cloning the zsh-autosuggestions plugin&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then you can modify your &lt;code&gt;.zshrc&lt;/code&gt; file the same way as I shown in the article section above, so in the result you will have:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;git adb zsh-autosuggestions&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then apply the changes to your shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that try to type something, and you should see some suggestion. For example I typed &amp;ldquo;neo&amp;rdquo;, and the plugin suggests to use &amp;ldquo;neofetch&amp;rdquo;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;370&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Testing the zsh-autosuggestions plugin&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;274&#34;
+		data-flex-basis=&#34;657px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;enabling-auto-updates&#34;&gt;Enabling auto updates&lt;/h3&gt;
+&lt;p&gt;Oh-My-Zsh has a built-in update mechanism to help users keep their installation up-to-date with the latest changes, enhancements, and bug fixes contributed by the community. Also it provides a way for automatic updates, but it is disabled by default.&lt;/p&gt;
+&lt;p&gt;To configure automatic updates you should set this directive in &lt;code&gt;.zshrc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;zstyle &lt;span class=&#34;s1&#34;&gt;&amp;#39;:omz:update&amp;#39;&lt;/span&gt; mode auto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;So ZSH is more feature rich shell that can make you work more efficient with extending the shell functionality with custom plugins, so it can be considered as a better alternative to bash that is the default shell in any modern Linux distribution.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

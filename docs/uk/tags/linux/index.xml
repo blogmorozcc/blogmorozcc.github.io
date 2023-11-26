@@ -6,7 +6,603 @@
         <description>Recent content in Linux on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 26 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Як встановити та налаштувати ZSH у Linux</title>
+        <link>https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/header.jpg" alt="Featured image of post Як встановити та налаштувати ZSH у Linux" /&gt;&lt;h2 id=&#34;введення&#34;&gt;Введення&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.zsh.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Zsh&lt;/a&gt;, або Z Shell, — це потужна та багатофункціональна оболонка командного рядка для Unix-подібних операційних систем, включаючи Linux і BSD (Berkeley Software Distribution). Це розширена версія Bourne Shell (sh) з численними вдосконаленнями та додатковими функціями. Zsh має на меті забезпечити більш інтерактивний і зручний досвід для користувачів оболонки.&lt;/p&gt;
+&lt;p&gt;Ось кілька причин, чому Zsh часто вважають однією з найкращих оболонок для систем Unix/Linux/BSD:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Редагування командного рядка&lt;/strong&gt;: Zsh пропонує розширені можливості редагування командного рядка, що дозволяє користувачам легко переходити та редагувати команди. Він підтримує такі функції, як розширення історії, виправлення орфографії та вдосконалене зіставлення шаблонів.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Налаштування&lt;/strong&gt;: Zsh можна налаштувати. Користувачі можуть налаштовувати різні аспекти поведінки оболонки, такі як швидкий вигляд, прив’язки клавіш і параметри завершення. Великі параметри конфігурації дозволяють адаптувати його до індивідуальних уподобань і робочих процесів.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Автодоповлення команд&lt;/strong&gt;: Zsh забезпечує Автодоповлення команд з урахуванням контексту, полегшуючи навігацію файловою системою та завершуючи імена та аргументи команд. Він може завершувати не лише команди, але й шляхи до файлів, змінні тощо.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Плагіни та розширення&lt;/strong&gt;: Zsh підтримує плагіни та розширення, які покращують його функціональність. Такі інструменти, як Oh-My-Zsh і Prezto, є популярними фреймворками, які спрощують керування конфігураціями Zsh і додають додаткові функції за допомогою плагінів.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Виправлення орфографії&lt;/strong&gt;: Zsh має вбудовану функцію виправлення орфографії, яка допомагає користувачам уникати помилок. Якщо ви неправильно введете команду або шлях до файлу, Zsh може запропонувати виправлення.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Інтерактивні функції&lt;/strong&gt;: Zsh містить інтерактивні функції, які покращують загальну взаємодію з користувачем, наприклад можливість легко переглядати історію команд, здійснювати пошук серед попередніх команд і повторно використовувати або ефективно змінювати команди.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Сумісність із оболонкою Bourne&lt;/strong&gt;: Zsh сумісний із синтаксисом оболонки Bourne (sh), що робить його відповідною заміною для sh або Bash. Існуючі сценарії оболонки, швидше за все, працюватимуть у Zsh без змін.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Хоча Zsh пропонує багатий набір функцій, вибір «найкращої» оболонки часто залежить від індивідуальних уподобань і конкретних випадків використання. Інші популярні оболонки включають Bash (Bourne Again SHell) і Fish (Friendly Interactive SHell), кожна з яких має свої сильні сторони та характеристики. Зрештою, найкраща оболонка — це та, яка узгоджується з вашим робочим процесом і відповідає вашим конкретним вимогам.&lt;/p&gt;
+&lt;h2 id=&#34;встановлення&#34;&gt;Встановлення&lt;/h2&gt;
+&lt;h3 id=&#34;встановіть-пакет-zsh&#34;&gt;Встановіть пакет ZSH&lt;/h3&gt;
+&lt;p&gt;Щоб установити пакет ZSH у вашій системі Linux, розгляньте можливість використання менеджера пакунків, який постачається з вашим дистрибутивом. Це робиться по-різному залежно від вашого дистрибутива, наприклад:&lt;/p&gt;
+&lt;p&gt;Для Arch Linux:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Для Fedora, Red Hat:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dnf install zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Для Debian, Ubuntu, Linux Mint, ElementaryOS:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;У моєму випадку я встановлюю його для Arch Linux:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/install.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Приклад встановлення ZSH на Arch Linux&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;встановлення-zsh-оболонкою-за-замовчуванням&#34;&gt;Встановлення ZSH оболонкою за замовчуванням&lt;/h3&gt;
+&lt;p&gt;Щоб зробити новий встановлений ZSH стандартним для вашого користувача, введіть команду нижче та введіть свій пароль користувача для підтвердження:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chsh -s &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;which zsh&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-default.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Встановлення ZSH оболонкою за замовчуванням&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Після цього рекомендується перезавантажити систему, при наступному перезавантаженні оболонка ZSH буде використана для вашого користувача. Щоб перезавантажити комп’ютер, ви можете скористатися командою &lt;code&gt;sudo reboot&lt;/code&gt; або просто скористатися графічним інтерфейсом робочого середовища для виконання перезавантаження.&lt;/p&gt;
+&lt;h3 id=&#34;перше-налаштування&#34;&gt;Перше налаштування&lt;/h3&gt;
+&lt;p&gt;Щойно ви відкриєте програму терміналу після перезавантаження, zsh запропонує вам створити файли конфігурації за замовчуванням. Для застосування конфігурації натисніть на клавіатурі «0».&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-initial.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Початкова конфігурація оболонки ZSH&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;встановлення-oh-my-zsh&#34;&gt;Встановлення Oh My ZSH&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; — це платформа з відкритим вихідним кодом і менеджер конфігурації для &lt;a class=&#34;link&#34; href=&#34;https://www.zsh.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Zsh&lt;/a&gt;, Z Shell. Він був створений, щоб полегшити користувачам керування конфігураціями Zsh і покращити роботу командного рядка. Oh-My-Zsh надає колекцію плагінів, тем і допоміжних функцій, які можна легко інтегрувати в Zsh, дозволяючи користувачам налаштовувати та розширювати функціональність свого середовища оболонки.&lt;/p&gt;
+&lt;p&gt;Найпростіший спосіб щоб інсталювати ZSH — скористатися сценарієм інсталяції зі &lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh GitHub Repository&lt;/a&gt;. Можна виконати інсталяційний сценарій, завантаживши його, ось так:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Після завершення скрипта ви побачите встановлену оболонку &lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt;, як на знімку екрана нижче.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-post-install.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Початкова конфігурація оболонки ZSH&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;налаштування-теми-oh-my-zsh&#34;&gt;Налаштування теми Oh My ZSH&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; має багато попередньо встановлених тем, які знаходяться в папці &lt;code&gt;~/.oh-my-zsh/themes/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-default-themes.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Початкова конфігурація оболонки ZSH&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Ви можете змінити свій файл &lt;code&gt;.zshrc&lt;/code&gt; і використовувати попередньо встановлену тему.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;А щоб змінити тему на &lt;code&gt;agnoster&lt;/code&gt;, наприклад, знайдіть параметр &lt;code&gt;ZSH_THEME&lt;/code&gt; і змініть його так:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;agnoster&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;встановлення-сторонної-теми-oh-my-zsh&#34;&gt;Встановлення сторонної теми Oh My ZSH&lt;/h3&gt;
+&lt;p&gt;Особисто мені тема &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Powerlevel10k&lt;/a&gt; найбільше подобається серед інших, тому в цьому прикладі я покажу, як її встановити.&lt;/p&gt;
+&lt;h4 id=&#34;встановлення-сумісного-шрифта-терміналу&#34;&gt;Встановлення сумісного шрифта терміналу&lt;/h4&gt;
+&lt;p&gt;Щоб тема могла правильно відображати деякі символи, ваш термінал має використовувати спеціальний сумісний фон Meslo LGS NF. Для цього ви можете виконати &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k/blob/master/font.md&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;інструкції зі сховища GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Найпростіший спосіб - завантажити 4 файли шрифтів:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Regular.ttf&#34; &gt;MesloLGS NF Regular.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Bold.ttf&#34; &gt;MesloLGS NF Bold.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Italic.ttf&#34; &gt;MesloLGS NF Italic.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Bold%20Italic.ttf&#34; &gt;MesloLGS NF Bold Italic.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Щоб зробити їх доступними для всієї системи, перемістіть ці 4 файли до папки &lt;code&gt;/usr/share/fonts&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Regular.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Bold.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Italic.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Bold Italic.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Щоб очистити кеш шрифтів, виконайте команду:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo fc-cache&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Останнім кроком є зміна шрифту вашого терміналу. Це може залежати від терміналу, який ви використовуєте, але зазвичай ви можете просто змінити його в графічних налаштуваннях терміналу. У моєму випадку я налаштував його на використання &lt;code&gt;Meslo LGS NF Regular 12&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/terminal-font-settings.png&#34;
+	width=&#34;1071&#34;
+	height=&#34;787&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Приклад налаштувань шрифту терміналу&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;326px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;встановлення-теми-powerlevel10k&#34;&gt;Встановлення теми Powerlevel10k&lt;/h4&gt;
+&lt;p&gt;Спочатку завантажте тему &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Powerlevel10k&lt;/a&gt; у свій каталог користувальницьких тем, це можна легко зробити за допомогою однієї команди:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-clone.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Процес клонування файлів репозиторію Powerlevel10k&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Потім змініть файл &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;і встановіть параметр &lt;code&gt;ZSH_THEME&lt;/code&gt; рівним &lt;code&gt;powerlevel10k/powerlevel10k&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;powerlevel10k/powerlevel10k&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zshrc-theme.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Зміна теми в .zshrc&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Після збереження файлу скористайтеся наведеною нижче командою, щоб застосувати зміни:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;перше-налаштування-powerlevel10k&#34;&gt;Перше налаштування Powerlevel10k&lt;/h4&gt;
+&lt;p&gt;Під час першого запуску нового спеціального рівня Powerlevel10k запуститься майстер налаштування теми Powerlevel10k. Ви завжди можете знову запустити цей майстер, використовуючи команду терміналу &lt;code&gt;p10k configure&lt;/code&gt;. Майстер має кілька кроків, просто натисніть відповідні клавіші на клавіатурі, щоб відповісти. Нижче я покажу, як конфігурація виглядає в моєму випадку.&lt;/p&gt;
+&lt;h5 id=&#34;1-переконайтеся-що-кілька-символів-шрифту-відображаються-правильно&#34;&gt;1. Переконайтеся, що кілька символів шрифту відображаються правильно.&lt;/h5&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard1.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Символ ромба&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard2.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Символ замка&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard3.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Символ стрілки вгору&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard4.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Відповідність між символами&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Я просто відповів «так» на ці запитання (натиснувши «y» на клавіатурі), тому що все, що стосується відтворення символів, відображалося правильно.&lt;/p&gt;
+&lt;h5 id=&#34;2-налаштуйте-стиль-теми&#34;&gt;2. Налаштуйте стиль теми&lt;/h5&gt;
+&lt;p&gt;Усі параметри в цьому розділі дозволяють змінити дизайн теми відповідно до ваших особистих уподобань. Я покажу, які відповіді я ввів у майстер, якщо ви захочете відтворити точну поведінку теми з цього посібника.&lt;/p&gt;
+&lt;p&gt;Швидке налаштування стилю дозволить налаштувати основний вигляд і відчуття, тут я відповів «3».
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard5.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Стиль запиту&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Набір символів є важливим параметром, і насправді Юнікод дозволяє відображати більше символів, тому я настійно рекомендую відповісти тут «1».
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard6.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Набір символів&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Цей параметр дозволяє показувати або приховувати поточний час у терміналі. Я не бачу в цьому жодної практичної користі, тому відповів &lt;code&gt;n&lt;/code&gt; тут.
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard7.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Поточний час&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Наступні налаштування стосуються зовнішнього вигляду теми, ви можете вибрати те, що вам подобається особисто.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard8.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Розділювач запитів&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard9.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Заголовки підказок&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard10.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Підказки&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard11.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Висота запиту&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard12.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Швидке підключення&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard13.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Рейм підказки&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard14.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Інтервал підказок&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard15.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Значки&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard16.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Підказка&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard17.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Минуща підказка&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Функція instant prompt дозволяє скоротити час завантаження оболонки ZSH, тому я настійно рекомендую ввімкнути її, відповівши тут «1».
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard18.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Instant prompt&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Останнім кроком є застосування змін до &lt;code&gt;.zshrc&lt;/code&gt;, просто дайте тут відповідь &lt;code&gt;y&lt;/code&gt;.
+&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard19.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Застосувати зміни&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Якщо все налаштовано правильно, ви побачите нову тему оболонки.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-installed.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;451&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Встановлена тема p10k&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;539px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;увімкніть-вбудовані-плагіни-oh-my-zsh&#34;&gt;Увімкніть вбудовані плагіни Oh My ZSH&lt;/h3&gt;
+&lt;p&gt;Zsh підтримує плагіни та розширення, які покращують його функціональність. Oh-My-Zsh дозволяє легко керувати конфігураціями Zsh і додавати додаткові функції за допомогою плагінів.&lt;/p&gt;
+&lt;p&gt;Щоб переглянути список плагінів, які входять до складу Oh My ZSH, ви можете ввести команду:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -a ~/.oh-my-zsh/plugins/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;У моєму випадку у мене є такі плагіни:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-bundled-plugins.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Плагіни, включені до Oh My ZSH за замовчуванням&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Потім ви можете змінити свій файл &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;і встановити параметр &lt;code&gt;plugins&lt;/code&gt; для завантаження потрібних вам плагінів, у моєму випадку (як розробника Android) мені потрібні плагіни &lt;code&gt;git&lt;/code&gt; і &lt;code&gt;adb&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;git adb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zshrc-plugins.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Зміна плагінів у .zshrc&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Потім застосуйте зміни до оболонки:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;встановлення-сторонніх-плагінів&#34;&gt;Встановлення сторонніх плагінів&lt;/h3&gt;
+&lt;p&gt;Також Oh My ZSH дозволяє встановлювати та використовувати сторонні плагіни. Наприклад, давайте встановимо плагіни &lt;code&gt;zsh-autosuggestions&lt;/code&gt;, щоб мати хороші рекомендації щодо команд введення на основі історії.&lt;/p&gt;
+&lt;p&gt;Встановлення дуже схоже на встановлення спеціальної теми. Спочатку клонуйте плагін у каталог настроюваних плагінів.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/zsh-users/zsh-autosuggestions &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;~/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/plugins/zsh-autosuggestions&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-autosuggestions-clone.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Клонування плагіна zsh-autosuggestions&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Тоді ви можете змінити свій файл &lt;code&gt;.zshrc&lt;/code&gt; так само, як я показав у розділі статті вище, тому в результаті ви матимете:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;git adb zsh-autosuggestions&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Потім застосуйте зміни до оболонки:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Після цього спробуйте щось набрати, і ви побачите пропозицію. Наприклад, я ввів &amp;ldquo;neo&amp;rdquo;, а плагін пропонує використовувати &amp;ldquo;neofetch&amp;rdquo;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-autosuggestions-works.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;370&#34;
+	srcset=&#34;https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_480x0_resize_box_3.png 480w, https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Тестування плагіна zsh-autosuggestions&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;274&#34;
+		data-flex-basis=&#34;657px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;увімкнення-автоматичних-оновлень&#34;&gt;Увімкнення автоматичних оновлень&lt;/h3&gt;
+&lt;p&gt;Oh-My-Zsh має вбудований механізм оновлення, який допомагає користувачам підтримувати інсталяцію в актуальному стані за допомогою останніх змін, удосконалень і виправлень помилок, внесених спільнотою. Він також надає можливість автоматичного оновлення, але за умовчанням його вимкнено.&lt;/p&gt;
+&lt;p&gt;Щоб налаштувати автоматичне оновлення, вам слід встановити цю директиву у файлі &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;zstyle &lt;span class=&#34;s1&#34;&gt;&amp;#39;:omz:update&amp;#39;&lt;/span&gt; mode auto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;висновки&#34;&gt;Висновки&lt;/h2&gt;
+&lt;p&gt;Таким чином, ZSH є більш багатофункціональною оболонкою, яка може зробити вашу роботу ефективнішою, розширюючи функціональність оболонки за допомогою спеціальних плагінів, тому її можна вважати кращою альтернативою bash, яка є оболонкою за замовчуванням у будь-якому сучасному дистрибутиві Linux.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</title>
         <link>https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/</link>
         <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
