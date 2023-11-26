@@ -184,18 +184,18 @@ params:
 menu:
     main: []
 
-    # social:
-    #     - identifier: github
-    #       name: GitHub
-    #       url: https://github.com/CaiJimmy/hugo-theme-stack
-    #       params:
-    #           icon: brand-github
+    social:
+        - identifier: github
+          name: GitHub
+          url: https://github.com/ShiftHackZ
+          params:
+              icon: brand-github
 
-    #     - identifier: twitter
-    #       name: Twitter
-    #       url: https://twitter.com
-    #       params:
-    #           icon: brand-twitter
+        - identifier: linkedin
+          name: LinkedIn
+          url: https://www.linkedin.com/in/moroz-dm-m
+          params:
+              icon: brand-linkedin
 
 related:
     includeNewer: true
