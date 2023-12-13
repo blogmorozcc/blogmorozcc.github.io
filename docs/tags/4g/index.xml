@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>4G on The IT Blog</title>
+        <link>https://blog.moroz.cc/tags/4g/</link>
+        <description>Recent content in 4G on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Wed, 13 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/4g/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</title>
+        <link>https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg" alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.&lt;/p&gt;
+&lt;h2 id=&#34;fcc-lock&#34;&gt;FCC Lock&lt;/h2&gt;
+&lt;h3 id=&#34;what-is-fcc-lock&#34;&gt;What is FCC Lock&lt;/h3&gt;
+&lt;p&gt;The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP. This locks prevents the WWAN module from being put online until some specific unlock procedure (usually a magic command sent to the module) is done. You can read more details about the FCC lock/unlock procedure &lt;!-- raw HTML omitted --&gt;here&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;how-os-handles-fcc-unlock&#34;&gt;How OS handles FCC Unlock&lt;/h3&gt;
+&lt;p&gt;On Windows based system FCC unlock is usually done by the driver provided by modem or laptop manufacturer. On Linux systems Modem Manager is used to operate the WWAN modem, and actually has some pre-defined scripts for certain well-known WWAN modems. In some cases manufacturer provides the FCC unlock scripts, especially when it comes to ThinkPads that are designed to be Linux-compatible in the first place. But as each modem has different way of FCC unlock procedure, the FCC unlock procedure is not enabled by default and user should manually enable FCC unlock script for the exact modem model and revision. This is the reason why LTE does not work out-of-box in Linux system, which may confuse some users.&lt;/p&gt;
+&lt;h2 id=&#34;fcc-unlock-example&#34;&gt;FCC Unlock example&lt;/h2&gt;
+&lt;p&gt;I have &lt;strong&gt;Lenovo ThinkPad X13 Gen2&lt;/strong&gt; with &lt;strong&gt;Intel CPU&lt;/strong&gt; running Arch Linux, so this example shows how to perfom FCC unlock procedure with this exact laptop and OS environment. This procedure is quite similar for other Lenovo ThinkPad series laptops, but with your equipment procedure may be slightly different, so consider investigating manufacturer website or special forums regarding your exact hardware.&lt;/p&gt;
+&lt;h3 id=&#34;detect-wwan-modem-model&#34;&gt;Detect WWAN modem model&lt;/h3&gt;
+&lt;p&gt;First of all let&amp;rsquo;s detect the exact model of LTE modem that is installed in laptop. This can be done with terminal command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lspci&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It will actually print all the PCI devices in your system and you can look for the LTE modem in the output. In my case LTE modem was the last in the output.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;682&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Getting a list of PCI devices&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;152&#34;
+		data-flex-basis=&#34;366px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;08:00.0 Unassigned class &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;ff00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Quectel Wireless Solutions Co., Ltd. EM120R-GL LTE Modem
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;install-modem-manager-package&#34;&gt;Install Modem Manager package&lt;/h3&gt;
+&lt;p&gt;Make sure you have installed &lt;code&gt;modemmanager&lt;/code&gt; package, because it&amp;rsquo;s essential requirement to have it in order for LTE connectivity to work on your Linux system.&lt;/p&gt;
+&lt;p&gt;Depending on your distribution, install command may be different.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For Arch-based systems:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S modemmanager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;For Debain-based systems:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install modemmanager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;For Fedora-based systems:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dnf install modemmanager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that enable the ModemManager.service in systemd, it can be done with command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; --now ModemManager.service&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;find-the-fcc-unlock-script&#34;&gt;Find the FCC Unlock script&lt;/h3&gt;
+&lt;p&gt;This step requires investiagting online to get the FCC Unlock script from the manufacturer. If there is no script from the manufacturer try to look on some forum pages or subreddits regarding your laptop/modem.&lt;/p&gt;
+&lt;p&gt;In my case I have &lt;strong&gt;Quectel EM120R-GL&lt;/strong&gt; WWAN modem, and luckily the FCC unlock script is bundled with Modem Manager itself. I found the location of pre-defined script on &lt;!-- raw HTML omitted --&gt;this page&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;The location of the pre-defined script for my modem is &lt;code&gt;/usr/share/ModemManager/fcc-unlock.available.d/1eac:1001&lt;/code&gt;, and to make FCC unlock performing automatically with start of the ModemManager.service it&amp;rsquo;s enough to link this script to the &lt;code&gt;/etc/ModemManager/fcc-unlock.d&lt;/code&gt;, so the command to do so look like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ln -snf /usr/share/ModemManager/fcc-unlock.available.d/1eac:1001 /etc/ModemManager/fcc-unlock.d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After this you can restart ModemManager.service:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl restart ModemManager.service&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and try to connect to your LTE network, in case it not works try rebooting your computer.&lt;/p&gt;
+&lt;h2 id=&#34;connecting-to-the-lte-network&#34;&gt;Connecting to the LTE network&lt;/h2&gt;
+&lt;p&gt;To perform connection to the LTE networks you can either use &lt;code&gt;modemmanager&lt;/code&gt; in your terminal, or use some graphical settings tools provided by NetworkManager in KDE/Gnome. You can read detailed info how to perform mobile broadband connections on this &lt;!-- raw HTML omitted --&gt;arch wiki page&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;I will show both terminal and graphical way on my system.&lt;/p&gt;
+&lt;h3 id=&#34;terminal-only-method&#34;&gt;Terminal only method&lt;/h3&gt;
+&lt;p&gt;First you need to know the index of the WWAN modem. To do this, list all the available WWAN modems using &lt;code&gt;mmcli&lt;/code&gt; like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mmcli -L&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;374&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;List of WWAN modems&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;278&#34;
+		data-flex-basis=&#34;668px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;In the output look for the string &lt;code&gt;/org/freedesktop/ModemManager1/Modem/1&lt;/code&gt;, the modem index is at the end, in my case it is &lt;code&gt;1&lt;/code&gt;. So this index should be used in all the below commands.&lt;/p&gt;
+&lt;p&gt;Next, you can try connecting to LTE network, but you need to know what settings are required for your Internet Service Provider to perform connection. In my case only &lt;code&gt;apn=internet&lt;/code&gt; is enough, so command to connect is:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mmcli -m &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; --simple-connect&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;apn=internet&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;374&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of WWAN connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;278&#34;
+		data-flex-basis=&#34;668px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;If connection successful, try browsing the internet, or just do &lt;code&gt;ping 8.8.8.8&lt;/code&gt; in terminal to ensure you are online.&lt;/p&gt;
+&lt;p&gt;After you done browsing, you can disconnect from LTE network using command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mmcli -m &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; --simple-connect&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;apn=internet&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;374&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of terminating WWAN connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;278&#34;
+		data-flex-basis=&#34;668px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;graphical-method&#34;&gt;Graphical method&lt;/h3&gt;
+&lt;p&gt;This method requires to have use desktop environment like KDE or Gnome, and have NetworkManager as the primary way of network setup in your Linux system. In this example I will show how to setup it on KDE Plasma 5.27.10.&lt;/p&gt;
+&lt;p&gt;First of all go to the &lt;strong&gt;System Settings&lt;/strong&gt; app, and open the &lt;strong&gt;Connections&lt;/strong&gt; section.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1.png&#34;
+	width=&#34;1395&#34;
+	height=&#34;874&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;KDE Plasma connection settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;159&#34;
+		data-flex-basis=&#34;383px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Press the &lt;code&gt;+&lt;/code&gt; add button, and select &lt;code&gt;Mobile Broadband&lt;/code&gt; connection type in the opened dialog.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type.png&#34;
+	width=&#34;630&#34;
+	height=&#34;754&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Network type selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;83&#34;
+		data-flex-basis=&#34;200px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;In the next dialog you can select specific modem for this connection, but as I have only one WWAN modem in my system, I will leave &lt;code&gt;Any GSM device&lt;/code&gt; selection as is.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Broadband device selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next, select your ISP provider country.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ISP selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Select your ISP provider, or you can enter the name manually if it&amp;rsquo;s not listed.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ISP selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;On this step select your tariff plan, and ensure you enter correct APN, in my case it is &amp;ldquo;internet&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;APN settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After all the information was entered, you should see success window.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Finish step&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;KDE makes it easy to connect the LTE network and monitor its&amp;rsquo; state from the tray icon. Find the profile you just created and click connect, when you are online it should display connected status like on screenshot.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray.png&#34;
+	width=&#34;445&#34;
+	height=&#34;489&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;KDE Plasma network applet LTE connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;91&#34;
+		data-flex-basis=&#34;218px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;So if you don&amp;rsquo;t have your LTE modem working out-of-box after installing Linux consider checking if it has FCC lock and look online for the unlock script. In case you have exactly the same &lt;strong&gt;Quectel EM120R&lt;/strong&gt; modem like I have, you can just use the same FCC script from example.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

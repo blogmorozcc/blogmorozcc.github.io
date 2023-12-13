@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/</loc>
-    <lastmod>2023-11-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -15,8 +15,21 @@
                 href="https://blog.moroz.cc/"
                 />
   </url><url>
+    <loc>https://blog.moroz.cc/tags/4g/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/4g/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/4g/"
+                />
+  </url><url>
     <loc>https://blog.moroz.cc/categories/</loc>
-    <lastmod>2023-11-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -26,6 +39,158 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/categories/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/fcc/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/fcc/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/fcc/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/hardware/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/hardware/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/linux/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/linux/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/lte/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/lte/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/lte/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/mmcli/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/mmcli/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/mmcli/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/modem-manager/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/modem-manager/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/modem-manager/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/networking/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/post/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/quectel/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/quectel/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/quectel/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/quectel-em120r/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/quectel-em120r/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/quectel-em120r/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/</loc>
+    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/</loc>
@@ -41,32 +206,6 @@
                 href="https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/tags/linux/</loc>
-    <lastmod>2023-11-26T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/linux/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/linux/</loc>
-    <lastmod>2023-11-26T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/linux/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/tags/oh-my-zsh/</loc>
     <lastmod>2023-11-26T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -78,19 +217,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/oh-my-zsh/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/post/</loc>
-    <lastmod>2023-11-26T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/post/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/powerlevel10k/</loc>
@@ -117,19 +243,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/shell/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/</loc>
-    <lastmod>2023-11-26T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/zsh/</loc>
@@ -309,9 +422,6 @@
                 hreflang="en"
                 href="https://blog.moroz.cc/post/how-the-tor-network-actually-works/"
                 />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/networking/</loc>
-    <lastmod>2016-10-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.moroz.cc/tags/tor/</loc>
     <lastmod>2016-10-07T00:00:00+00:00</lastmod>
