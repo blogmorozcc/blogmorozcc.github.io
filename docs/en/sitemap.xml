@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -13,6 +13,106 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/fonts/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/linux/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/linux/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/office/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/office/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/post/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/wps-office/</loc>
+    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/wps-office/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/wps-office/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/4g/</loc>
@@ -26,19 +126,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/4g/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/fcc/</loc>
@@ -71,32 +158,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/linux/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/linux/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/linux/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/linux/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/lte/</loc>
@@ -141,19 +202,6 @@
     <loc>https://blog.moroz.cc/categories/networking/</loc>
     <lastmod>2023-12-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.moroz.cc/post/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/post/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/tags/quectel/</loc>
     <lastmod>2023-12-13T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -178,19 +226,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/quectel-em120r/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/</loc>

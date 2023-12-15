@@ -6,20 +6,28 @@
         <description>Recent content in Categories on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Wed, 13 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 15 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/categories/linux/</link>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Office</title>
+        <link>https://blog.moroz.cc/categories/office/</link>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/office/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Hardware</title>
         <link>https://blog.moroz.cc/categories/hardware/</link>
         <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/categories/hardware/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/categories/linux/</link>
-        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/categories/linux/</guid>
         <description></description>
         </item>
         <item>
