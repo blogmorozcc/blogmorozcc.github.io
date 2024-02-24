@@ -11,11 +11,11 @@
 Блокування FCC Що таке блокування FCC?'>
 <meta property='og:url' content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/'>
 <meta property='og:site_name' content='Блог про IT'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Обладнання' /><meta property='article:tag' content='4G' /><meta property='article:tag' content='LTE' /><meta property='article:tag' content='Modem Manager' /><meta property='article:tag' content='mmcli' /><meta property='article:tag' content='FCC' /><meta property='article:tag' content='Quectel' /><meta property='article:tag' content='Quectel EM120R' /><meta property='article:published_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Обладнання' /><meta property='article:tag' content='4G' /><meta property='article:tag' content='LTE' /><meta property='article:tag' content='Modem Manager' /><meta property='article:tag' content='mmcli' /><meta property='article:tag' content='FCC' /><meta property='article:tag' content='Quectel' /><meta property='article:tag' content='Quectel EM120R' /><meta property='article:published_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg' />
 <meta name="twitter:title" content="Налаштування LTE модему вбудованного в ноутбук ThinkPad на Arch Linux за допомогою FCC unlock">
 <meta name="twitter:description" content="Введення Добре мати ноутбук з Wi-Fi та LTE одночасно, оскільки це фактично забезпечує зарезервований канал підключення до інтернету, що особливо актуально зараз в реаліях 2023 року під час масових перебоїв із зв&amp;rsquo;язком. Ноутбуки серії ThinkPad, як правило, мають підтримку Linux, і багато користувачів успішно використовують модем LTE на цих ноутбуках без додаткової конфігурації. Однак деякі нові моделі поєднуються з модемами Quectel LTE, які мають блокування FCC (FCC lock).
 Блокування FCC Що таке блокування FCC?"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header.jpg' />
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg' />
     </head>
     <body class="
     article-page
@@ -53,7 +53,7 @@
         
             
             <figure class="site-avatar">
-                <a href="/uk">
+                <a href="/uk/">
                 
                     
                     
@@ -242,8 +242,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg"
-                        srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg 800w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_1600x0_resize_q75_box.jpg 1600w"
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg"
+                        srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg 800w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_1600x0_resize_q75_box.jpg 1600w"
                         width="800" 
                         height="450" 
                         loading="lazy"
@@ -354,10 +354,10 @@
 <p>Перш за все, слід дізнатися точну модель модему LTE ноутбука. Це можна зробити за допомогою команди:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">lspci</span></span></code></pre></div>
 <p>Команда виведе всі PCI пристрої у системі, тож можна відшукати там модем. У моєму випадку модем LTE був останнім у списку.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/fcc-lspci.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci.png"
 	width="1041"
 	height="682"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Список PCI пристроїв"
@@ -411,10 +411,10 @@
 <h3 id="підключення-lte-через-термінал">Підключення LTE через термінал</h3>
 <p>Спочатку вам потрібно знати індекс WWAN-модема. Для цього виведіть список всіх доступних WWAN-модемів за допомогою <code>mmcli</code> так:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mmcli -L</span></span></code></pre></div>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-list.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list.png"
 	width="1041"
 	height="374"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Список WWAN-модемів"
@@ -428,10 +428,10 @@
 <p>У виводі знайдіть рядок <code>/org/freedesktop/ModemManager1/Modem/1</code>, індекс модема знаходиться в кінці, у моєму випадку це <code>1</code>. Цей індекс слід використовувати в усіх командах нижче.</p>
 <p>Далі ви можете спробувати підключитися до мережі LTE, але вам потрібно знати налаштування, які необхідні для вашого постачальника Інтернет-послуг для здійснення підключення. У моєму випадку достатньо лише <code>apn=internet</code>, отже, команда для підключення така:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mmcli -m <span class="m">1</span> --simple-connect<span class="o">=</span><span class="s2">&#34;apn=internet&#34;</span></span></span></code></pre></div>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-connect.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect.png"
 	width="1041"
 	height="374"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Приклад підключення WWAN"
@@ -445,10 +445,10 @@
 <p>Якщо підключення вдале, спробуйте переглянути Інтернет або просто виконайте <code>ping 8.8.8.8</code> в терміналі, щоб переконатися, що ви онлайн.</p>
 <p>Після завершення перегляду ви можете відключитися від мережі LTE за допомогою команди:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mmcli -m <span class="m">1</span> --simple-connect<span class="o">=</span><span class="s2">&#34;apn=internet&#34;</span></span></span></code></pre></div>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-disconnect.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect.png"
 	width="1041"
 	height="374"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Приклад завершення підключення WWAN"
@@ -462,10 +462,10 @@
 <h3 id="підключення-через-графічні-налаштування">Підключення через графічні налаштування</h3>
 <p>Цей метод передбачає використання робочого середовища, такого як KDE або Gnome, і наявність NetworkManager як основного засобу налаштування мережі у вашій системі Linux. У цьому прикладі я покажу, як це налаштувати в KDE Plasma 5.27.10.</p>
 <p>По-перше, перейдіть до програми <strong>Налаштування системи</strong> та відкрийте розділ <strong>Підключення</strong>.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-connections-1.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1.png"
 	width="1395"
 	height="874"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Налаштування з&rsquo;єднань KDE Plasma"
@@ -477,10 +477,10 @@
 	
 ></p>
 <p>Натисніть кнопку <code>+</code> для додавання та оберіть тип підключення <code>Mobile Broadband</code> у відкритому діалозі.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-net-type.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type.png"
 	width="630"
 	height="754"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Вибір типу мережі"
@@ -492,10 +492,10 @@
 	
 ></p>
 <p>У наступному діалозі ви можете обрати конкретний модем для цього підключення, але оскільки у моєї системі є лише один WWAN-модем, я залишу вибір <code>Any GSM device</code> без змін.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-broadband-device.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device.png"
 	width="630"
 	height="514"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Вибір пристрою широкосмугового доступу"
@@ -507,10 +507,10 @@
 	
 ></p>
 <p>Далі оберіть країну свого постачальника Інтернет-послуг.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-country.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country.png"
 	width="630"
 	height="514"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Вибір країни"
@@ -522,10 +522,10 @@
 	
 ></p>
 <p>Оберіть свого постачальника Інтернет-послуг, або введіть назву вручну, якщо він не вказаний у списку.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-isp.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp.png"
 	width="630"
 	height="514"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Вибір постачальника Інтернет-послуг"
@@ -537,10 +537,10 @@
 	
 ></p>
 <p>На цьому етапі оберіть свій тарифний план та переконайтеся, що ви правильно ввели APN, у моєму випадку це &ldquo;internet&rdquo;.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-apn.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn.png"
 	width="630"
 	height="514"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Налаштування APN"
@@ -552,10 +552,10 @@
 	
 ></p>
 <p>Після введення всієї інформації ви повинні побачити вікно успішного завершення.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-nm-success.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success.png"
 	width="630"
 	height="514"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Заключний етап"
@@ -567,10 +567,10 @@
 	
 ></p>
 <p>KDE спрощує підключення до мережі LTE та моніторинг її стану з іконки лотка. Знайдіть профіль, щойно створений, і натисніть &ldquo;Підключити&rdquo;. Коли ви будете онлайн, статус підключення повинен відображати &ldquo;Підключено&rdquo;, як на знімку екрану.</p>
-<p><img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-lte-tray.png"
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray.png"
 	width="445"
 	height="489"
-	srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Іконка мережі KDE Plasma з підключенням LTE"
@@ -601,7 +601,7 @@
         
             <a href="/uk/tags/modem-manager/">Modem Manager</a>
         
-            <a href="/uk/tags/mmcli/">mmcli</a>
+            <a href="/uk/tags/mmcli/">Mmcli</a>
         
             <a href="/uk/tags/fcc/">FCC</a>
         
@@ -633,7 +633,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -657,7 +657,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -677,11 +677,35 @@
             
                 
 <article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
     <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -705,7 +729,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -718,30 +742,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Як встановити та налаштувати ZSH у Linux</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/">
-        
-        
-            <div class="article-image">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції"
-                        
-                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</h2>
         </div>
     </a>
 </article>
@@ -810,7 +810,7 @@
         
             2016 - 
         
-        2023 | Блог про IT
+        2024 | Блог про IT
     </section>
     
     <section class="powerby">

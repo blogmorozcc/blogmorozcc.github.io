@@ -13,12 +13,12 @@
 Перенаправлення локального порта Розглянемо ситуацію, коли ми перебуваємо всередині локальної мережі, де доступ в інтернет блокується фаєрволлом усім, крім одного сервера, що має прямий доступ до інтернету. У нас є доступ до цього сервера SSH.'>
 <meta property='og:url' content='https://blog.moroz.cc/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/'>
 <meta property='og:site_name' content='Блог про IT'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='SSH' /><meta property='article:published_time' content='2016-09-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2016-09-26T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/header.webp' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='SSH' /><meta property='article:published_time' content='2016-09-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2016-09-26T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/port-forwarding-using-an-ssh-tunnel/header.webp' />
 <meta name="twitter:title" content="Перенаправлення портів за допомогою SSH тунелю">
 <meta name="twitter:description" content="Введення SSH Тунелі дозволяють перенаправляти певні порти на віддаленому сервері або локально. Це дуже зручно, коли нам потрібно потрапити на конкретний сервер у локальній мережі.
 Технічно є можливість перенаправляти можна як локальні, так і віддалені порти. Ми розглянемо обидва випадки.
 Перенаправлення локального порта Розглянемо ситуацію, коли ми перебуваємо всередині локальної мережі, де доступ в інтернет блокується фаєрволлом усім, крім одного сервера, що має прямий доступ до інтернету. У нас є доступ до цього сервера SSH."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/header.webp' />
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/port-forwarding-using-an-ssh-tunnel/header.webp' />
     </head>
     <body class="
     article-page
@@ -56,7 +56,7 @@
         
             
             <figure class="site-avatar">
-                <a href="/uk">
+                <a href="/uk/">
                 
                     
                     
@@ -245,8 +245,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/">
-                <img src="/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/header_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_800x0_resize_q75_h2_box_2.webp"
-                        srcset="/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/header_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_800x0_resize_q75_h2_box_2.webp 800w, /uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/header_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_1600x0_resize_q75_h2_box_2.webp 1600w"
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_800x0_resize_q75_h2_box_2.webp"
+                        srcset="/post/port-forwarding-using-an-ssh-tunnel/header_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_800x0_resize_q75_h2_box_2.webp 800w, /post/port-forwarding-using-an-ssh-tunnel/header_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_1600x0_resize_q75_h2_box_2.webp 1600w"
                         width="800" 
                         height="533" 
                         loading="lazy"
@@ -394,7 +394,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -418,7 +418,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -438,11 +438,35 @@
             
                 
 <article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
     <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -466,7 +490,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -479,30 +503,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Як встановити та налаштувати ZSH у Linux</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/">
-        
-        
-            <div class="article-image">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції"
-                        
-                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</h2>
         </div>
     </a>
 </article>
@@ -571,7 +571,7 @@
         
             2016 - 
         
-        2023 | Блог про IT
+        2024 | Блог про IT
     </section>
     
     <section class="powerby">
