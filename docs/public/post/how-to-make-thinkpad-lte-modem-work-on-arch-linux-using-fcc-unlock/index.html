@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
+FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP.'><title>How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</title>
+
+<link rel='canonical' href='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock'>
+<meta property='og:description' content='Introduction It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
+FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP.'>
+<meta property='og:url' content='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Hardware' /><meta property='article:tag' content='4G' /><meta property='article:tag' content='LTE' /><meta property='article:tag' content='Modem Manager' /><meta property='article:tag' content='mmcli' /><meta property='article:tag' content='FCC' /><meta property='article:tag' content='Quectel' /><meta property='article:tag' content='Quectel EM120R' /><meta property='article:published_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg' />
+<meta name="twitter:title" content="How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock">
+<meta name="twitter:description" content="Introduction It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
+FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">Dmitriy Moroz</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected>English</option>
+                        
+                            <option value="http://localhost:1313/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg"
+                        srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg 800w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/categories/networking/" >
+                Networking
+            </a>
+        
+            <a href="/categories/hardware/" >
+                Hardware
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">13.12.2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<p>It&rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.</p>
+<h2 id="fcc-lock">FCC Lock</h2>
+<h3 id="what-is-fcc-lock">What is FCC Lock</h3>
+<p>The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP. This locks prevents the WWAN module from being put online until some specific unlock procedure (usually a magic command sent to the module) is done. You can read more details about the FCC lock/unlock procedure <!-- raw HTML omitted -->here<!-- raw HTML omitted -->.</p>
+<h3 id="how-os-handles-fcc-unlock">How OS handles FCC Unlock</h3>
+<p>On Windows based system FCC unlock is usually done by the driver provided by modem or laptop manufacturer. On Linux systems Modem Manager is used to operate the WWAN modem, and actually has some pre-defined scripts for certain well-known WWAN modems. In some cases manufacturer provides the FCC unlock scripts, especially when it comes to ThinkPads that are designed to be Linux-compatible in the first place. But as each modem has different way of FCC unlock procedure, the FCC unlock procedure is not enabled by default and user should manually enable FCC unlock script for the exact modem model and revision. This is the reason why LTE does not work out-of-box in Linux system, which may confuse some users.</p>
+<h2 id="fcc-unlock-example">FCC Unlock example</h2>
+<p>I have <strong>Lenovo ThinkPad X13 Gen2</strong> with <strong>Intel CPU</strong> running Arch Linux, so this example shows how to perfom FCC unlock procedure with this exact laptop and OS environment. This procedure is quite similar for other Lenovo ThinkPad series laptops, but with your equipment procedure may be slightly different, so consider investigating manufacturer website or special forums regarding your exact hardware.</p>
+<h3 id="detect-wwan-modem-model">Detect WWAN modem model</h3>
+<p>First of all let&rsquo;s detect the exact model of LTE modem that is installed in laptop. This can be done with terminal command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">lspci</span></span></code></pre></div>
+<p>It will actually print all the PCI devices in your system and you can look for the LTE modem in the output. In my case LTE modem was the last in the output.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci.png"
+	width="1041"
+	height="682"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Getting a list of PCI devices"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="152"
+		data-flex-basis="366px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">08:00.0 Unassigned class <span class="o">[</span>ff00<span class="o">]</span>: Quectel Wireless Solutions Co., Ltd. EM120R-GL LTE Modem
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="install-modem-manager-package">Install Modem Manager package</h3>
+<p>Make sure you have installed <code>modemmanager</code> package, because it&rsquo;s essential requirement to have it in order for LTE connectivity to work on your Linux system.</p>
+<p>Depending on your distribution, install command may be different.</p>
+<ul>
+<li>For Arch-based systems:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo pacman -S modemmanager</span></span></code></pre></div>
+<ul>
+<li>For Debain-based systems:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt install modemmanager</span></span></code></pre></div>
+<ul>
+<li>For Fedora-based systems:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo dnf install modemmanager</span></span></code></pre></div>
+<p>After that enable the ModemManager.service in systemd, it can be done with command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> --now ModemManager.service</span></span></code></pre></div>
+<h3 id="find-the-fcc-unlock-script">Find the FCC Unlock script</h3>
+<p>This step requires investiagting online to get the FCC Unlock script from the manufacturer. If there is no script from the manufacturer try to look on some forum pages or subreddits regarding your laptop/modem.</p>
+<p>In my case I have <strong>Quectel EM120R-GL</strong> WWAN modem, and luckily the FCC unlock script is bundled with Modem Manager itself. I found the location of pre-defined script on <!-- raw HTML omitted -->this page<!-- raw HTML omitted -->.</p>
+<p>The location of the pre-defined script for my modem is <code>/usr/share/ModemManager/fcc-unlock.available.d/1eac:1001</code>, and to make FCC unlock performing automatically with start of the ModemManager.service it&rsquo;s enough to link this script to the <code>/etc/ModemManager/fcc-unlock.d</code>, so the command to do so look like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo ln -snf /usr/share/ModemManager/fcc-unlock.available.d/1eac:1001 /etc/ModemManager/fcc-unlock.d</span></span></code></pre></div>
+<p>After this you can restart ModemManager.service:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl restart ModemManager.service</span></span></code></pre></div>
+<p>and try to connect to your LTE network, in case it not works try rebooting your computer.</p>
+<h2 id="connecting-to-the-lte-network">Connecting to the LTE network</h2>
+<p>To perform connection to the LTE networks you can either use <code>modemmanager</code> in your terminal, or use some graphical settings tools provided by NetworkManager in KDE/Gnome. You can read detailed info how to perform mobile broadband connections on this <!-- raw HTML omitted -->arch wiki page<!-- raw HTML omitted -->.</p>
+<p>I will show both terminal and graphical way on my system.</p>
+<h3 id="terminal-only-method">Terminal only method</h3>
+<p>First you need to know the index of the WWAN modem. To do this, list all the available WWAN modems using <code>mmcli</code> like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mmcli -L</span></span></code></pre></div>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list.png"
+	width="1041"
+	height="374"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="List of WWAN modems"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="278"
+		data-flex-basis="668px"
+	
+></p>
+<p>In the output look for the string <code>/org/freedesktop/ModemManager1/Modem/1</code>, the modem index is at the end, in my case it is <code>1</code>. So this index should be used in all the below commands.</p>
+<p>Next, you can try connecting to LTE network, but you need to know what settings are required for your Internet Service Provider to perform connection. In my case only <code>apn=internet</code> is enough, so command to connect is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mmcli -m <span class="m">1</span> --simple-connect<span class="o">=</span><span class="s2">&#34;apn=internet&#34;</span></span></span></code></pre></div>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect.png"
+	width="1041"
+	height="374"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Example of WWAN connection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="278"
+		data-flex-basis="668px"
+	
+></p>
+<p>If connection successful, try browsing the internet, or just do <code>ping 8.8.8.8</code> in terminal to ensure you are online.</p>
+<p>After you done browsing, you can disconnect from LTE network using command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mmcli -m <span class="m">1</span> --simple-connect<span class="o">=</span><span class="s2">&#34;apn=internet&#34;</span></span></span></code></pre></div>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect.png"
+	width="1041"
+	height="374"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Example of terminating WWAN connection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="278"
+		data-flex-basis="668px"
+	
+></p>
+<h3 id="graphical-method">Graphical method</h3>
+<p>This method requires to have use desktop environment like KDE or Gnome, and have NetworkManager as the primary way of network setup in your Linux system. In this example I will show how to setup it on KDE Plasma 5.27.10.</p>
+<p>First of all go to the <strong>System Settings</strong> app, and open the <strong>Connections</strong> section.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1.png"
+	width="1395"
+	height="874"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="KDE Plasma connection settings"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="159"
+		data-flex-basis="383px"
+	
+></p>
+<p>Press the <code>+</code> add button, and select <code>Mobile Broadband</code> connection type in the opened dialog.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type.png"
+	width="630"
+	height="754"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Network type selection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="83"
+		data-flex-basis="200px"
+	
+></p>
+<p>In the next dialog you can select specific modem for this connection, but as I have only one WWAN modem in my system, I will leave <code>Any GSM device</code> selection as is.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device.png"
+	width="630"
+	height="514"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Broadband device selection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="122"
+		data-flex-basis="294px"
+	
+></p>
+<p>Next, select your ISP provider country.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country.png"
+	width="630"
+	height="514"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="ISP selection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="122"
+		data-flex-basis="294px"
+	
+></p>
+<p>Select your ISP provider, or you can enter the name manually if it&rsquo;s not listed.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp.png"
+	width="630"
+	height="514"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="ISP selection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="122"
+		data-flex-basis="294px"
+	
+></p>
+<p>On this step select your tariff plan, and ensure you enter correct APN, in my case it is &ldquo;internet&rdquo;.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn.png"
+	width="630"
+	height="514"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="APN settings"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="122"
+		data-flex-basis="294px"
+	
+></p>
+<p>After all the information was entered, you should see success window.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success.png"
+	width="630"
+	height="514"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Finish step"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="122"
+		data-flex-basis="294px"
+	
+></p>
+<p>KDE makes it easy to connect the LTE network and monitor its&rsquo; state from the tray icon. Find the profile you just created and click connect, when you are online it should display connected status like on screenshot.</p>
+<p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray.png"
+	width="445"
+	height="489"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="KDE Plasma network applet LTE connection"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="91"
+		data-flex-basis="218px"
+	
+></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>So if you don&rsquo;t have your LTE modem working out-of-box after installing Linux consider checking if it has FCC lock and look online for the unlock script. In case you have exactly the same <strong>Quectel EM120R</strong> modem like I have, you can just use the same FCC script from example.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/hardware/">Hardware</a>
+        
+            <a href="/tags/4g/">4G</a>
+        
+            <a href="/tags/lte/">LTE</a>
+        
+            <a href="/tags/modem-manager/">Modem Manager</a>
+        
+            <a href="/tags/mmcli/">Mmcli</a>
+        
+            <a href="/tags/fcc/">FCC</a>
+        
+            <a href="/tags/quectel/">Quectel</a>
+        
+            <a href="/tags/quectel-em120r/">Quectel EM120R</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/automatic-server-backup-to-the-mega.nz-cloud/">
+        
+        
+            <div class="article-image">
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Automatic server backup to the Mega.nz cloud"
+                        
+                        data-hash="md5-pJE9cbvfkTY1g5wjrDVyFg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Automatic server backup to the Mega.nz cloud</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/port-forwarding-using-an-ssh-tunnel/">
+        
+        
+            <div class="article-image">
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Port forwarding using an SSH tunnel"
+                        
+                        data-hash="md5-uhvQM97BaXSmn9UTt9VaUQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Port forwarding using an SSH tunnel</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/arch-linux-install-guide-uefi--encrypted-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Arch Linux install guide (UEFI &#43; encrypted LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/fix-missing-formula-fonts-for-wps-office-on-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Fix missing formula fonts for WPS Office on Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fix missing formula fonts for WPS Office on Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-install-and-configure-zsh-shell-in-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to install and configure ZSH shell in Linux"
+                        
+                        data-hash="md5-Gb36U4Id1tCSnKHtlEKqOg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to install and configure ZSH shell in Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | The IT Blog
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#fcc-lock">FCC Lock</a>
+      <ol>
+        <li><a href="#what-is-fcc-lock">What is FCC Lock</a></li>
+        <li><a href="#how-os-handles-fcc-unlock">How OS handles FCC Unlock</a></li>
+      </ol>
+    </li>
+    <li><a href="#fcc-unlock-example">FCC Unlock example</a>
+      <ol>
+        <li><a href="#detect-wwan-modem-model">Detect WWAN modem model</a></li>
+        <li><a href="#install-modem-manager-package">Install Modem Manager package</a></li>
+        <li><a href="#find-the-fcc-unlock-script">Find the FCC Unlock script</a></li>
+      </ol>
+    </li>
+    <li><a href="#connecting-to-the-lte-network">Connecting to the LTE network</a>
+      <ol>
+        <li><a href="#terminal-only-method">Terminal only method</a></li>
+        <li><a href="#graphical-method">Graphical method</a></li>
+      </ol>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

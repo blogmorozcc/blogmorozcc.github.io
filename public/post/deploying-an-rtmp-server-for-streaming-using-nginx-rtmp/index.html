@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Currently, there are many platforms for online video content streaming, such as YouTube, Twitch, and others. They use the RTMP protocol (Real-Time Messaging Protocol) to broadcast streaming video over the Internet. While these platforms have powerful video streaming capabilities, in some cases independence from the streaming platform and its rules makes perfect sense.
+In this article, I will provide instructions on the deployment of the RTMP service based on Nginx-RTMP, which will allow receiving an RTMP stream from the streamer&amp;rsquo;s computer, and converting it to modern HLS and DASH formats for viewing in the receiver program.'><title>Deploying an RTMP server for streaming using Nginx RTMP</title>
+
+<link rel='canonical' href='http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Deploying an RTMP server for streaming using Nginx RTMP'>
+<meta property='og:description' content='Introduction Currently, there are many platforms for online video content streaming, such as YouTube, Twitch, and others. They use the RTMP protocol (Real-Time Messaging Protocol) to broadcast streaming video over the Internet. While these platforms have powerful video streaming capabilities, in some cases independence from the streaming platform and its rules makes perfect sense.
+In this article, I will provide instructions on the deployment of the RTMP service based on Nginx-RTMP, which will allow receiving an RTMP stream from the streamer&amp;rsquo;s computer, and converting it to modern HLS and DASH formats for viewing in the receiver program.'>
+<meta property='og:url' content='http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Server' /><meta property='article:tag' content='RTMP' /><meta property='article:tag' content='Nginx' /><meta property='article:tag' content='HLS' /><meta property='article:tag' content='DASH' /><meta property='article:published_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.jpeg' />
+<meta name="twitter:title" content="Deploying an RTMP server for streaming using Nginx RTMP">
+<meta name="twitter:description" content="Introduction Currently, there are many platforms for online video content streaming, such as YouTube, Twitch, and others. They use the RTMP protocol (Real-Time Messaging Protocol) to broadcast streaming video over the Internet. While these platforms have powerful video streaming capabilities, in some cases independence from the streaming platform and its rules makes perfect sense.
+In this article, I will provide instructions on the deployment of the RTMP service based on Nginx-RTMP, which will allow receiving an RTMP stream from the streamer&amp;rsquo;s computer, and converting it to modern HLS and DASH formats for viewing in the receiver program."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.jpeg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">Dmitriy Moroz</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected>English</option>
+                        
+                            <option value="http://localhost:1313/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/">
+                <img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg"
+                        srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg 800w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_1600x0_resize_q75_box.jpeg 1600w"
+                        width="800" 
+                        height="600" 
+                        loading="lazy"
+                        alt="Featured image of post Deploying an RTMP server for streaming using Nginx RTMP" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/categories/multimedia/" >
+                Multimedia
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/">Deploying an RTMP server for streaming using Nginx RTMP</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">20.07.2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<p>Currently, there are many platforms for online video content streaming, such as YouTube, Twitch, and others. They use the RTMP protocol (Real-Time Messaging Protocol) to broadcast streaming video over the Internet. While these platforms have powerful video streaming capabilities, in some cases independence from the streaming platform and its rules makes perfect sense.</p>
+<p>In this article, I will provide instructions on the deployment of the RTMP service based on Nginx-RTMP, which will allow receiving an RTMP stream from the streamer&rsquo;s computer, and converting it to modern HLS and DASH formats for viewing in the receiver program.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>To deploy the RTMP service, you need to have:</p>
+<ul>
+<li>A clean virtual machine or physical server based on the Linux OS.</li>
+<li>A computer for streaming.</li>
+</ul>
+<p>To work outside the local network, in the global Internet:</p>
+<ul>
+<li>Dedicated IP address.</li>
+<li>Domain.</li>
+</ul>
+<p>The instructions will use a VPS based on Debian 11.</p>
+<h2 id="working-with-nginx-rtmp">Working with Nginx-RTMP</h2>
+<h3 id="installation">Installation</h3>
+<p>First of all, you need to install <code>nginx</code> and <code>libnginx-mod-rtmp</code> packages. To do this, you need to execute the following commands:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt install nginx libnginx-mod-rtmp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="set-up-rtmp-service">Set up RTMP service</h3>
+<p>Once installed, you need to configure the Nginx web server to listen on port 1935 to receive the RTMP stream. To do this, you need to edit the file <code>/etc/nginx/nginx.conf</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/nginx/nginx.conf</span></span></code></pre></div>
+<p>At the end of the file, you need to add the configuration of the RTMP server:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">rtmp <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        listen 1935<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        chunk_size 4096<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        allow publish 127.0.0.1<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        allow publish 192.168.0.0/24<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        deny publish all<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        application live <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            live on<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            record off<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            hls on<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            hls_path /var/www/html/stream/hls<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            hls_fragment 3<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            hls_playlist_length 60<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            dash on<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            dash_path /var/www/html/stream/dash<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>An explanation of the important aspects of this configuration:</p>
+<ul>
+<li><code>listen 1935</code> - specifies the port on which the RTMP server is running.</li>
+<li><code>chunk_size 4096</code> - sets the block size, 4 KB each.</li>
+<li><code>allow publish [IP / Subnet]</code> - each line specifies an IP or subnet that is allowed to send the RTMP stream to the server.</li>
+<li><code>deny publish all</code> - prohibits receiving RTMP stream from all other addresses/networks.</li>
+<li><code>application live</code> - configuration for converting RTMP to HLS and DASH formats, where <code>hls_path</code> and <code>dash_path</code> indicate paths to directories for placing playlists.</li>
+<li><code>live on</code> - allows you to receive data via a video stream.</li>
+<li><code>record off</code> - disables recording of the video stream to a file on the disk.</li>
+</ul>
+<h3 id="set-up-streaming-hls-dash">Set up streaming HLS, DASH</h3>
+<p>Next, you need to deploy a virtual host that will allow access to HLS or DASH streams via the HTTP/HTTPS protocol.</p>
+<p>First, you need to create two directories for storing video stream fragments for HLS and DASH:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mkdir -p /var/www/html/stream/hls
+</span></span><span class="line"><span class="cl">sudo mkdir -p /var/www/html/stream/dash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And also establish the owner and rights:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chown -R www-data:www-data /var/www/html/stream
+</span></span><span class="line"><span class="cl">sudo chmod -R <span class="m">755</span> /var/www/html/stream
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For the virtual host to work, you need to create a new configuration file (for example <code>rtmp</code>) in the <code>/etc/nginx/sites-available</code> directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/nginx/sites-available/rtmp</span></span></code></pre></div>
+<p>The <code>rtmp</code> host file consists of the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    listen <span class="m">443</span> ssl<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    listen 80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server_name rtmp.yourdomain.com<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ssl_certificate /etc/ssl/yourdomain.crt<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ssl_certificate_key /etc/ssl/yourdomain.key<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        add_header Access-Control-Allow-Origin *<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        root /var/www/html/stream<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">types <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    application/dash+xml mpd<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Explanation for this configuration:</p>
+<ul>
+<li>Replace <code>rtmp.yourdomain.com</code> with your domain.</li>
+<li>If you want to use SSL, also write the certificate and key files under the paths <code>/etc/ssl/yourdomain.crt</code> and <code>/etc/ssl/yourdomain.key</code>.</li>
+<li>If you don&rsquo;t want to use SSL, remove the lines starting with <code>ssl</code> and <code>listen 443 ssl</code> from the file.</li>
+</ul>
+<p>In order for all the configurations to take effect, you need to enable the virtual host and restart Nginx:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s /etc/nginx/sites-available/rtmp /etc/nginx/sites-enabled/
+</span></span><span class="line"><span class="cl">sudo service nginx restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="broadcasting-in-obs-studio">Broadcasting in OBS Studio</h2>
+<p>The best suited program for broadcasting is <a class="link" href="https://obsproject.com/uk"  target="_blank" rel="noopener"
+    >OBS Studio</a>.</p>
+<p>First of all, it is necessary to create a scene, adjust the sound, and the appearance of the broadcast.</p>
+<p>To configure streaming parameters, you need to go to Settings and select the Stream tab. The following parameters must be set there:</p>
+<ul>
+<li>Service: <strong>Custom</strong></li>
+<li>Server: <strong>rtmp://rtmp.yourdomain.com/live</strong> (instead of domain, you can specify IP, for example <em>http://11.22.33.44/live</em>)</li>
+<li>Stream Key: <strong>obs_stream</strong></li>
+</ul>
+<p>Example settings:</p>
+<p><img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings.png"
+	width="699"
+	height="544"
+	srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_480x0_resize_box_3.png 480w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Setting up OBS streaming"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="128"
+		data-flex-basis="308px"
+	
+></p>
+<p>To start a video broadcast, you need to click Start Streaming in the main window of the program:</p>
+<p><img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start.png"
+	width="502"
+	height="230"
+	srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_480x0_resize_box_3.png 480w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Start OBS streaming"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="218"
+		data-flex-basis="523px"
+	
+></p>
+<h2 id="viewing-the-broadcast">Viewing the broadcast</h2>
+<p>The broadcast can now be viewed using any application that supports the HLS and DASH protocols. The easiest way would be to watch in VLC by opening the link to the stream.</p>
+<p>To begin with, let&rsquo;s understand how a link to streams is formed in the configured service:</p>
+<ul>
+<li>HLS: <code>{protocol}://{domain}/hls/{stream key}.m3u8</code></li>
+<li>DASH: <code>{protocol}://{domain}/dash/{stream key}.mpd</code></li>
+</ul>
+<p>For example, if you deployed a service at the address <code>rtmp.yourdomain.com</code> that uses SSL, and in the OBS settings you specified the <code>obs_stream</code> key, then in this case the links will be as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://rtmp.yourdomain.com/hls/obs_stream.m3u8
+</span></span><span class="line"><span class="cl">https://rtmp.yourdomain.com/dash/obs_stream.mpd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To view in VLC, you need to press Ctrl + N, or go to the menu Media &gt; Open Network Stream, specify a link to one of the formats, and press Play.</p>
+<p><img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1.png"
+	width="521"
+	height="428"
+	srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_480x0_resize_box_3.png 480w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="VLC Network Play"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="121"
+		data-flex-basis="292px"
+	
+></p>
+<h2 id="conclusions">Conclusions</h2>
+<p>In this way, you can create your own broadcasting service, which will be independent of popular services.</p>
+<p>Advantages of such a solution:</p>
+<ul>
+<li>Privacy and full control over the infrastructure, guarantee that the flow data is not stored.</li>
+<li>You do not need to follow the rules of the service (for example, a ban on broadcasting certain content).</li>
+</ul>
+<p>But there are certain disadvantages:</p>
+<ul>
+<li>Such a solution requires certain server resources.</li>
+<li>The owner needs to spend time and money on maintaining and maintaining the security of his infrastructure.</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/server/">Server</a>
+        
+            <a href="/tags/rtmp/">RTMP</a>
+        
+            <a href="/tags/nginx/">Nginx</a>
+        
+            <a href="/tags/hls/">HLS</a>
+        
+            <a href="/tags/dash/">DASH</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/arch-linux-install-guide-uefi--encrypted-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Arch Linux install guide (UEFI &#43; encrypted LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/fix-missing-formula-fonts-for-wps-office-on-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Fix missing formula fonts for WPS Office on Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fix missing formula fonts for WPS Office on Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-install-and-configure-zsh-shell-in-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to install and configure ZSH shell in Linux"
+                        
+                        data-hash="md5-Gb36U4Id1tCSnKHtlEKqOg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to install and configure ZSH shell in Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make systemd-boot remember the last selected entry"
+                        
+                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make systemd-boot remember the last selected entry</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | The IT Blog
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#working-with-nginx-rtmp">Working with Nginx-RTMP</a>
+      <ol>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#set-up-rtmp-service">Set up RTMP service</a></li>
+        <li><a href="#set-up-streaming-hls-dash">Set up streaming HLS, DASH</a></li>
+      </ol>
+    </li>
+    <li><a href="#broadcasting-in-obs-studio">Broadcasting in OBS Studio</a></li>
+    <li><a href="#viewing-the-broadcast">Viewing the broadcast</a></li>
+    <li><a href="#conclusions">Conclusions</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

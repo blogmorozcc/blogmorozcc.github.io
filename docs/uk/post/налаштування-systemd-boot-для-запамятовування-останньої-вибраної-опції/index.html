@@ -11,11 +11,11 @@
 Зміна конфігураційного файлу Щоб налаштувати запам&amp;rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте.'>
 <meta property='og:url' content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/'>
 <meta property='og:site_name' content='Блог про IT'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Bootloader' /><meta property='article:tag' content='systemd-boot' /><meta property='article:published_time' content='2023-11-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-22T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Bootloader' /><meta property='article:tag' content='systemd-boot' /><meta property='article:published_time' content='2023-11-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-22T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.png' />
 <meta name="twitter:title" content="Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції">
 <meta name="twitter:description" content="Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&amp;rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
 Зміна конфігураційного файлу Щоб налаштувати запам&amp;rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header.png' />
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.png' />
     </head>
     <body class="
     article-page
@@ -53,7 +53,7 @@
         
             
             <figure class="site-avatar">
-                <a href="/uk">
+                <a href="/uk/">
                 
                     
                     
@@ -242,8 +242,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header_hu0e765b8aca8d9ba54a80770b06516939_1619_800x0_resize_box_3.png"
-                        srcset="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header_hu0e765b8aca8d9ba54a80770b06516939_1619_800x0_resize_box_3.png 800w, /uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header_hu0e765b8aca8d9ba54a80770b06516939_1619_1600x0_resize_box_3.png 1600w"
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu0e765b8aca8d9ba54a80770b06516939_1619_800x0_resize_box_3.png"
+                        srcset="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu0e765b8aca8d9ba54a80770b06516939_1619_800x0_resize_box_3.png 800w, /post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu0e765b8aca8d9ba54a80770b06516939_1619_1600x0_resize_box_3.png 1600w"
                         width="800" 
                         height="443" 
                         loading="lazy"
@@ -371,7 +371,7 @@
         
             <a href="/uk/tags/bootloader/">Bootloader</a>
         
-            <a href="/uk/tags/systemd-boot/">systemd-boot</a>
+            <a href="/uk/tags/systemd-boot/">Systemd-Boot</a>
         
     </section>
 
@@ -393,11 +393,35 @@
             
                 
 <article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
     <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -421,7 +445,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -445,7 +469,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -469,7 +493,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.9cb92591c6d5a62cc38b529e04dc0703_hu41968337912a42023606e3de60723367_1230034_250x150_fill_q75_box_smart1.jpeg" 
+                <img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.9cb92591c6d5a62cc38b529e04dc0703_hu41968337912a42023606e3de60723367_1230034_250x150_fill_q75_box_smart1.jpeg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -482,30 +506,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/">
-        
-        
-            <div class="article-image">
-                <img src="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Автоматичние резервне копіювання сервера в хмарне середовище Mega.nz"
-                        
-                        data-hash="md5-pJE9cbvfkTY1g5wjrDVyFg==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Автоматичние резервне копіювання сервера в хмарне середовище Mega.nz</h2>
         </div>
     </a>
 </article>
@@ -574,7 +574,7 @@
         
             2016 - 
         
-        2023 | Блог про IT
+        2024 | Блог про IT
     </section>
     
     <section class="powerby">

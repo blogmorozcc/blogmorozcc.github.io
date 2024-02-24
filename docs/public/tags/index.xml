@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tags on The IT Blog</title>
+        <link>http://localhost:1313/tags/</link>
+        <description>Recent content in Tags on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Sat, 24 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux</title>
+        <link>http://localhost:1313/tags/linux/</link>
+        <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Fonts</title>
+        <link>http://localhost:1313/tags/fonts/</link>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/fonts/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Office</title>
+        <link>http://localhost:1313/tags/office/</link>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/office/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>WPS Office</title>
+        <link>http://localhost:1313/tags/wps-office/</link>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/wps-office/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>4G</title>
+        <link>http://localhost:1313/tags/4g/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/4g/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>FCC</title>
+        <link>http://localhost:1313/tags/fcc/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/fcc/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Hardware</title>
+        <link>http://localhost:1313/tags/hardware/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/hardware/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>LTE</title>
+        <link>http://localhost:1313/tags/lte/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/lte/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Mmcli</title>
+        <link>http://localhost:1313/tags/mmcli/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/mmcli/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Modem Manager</title>
+        <link>http://localhost:1313/tags/modem-manager/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/modem-manager/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Quectel</title>
+        <link>http://localhost:1313/tags/quectel/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/quectel/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Quectel EM120R</title>
+        <link>http://localhost:1313/tags/quectel-em120r/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/quectel-em120r/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Oh My Zsh</title>
+        <link>http://localhost:1313/tags/oh-my-zsh/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/oh-my-zsh/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Powerlevel10k</title>
+        <link>http://localhost:1313/tags/powerlevel10k/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/powerlevel10k/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Shell</title>
+        <link>http://localhost:1313/tags/shell/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/shell/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ZSH</title>
+        <link>http://localhost:1313/tags/zsh/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/zsh/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Bootloader</title>
+        <link>http://localhost:1313/tags/bootloader/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/bootloader/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Systemd-Boot</title>
+        <link>http://localhost:1313/tags/systemd-boot/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/systemd-boot/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>DASH</title>
+        <link>http://localhost:1313/tags/dash/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/dash/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>HLS</title>
+        <link>http://localhost:1313/tags/hls/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/hls/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Nginx</title>
+        <link>http://localhost:1313/tags/nginx/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/nginx/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>RTMP</title>
+        <link>http://localhost:1313/tags/rtmp/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/rtmp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Server</title>
+        <link>http://localhost:1313/tags/server/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/server/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Anonimity</title>
+        <link>http://localhost:1313/tags/anonimity/</link>
+        <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/anonimity/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Dark Net</title>
+        <link>http://localhost:1313/tags/dark-net/</link>
+        <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/dark-net/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tor</title>
+        <link>http://localhost:1313/tags/tor/</link>
+        <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/tor/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Backup</title>
+        <link>http://localhost:1313/tags/backup/</link>
+        <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/backup/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Cloud</title>
+        <link>http://localhost:1313/tags/cloud/</link>
+        <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/cloud/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SSH</title>
+        <link>http://localhost:1313/tags/ssh/</link>
+        <pubDate>Mon, 26 Sep 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/ssh/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

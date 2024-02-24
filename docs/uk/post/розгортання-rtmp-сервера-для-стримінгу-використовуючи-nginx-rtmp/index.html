@@ -11,11 +11,11 @@
 У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі.'>
 <meta property='og:url' content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/'>
 <meta property='og:site_name' content='Блог про IT'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Сервер' /><meta property='article:tag' content='RTMP' /><meta property='article:tag' content='Nginx' /><meta property='article:tag' content='HLS' /><meta property='article:tag' content='DASH' /><meta property='article:published_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.jpeg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Сервер' /><meta property='article:tag' content='RTMP' /><meta property='article:tag' content='Nginx' /><meta property='article:tag' content='HLS' /><meta property='article:tag' content='DASH' /><meta property='article:published_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-20T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.jpeg' />
 <meta name="twitter:title" content="Розгортання RTMP сервера для стримінгу, використовуючи Nginx RTMP">
 <meta name="twitter:description" content="Введення Наразі існує дуже багато платформ для онлайн-стримінгу відеоконтенту, такі як YouTube, Twitch, та інші. Для трансляції потокового відео через мережу інтернет вони використовують прокотол RTMP (Real-Time Messaging Protocol). Хоча ці платформи мають потужні можливості для проведення відеотрансляцій, в деяких випадках незалежність від стримінгової платформи та її правил є цілком доцільною.
 У цій статті наведемо інструкцію з деплойменту RTMP сервіса на базі Nginx-RTMP, що дозволить приймати RTMP потік від комп&amp;rsquo;ютера стримера, та конвертувати його в сучасні формати HLS та DASH для перегляду у програмі-приймачі."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header.jpeg' />
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.jpeg' />
     </head>
     <body class="
     article-page
@@ -53,7 +53,7 @@
         
             
             <figure class="site-avatar">
-                <a href="/uk">
+                <a href="/uk/">
                 
                     
                     
@@ -242,8 +242,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/">
-                <img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg"
-                        srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg 800w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_1600x0_resize_q75_box.jpeg 1600w"
+                <img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg"
+                        srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_800x0_resize_q75_box.jpeg 800w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header_hu41968337912a42023606e3de60723367_1230034_1600x0_resize_q75_box.jpeg 1600w"
                         width="800" 
                         height="600" 
                         loading="lazy"
@@ -528,10 +528,10 @@
 <li>Stream Key: <strong>obs_stream</strong></li>
 </ul>
 <p>Приклад налаштувань:</p>
-<p><img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_settings.png"
+<p><img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings.png"
 	width="699"
 	height="544"
-	srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_480x0_resize_box_3.png 480w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_1024x0_resize_box_3.png 1024w"
+	srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_480x0_resize_box_3.png 480w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Налаштування трансляції OBS"
@@ -543,10 +543,10 @@
 	
 ></p>
 <p>Для запуску відеотрансляції, необхідно натиснути Start Streaming в головномі вікні програми:</p>
-<p><img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_start.png"
+<p><img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start.png"
 	width="502"
 	height="230"
-	srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_480x0_resize_box_3.png 480w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_1024x0_resize_box_3.png 1024w"
+	srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_480x0_resize_box_3.png 480w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Запуск трансляції OBS"
@@ -576,10 +576,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Для перегляду в VLC, потрібно натиснути Ctrl + N, або перейти в меню Media &gt; Open Network Stream, вказати посилання на один із форматів, та натиснути Play.</p>
-<p><img src="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/vlc_play_1.png"
+<p><img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1.png"
 	width="521"
 	height="428"
-	srcset="/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_480x0_resize_box_3.png 480w, /uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-rtmp-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B4%D0%BB%D1%8F-%D1%81%D1%82%D1%80%D0%B8%D0%BC%D1%96%D0%BD%D0%B3%D1%83-%D0%B2%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D1%83%D1%8E%D1%87%D0%B8-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_1024x0_resize_box_3.png 1024w"
+	srcset="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_480x0_resize_box_3.png 480w, /post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="Перегляд мережевого джерела в VLC"
@@ -642,11 +642,35 @@
             
                 
 <article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
     <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -670,7 +694,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -694,7 +718,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D1%8F%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D0%B8-%D1%82%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8-zsh-%D1%83-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -718,7 +742,7 @@
         
         
             <div class="article-image">
-                <img src="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -731,30 +755,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/">
-        
-        
-            <div class="article-image">
-                <img src="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Автоматичние резервне копіювання сервера в хмарне середовище Mega.nz"
-                        
-                        data-hash="md5-pJE9cbvfkTY1g5wjrDVyFg==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Автоматичние резервне копіювання сервера в хмарне середовище Mega.nz</h2>
         </div>
     </a>
 </article>
@@ -823,7 +823,7 @@
         
             2016 - 
         
-        2023 | Блог про IT
+        2024 | Блог про IT
     </section>
     
     <section class="powerby">
