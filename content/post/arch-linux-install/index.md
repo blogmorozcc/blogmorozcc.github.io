@@ -3,12 +3,12 @@ title = "Arch Linux install guide (UEFI + encrypted LVM)"
 date = "2024-02-24"
 tags = [
     "Linux",
-]
-categories = [
-    "Linux",
     "Arch",
     "Install",
     "Setup",
+]
+categories = [
+    "Linux",
 ]
 image = "header.png"
 +++
@@ -39,7 +39,7 @@ Run iwd:
 iwctl
 {{< / highlight >}}
 
-View a list of Wi-Fi adapters
+View a list of Wi-Fi adapters:
 
 {{< highlight shell "linenos=false" >}}
 device list
