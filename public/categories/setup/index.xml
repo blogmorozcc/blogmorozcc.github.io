@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Setup on The IT Blog</title>
+        <link>http://localhost:1313/categories/setup/</link>
+        <description>Recent content in Setup on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Sat, 24 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/setup/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Arch Linux install guide (UEFI &#43; encrypted LVM)</title>
+        <link>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</link>
+        <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</guid>
+        <description>&lt;img src="http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/header.png" alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This is my own guide for installing Arch Linux on bare metal machine with UEFI, encrypted LVM and separate /home partition.&lt;/p&gt;
+&lt;h2 id=&#34;steps&#34;&gt;Steps&lt;/h2&gt;
+&lt;p&gt;First you need to create and boot the installation media on your PC, as the result you will boot into plain console.&lt;/p&gt;
+&lt;h3 id=&#34;increase-font-size&#34;&gt;Increase font size&lt;/h3&gt;
+&lt;p&gt;As most modern laptops/PCs have large resolution displays I recommend increasing the font size:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;setfont ter-132b&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;setup-the-internet-connection&#34;&gt;Setup the internet connection&lt;/h3&gt;
+&lt;p&gt;In this example I have a laptop with Wi-Fi modem, so I&amp;rsquo;ll be using &lt;code&gt;iwd&lt;/code&gt; to setup the internet connection.&lt;/p&gt;
+&lt;p&gt;Run iwd:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;View a list of Wi-Fi adapters&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;device list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Usually you should see one Wi-Fi device in output, in my case it is &lt;code&gt;wlan0&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Then if you know the station SSID and password, simply connect to the station, and don&amp;rsquo;t forget to replace {SSID} with your actual value:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;device wlan0 connect &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;SSID&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

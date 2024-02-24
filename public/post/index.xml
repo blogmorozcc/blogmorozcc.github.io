@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on The IT Blog</title>
+        <link>http://localhost:1313/post/</link>
+        <description>Recent content in Posts on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Sat, 24 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Arch Linux install guide (UEFI &#43; encrypted LVM)</title>
+        <link>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</link>
+        <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</guid>
+        <description>&lt;img src="http://localhost:1313/header.jpg" alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This is my own guide for installing Arch Linux on bare metal machine with UEFI, encrypted LVM and separate /home partition.&lt;/p&gt;
+&lt;h2 id=&#34;steps&#34;&gt;Steps&lt;/h2&gt;
+&lt;h3 id=&#34;boot-the-installation-media&#34;&gt;Boot the installation media&lt;/h3&gt;
+</description>
+        </item>
+        <item>
+        <title>Fix missing formula fonts for WPS Office on Linux</title>
+        <link>http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/</link>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/</guid>
+        <description>&lt;img src="http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.png" alt="Featured image of post Fix missing formula fonts for WPS Office on Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Usually WPS Office offers one of the best compatibility on Linux with weird proprietary ms office document formats including document with some complex formatting and formulas. But in order for the formulas to display correctly some custom fonts required, and by default they are missing on most of the Linux system. In that case after launching the WPS Office you will see the error message saying:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Some formula symbols might not be displayed correctly due to missing fonts Symbol, Wingdings, Wingdings 2, Wingdings 3, Webdings, MT Extra.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error.png&#34;
+	width=&#34;1341&#34;
+	height=&#34;459&#34;
+	srcset=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu8e4e92b7cf4700e037c8e42b427c12f1_46916_480x0_resize_box_3.png 480w, http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu8e4e92b7cf4700e037c8e42b427c12f1_46916_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Missing formula fonts error message for WPS Office&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;292&#34;
+		data-flex-basis=&#34;701px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;fix-the-fonts-issue&#34;&gt;Fix the fonts issue&lt;/h2&gt;
+&lt;p&gt;To fix the issue you just need to download the missing and install them in your Linux system.&lt;/p&gt;
+&lt;h3 id=&#34;download-fonts-files&#34;&gt;Download fonts files&lt;/h3&gt;
+&lt;p&gt;Download needed fonts and save them in some folder. You can just click on every file below to download it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./WEBDINGS.TTF&#34; &gt;WEBDINGS.TTF&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./WINGDNG2.ttf&#34; &gt;WINGDNG2.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./WINGDNG3.ttf&#34; &gt;WINGDNG3.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./mtextra.ttf&#34; &gt;mtextra.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./symbol.ttf&#34; &gt;symbol.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./wingding.ttf&#34; &gt;wingding.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;install-downloaded-fonts&#34;&gt;Install downloaded fonts&lt;/h3&gt;
+&lt;p&gt;Create a folder that is required for formula fonts, by typing this command in the terminal:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mkdir -p /usr/share/fonts/kingsoft&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then copy downloaded files to destination folder:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp WEBDINGS.TTF /usr/share/fonts/kingsoft
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp WINGDNG2.ttf /usr/share/fonts/kingsoft
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp WINGDNG3.ttf /usr/share/fonts/kingsoft
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp mtextra.ttf /usr/share/fonts/kingsoft
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp symbol.ttf /usr/share/fonts/kingsoft
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp wingding.ttf /usr/share/fonts/kingsoft
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;And make your user the owner of the folder:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo chown -R &lt;span class=&#34;nv&#34;&gt;$USER&lt;/span&gt;:&lt;span class=&#34;nv&#34;&gt;$USER&lt;/span&gt; /usr/share/fonts/kingsoft&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;invalidate-the-font-cache&#34;&gt;Invalidate the font cache&lt;/h3&gt;
+&lt;p&gt;To invalidate your system font cache, run this command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo fc-cache -vfs&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;conclution&#34;&gt;Conclution&lt;/h2&gt;
+&lt;p&gt;After necessary fonts are installed close all the WPS office processes and try to launch it again, the error should not be shown after launch, and you should be able to use formula formatting.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula.png&#34;
+	width=&#34;1346&#34;
+	height=&#34;418&#34;
+	srcset=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hub6332841ae24cdfeb3c7bc7df7f83e7d_56315_480x0_resize_box_3.png 480w, http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hub6332841ae24cdfeb3c7bc7df7f83e7d_56315_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;WPS Office formula displaying after the fix&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;322&#34;
+		data-flex-basis=&#34;772px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</title>
+        <link>http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/</link>
+        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg" alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.&lt;/p&gt;
+&lt;h2 id=&#34;fcc-lock&#34;&gt;FCC Lock&lt;/h2&gt;
+&lt;h3 id=&#34;what-is-fcc-lock&#34;&gt;What is FCC Lock&lt;/h3&gt;
+&lt;p&gt;The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP. This locks prevents the WWAN module from being put online until some specific unlock procedure (usually a magic command sent to the module) is done. You can read more details about the FCC lock/unlock procedure &lt;!-- raw HTML omitted --&gt;here&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;how-os-handles-fcc-unlock&#34;&gt;How OS handles FCC Unlock&lt;/h3&gt;
+&lt;p&gt;On Windows based system FCC unlock is usually done by the driver provided by modem or laptop manufacturer. On Linux systems Modem Manager is used to operate the WWAN modem, and actually has some pre-defined scripts for certain well-known WWAN modems. In some cases manufacturer provides the FCC unlock scripts, especially when it comes to ThinkPads that are designed to be Linux-compatible in the first place. But as each modem has different way of FCC unlock procedure, the FCC unlock procedure is not enabled by default and user should manually enable FCC unlock script for the exact modem model and revision. This is the reason why LTE does not work out-of-box in Linux system, which may confuse some users.&lt;/p&gt;
+&lt;h2 id=&#34;fcc-unlock-example&#34;&gt;FCC Unlock example&lt;/h2&gt;
+&lt;p&gt;I have &lt;strong&gt;Lenovo ThinkPad X13 Gen2&lt;/strong&gt; with &lt;strong&gt;Intel CPU&lt;/strong&gt; running Arch Linux, so this example shows how to perfom FCC unlock procedure with this exact laptop and OS environment. This procedure is quite similar for other Lenovo ThinkPad series laptops, but with your equipment procedure may be slightly different, so consider investigating manufacturer website or special forums regarding your exact hardware.&lt;/p&gt;
+&lt;h3 id=&#34;detect-wwan-modem-model&#34;&gt;Detect WWAN modem model&lt;/h3&gt;
+&lt;p&gt;First of all let&amp;rsquo;s detect the exact model of LTE modem that is installed in laptop. This can be done with terminal command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lspci&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It will actually print all the PCI devices in your system and you can look for the LTE modem in the output. In my case LTE modem was the last in the output.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;682&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Getting a list of PCI devices&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;152&#34;
+		data-flex-basis=&#34;366px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;08:00.0 Unassigned class &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;ff00&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Quectel Wireless Solutions Co., Ltd. EM120R-GL LTE Modem
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;install-modem-manager-package&#34;&gt;Install Modem Manager package&lt;/h3&gt;
+&lt;p&gt;Make sure you have installed &lt;code&gt;modemmanager&lt;/code&gt; package, because it&amp;rsquo;s essential requirement to have it in order for LTE connectivity to work on your Linux system.&lt;/p&gt;
+&lt;p&gt;Depending on your distribution, install command may be different.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For Arch-based systems:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S modemmanager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;For Debain-based systems:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install modemmanager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;For Fedora-based systems:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dnf install modemmanager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that enable the ModemManager.service in systemd, it can be done with command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; --now ModemManager.service&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;find-the-fcc-unlock-script&#34;&gt;Find the FCC Unlock script&lt;/h3&gt;
+&lt;p&gt;This step requires investiagting online to get the FCC Unlock script from the manufacturer. If there is no script from the manufacturer try to look on some forum pages or subreddits regarding your laptop/modem.&lt;/p&gt;
+&lt;p&gt;In my case I have &lt;strong&gt;Quectel EM120R-GL&lt;/strong&gt; WWAN modem, and luckily the FCC unlock script is bundled with Modem Manager itself. I found the location of pre-defined script on &lt;!-- raw HTML omitted --&gt;this page&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;The location of the pre-defined script for my modem is &lt;code&gt;/usr/share/ModemManager/fcc-unlock.available.d/1eac:1001&lt;/code&gt;, and to make FCC unlock performing automatically with start of the ModemManager.service it&amp;rsquo;s enough to link this script to the &lt;code&gt;/etc/ModemManager/fcc-unlock.d&lt;/code&gt;, so the command to do so look like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ln -snf /usr/share/ModemManager/fcc-unlock.available.d/1eac:1001 /etc/ModemManager/fcc-unlock.d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After this you can restart ModemManager.service:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl restart ModemManager.service&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and try to connect to your LTE network, in case it not works try rebooting your computer.&lt;/p&gt;
+&lt;h2 id=&#34;connecting-to-the-lte-network&#34;&gt;Connecting to the LTE network&lt;/h2&gt;
+&lt;p&gt;To perform connection to the LTE networks you can either use &lt;code&gt;modemmanager&lt;/code&gt; in your terminal, or use some graphical settings tools provided by NetworkManager in KDE/Gnome. You can read detailed info how to perform mobile broadband connections on this &lt;!-- raw HTML omitted --&gt;arch wiki page&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;I will show both terminal and graphical way on my system.&lt;/p&gt;
+&lt;h3 id=&#34;terminal-only-method&#34;&gt;Terminal only method&lt;/h3&gt;
+&lt;p&gt;First you need to know the index of the WWAN modem. To do this, list all the available WWAN modems using &lt;code&gt;mmcli&lt;/code&gt; like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mmcli -L&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;374&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;List of WWAN modems&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;278&#34;
+		data-flex-basis=&#34;668px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;In the output look for the string &lt;code&gt;/org/freedesktop/ModemManager1/Modem/1&lt;/code&gt;, the modem index is at the end, in my case it is &lt;code&gt;1&lt;/code&gt;. So this index should be used in all the below commands.&lt;/p&gt;
+&lt;p&gt;Next, you can try connecting to LTE network, but you need to know what settings are required for your Internet Service Provider to perform connection. In my case only &lt;code&gt;apn=internet&lt;/code&gt; is enough, so command to connect is:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mmcli -m &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; --simple-connect&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;apn=internet&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;374&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of WWAN connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;278&#34;
+		data-flex-basis=&#34;668px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;If connection successful, try browsing the internet, or just do &lt;code&gt;ping 8.8.8.8&lt;/code&gt; in terminal to ensure you are online.&lt;/p&gt;
+&lt;p&gt;After you done browsing, you can disconnect from LTE network using command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mmcli -m &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; --simple-connect&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;apn=internet&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;374&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of terminating WWAN connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;278&#34;
+		data-flex-basis=&#34;668px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;graphical-method&#34;&gt;Graphical method&lt;/h3&gt;
+&lt;p&gt;This method requires to have use desktop environment like KDE or Gnome, and have NetworkManager as the primary way of network setup in your Linux system. In this example I will show how to setup it on KDE Plasma 5.27.10.&lt;/p&gt;
+&lt;p&gt;First of all go to the &lt;strong&gt;System Settings&lt;/strong&gt; app, and open the &lt;strong&gt;Connections&lt;/strong&gt; section.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1.png&#34;
+	width=&#34;1395&#34;
+	height=&#34;874&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;KDE Plasma connection settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;159&#34;
+		data-flex-basis=&#34;383px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Press the &lt;code&gt;+&lt;/code&gt; add button, and select &lt;code&gt;Mobile Broadband&lt;/code&gt; connection type in the opened dialog.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type.png&#34;
+	width=&#34;630&#34;
+	height=&#34;754&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Network type selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;83&#34;
+		data-flex-basis=&#34;200px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;In the next dialog you can select specific modem for this connection, but as I have only one WWAN modem in my system, I will leave &lt;code&gt;Any GSM device&lt;/code&gt; selection as is.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Broadband device selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next, select your ISP provider country.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ISP selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Select your ISP provider, or you can enter the name manually if it&amp;rsquo;s not listed.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ISP selection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;On this step select your tariff plan, and ensure you enter correct APN, in my case it is &amp;ldquo;internet&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;APN settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After all the information was entered, you should see success window.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success.png&#34;
+	width=&#34;630&#34;
+	height=&#34;514&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Finish step&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;122&#34;
+		data-flex-basis=&#34;294px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;KDE makes it easy to connect the LTE network and monitor its&amp;rsquo; state from the tray icon. Find the profile you just created and click connect, when you are online it should display connected status like on screenshot.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray.png&#34;
+	width=&#34;445&#34;
+	height=&#34;489&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;KDE Plasma network applet LTE connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;91&#34;
+		data-flex-basis=&#34;218px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;So if you don&amp;rsquo;t have your LTE modem working out-of-box after installing Linux consider checking if it has FCC lock and look online for the unlock script. In case you have exactly the same &lt;strong&gt;Quectel EM120R&lt;/strong&gt; modem like I have, you can just use the same FCC script from example.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>How to install and configure ZSH shell in Linux</title>
+        <link>http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/</link>
+        <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/header.jpg" alt="Featured image of post How to install and configure ZSH shell in Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.zsh.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Zsh&lt;/a&gt;, or Z Shell, is a powerful and feature-rich command-line shell for Unix-like operating systems, including Linux and BSD (Berkeley Software Distribution). It is an extended version of the Bourne Shell (sh) with numerous improvements and additional features. Zsh aims to provide a more interactive and user-friendly experience for shell users.&lt;/p&gt;
+&lt;p&gt;Here are some reasons why Zsh is often considered one of the best shells for Unix/Linux/BSD systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Command Line Editing&lt;/strong&gt;: Zsh offers advanced command-line editing capabilities, allowing users to navigate and edit commands with ease. It supports features like history expansion, spelling correction, and advanced pattern matching.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Customization&lt;/strong&gt;: Zsh is highly customizable. Users can configure various aspects of the shell&amp;rsquo;s behavior, such as prompt appearance, key bindings, and completion options. The extensive configuration options make it adaptable to individual preferences and workflows.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Powerful Tab Completion&lt;/strong&gt;: Zsh provides powerful and context-aware tab completion, making it easier to navigate the file system and complete command names and arguments. It can complete not only commands but also file paths, variables, and more.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Plugins and Extensions&lt;/strong&gt;: Zsh supports plugins and extensions that enhance its functionality. Tools like Oh-My-Zsh and Prezto are popular frameworks that make it easy to manage Zsh configurations and add additional features through plugins.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Advanced Globbing&lt;/strong&gt;: Zsh supports advanced globbing patterns, which provide more flexibility and power when specifying file paths or matching patterns. This makes it easier to perform complex file operations directly from the command line.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Spelling Correction&lt;/strong&gt;: Zsh has a built-in spelling correction feature that helps users avoid typos. If you mistype a command or file path, Zsh can suggest corrections.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Interactive Features&lt;/strong&gt;: Zsh includes interactive features that improve the overall user experience, such as the ability to navigate command history easily, search through previous commands, and reuse or modify commands efficiently.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Compatibility with Bourne Shell&lt;/strong&gt;: Zsh is compatible with the Bourne Shell (sh) syntax, making it a suitable replacement for sh or Bash. Existing shell scripts are likely to work in Zsh without modification.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While Zsh offers a rich set of features, the choice of the &amp;ldquo;best&amp;rdquo; shell often depends on individual preferences and specific use cases. Other popular shells include Bash (Bourne Again SHell) and Fish (Friendly Interactive SHell), each with its own strengths and characteristics. Ultimately, the best shell is the one that aligns with your workflow and meets your specific requirements.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;h3 id=&#34;install-zsh-package&#34;&gt;Install ZSH package&lt;/h3&gt;
+&lt;p&gt;To install ZSH package in your Linux system consider using the package manager provided with your distribution. It is done differently depending on your distribution, for example:&lt;/p&gt;
+&lt;p&gt;For Arch Linux:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For Fedora, Red Hat:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dnf install zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For Debian, Ubuntu, Linux Mint, ElementaryOS:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install zsh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case, I am installing it for Arch Linux, for example:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of installing ZSH on Arch Linux&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;make-zsh-your-default-shell&#34;&gt;Make ZSH your default shell&lt;/h3&gt;
+&lt;p&gt;To make the new installed ZSH the default for your user, type the command below, and enter your user password for confirmation:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chsh -s &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;which zsh&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Making ZSH the default shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After that it is recommended to reboot your system, on next reboot the ZSH shell will be used for your user. To reboot your Linux computer you can use command &lt;code&gt;sudo reboot&lt;/code&gt; or just use GUI of your desktop environment to perform reboot.&lt;/p&gt;
+&lt;h3 id=&#34;perform-the-initial-configuration&#34;&gt;Perform the initial configuration&lt;/h3&gt;
+&lt;p&gt;Once you open the terminal application after reboot zsh will prompt you to create the default configuration files. To apply the initial configuration press &amp;ldquo;0&amp;rdquo; on the keyboard.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Initial configuration of ZSH shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;install-oh-my-zsh&#34;&gt;Install Oh My ZSH&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; is an open-source framework and configuration manager for &lt;a class=&#34;link&#34; href=&#34;https://www.zsh.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Zsh&lt;/a&gt;, the Z Shell. It was created to make it easier for users to manage their Zsh configurations and enhance their command-line experience. Oh-My-Zsh provides a collection of plugins, themes, and helper functions that can be easily integrated into Zsh, allowing users to customize and extend the functionality of their shell environment.&lt;/p&gt;
+&lt;p&gt;To install ZSH the most easy way is to use installation script from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh GitHub Repository&lt;/a&gt;. It is possible to execute the installation script by downloading it, like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After script finishes, you should see &lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; installed like on screenshot below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Initial configuration of ZSH shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;modify-oh-my-zsh-theme&#34;&gt;Modify Oh My ZSH theme&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ohmyzsh/ohmyzsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Oh My Zsh&lt;/a&gt; has a plenty of pre-installed themes that are located in &lt;code&gt;~/.oh-my-zsh/themes/&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Initial configuration of ZSH shell&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;You can modify your &lt;code&gt;.zshrc&lt;/code&gt; file and use pre-installed theme.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And to change your theme to &lt;code&gt;agnoster&lt;/code&gt; for example, find &lt;code&gt;ZSH_THEME&lt;/code&gt; paramater and change it like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;agnoster&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;install-custom-oh-my-zsh-theme&#34;&gt;Install custom Oh My ZSH theme&lt;/h3&gt;
+&lt;p&gt;Personally for me &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Powerlevel10k&lt;/a&gt; is the most liked among the others, so in this example I will demonstrate how to install it.&lt;/p&gt;
+&lt;h4 id=&#34;install-compatible-terminal-font&#34;&gt;Install compatible terminal font&lt;/h4&gt;
+&lt;p&gt;In order for this custom theme to be able to correctly display some characters, your terminal should use a custom compatible fon Meslo LGS NF. To to this you can follow the &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k/blob/master/font.md&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;instructions from the GitHub repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The most simple way is download and 4 font files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Regular.ttf&#34; &gt;MesloLGS NF Regular.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Bold.ttf&#34; &gt;MesloLGS NF Bold.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Italic.ttf&#34; &gt;MesloLGS NF Italic.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;./MesloLGS%20NF%20Bold%20Italic.ttf&#34; &gt;MesloLGS NF Bold Italic.ttf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To make them available system wide move those 4 files to &lt;code&gt;/usr/share/fonts&lt;/code&gt; folder:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Regular.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Bold.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Italic.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv &lt;span class=&#34;s2&#34;&gt;&amp;#34;MesloLGS NF Bold Italic.ttf&amp;#34;&lt;/span&gt; /usr/share/fonts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Finally, to flush the font cache, execute the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo fc-cache&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The last step is to change the font of your terminal. It can depend on the terminal you are using, but usually you can just modify it in the terminal graphical settings. In my case I set it up to use &lt;code&gt;Meslo LGS NF Regular 12&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings.png&#34;
+	width=&#34;1071&#34;
+	height=&#34;787&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Terminal font settings example&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;326px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;install-powerlevel10k-theme&#34;&gt;Install Powerlevel10k theme&lt;/h4&gt;
+&lt;p&gt;First download the &lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Powerlevel10k&lt;/a&gt; theme to your custom themes directory, it can be done easily just with one command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;The process of cloning Powerlevel10k repository files&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then modify your &lt;code&gt;.zshrc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and set &lt;code&gt;ZSH_THEME&lt;/code&gt; parameter to be equal to &lt;code&gt;powerlevel10k/powerlevel10k&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;powerlevel10k/powerlevel10k&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Changing the theme in .zshrc&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After you saved the file, use the command below to apply the changes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;complete-powerlevel10k-configuration-wizard&#34;&gt;Complete Powerlevel10k configuration wizard&lt;/h4&gt;
+&lt;p&gt;The first time new custom Powerlevel10k is running, the Powerlevel10k theme configuration wizard will start. You can always start this wizard again by using &lt;code&gt;p10k configure&lt;/code&gt; terminal command. The wizard has several steps, just press corresponding keyboard keys to answer. I will show below how the configuration looks like in my case.&lt;/p&gt;
+&lt;h5 id=&#34;1-confirm-that-several-font-symbols-are-displayed-correctly&#34;&gt;1. Confirm that several font symbols are displayed correctly.&lt;/h5&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Diamond symbol&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Lock symbol&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Up arrow symbol&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Fit between symbols&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;I just answered yes to those questions (by pressing &amp;ldquo;y&amp;rdquo; on keyboard), because everything in terms of symbol rendering was displayed correctly.&lt;/p&gt;
+&lt;h5 id=&#34;2-setup-theme-style&#34;&gt;2. Setup theme style&lt;/h5&gt;
+&lt;p&gt;All the options in this section allow to modify the design of the theme according to your personal preferences. I will show what answers I typed into the wizard in case you want to replicate the exact theme behavior from this guide.&lt;/p&gt;
+&lt;p&gt;The prompt style setting will allow to setup the main look and feel, I answered &lt;code&gt;3&lt;/code&gt; here.
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt style&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The character set is important setting, and actually Unicode allows to display more symbols, so I highly recommend answer &lt;code&gt;1&lt;/code&gt; here.
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Character set&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This setting allows to show or hide current time in terminal. I see no practical use in this, so I answered &lt;code&gt;n&lt;/code&gt; here.
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Current time&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The next settings are all about the look and feel of the theme, you can choose whatever you personally like.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt separator&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt heads&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt tails&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt height&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt connection&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt frame&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt spacing&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Icons&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Prompt flow&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Transient prompt&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The instant prompt feature allows to reduce the loading times of the ZSH shell, so I highly recomment to enable it by answering &lt;code&gt;1&lt;/code&gt; here.
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Instant prompt&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The last step is to apply changes to &lt;code&gt;.zshrc&lt;/code&gt;, just answer &lt;code&gt;y&lt;/code&gt; here.
+&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;775&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Apply changes&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;If everything was set up right, you will see your new shell theme.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;451&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Installed p10k theme&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;539px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;enable-built-in-oh-my-zsh-plugins&#34;&gt;Enable built-in Oh My ZSH plugins&lt;/h3&gt;
+&lt;p&gt;Zsh supports plugins and extensions that enhance its functionality. Oh-My-Zsh makes it easy to manage Zsh configurations and add additional features through plugins.&lt;/p&gt;
+&lt;p&gt;To view a list of plugins that is bundeled with Oh My ZSH, you can type a command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -a ~/.oh-my-zsh/plugins/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case I have those plugins:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Plugins bundled with Oh My ZSH by default&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then you can modify your &lt;code&gt;.zshrc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and set &lt;code&gt;plugins&lt;/code&gt; parameter to load the plugins you need, in my case as an Android Developer I need &lt;code&gt;git&lt;/code&gt; and &lt;code&gt;adb&lt;/code&gt; plugins:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;git adb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Changing the plugins in .zshrc&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then apply the changes to your shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;installing-custom-plugins&#34;&gt;Installing custom plugins&lt;/h3&gt;
+&lt;p&gt;Also Oh My ZSH allows you to install and user third party plugins. For example let&amp;rsquo;s install &lt;code&gt;zsh-autosuggestions&lt;/code&gt; plugins to have some nice recommendations for input commands based on history.&lt;/p&gt;
+&lt;p&gt;Installing is very similar to installing a custom theme. First, clone the plugin into the custom plugins directory.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/zsh-users/zsh-autosuggestions &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;~/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/plugins/zsh-autosuggestions&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;725&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Cloning the zsh-autosuggestions plugin&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;335px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then you can modify your &lt;code&gt;.zshrc&lt;/code&gt; file the same way as I shown in the article section above, so in the result you will have:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;git adb zsh-autosuggestions&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then apply the changes to your shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that try to type something, and you should see some suggestion. For example I typed &amp;ldquo;neo&amp;rdquo;, and the plugin suggests to use &amp;ldquo;neofetch&amp;rdquo;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works.png&#34;
+	width=&#34;1014&#34;
+	height=&#34;370&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Testing the zsh-autosuggestions plugin&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;274&#34;
+		data-flex-basis=&#34;657px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;enabling-auto-updates&#34;&gt;Enabling auto updates&lt;/h3&gt;
+&lt;p&gt;Oh-My-Zsh has a built-in update mechanism to help users keep their installation up-to-date with the latest changes, enhancements, and bug fixes contributed by the community. Also it provides a way for automatic updates, but it is disabled by default.&lt;/p&gt;
+&lt;p&gt;To configure automatic updates you should set this directive in &lt;code&gt;.zshrc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;zstyle &lt;span class=&#34;s1&#34;&gt;&amp;#39;:omz:update&amp;#39;&lt;/span&gt; mode auto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;So ZSH is more feature rich shell that can make you work more efficient with extending the shell functionality with custom plugins, so it can be considered as a better alternative to bash that is the default shell in any modern Linux distribution.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>How to make systemd-boot remember the last selected entry</title>
+        <link>http://localhost:1313/post/how-to-make-systemd-boot-remember-the-last-selected-entry/</link>
+        <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/how-to-make-systemd-boot-remember-the-last-selected-entry/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.png" alt="Featured image of post How to make systemd-boot remember the last selected entry" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;When using systemd-boot as your bootloader, you may find it convenient to have the system remember the last selected entry on each subsequent boot. This is especially useful for users who frequently switch between different operating systems or kernels. By configuring systemd-boot to remember the last chosen boot entry, you can streamline the boot process and avoid having to manually select the desired option every time the system restarts.&lt;/p&gt;
+&lt;h2 id=&#34;modifying-the-configuration-file&#34;&gt;Modifying the Configuration File&lt;/h2&gt;
+&lt;p&gt;To achieve this functionality, you need to modify the loader.conf configuration file. The exact location of this file can vary depending on the Linux distribution you are using.&lt;/p&gt;
+&lt;p&gt;Personally, I have used several Linux distributions, and the path for &lt;code&gt;loader.conf&lt;/code&gt; was different in each of them, for example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For &lt;strong&gt;Ubuntu&lt;/strong&gt; it was &lt;code&gt;/boot/efi/loader/loader.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For &lt;strong&gt;Arch Linux&lt;/strong&gt; it was &lt;code&gt;/boot/loader/loader.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For &lt;strong&gt;EndeavourOS&lt;/strong&gt; it was &lt;code&gt;/efi/loader/loader.conf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To modify the file open the Terminal and follow this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the &lt;code&gt;loader.conf&lt;/code&gt; file for editing, for example:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /boot/loader/loader.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Modify the &lt;code&gt;default&lt;/code&gt; parameter like below:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;default @saved&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Save the file (In nano, this is done with the keyboard shortcut `Ctrl + O&amp;rsquo;).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;At the next boot, after you will select some entry it will be remembered as the default.&lt;/p&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;By configuring systemd-boot to remember the last selected entry, you can streamline your boot process and enhance the overall user experience. Whether you&amp;rsquo;re using Arch Linux, Ubuntu, or another distribution that employs systemd-boot, this simple modification can save you time and make your system startup more efficient.&lt;/p&gt;
+&lt;p&gt;Remember to adapt the file paths and commands based on the specifics of your distribution. With this configuration in place, your system will automatically boot into the last chosen entry, reducing the need for manual intervention during the boot process.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Deploying an RTMP server for streaming using Nginx RTMP</title>
+        <link>http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/</link>
+        <pubDate>Wed, 20 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/</guid>
+        <description>&lt;img src="http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.jpeg" alt="Featured image of post Deploying an RTMP server for streaming using Nginx RTMP" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Currently, there are many platforms for online video content streaming, such as YouTube, Twitch, and others. They use the RTMP protocol (Real-Time Messaging Protocol) to broadcast streaming video over the Internet. While these platforms have powerful video streaming capabilities, in some cases independence from the streaming platform and its rules makes perfect sense.&lt;/p&gt;
+&lt;p&gt;In this article, I will provide instructions on the deployment of the RTMP service based on Nginx-RTMP, which will allow receiving an RTMP stream from the streamer&amp;rsquo;s computer, and converting it to modern HLS and DASH formats for viewing in the receiver program.&lt;/p&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;To deploy the RTMP service, you need to have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A clean virtual machine or physical server based on the Linux OS.&lt;/li&gt;
+&lt;li&gt;A computer for streaming.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To work outside the local network, in the global Internet:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dedicated IP address.&lt;/li&gt;
+&lt;li&gt;Domain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The instructions will use a VPS based on Debian 11.&lt;/p&gt;
+&lt;h2 id=&#34;working-with-nginx-rtmp&#34;&gt;Working with Nginx-RTMP&lt;/h2&gt;
+&lt;h3 id=&#34;installation&#34;&gt;Installation&lt;/h3&gt;
+&lt;p&gt;First of all, you need to install &lt;code&gt;nginx&lt;/code&gt; and &lt;code&gt;libnginx-mod-rtmp&lt;/code&gt; packages. To do this, you need to execute the following commands:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install nginx libnginx-mod-rtmp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;set-up-rtmp-service&#34;&gt;Set up RTMP service&lt;/h3&gt;
+&lt;p&gt;Once installed, you need to configure the Nginx web server to listen on port 1935 to receive the RTMP stream. To do this, you need to edit the file &lt;code&gt;/etc/nginx/nginx.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/nginx/nginx.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;At the end of the file, you need to add the configuration of the RTMP server:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rtmp &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    server &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        listen 1935&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        chunk_size 4096&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        allow publish 127.0.0.1&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        allow publish 192.168.0.0/24&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        deny publish all&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        application live &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            live on&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            record off&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            hls on&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            hls_path /var/www/html/stream/hls&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            hls_fragment 3&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            hls_playlist_length 60&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            dash on&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            dash_path /var/www/html/stream/dash&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;An explanation of the important aspects of this configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;listen 1935&lt;/code&gt; - specifies the port on which the RTMP server is running.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chunk_size 4096&lt;/code&gt; - sets the block size, 4 KB each.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;allow publish [IP / Subnet]&lt;/code&gt; - each line specifies an IP or subnet that is allowed to send the RTMP stream to the server.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;deny publish all&lt;/code&gt; - prohibits receiving RTMP stream from all other addresses/networks.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;application live&lt;/code&gt; - configuration for converting RTMP to HLS and DASH formats, where &lt;code&gt;hls_path&lt;/code&gt; and &lt;code&gt;dash_path&lt;/code&gt; indicate paths to directories for placing playlists.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;live on&lt;/code&gt; - allows you to receive data via a video stream.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;record off&lt;/code&gt; - disables recording of the video stream to a file on the disk.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;set-up-streaming-hls-dash&#34;&gt;Set up streaming HLS, DASH&lt;/h3&gt;
+&lt;p&gt;Next, you need to deploy a virtual host that will allow access to HLS or DASH streams via the HTTP/HTTPS protocol.&lt;/p&gt;
+&lt;p&gt;First, you need to create two directories for storing video stream fragments for HLS and DASH:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mkdir -p /var/www/html/stream/hls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mkdir -p /var/www/html/stream/dash
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;And also establish the owner and rights:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo chown -R www-data:www-data /var/www/html/stream
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo chmod -R &lt;span class=&#34;m&#34;&gt;755&lt;/span&gt; /var/www/html/stream
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;For the virtual host to work, you need to create a new configuration file (for example &lt;code&gt;rtmp&lt;/code&gt;) in the &lt;code&gt;/etc/nginx/sites-available&lt;/code&gt; directory:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/nginx/sites-available/rtmp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;rtmp&lt;/code&gt; host file consists of the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;server &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    listen &lt;span class=&#34;m&#34;&gt;443&lt;/span&gt; ssl&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    listen 80&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    server_name rtmp.yourdomain.com&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ssl_certificate /etc/ssl/yourdomain.crt&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ssl_certificate_key /etc/ssl/yourdomain.key&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    location / &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        add_header Access-Control-Allow-Origin *&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        root /var/www/html/stream&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;types &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    application/dash+xml mpd&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Explanation for this configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Replace &lt;code&gt;rtmp.yourdomain.com&lt;/code&gt; with your domain.&lt;/li&gt;
+&lt;li&gt;If you want to use SSL, also write the certificate and key files under the paths &lt;code&gt;/etc/ssl/yourdomain.crt&lt;/code&gt; and &lt;code&gt;/etc/ssl/yourdomain.key&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If you don&amp;rsquo;t want to use SSL, remove the lines starting with &lt;code&gt;ssl&lt;/code&gt; and &lt;code&gt;listen 443 ssl&lt;/code&gt; from the file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In order for all the configurations to take effect, you need to enable the virtual host and restart Nginx:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ln -s /etc/nginx/sites-available/rtmp /etc/nginx/sites-enabled/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo service nginx restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;broadcasting-in-obs-studio&#34;&gt;Broadcasting in OBS Studio&lt;/h2&gt;
+&lt;p&gt;The best suited program for broadcasting is &lt;a class=&#34;link&#34; href=&#34;https://obsproject.com/uk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OBS Studio&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;First of all, it is necessary to create a scene, adjust the sound, and the appearance of the broadcast.&lt;/p&gt;
+&lt;p&gt;To configure streaming parameters, you need to go to Settings and select the Stream tab. The following parameters must be set there:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Service: &lt;strong&gt;Custom&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Server: &lt;strong&gt;rtmp://rtmp.yourdomain.com/live&lt;/strong&gt; (instead of domain, you can specify IP, for example &lt;em&gt;http://11.22.33.44/live&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Stream Key: &lt;strong&gt;obs_stream&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example settings:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings.png&#34;
+	width=&#34;699&#34;
+	height=&#34;544&#34;
+	srcset=&#34;http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_480x0_resize_box_3.png 480w, http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Setting up OBS streaming&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;128&#34;
+		data-flex-basis=&#34;308px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;To start a video broadcast, you need to click Start Streaming in the main window of the program:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start.png&#34;
+	width=&#34;502&#34;
+	height=&#34;230&#34;
+	srcset=&#34;http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_480x0_resize_box_3.png 480w, http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Start OBS streaming&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;218&#34;
+		data-flex-basis=&#34;523px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;viewing-the-broadcast&#34;&gt;Viewing the broadcast&lt;/h2&gt;
+&lt;p&gt;The broadcast can now be viewed using any application that supports the HLS and DASH protocols. The easiest way would be to watch in VLC by opening the link to the stream.&lt;/p&gt;
+&lt;p&gt;To begin with, let&amp;rsquo;s understand how a link to streams is formed in the configured service:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HLS: &lt;code&gt;{protocol}://{domain}/hls/{stream key}.m3u8&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;DASH: &lt;code&gt;{protocol}://{domain}/dash/{stream key}.mpd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, if you deployed a service at the address &lt;code&gt;rtmp.yourdomain.com&lt;/code&gt; that uses SSL, and in the OBS settings you specified the &lt;code&gt;obs_stream&lt;/code&gt; key, then in this case the links will be as follows:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://rtmp.yourdomain.com/hls/obs_stream.m3u8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://rtmp.yourdomain.com/dash/obs_stream.mpd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To view in VLC, you need to press Ctrl + N, or go to the menu Media &amp;gt; Open Network Stream, specify a link to one of the formats, and press Play.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1.png&#34;
+	width=&#34;521&#34;
+	height=&#34;428&#34;
+	srcset=&#34;http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_480x0_resize_box_3.png 480w, http://localhost:1313/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;VLC Network Play&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;121&#34;
+		data-flex-basis=&#34;292px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;In this way, you can create your own broadcasting service, which will be independent of popular services.&lt;/p&gt;
+&lt;p&gt;Advantages of such a solution:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Privacy and full control over the infrastructure, guarantee that the flow data is not stored.&lt;/li&gt;
+&lt;li&gt;You do not need to follow the rules of the service (for example, a ban on broadcasting certain content).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But there are certain disadvantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Such a solution requires certain server resources.&lt;/li&gt;
+&lt;li&gt;The owner needs to spend time and money on maintaining and maintaining the security of his infrastructure.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>How the Tor network actually works</title>
+        <link>http://localhost:1313/post/how-the-tor-network-actually-works/</link>
+        <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/how-the-tor-network-actually-works/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-the-tor-network-actually-works/header.jpg" alt="Featured image of post How the Tor network actually works" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Tor is an open source software complex that connects certain computers around the world into a system of proxy servers, the connections between which are made according to the bulb routing scheme. This allows users of this network to establish an anonymous connection that is protected from eavesdropping.&lt;/p&gt;
+&lt;p&gt;The main purpose of the Tor network today is to provide anonymity for Internet users, allowing you to hide your identity while browsing sites from ISPs, site owners, advertising robots, automated traffic analysis systems, etc. This is achieved due to a large distributed system of servers - nodes, traffic between which is routed at the network level according to the OSI model.&lt;/p&gt;
+&lt;h2 id=&#34;roles-of-tor-network-subjects&#34;&gt;Roles of Tor network subjects&lt;/h2&gt;
+&lt;p&gt;Knowing that the network consists of server-nodes connected to the bulb network, let&amp;rsquo;s consider which nodes are in the Tor network:&lt;/p&gt;
+&lt;h3 id=&#34;entry-node-entry-node&#34;&gt;Entry Node (Entry Node)&lt;/h3&gt;
+&lt;p&gt;The input node is the first link in the connection chain. It initiates the establishment of a secure connection by accepting packets from a Tor user, encrypts them, and forwards them to the next node. Note that interception of data between the user and the input node is impossible, since each block is encrypted with a session key using hybrid encryption.&lt;/p&gt;
+&lt;h3 id=&#34;middle-node&#34;&gt;Middle Node&lt;/h3&gt;
+&lt;p&gt;The task of these nodes is reduced only to receiving data from the previous node, encrypting it and transmitting it to the next one. From such a site, it is impossible to go outside the Tor network to the Internet. From such a node, you can only get to the site of the intranet domain .onion, no more. But these nodes are very important to keep the network functioning: the more intermediaries in the chain, the higher the anonymity, and the probability of your connection being compromised decreases. In addition, it is impossible to establish through which intermediary nodes your chain passes, since the IP addresses of such nodes are not recorded in the log file.&lt;/p&gt;
+&lt;h3 id=&#34;exit-node&#34;&gt;Exit Node&lt;/h3&gt;
+&lt;p&gt;This is the last node in the Tor chain. It decodes the packets transmitted by the user along the entire chain and transmits the data to the requested remote server on the Internet. A connection from the IP address of the source node will be registered on the requested server. These types of nodes are the weakest point of the Tor network, as there are ways to intercept user data between the origin node and the remote server. Also, a volunteer who has launched an Exit Node exposes himself to the risk of problems, since it is his IP that is fixed by Internet resources.&lt;/p&gt;
+&lt;h3 id=&#34;bridge-relay&#34;&gt;Bridge Relay&lt;/h3&gt;
+&lt;p&gt;These are repeaters whose addresses are publicly available. They are used to initiate connections in places where Tor root server addresses are blocked. You can get the address of the bridge node by accepting an e-mail from TheTorProject with a special request. Thus, even a total blocking of all publicly known addresses of Tor network nodes will not give any result, since it will not affect the availability of classified relays.&lt;/p&gt;
+&lt;h3 id=&#34;exit-enclave&#34;&gt;Exit Enclave&lt;/h3&gt;
+&lt;p&gt;A relay used by site owners to create a mirror of their resource on the Tor network. This will allow users of some countries to bypass blocking, and the rest to maintain anonymity, protecting themselves again from interception of traffic from the source node.&lt;/p&gt;
+&lt;p&gt;What the chain between the user and the final Internet resource looks like is shown in the diagram below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-the-tor-network-actually-works/scheme.png&#34;
+	width=&#34;2048&#34;
+	height=&#34;968&#34;
+	srcset=&#34;http://localhost:1313/post/how-the-tor-network-actually-works/scheme_hu62fd71bd449996ae9b2b7329843b6925_210272_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-the-tor-network-actually-works/scheme_hu62fd71bd449996ae9b2b7329843b6925_210272_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Principle diagram of the network of Tor nodes&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;211&#34;
+		data-flex-basis=&#34;507px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;features-of-tor&#34;&gt;Features of Tor&lt;/h2&gt;
+&lt;p&gt;Also, Tor, since 2004, can provide anonymity for servers as well. Each network user can host any service, the so-called .onion internal domain, which consists of a random set of characters. Such a service will be available only from the Tor network, and neither users will be able to find out about the public IP of the hidden site, nor the site administrator will be able to know who its visitors are. Only the fact of visiting the site and the specific directory visited by the user will be available in the server logs.&lt;/p&gt;
+&lt;p&gt;But you need to be careful when using Tor, because it has the following features that should be kept in mind when using Tor:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The input node knows the user&amp;rsquo;s IP address;&lt;/li&gt;
+&lt;li&gt;The message is fully decoded at the source node, but the sender is unknown;&lt;/li&gt;
+&lt;li&gt;On the requested remote server, some technical data about the sender is transmitted along with the package, although the sender is essentially unknown;&lt;/li&gt;
+&lt;li&gt;Packets with your message may pass through nodes that were launched by attackers in order to steal your data;&lt;/li&gt;
+&lt;li&gt;The Internet resource can obtain data about the user&amp;rsquo;s PC configuration and OS version, as well as his IP address by executing JavaScript, Flash, ActiveX scripts on the page;&lt;/li&gt;
+&lt;li&gt;On the way from the source node to the final server, data can be changed due to a Man-In-The-Middle attack, so if, for example, you download a file through Tor, always check its hash sums;&lt;/li&gt;
+&lt;li&gt;The owner of the source node can steal your session, cookies, and even logins and passwords by intercepting data using SSL Strip;&lt;/li&gt;
+&lt;li&gt;Since the IP addresses of the outgoing nodes are publicly available, some Internet providers and sites block them (for example, Google, VK);&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;We can conclude that the Tor network has great value for those who are subject to mass surveillance, for those who value freedom on the Internet, for those who do not want to put up with large-scale senseless blocking, for those who want at least a small island of anonymity .&lt;/p&gt;
+&lt;p&gt;Be careful on the internet, because it&amp;rsquo;s possible that right now, as you read this, someone is watching your traffic 😱.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Automatic server backup to the Mega.nz cloud</title>
+        <link>http://localhost:1313/post/automatic-server-backup-to-the-mega.nz-cloud/</link>
+        <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/automatic-server-backup-to-the-mega.nz-cloud/</guid>
+        <description>&lt;img src="http://localhost:1313/post/automatic-server-backup-to-the-mega.nz-cloud/header.jpg" alt="Featured image of post Automatic server backup to the Mega.nz cloud" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Mega.nz is one of the most affordable cloud storage in terms of volume, because it provides its new users with 50Gb of cloud disk space absolutely free. There are also paid plans that allow you to expand the cloud up to 4 terabytes. But even 50Gb is quite enough for backup copies of sites and MySQL databases. Also, there is a set of megatools console utilities for downloading and uploading files to a remote cloud.&lt;/p&gt;
+&lt;h2 id=&#34;solution-setup&#34;&gt;Solution setup&lt;/h2&gt;
+&lt;h3 id=&#34;installing-megatools&#34;&gt;Installing megatools&lt;/h3&gt;
+&lt;p&gt;First, register and activate your mega.nz account if you don&amp;rsquo;t already have one.&lt;/p&gt;
+&lt;p&gt;Next, you need to connect to the server via SSH, and install the necessary packages for assembling megatools:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get -y install build-essential libglib2.0-dev libssl-dev libcurl4-openssl-dev libgirepository1.0-dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that, you should find a link to download megatools on the official website, which we then use to download with the wget command.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /opt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://megatools.megous.com/builds/megatools-1.9.97.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tar -xvzf megatools-1.9.97.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After we have downloaded and unzipped the source code, we need to compile it. This can be done using the following sequence of commands:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; megatools-1.9.97
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./configure
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;make
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;make install
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If everything was compiled and installed without errors, you can proceed to the next stage, namely writing a script for creating and uploading backups to the cloud.&lt;/p&gt;
+&lt;h3 id=&#34;creating-a-backup-script&#34;&gt;Creating a backup script&lt;/h3&gt;
+&lt;p&gt;First, we create a file with data for logging into the account:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ~
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano .megarc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The file should be filled as follows:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Login&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;Username&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;Your login&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;Password&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;Your password&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;As our login data is stored unencrypted, let&amp;rsquo;s make it available only to root.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod &lt;span class=&#34;m&#34;&gt;640&lt;/span&gt; .megarc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now let&amp;rsquo;s check the correctness of entering the login and password, for this we enter the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;megals&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If all settings are correct, it should display a list of files. If the command did not display a list of files, then we check the correctness of entering the password, if it did, then we proceed to the next step of creating a backup script. In this case, the scripts are stored in the /opt/scripts directory with modified permissions.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano /opt/scripts/do_backup.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The script looks like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;server&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;DAYS_TO_BACKUP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/root/tmp_dir&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;BACKUP_MYSQL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_USER&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;{Your MySQL user}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_PASSWORD&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;{Your MySQL password}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;DOMAINS_FOLDER&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/var/www&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;##################################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# We create a temporary folder for creating archives&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Archive /etc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tar cJf &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/etc.tar.gx etc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; - &amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Backup MySQL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;BACKUP_MYSQL&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; mkdir &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/mysql
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; db in &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;mysql -u&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_USER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; -p&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_PASSWORD&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; -e &lt;span class=&#34;s1&#34;&gt;&amp;#39;show databases;&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -Ev &lt;span class=&#34;s2&#34;&gt;&amp;#34;^(Database|mysql|information_schema|performance_schema|phpmyadmin)&lt;/span&gt;$&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;c1&#34;&gt;#echo &amp;#34;processing ${db}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; mysqldump --opt -u&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_USER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; -p&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_PASSWORD&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;db&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; gzip &amp;gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/mysql/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;db&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%F_%T&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;.sql.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;c1&#34;&gt;#echo &amp;#34;all db now&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; mysqldump --opt -u&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_USER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; -p&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MYSQL_PASSWORD&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; --events --ignore-table&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;mysql.event --all-databases &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; gzip &amp;gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/mysql/ALL_DATABASES_&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%F_%T&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;.sql.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Backup websites&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/domains
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; folder in &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;find &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DOMAINS_FOLDER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; -mindepth &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -maxdepth &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -type d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;dirname &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;folder&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; tar cJf &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/domains/&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;basename &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;folder&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;.tar.xz &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;basename &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;folder&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; - &amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;##################################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Handling possible dbus-errors&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;dbus-launch&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a folder on the cloud with the name of the server, and in it another folder with today&amp;#39;s date&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; -z &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;megals --reload /Root/backup_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; megamkdir /Root/backup_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Cleaning old unnecessary logs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;megals --reload /Root/backup_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -E &lt;span class=&#34;s2&#34;&gt;&amp;#34;/Root/backup_&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/[0-9]{4}-[0-9]{2}-[0-9]{2}&lt;/span&gt;$&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; wc -l&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; -gt &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DAYS_TO_BACKUP&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; &lt;span class=&#34;nv&#34;&gt;TO_REMOVE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;megals --reload /Root/backup_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -E &lt;span class=&#34;s2&#34;&gt;&amp;#34;/Root/backup_&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/[0-9]{4}-[0-9]{2}-[0-9]{2}&lt;/span&gt;$&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sort &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; head -n 1&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; megarm &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;TO_REMOVE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a folder for backup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;curday&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%F&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;megamkdir /Root/backup_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;curday&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; 2&amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Upload the files to cloud&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;megacopy --reload --no-progress --local &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; --remote /Root/backup_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;curday&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kill DBUS-daemon&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;kill&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DBUS_SESSION_BUS_PID&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -f &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DBUS_SESSION_BUS_ADDRESS&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Remove temporary files&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;WORKING_DIR&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Now you need to allow the execution of the script:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod a+x /opt/scripts/do_backup.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next, you need to test the script by directly executing it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/opt/scripts/do_backup.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that, you can go to the mega account through the web interface and check that the necessary files have appeared there.&lt;/p&gt;
+&lt;h3 id=&#34;creating-a-script-autorun-rule-in-crontab&#34;&gt;Creating a script autorun rule in crontab&lt;/h3&gt;
+&lt;p&gt;In order for the script to run according to a certain time schedule, let&amp;rsquo;s add it to the crontab.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;m&#34;&gt;04&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;04&lt;/span&gt; * * * root /opt/scripts/do_backup.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;is-it-optimal-to-use-&#34;&gt;Is it optimal to use ?&lt;/h2&gt;
+&lt;p&gt;In my case, the backup folder is &lt;code&gt;538.8 Mb&lt;/code&gt; in size.&lt;/p&gt;
+&lt;p&gt;A total of &lt;code&gt;50,000 Mb&lt;/code&gt; of free space on the cloud. Let each backup weigh approximately &lt;code&gt;550 Mb&lt;/code&gt;. We divide 50,000 by 550, we have:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;m&#34;&gt;50000&lt;/span&gt; / &lt;span class=&#34;m&#34;&gt;550&lt;/span&gt; ≈ 90.9&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This means that the cloud is enough for 90 backups, which is quite a large number, especially if you take into account the free service of Mega.&lt;/p&gt;
+&lt;p&gt;But optimality as a whole depends on factors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Backup size&lt;/li&gt;
+&lt;li&gt;Backup frequency&lt;/li&gt;
+&lt;li&gt;Storage duration of each backup&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Therefore, it is advisable to evaluate the optimality separately for each individual case.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Port forwarding using an SSH tunnel</title>
+        <link>http://localhost:1313/post/port-forwarding-using-an-ssh-tunnel/</link>
+        <pubDate>Mon, 26 Sep 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/port-forwarding-using-an-ssh-tunnel/</guid>
+        <description>&lt;img src="http://localhost:1313/post/port-forwarding-using-an-ssh-tunnel/header.webp" alt="Featured image of post Port forwarding using an SSH tunnel" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;SSH Tunnels allow you to forward specific ports on a remote server or locally. This is very convenient when we need to get to a specific server in the local network.&lt;/p&gt;
+&lt;p&gt;Technically, it is possible to forward both local and remote ports. We will consider both cases.&lt;/p&gt;
+&lt;h2 id=&#34;local-port-forwarding&#34;&gt;Local port forwarding&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s imagine the situation when we are inside a local network, where access to the Internet is blocked by a firewall for all but one server that has direct access to the Internet. We have SSH access to this server. Our task is to connect to a remote server that is on an external SSH network.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -f -N -L 2222:212.212.212.212:22 user@111.111.111.111&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This command will create a tunnel by opening port 22 of the remote server through the local server, and we can connect to the remote server through port 2222, which will listen on the local interface of our PC.&lt;/p&gt;
+&lt;p&gt;We should leave the terminal with the tunnel session running, and in the new terminal we can connect to the remote server with the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -p2222 127.0.0.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, we have SSH access to the remote server.&lt;/p&gt;
+&lt;h2 id=&#34;remote-port-forwarding&#34;&gt;Remote port forwarding&lt;/h2&gt;
+&lt;p&gt;This case is the opposite of local port forwarding. Let&amp;rsquo;s imagine the same local network and remote server, only now the local PC has access to the Internet through NAT. Let&amp;rsquo;s say that a system administrator who has physical access to a remote server needs to RDP to computer 192.168.0.2, but NAT will not allow him to do so directly.&lt;/p&gt;
+&lt;p&gt;Consider an example where there is an RDP service that by default is running on local port 3389. Let&amp;rsquo;s send it to remote port 3333.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -f -N -R 3333:127.0.0.1:3389 username@212.212.212.212&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After setting up such a tunnel, the sysadmin sitting behind the remote server will be able to connect to us by RDP using the address 127.0.0.1:3333 in the RDP client.&lt;/p&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;These simple techniques of tunneling through the SSH protocol allow you to redirect the ports of a local or remote service as you like, which can be useful if you need to bypass certain network restrictions, such as NAT.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

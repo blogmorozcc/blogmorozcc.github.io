@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction This is my own guide for installing Arch Linux on bare metal machine with UEFI, encrypted LVM and separate /home partition.
+Steps First you need to create and boot the installation media on your PC, as the result you will boot into plain console.
+Increase font size As most modern laptops/PCs have large resolution displays I recommend increasing the font size:
+setfont ter-132b Setup the internet connection In this example I have a laptop with Wi-Fi modem, so I&amp;rsquo;ll be using iwd to setup the internet connection.'><title>Arch Linux install guide (UEFI &#43; encrypted LVM)</title>
+
+<link rel='canonical' href='http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Arch Linux install guide (UEFI &#43; encrypted LVM)'>
+<meta property='og:description' content='Introduction This is my own guide for installing Arch Linux on bare metal machine with UEFI, encrypted LVM and separate /home partition.
+Steps First you need to create and boot the installation media on your PC, as the result you will boot into plain console.
+Increase font size As most modern laptops/PCs have large resolution displays I recommend increasing the font size:
+setfont ter-132b Setup the internet connection In this example I have a laptop with Wi-Fi modem, so I&amp;rsquo;ll be using iwd to setup the internet connection.'>
+<meta property='og:url' content='http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:published_time' content='2024-02-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-02-24T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/header.png' />
+<meta name="twitter:title" content="Arch Linux install guide (UEFI &#43; encrypted LVM)">
+<meta name="twitter:description" content="Introduction This is my own guide for installing Arch Linux on bare metal machine with UEFI, encrypted LVM and separate /home partition.
+Steps First you need to create and boot the installation media on your PC, as the result you will boot into plain console.
+Increase font size As most modern laptops/PCs have large resolution displays I recommend increasing the font size:
+setfont ter-132b Setup the internet connection In this example I have a laptop with Wi-Fi modem, so I&amp;rsquo;ll be using iwd to setup the internet connection."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/header.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">Dmitriy Moroz</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected>English</option>
+                        
+                            <option value="http://localhost:1313/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/arch-linux-install-guide-uefi--encrypted-lvm/">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header_hue96a0cab901c05107ef04317fe9cfdbe_381439_800x0_resize_box_3.png"
+                        srcset="/post/arch-linux-install-guide-uefi--encrypted-lvm/header_hue96a0cab901c05107ef04317fe9cfdbe_381439_800x0_resize_box_3.png 800w, /post/arch-linux-install-guide-uefi--encrypted-lvm/header_hue96a0cab901c05107ef04317fe9cfdbe_381439_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="454" 
+                        loading="lazy"
+                        alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/categories/arch/" >
+                Arch
+            </a>
+        
+            <a href="/categories/install/" >
+                Install
+            </a>
+        
+            <a href="/categories/setup/" >
+                Setup
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/arch-linux-install-guide-uefi--encrypted-lvm/">Arch Linux install guide (UEFI &#43; encrypted LVM)</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">24.02.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<p>This is my own guide for installing Arch Linux on bare metal machine with UEFI, encrypted LVM and separate /home partition.</p>
+<h2 id="steps">Steps</h2>
+<p>First you need to create and boot the installation media on your PC, as the result you will boot into plain console.</p>
+<h3 id="increase-font-size">Increase font size</h3>
+<p>As most modern laptops/PCs have large resolution displays I recommend increasing the font size:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">setfont ter-132b</span></span></code></pre></div>
+<h3 id="setup-the-internet-connection">Setup the internet connection</h3>
+<p>In this example I have a laptop with Wi-Fi modem, so I&rsquo;ll be using <code>iwd</code> to setup the internet connection.</p>
+<p>Run iwd:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">iwctl</span></span></code></pre></div>
+<p>View a list of Wi-Fi adapters</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">device list</span></span></code></pre></div>
+<p>Usually you should see one Wi-Fi device in output, in my case it is <code>wlan0</code></p>
+<p>Then if you know the station SSID and password, simply connect to the station, and don&rsquo;t forget to replace {SSID} with your actual value:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">station wlan0 connect <span class="o">{</span>SSID<span class="o">}</span></span></span></code></pre></div>
+<p>Then exit the iwctl by typing <code>exit</code>, then do the <code>ping 8.8.8.8</code> to ensure you are connected to the internet.</p>
+<h3 id="synchronize-system-clock">Synchronize system clock</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">timedatectl set-ntp true</span></span></code></pre></div>
+<h3 id="partition-your-disk">Partition your disk</h3>
+<p>In my case I want to have separate <code>root</code>, <code>/boot</code> and <code>/home</code> partitions, moreover <code>/</code> and <code>/home</code> should be encrypted by LVM and be in the same volume group.</p>
+<h4 id="detect-your-drive">Detect your drive</h4>
+<p>First, we need to know what device to user, to view the disk devices use:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fdisk -l</span></span></code></pre></div>
+<p>In my case it is the NVMe SSD drive <code>/dev/nvme0n1</code>.</p>
+<h4 id="partitioning">Partitioning</h4>
+<p>Next, use <code>gdisk /dev/nvme0n1</code> to create partitions with this layout:</p>
+<ul>
+<li><code>/dev/nvme0n1p1</code> - <em>at least 512M</em> - type <code>EF00</code> - EFI System Partition</li>
+<li><code>/dev/nvme0n1p2</code> - <em>rest of disk</em> - type <code>8309</code> - LUKS</li>
+</ul>
+<h4 id="format-the-physical-partitions">Format the physical partitions</h4>
+<ol>
+<li>EFI Partition</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkfs.vfat -F <span class="m">32</span> /dev/nvme0n1p1</span></span></code></pre></div>
+<ol start="2">
+<li>LUKS Encrypted partition</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cryptsetup luksFormat /dev/nvme0n1p2</span></span></code></pre></div>
+<h4 id="create-volume-group-and-logical-volumes">Create volume group and logical volumes</h4>
+<p>First, open the encrypted container:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cryptsetup luksOpen /dev/nvme0n1p2 luks</span></span></code></pre></div>
+<p>As the result the encrypted partition is mounted at <code>/dev/mapper/luks</code>.</p>
+<p>Next, treat <code>/dev/mapper/luks</code> as an LVM PV and create your volumes. In my case are like:</p>
+<ul>
+<li>Volume Group <code>vg0</code>
+<ul>
+<li>Logical Volume <code>lv_root</code> - Probably at least 20G, I use 75G</li>
+<li>Logical Volume <code>lv_swap</code> - Optional, maybe not desirable if you have an SSD</li>
+<li>Logical Volume <code>lv_home</code> - Rest of the space</li>
+</ul>
+</li>
+</ul>
+<p>The commands to achieve this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pvcreate /dev/mapper/luks
+</span></span><span class="line"><span class="cl">vgcreate vg0 /dev/mapper/luks
+</span></span><span class="line"><span class="cl">lvcreate -L 75G -n lv_root vg0
+</span></span><span class="line"><span class="cl">lvcreate -L 16G -n lv_swap vg0
+</span></span><span class="line"><span class="cl">lvcreate -l100%FREE -n lv_home vg0 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="format-the-logical-volumes">Format the logical volumes</h4>
+<p>I will use ext4 filesystems for my setup, here you can use something different (like btrfs).</p>
+<p>To format root and home partitions in ext4:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkfs.ext4 /dev/vg0/lv_root
+</span></span><span class="line"><span class="cl">mkfs.ext4 /dev/vg0/lv_home
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To format the swap partition and enable it:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkswap /dev/vg0/lv_swap
+</span></span><span class="line"><span class="cl">swapon /dev/vg0/lv_swap
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="mount-the-partitions">Mount the partitions</h4>
+<p>This step is required to mount the created partitions and install the Arch Linux system there. All the filesystems should be mounted considering <code>/mnt</code> as a root filesystem for the future installed system.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mount --mkdir /dev/vg0/lv_root /mnt
+</span></span><span class="line"><span class="cl">mount --mkdir /dev/vg0/lv_home /mnt/home
+</span></span><span class="line"><span class="cl">mount --mkdir /dev/nvme0n1p1 /mnt/boot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="install-the-base-system">Install the base system</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacstrap -K /mnt base base-devel linux linux-firmware linux-headers</span></span></code></pre></div>
+<h3 id="generate-the-fstab-file">Generate the fstab file</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span></span></code></pre></div>
+<h3 id="chroot-into-your-system">Chroot into your system</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">arch-chroot /mnt</span></span></code></pre></div>
+<h3 id="generate-locale">Generate locale</h3>
+<p>Uncomment <code>en_US.UTF-8 UTF-8</code> and other needed locales in file <code>/etc/locale.gen</code>.</p>
+<p>Then generate locales:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">locale-gen</span></span></code></pre></div>
+<p>To set the system locale:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;LANG=en_US.UTF-8&#34;</span> &gt; /etc/locale.conf</span></span></code></pre></div>
+<h3 id="setup-the-hostname">Setup the hostname</h3>
+<p>This is actually the analog of computer name in Windows, in my case I will name it <code>thinkpad</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;thinkpad&#34;</span> &gt; /etc/hostname</span></span></code></pre></div>
+<p>Also add the default values to the <code>/etc/hosts</code> file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Static table lookup for hostnames.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># See hosts(5) for details.</span>
+</span></span><span class="line"><span class="cl">127.0.0.1 localhost
+</span></span><span class="line"><span class="cl">::1 localhost
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="setup-timezone">Setup TimeZone</h3>
+<p>My timezone is <code>Europe/Kiev</code>, so in my case this sumlink should be created:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ln -s /usr/share/zoneinfo/Europe/Kiev /etc/localtime</span></span></code></pre></div>
+<p>And also I recommend switch the BIOS hardware clock to UTC:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hwclock --systohc --utc</span></span></code></pre></div>
+<h3 id="setup-initramfs">Setup initramfs</h3>
+<p>Install the lvm2 package:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S lvm2</span></span></code></pre></div>
+<p>Edit the <code>/etc/mkinitcpio.conf</code> file and insert hooks <code>encrypt</code> and <code>lvm2</code> strictly in this order between the <code>block</code> and <code>filesystems</code> hooks like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">HOOKS</span><span class="o">=(</span>base udev ... block encrypt lvm2 filesystems<span class="o">)</span></span></span></code></pre></div>
+<p>Then re-generate the initramfs:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkinitcpio -P</span></span></code></pre></div>
+<h3 id="create-a-user-and-credntials">Create a user and credntials</h3>
+<p>First it is recommended to change the root user password:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">passwd root</span></span></code></pre></div>
+<p>Then install sudo package to allow your user grant privileges:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S sudo</span></span></code></pre></div>
+<p>Then edit the sudoers file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo <span class="nv">EDITOR</span><span class="o">=</span>nano visudo</span></span></code></pre></div>
+<p>And uncomment the line <code>%wheel ALL=(ALL:ALL) ALL</code> and save the file.</p>
+<p>Create a user, change the password and add it to the necessary groups:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">useradd -m shifthackz
+</span></span><span class="line"><span class="cl">passwd shifthackz
+</span></span><span class="line"><span class="cl">usermod -aG wheel,audio,video,storage shifthackz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="install-the-needed-packages-and-desktop-environment">Install the needed packages and desktop environment</h3>
+<p>This is optional step and you may do the same after install, but I&rsquo;d like to be able to use the DE straigt after install.</p>
+<p>In this example I will install Gnome DE <em>(on Wayland and PipeWire)</em> with NetworkManager.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S gnome networkmanager gnome pipewire <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span> pipewire-alsa pipewire-pulse pipewire-jack <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span> wireplumber bluez bluez-utils </span></span></code></pre></div>
+<p>Then start the needed services by default</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl <span class="nb">enable</span> NetworkManager
+</span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> gdm
+</span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> bluetooth
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="install-the-bootloader">Install the bootloader</h3>
+<p>I will use systemd-boot as my bootloader, to install it, run:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">bootctl install</span></span></code></pre></div>
+<p>Then create the bootloader config at <code>/boot/loader/loader.conf</code> containing this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">default @saved
+</span></span><span class="line"><span class="cl">timeout <span class="m">3</span>
+</span></span><span class="line"><span class="cl">console-mode max
+</span></span><span class="line"><span class="cl">editor no
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To load your CPU microcode early at bootloader install <code>amd-ucode</code> or <code>intel-ucode</code> package, in my case I have Intel CPU, so command is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S intel-ucode</span></span></code></pre></div>
+<p>Then detect the UUID of your LVM encrypted partition (in my case /dev/nvme0n1p2):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">blkid /dev/nvme0n1p2</span></span></code></pre></div>
+<p>Then create the boot entry for your Arch Linux system at <code>/boot/loader/entries/arch.conf</code>, make sure to replace the UUID and correct root partition in the <code>options</code> parameter:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">title Arch Linux
+</span></span><span class="line"><span class="cl">linux /vmlinuz-linux
+</span></span><span class="line"><span class="cl">initrd /intel-ucode.img
+</span></span><span class="line"><span class="cl">initrd /initramfs-linux.img
+</span></span><span class="line"><span class="cl">options <span class="nv">cryptdevice</span><span class="o">=</span><span class="nv">UUID</span><span class="o">=</span>b574960c-1d6a-4363-bd8a-0e7345f23e06:luks <span class="nv">root</span><span class="o">=</span>/dev/vg0/lv_root rw
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Finally check the bootctl and validate that the config is correct in <code>bootctl list</code>.</p>
+<h3 id="reboot-to-your-new-system">Reboot to your new system</h3>
+<p>To reboot you need:</p>
+<ul>
+<li>type <code>exit</code> to exit the chroot shell.</li>
+<li>then do <code>umount -R /mnt</code> to unmount your partitions.</li>
+<li>finally type <code>reboot</code></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/fix-missing-formula-fonts-for-wps-office-on-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Fix missing formula fonts for WPS Office on Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fix missing formula fonts for WPS Office on Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-install-and-configure-zsh-shell-in-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-and-configure-zsh-shell-in-linux/header.19bdfa53821dd6d0929ca1ed9442aa3a_hu6914af8cdb8921216861b6ef227624ec_122422_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to install and configure ZSH shell in Linux"
+                        
+                        data-hash="md5-Gb36U4Id1tCSnKHtlEKqOg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to install and configure ZSH shell in Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.947980482d8619f720dba2930ba803e8_hu0e765b8aca8d9ba54a80770b06516939_1619_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make systemd-boot remember the last selected entry"
+                        
+                        data-hash="md5-lHmASC2GGfcg26KTC6gD6A==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make systemd-boot remember the last selected entry</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/">
+        
+        
+            <div class="article-image">
+                <img src="/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/header.9cb92591c6d5a62cc38b529e04dc0703_hu41968337912a42023606e3de60723367_1230034_250x150_fill_q75_box_smart1.jpeg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Deploying an RTMP server for streaming using Nginx RTMP"
+                        
+                        data-hash="md5-nLklkcbVpizDi1KeBNwHAw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Deploying an RTMP server for streaming using Nginx RTMP</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | The IT Blog
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#steps">Steps</a>
+      <ol>
+        <li><a href="#increase-font-size">Increase font size</a></li>
+        <li><a href="#setup-the-internet-connection">Setup the internet connection</a></li>
+        <li><a href="#synchronize-system-clock">Synchronize system clock</a></li>
+        <li><a href="#partition-your-disk">Partition your disk</a>
+          <ol>
+            <li><a href="#detect-your-drive">Detect your drive</a></li>
+            <li><a href="#partitioning">Partitioning</a></li>
+            <li><a href="#format-the-physical-partitions">Format the physical partitions</a></li>
+            <li><a href="#create-volume-group-and-logical-volumes">Create volume group and logical volumes</a></li>
+            <li><a href="#format-the-logical-volumes">Format the logical volumes</a></li>
+            <li><a href="#mount-the-partitions">Mount the partitions</a></li>
+          </ol>
+        </li>
+        <li><a href="#install-the-base-system">Install the base system</a></li>
+        <li><a href="#generate-the-fstab-file">Generate the fstab file</a></li>
+        <li><a href="#chroot-into-your-system">Chroot into your system</a></li>
+        <li><a href="#generate-locale">Generate locale</a></li>
+        <li><a href="#setup-the-hostname">Setup the hostname</a></li>
+        <li><a href="#setup-timezone">Setup TimeZone</a></li>
+        <li><a href="#setup-initramfs">Setup initramfs</a></li>
+        <li><a href="#create-a-user-and-credntials">Create a user and credntials</a></li>
+        <li><a href="#install-the-needed-packages-and-desktop-environment">Install the needed packages and desktop environment</a></li>
+        <li><a href="#install-the-bootloader">Install the bootloader</a></li>
+        <li><a href="#reboot-to-your-new-system">Reboot to your new system</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
