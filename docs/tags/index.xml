@@ -6,7 +6,39 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Sat, 24 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Authentication</title>
+        <link>https://blog.moroz.cc/tags/authentication/</link>
+        <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/authentication/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/tags/linux/</link>
+        <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>RSA</title>
+        <link>https://blog.moroz.cc/tags/rsa/</link>
+        <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/rsa/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SSH</title>
+        <link>https://blog.moroz.cc/tags/ssh/</link>
+        <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/ssh/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Arch</title>
         <link>https://blog.moroz.cc/tags/arch/</link>
         <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
@@ -20,14 +52,6 @@
         <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/install/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/tags/linux/</link>
-        <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/linux/</guid>
         <description></description>
         </item>
         <item>
@@ -252,14 +276,6 @@
         <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/cloud/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>SSH</title>
-        <link>https://blog.moroz.cc/tags/ssh/</link>
-        <pubDate>Mon, 26 Sep 2016 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/ssh/</guid>
         <description></description>
         </item>
         

@@ -23,7 +23,7 @@
 &lt;p&gt;In this example I have a laptop with Wi-Fi modem, so I&amp;rsquo;ll be using &lt;code&gt;iwd&lt;/code&gt; to setup the internet connection.&lt;/p&gt;
 &lt;p&gt;Run iwd:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iwctl&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;View a list of Wi-Fi adapters&lt;/p&gt;
+&lt;p&gt;View a list of Wi-Fi adapters:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;device list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Usually you should see one Wi-Fi device in output, in my case it is &lt;code&gt;wlan0&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Then if you know the station SSID and password, simply connect to the station, and don&amp;rsquo;t forget to replace {SSID} with your actual value:&lt;/p&gt;

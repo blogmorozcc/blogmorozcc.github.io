@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="uk" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Введення Аутентифікація на основі ключа SSH — це метод безпечного входу у віддалену систему або сервер за допомогою криптографічних ключів замість паролів. Він працює на основі криптографії з відкритим ключем, де генерується пара ключів — відкритий і закритий ключ. Відкритий ключ зберігається на сервері, а закритий ключ надійно зберігається на стороні клієнта.
+Як це працює? Генерація ключів: користувач генерує пару криптографічних ключів — відкритий і закритий ключ. Приватний ключ надійно зберігається на комп’ютері користувача, а відкритий ключ – на сервері.'><title>Налаштування SSH авторизації на основі RSA ключа</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-ssh-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-rsa-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Налаштування SSH авторизації на основі RSA ключа'>
+<meta property='og:description' content='Введення Аутентифікація на основі ключа SSH — це метод безпечного входу у віддалену систему або сервер за допомогою криптографічних ключів замість паролів. Він працює на основі криптографії з відкритим ключем, де генерується пара ключів — відкритий і закритий ключ. Відкритий ключ зберігається на сервері, а закритий ключ надійно зберігається на стороні клієнта.
+Як це працює? Генерація ключів: користувач генерує пару криптографічних ключів — відкритий і закритий ключ. Приватний ключ надійно зберігається на комп’ютері користувача, а відкритий ключ – на сервері.'>
+<meta property='og:url' content='https://blog.moroz.cc/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-ssh-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-rsa-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0/'>
+<meta property='og:site_name' content='Блог про IT'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='SSH' /><meta property='article:tag' content='RSA' /><meta property='article:tag' content='Authentication' /><meta property='article:published_time' content='2024-03-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-10T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/header.jpg' />
+<meta name="twitter:title" content="Налаштування SSH авторизації на основі RSA ключа">
+<meta name="twitter:description" content="Введення Аутентифікація на основі ключа SSH — це метод безпечного входу у віддалену систему або сервер за допомогою криптографічних ключів замість паролів. Він працює на основі криптографії з відкритим ключем, де генерується пара ключів — відкритий і закритий ключ. Відкритий ключ зберігається на сервері, а закритий ключ надійно зберігається на стороні клієнта.
+Як це працює? Генерація ключів: користувач генерує пару криптографічних ключів — відкритий і закритий ключ. Приватний ключ надійно зберігається на комп’ютері користувача, а відкритий ключ – на сервері."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/header.jpg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Показати меню">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/uk/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🇺🇦</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/uk">Блог про IT</a></h1>
+            
+            
+            
+            <h2 class="site-description">Дмитра Мороза</h2>
+            
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/uk/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Головна</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Архіви</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Пошук</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" >English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" selected>Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Темна тема</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-ssh-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-rsa-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0/">
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_800x0_resize_q75_box.jpg"
+                        srcset="/post/configure-ssh-authorization-based-on-rsa-key/header_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_800x0_resize_q75_box.jpg 800w, /post/configure-ssh-authorization-based-on-rsa-key/header_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="500" 
+                        loading="lazy"
+                        alt="Featured image of post Налаштування SSH авторизації на основі RSA ключа" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/uk/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/uk/categories/%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D1%96/" >
+                Мережі
+            </a>
+        
+            <a href="/uk/categories/%D0%BA%D1%96%D0%B1%D0%B5%D1%80-%D0%B1%D0%B5%D0%B7%D0%BF%D0%B5%D0%BA%D0%B0/" >
+                Кібер-Безпека
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-ssh-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-rsa-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0/">Налаштування SSH авторизації на основі RSA ключа</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">10.03.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    Час читання: 6 хв
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="введення">Введення</h2>
+<p>Аутентифікація на основі ключа SSH — це метод безпечного входу у віддалену систему або сервер за допомогою криптографічних ключів замість паролів. Він працює на основі криптографії з відкритим ключем, де генерується пара ключів — відкритий і закритий ключ. Відкритий ключ зберігається на сервері, а закритий ключ надійно зберігається на стороні клієнта.</p>
+<h3 id="як-це-працює">Як це працює?</h3>
+<ul>
+<li>
+<p>Генерація ключів: користувач генерує пару криптографічних ключів — відкритий і закритий ключ. Приватний ключ надійно зберігається на комп’ютері користувача, а відкритий ключ – на сервері.</p>
+</li>
+<li>
+<p>Конфігурація сервера: відкритий ключ додається до списку авторизованих ключів сервера. Це означає, що сервер розпізнає відповідний приватний ключ, коли він буде представлений під час спроб входу.</p>
+</li>
+<li>
+<p>Спроба входу: коли користувач намагається увійти на сервер, клієнтське програмне забезпечення представляє закритий ключ. Сервер перевіряє, чи цей закритий ключ відповідає будь-якому з відкритих ключів, які він записав для авторизованих користувачів.</p>
+</li>
+<li>
+<p>Авторизація: якщо сервер знаходить збіг, він дозволяє користувачеві увійти без необхідності вводити пароль.</p>
+</li>
+</ul>
+<h3 id="чому-використання-ключів-безпечніше">Чому використання ключів безпечніше?</h3>
+<p>Авторизація на основі ключа вважається більш безпечною, ніж авторизація на основі пароля з кількох причин:</p>
+<ul>
+<li>
+<p>Стійкість до bruteforce атак: паролі можна вгадати або зламати за допомогою bruteforce. Однак за допомогою автентифікації на основі ключа зловмиснику потрібно буде володіти приватним ключем, який в ідеалі повинен надійно зберігатися та не бути легкодоступним.</p>
+</li>
+<li>
+<p>Немає передачі паролів: під час авторизації на основі пароля пароль передається через мережу, яка потенційно може бути перехоплена зловмисниками. Завдяки авторизації на основі ключа закритий ключ ніколи не залишає клієнтську машину, тому немає ризику перехоплення.</p>
+</li>
+<li>
+<p>Надійніше шифрування: ключі SSH використовують надійні криптографічні алгоритми для авторизації, що робить їх стійкими до різних типів атак.</p>
+</li>
+<li>
+<p>Не потрібно покладатися на паролі, створені людиною: паролі, створені людиною, можуть бути слабкими та схильними до зламу. З іншого боку, ключі генеруються випадковим чином і зазвичай набагато довші, тому їх важче вгадати.</p>
+</li>
+</ul>
+<p>Загалом авторизація на основі ключа SSH забезпечує вищий рівень безпеки та рекомендована для віддаленого доступу до серверів і систем, особливо в середовищах, де безпека має першорядне значення.</p>
+<h2 id="приклад-з-налаштування">Приклад з налаштування</h2>
+<p>Далі поговоримо про те, як реалізувати авторизацію на основі ключа RSA для доступу до віддаленого сервера через протокол SSH. Цей посібник припускає, що у вас є локальні та віддалені (серверні) системи Linux і ви вже маєте доступ до свого сервера через протокол ssh на основі пароля.</p>
+<h3 id="генерація-нового-ключа">Генерація нового ключа</h3>
+<blockquote>
+<p>🟢 <strong>Порада щодо безпеки:</strong> якщо у вас є кілька серверів, до яких ви хочете отримати доступ через SSH на основі ключа, наполегливо рекомендуємо створити окремий ключ ssh для кожного сервера.</p>
+</blockquote>
+<p>Усі ключі ssh зберігаються в каталозі <code>.ssh</code>, який розташований у вашому домашньому каталозі користувача, тому нам потрібно змінити робочий каталог у терміналі:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/.ssh</span></span></code></pre></div>
+<p>У моєму випадку не було каталогу <code>.ssh</code>, тому я створив його вручну:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir ~/.ssh</span></span></code></pre></div>
+<p>Потім, щоб створити новий ключ:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh-keygen -t rsa -b <span class="m">4096</span> </span></span></code></pre></div>
+<p>Параметри в команді генерації вище означають:</p>
+<ul>
+<li>
+<p><code>-t rsa</code>: вказує тип ключа для створення. У цьому випадку це означає, що слід використовувати алгоритм RSA. RSA (Rivest-Shamir-Adleman) — це широко використовувана криптосистема з відкритим ключем для безпечної передачі даних.</p>
+</li>
+<li>
+<p><code>b 4096</code>: визначає кількість бітів у ключі. У цьому випадку він встановлює розмір ключа 4096 біт. Більші розміри ключів зазвичай забезпечують сильніший захист, але також можуть вимагати більше обчислювальних ресурсів для шифрування та дешифрування.</p>
+</li>
+</ul>
+<p>Майстер створення ключів запитає про деякі параметри:</p>
+<ol>
+<li>Enter a file in which save a key (Введіть файл, в якому буде збережено ключ).</li>
+</ol>
+<p>Якщо у вас є кілька ключів для кількох серверів, рекомендується назвати ваші ключові файли так, щоб пізніше було зрозуміло, який ключ використовується для доступу до певного сервера.</p>
+<p><img src="/post/configure-ssh-authorization-based-on-rsa-key/keygen1.png"
+	width="774"
+	height="91"
+	srcset="/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_480x0_resize_box_3.png 480w, /post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Приклад налаштування імені файлу ключа SSH"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="850"
+		data-flex-basis="2041px"
+	
+></p>
+<ol start="2">
+<li>Enter key passphraze (Введіть пароль ключа) - двічі.</li>
+</ol>
+<p>Щоб фактично розблокувати ключ ssh, вам потрібно вказати надійний пароль. Це означає, що якщо ваш ключ буде вкрадено або зламано, він усе ще буде захищений паролем.</p>
+<blockquote>
+<p>🟢 <strong>Порада щодо безпеки:</strong> рекомендується мати різні паролі для ключа ssh і для віддаленого користувача Unix.</p>
+</blockquote>
+<p>Нарешті, після створення ключа ви побачите такий результат у терміналі:</p>
+<p><img src="/post/configure-ssh-authorization-based-on-rsa-key/keygen2.png"
+	width="768"
+	height="448"
+	srcset="/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_480x0_resize_box_3.png 480w, /post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Приклад успішної генерації ключа SSH"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="171"
+		data-flex-basis="411px"
+	
+></p>
+<h3 id="передача-ключа-на-віддалений-сервер">Передача ключа на віддалений сервер</h3>
+<p>Ви можете скопіювати відкритий ключ ssh на свій сервер багатьма способами, але найбезпечнішим способом є використання <code>SCP</code> (захищеної копії).</p>
+<blockquote>
+<p>🟡 <strong>Примітка:</strong> Команди <code>scp</code> і <code>ssh</code> вимагають введення пароля віддаленого користувача (<code>user</code>).</p>
+</blockquote>
+<p>Щоб скопіювати відкритий ключ, використовуйте таку команду, але не забудьте замінити параметри на ваші фактичні:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">scp dc1srv1.pub user@192.168.0.2:</span></span></code></pre></div>
+<p>Параметри команди scp означають:</p>
+<ul>
+<li><code>dc1srv1.pub</code> — це файл відкритого ключа, створений на попередньому кроці.</li>
+<li><code>user</code> - ім&rsquo;я користувача на віддаленій машині.</li>
+<li><code>192.168.0.2</code> - IP або домен віддаленої машини.</li>
+<li><code>:</code> - шлях, куди скопіювати файл <code>dc1srv1.pub</code> (у цьому випадку домашній каталог віддаленого користувача <code>user</code>).</li>
+</ul>
+<h3 id="дозвіл-на-використання-нового-ключа">Дозвіл на використання нового ключа</h3>
+<p>Для цього нам потрібно підключитися до серверної оболонки через протокол SSH, в іншому терміналі підключитися до віддаленої оболонки:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh user@192.168.0.2</span></span></code></pre></div>
+<p>Потім перевірте, чи є у вас каталог <code>.ssh</code> у домашній папці віддаленого користувача <code>user</code>, якщо його немає, створіть його:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir ~/.ssh</span></span></code></pre></div>
+<p>Створіть файл <code>authorized_keys</code> в каталозі <code>.ssh</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">touch ~/.ssh/authorized_keys</span></span></code></pre></div>
+<p>Скопіюйте вміст відкритого ключа у файл <code>authorized_keys</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat ~/dc1srv1.pub &gt;&gt; ~/.ssh/authorized_keys</span></span></code></pre></div>
+<p>Після цього переданий на попередньому кроці файл відкритого ключа більше не потрібен, тому його можна видалити:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">rm ~/dc1srv1.pub</span></span></code></pre></div>
+<h3 id="зміна-конфігурації-ssh">Зміна конфігурації SSH</h3>
+<p>Щоб змінити конфігурацію ssh, відредагуйте файл <code>/etc/ssh/sshd_config</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano /etc/ssh/sshd_config</span></span></code></pre></div>
+<p>У цьому файлі ви повинні знайти деякі параметри та явно задати їхні значення:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="c1"># Заборонити авторизацію від root</span>
+</span></span><span class="line"><span class="cl">PermitRootLogin no
+</span></span><span class="line"><span class="cl"><span class="c1"># Дозволити авторизацію ключами</span>
+</span></span><span class="line"><span class="cl">PubkeyAuthentication yes
+</span></span><span class="line"><span class="cl"><span class="c1"># Заборонити challenge response</span>
+</span></span><span class="line"><span class="cl">ChallengeResponseAuthentication no
+</span></span><span class="line"><span class="cl"><span class="c1"># Увімкнути PAM</span>
+</span></span><span class="line"><span class="cl">UsePAM yes
+</span></span><span class="line"><span class="cl"><span class="c1"># Заборонити авторизацію на базі пароля</span>
+</span></span><span class="line"><span class="cl">PasswordAuthentication no
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Після збереження файлу перезапустіть службу <code>sshd</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl restart sshd</span></span></code></pre></div>
+<blockquote>
+<p>🔴 <strong>ВАЖЛИВО:</strong> Після перезапуску <code>sshd</code> нова конфігурація набуде чинності. Рекомендовано <strong>НЕ ЗАКРИВАТИ</strong> ваш поточний відкритий сеанс ssh і зберігати його, доки ви не перевірите та не переконаєтеся, що ваш новий ключ ssh працює в <strong>ІНШОМУ вікні терміналу</strong>. У цьому випадку, якщо щось піде не так, ви все одно можете повернути зміни до файлу <code>ssh_config</code> і перезапустити демон <code>sshd</code>, щоб застосувати попередню конфігурацію.</p>
+</blockquote>
+<h3 id="перевірка-ssh-авторизації">Перевірка SSH авторизації</h3>
+<h4 id="переконайтеся-що-авторизація-через-пароль-не-працює">Переконайтеся що авторизація через пароль НЕ працює</h4>
+<p>По-перше, давайте перевіримо, що ми не можемо підключитися як root і як загальний користувач, тому для команди:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh root@192.168.0.2</span></span></code></pre></div>
+<p>або:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh user@192.168.0.2</span></span></code></pre></div>
+<p>Ви повинні отримати повідомлення про помилку <code>Permission denied (publickey)</code>.</p>
+<h4 id="переконайтеся-що-авторизація-через-rsa-ключ-працює">Переконайтеся що авторизація через RSA ключ працює</h4>
+<p>Команда ssh для підключення до віддаленого сервера буде дещо іншою, оскільки вам слід вказати ключ ssh, який потрібно використовувати для автентифікації:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh -i ~/.ssh/dc1srv1 user@192.168.0.2</span></span></code></pre></div>
+<p>Після введення цієї команди вам буде запропоновано ввести пароль, який використовувався під час генерації ключа ssh.</p>
+<h2 id="висновки">Висновки</h2>
+<p>Після завершення нашалтування описаного в прикладі, ваш сервер використовує автентифікацію SSH на основі безпечного ключа. Майте на увазі, що вам потрібно створити резервну копію ваших ключів ssh, тому що, якщо ви втратите ключ ssh, ви не зможете підключитися до віддаленої машини через ssh (у цьому випадку лише фізичний доступ до віддаленої машини може допомогти скинути ключ, або якщо ви використовуєте VPS/хостинг-провайдера, деякі веб-панелі адміністратора дозволяють скинути нашалтування ssh).</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/uk/tags/linux/">Linux</a>
+        
+            <a href="/uk/tags/ssh/">SSH</a>
+        
+            <a href="/uk/tags/rsa/">RSA</a>
+        
+            <a href="/uk/tags/authentication/">Authentication</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Схожі матеріали</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D0%BE%D1%80%D1%82%D1%96%D0%B2-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-ssh-%D1%82%D1%83%D0%BD%D0%B5%D0%BB%D1%8E/">
+        
+        
+            <div class="article-image">
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Перенаправлення портів за допомогою SSH тунелю"
+                        
+                        data-hash="md5-uhvQM97BaXSmn9UTt9VaUQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Перенаправлення портів за допомогою SSH тунелю</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Налаштування LTE модему вбудованного в ноутбук ThinkPad на Arch Linux за допомогою FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Налаштування LTE модему вбудованного в ноутбук ThinkPad на Arch Linux за допомогою FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%BD%D0%B8%D0%B5-%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0-%D0%B2-%D1%85%D0%BC%D0%B0%D1%80%D0%BD%D0%B5-%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B5-mega.nz/">
+        
+        
+            <div class="article-image">
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Автоматичние резервне копіювання сервера в хмарне середовище Mega.nz"
+                        
+                        data-hash="md5-pJE9cbvfkTY1g5wjrDVyFg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Автоматичние резервне копіювання сервера в хмарне середовище Mega.nz</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Як виправити помилку відсутності шрифтів формул для WPS Office на Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Як виправити помилку відсутності шрифтів формул для WPS Office на Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | Блог про IT
+    </section>
+    
+    <section class="powerby">
+        
+        Всі права захищено.
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Зміст</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#введення">Введення</a>
+      <ol>
+        <li><a href="#як-це-працює">Як це працює?</a></li>
+        <li><a href="#чому-використання-ключів-безпечніше">Чому використання ключів безпечніше?</a></li>
+      </ol>
+    </li>
+    <li><a href="#приклад-з-налаштування">Приклад з налаштування</a>
+      <ol>
+        <li><a href="#генерація-нового-ключа">Генерація нового ключа</a></li>
+        <li><a href="#передача-ключа-на-віддалений-сервер">Передача ключа на віддалений сервер</a></li>
+        <li><a href="#дозвіл-на-використання-нового-ключа">Дозвіл на використання нового ключа</a></li>
+        <li><a href="#зміна-конфігурації-ssh">Зміна конфігурації SSH</a></li>
+        <li><a href="#перевірка-ssh-авторизації">Перевірка SSH авторизації</a>
+          <ol>
+            <li><a href="#переконайтеся-що-авторизація-через-пароль-не-працює">Переконайтеся що авторизація через пароль НЕ працює</a></li>
+            <li><a href="#переконайтеся-що-авторизація-через-rsa-ключ-працює">Переконайтеся що авторизація через RSA ключ працює</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#висновки">Висновки</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
