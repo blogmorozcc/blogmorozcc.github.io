@@ -44,7 +44,7 @@ params:
         #lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🇺🇦
+        emoji: 💻
         subtitle: fsdfdsf
         avatar:
             enabled: true

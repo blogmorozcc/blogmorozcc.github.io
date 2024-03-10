@@ -7,12 +7,12 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <lastBuildDate>Sun, 10 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>SSH Key based server authorization guide</title>
-        <link>http://localhost:1313/post/ssh-key-based-server-authorization-guide/</link>
+        <title>Configure SSH authorization based on RSA key</title>
+        <link>http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/</link>
         <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/ssh-key-based-server-authorization-guide/</guid>
-        <description>&lt;img src="http://localhost:1313/post/ssh-key-based-server-authorization-guide/header.jpg" alt="Featured image of post SSH Key based server authorization guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+        <guid>http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/</guid>
+        <description>&lt;img src="http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/header.jpg" alt="Featured image of post Configure SSH authorization based on RSA key" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;SSH key-based authentication is a method of securely logging into a remote system or server using cryptographic keys instead of passwords. It works based on public-key cryptography, where a pair of keys is generated—a public key and a private key. The public key is stored on the server, and the private key is kept secure on the client side.&lt;/p&gt;
 &lt;h3 id=&#34;how-it-works&#34;&gt;How it works?&lt;/h3&gt;
 &lt;ul&gt;
@@ -30,10 +30,8 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;why-using-keys-is-more-secure&#34;&gt;Why using keys is more secure?&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
 &lt;p&gt;Key-based authentication is considered more secure than password-based authentication for several reasons:&lt;/p&gt;
-&lt;/li&gt;
+&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Resistance to brute-force attacks: Passwords can be guessed or cracked through brute-force attacks. However, with key-based authentication, an attacker would need to possess the private key, which ideally should be securely stored and not easily accessible.&lt;/p&gt;
 &lt;/li&gt;
@@ -48,11 +46,11 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Overall, SSH key-based authentication offers a higher level of security and is recommended for remote access to servers and systems, especially in environments where security is paramount.&lt;/p&gt;
-&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
-&lt;p&gt;Next let&amp;rsquo;s talk how actually implement ssh key based authorizatoin to access the remote server via SSH protocol. This guide assumes you have local and remote (server) Linux systems, and you already have access to your server via password based ssh protocol.&lt;/p&gt;
+&lt;h2 id=&#34;implementation-example&#34;&gt;Implementation example&lt;/h2&gt;
+&lt;p&gt;Next let&amp;rsquo;s talk how actually implement RSA key based authorizatoin to access the remote server via SSH protocol. This guide assumes you have local and remote (server) Linux systems, and you already have access to your server via password based ssh protocol.&lt;/p&gt;
 &lt;h3 id=&#34;generate-the-new-ssh-key&#34;&gt;Generate the new ssh key&lt;/h3&gt;
 &lt;blockquote&gt;
-&lt;p&gt;🔴 &lt;strong&gt;Advice:&lt;/strong&gt; if you have multiple servers that you want to access via key based SSH it is strongly recommended to create different ssh key for every server.&lt;/p&gt;
+&lt;p&gt;🟢 &lt;strong&gt;Security Tip:&lt;/strong&gt; if you have multiple servers that you want to access via key based SSH it is strongly recommended to create different ssh key for every server.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;All the ssh keys are stored in the &lt;code&gt;.ssh&lt;/code&gt; directory that is located at your user home directory, so we need to change the working dir in the terminal:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ~/.ssh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -74,10 +72,10 @@
 &lt;li&gt;Enter a file in which save a key.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In case you have multiple keys for multimple servers it is recommended to name your key files in a way you can later understand what key is used to access some particular server.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/ssh-key-based-server-authorization-guide/keygen1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/keygen1.png&#34;
 	width=&#34;774&#34;
 	height=&#34;91&#34;
-	srcset=&#34;http://localhost:1313/post/ssh-key-based-server-authorization-guide/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_480x0_resize_box_3.png 480w, http://localhost:1313/post/ssh-key-based-server-authorization-guide/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_480x0_resize_box_3.png 480w, http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of setting the SSH key filename&#34;
@@ -92,11 +90,14 @@
 &lt;li&gt;Enter key passphraze (twice).&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;To actually unlock the ssh key you need to specify a secure password. It means that in case your key becomes stolen or compromised it will be still protected by password.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🟢 &lt;strong&gt;Security Tip:&lt;/strong&gt; it is recommended to have different password for the ssh key and for the remote unix user.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Finally, after key is created you will see the output in terminal like this:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/ssh-key-based-server-authorization-guide/keygen2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/keygen2.png&#34;
 	width=&#34;768&#34;
 	height=&#34;448&#34;
-	srcset=&#34;http://localhost:1313/post/ssh-key-based-server-authorization-guide/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_480x0_resize_box_3.png 480w, http://localhost:1313/post/ssh-key-based-server-authorization-guide/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_480x0_resize_box_3.png 480w, http://localhost:1313/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of successful SSH key generation&#34;
@@ -107,6 +108,83 @@
 		data-flex-basis=&#34;411px&#34;
 	
 &gt;&lt;/p&gt;
+&lt;h3 id=&#34;copy-public-key-to-your-server&#34;&gt;Copy public key to your server&lt;/h3&gt;
+&lt;p&gt;There are many ways you can copy the public ssh key to your server, but the most secure way is to use &lt;code&gt;SCP&lt;/code&gt; (secure copy).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🟡 &lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt; commands require to enter the password of the remote &lt;code&gt;user&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To copy the public key use a command like this, but don&amp;rsquo;t forget to replace the parameters with your actual ones:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;scp dc1srv1.pub user@192.168.0.2:&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The parameters of the scp command mean:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dc1srv1.pub&lt;/code&gt; is a public key file that was created at previous step.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;user&lt;/code&gt; is the username on the remote machine.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;192.168.0.2&lt;/code&gt; - the IP or domain of the remote machine.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:&lt;/code&gt; - the path where to copy &lt;code&gt;dc1srv1.pub&lt;/code&gt; file (in this case home directory of the remote &lt;code&gt;user&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;allow-the-public-key-on-sever&#34;&gt;Allow the public key on sever&lt;/h3&gt;
+&lt;p&gt;To do this we need to connect to a server shell via SSH protocol, in another terminal, connect to the remote shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh user@192.168.0.2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then check that you also have &lt;code&gt;.ssh&lt;/code&gt; directory in the home folder of the remote &lt;code&gt;user&lt;/code&gt;, if you don&amp;rsquo;t, create it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir ~/.ssh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Create an &lt;code&gt;authorized_keys&lt;/code&gt; file in &lt;code&gt;.ssh&lt;/code&gt; directory:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;touch ~/.ssh/authorized_keys&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Copy the contents of the public key to the &lt;code&gt;authorized_keys&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ~/dc1srv1.pub &amp;gt;&amp;gt; ~/.ssh/authorized_keys&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that the transferred at the previous step public key file is no longer needed, so it can be deleted:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm ~/dc1srv1.pub&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;change-ssh-configuration&#34;&gt;Change SSH configuration&lt;/h3&gt;
+&lt;p&gt;To change the ssh configuration edit the file &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/ssh/sshd_config&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In this file you should find some paramters, and set their values explicitly:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Disallow connection as root user&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PermitRootLogin no
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Enable public key authentication&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PubkeyAuthentication yes
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Disable challenge response&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ChallengeResponseAuthentication no
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Enable PAM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UsePAM yes
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Disable password based authentication&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PasswordAuthentication no
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After saving the file, restart the &lt;code&gt;sshd&lt;/code&gt; service:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl restart sshd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔴 &lt;strong&gt;IMPORTANT:&lt;/strong&gt; After the &lt;code&gt;sshd&lt;/code&gt; restart the new configuration will take effect. It is recommended to &lt;strong&gt;NOT CLOSE&lt;/strong&gt; your currently opened ssh session and keep it until you test and ensure your new ssh key works in &lt;strong&gt;ANOTHER terminal window&lt;/strong&gt;. In this case if something goes wrong you can still revert the changes back to &lt;code&gt;ssh_config&lt;/code&gt; file and restart the &lt;code&gt;sshd&lt;/code&gt; daemon to apply previous configuration.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;check-the-ssh-authentication&#34;&gt;Check the SSH authentication&lt;/h3&gt;
+&lt;h4 id=&#34;verify-password-based-authentication-is-not-allowed&#34;&gt;Verify password based authentication is not allowed&lt;/h4&gt;
+&lt;p&gt;First, let&amp;rsquo;s verify that we can not connect as root and as a generic user, so for the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh root@192.168.0.2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;or:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh user@192.168.0.2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You should get an error &lt;code&gt;Permission denied (publickey)&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;verify-key-based-authentication-works&#34;&gt;Verify key based authentication works&lt;/h4&gt;
+&lt;p&gt;The ssh command to connect to your remote server will be a bit different, as you should specify the ssh key that needs to be used for authentication:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -i ~/.ssh/dc1srv1 user@192.168.0.2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After typing this command you will be promted to enter the password that was used during ssh key generation.&lt;/p&gt;
+&lt;h2 id=&#34;conclution&#34;&gt;Conclution&lt;/h2&gt;
+&lt;p&gt;After you complete this tutorial your server is using secure key based ssh authentication. Keep in mind that you need to backup your ssh keys, because if you lose your ssh key there is no way you can connect to the remote machine via the ssh (in this case only bare metal access to the remote machine can help reset a key, or if you are using some VPS/hosting provider some admin web panels allow resetting ssh settings).&lt;/p&gt;
 </description>
         </item>
         <item>
