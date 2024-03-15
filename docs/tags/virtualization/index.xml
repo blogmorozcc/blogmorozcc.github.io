@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Virtualization on The IT Blog</title>
+        <link>https://blog.moroz.cc/tags/virtualization/</link>
+        <description>Recent content in Virtualization on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Fri, 15 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/virtualization/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to install KVM on Arch Linux</title>
+        <link>https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/</link>
+        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/header.png" alt="Featured image of post How to install KVM on Arch Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;KVM, which stands for Kernel-based Virtual Machine, is a virtualization solution for Linux operating systems. It allows you to run multiple virtual machines (VMs) on a single physical machine by leveraging hardware virtualization features built into modern processors.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a breakdown of what KVM offers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Hypervisor&lt;/strong&gt;: KVM acts as a hypervisor, which is a piece of software that creates and runs virtual machines. It utilizes the virtualization extensions present in modern processors (such as Intel VT-x or AMD-V) to provide hardware-assisted virtualization.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Kernel Integration&lt;/strong&gt;: KVM is integrated into the Linux kernel, which means it leverages the kernel&amp;rsquo;s functionality and benefits from ongoing kernel improvements. This integration provides better performance and stability for virtualized environments.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Full Virtualization&lt;/strong&gt;: KVM supports full virtualization, which allows guest operating systems to run unmodified. This means you can run a variety of operating systems, including Linux, Windows, and others, as virtual machines on a KVM-enabled host.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: KVM is known for its high performance, thanks to its hardware-assisted virtualization support and tight integration with the Linux kernel. This allows for efficient resource utilization and minimal overhead when running virtualized workloads.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Management Tools&lt;/strong&gt;: KVM can be managed through various tools, including command-line utilities like virsh and graphical interfaces like Virt-Manager. These tools provide administrators with the ability to create, configure, and manage virtual machines on KVM hosts.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Overall, KVM is a powerful and versatile virtualization solution for Linux-based systems, offering performance, flexibility, and ease of management for virtualized environments.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;h3 id=&#34;check-virtualization-support&#34;&gt;Check Virtualization Support&lt;/h3&gt;
+&lt;p&gt;Before installing KVM, ensure that your processor supports virtualization and it is enabled in the BIOS settings. Most modern processors support virtualization, but it&amp;rsquo;s good to double-check.&lt;/p&gt;
+&lt;p&gt;For detailed information about checking your hardware please refer to the &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/KVM#Checking_support_for_KVM&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Arch Wiki - Cheking support for KVM&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;install-required-packages&#34;&gt;Install Required Packages&lt;/h3&gt;
+&lt;p&gt;Open a terminal and install the necessary packages. This includes the QEMU disk image utility &lt;code&gt;qemu&lt;/code&gt;, the KVM kernel module &lt;code&gt;kvm&lt;/code&gt;, and the libvirt virtualization API and management tool &lt;code&gt;libvirt&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S virt-manager virt-viewer qemu dnsmasq bridge-utils&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;configure-libvirt-service&#34;&gt;Configure libvirt Service&lt;/h3&gt;
+&lt;p&gt;Libvirt is a toolkit to interact with virtualization capabilities of the Linux kernel. Enable the libvirt service to manage virtual machines.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; --now libvirtd.service&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Enable autostart for the default NAT virtual network for your VMs:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo virsh net-start default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo virsh net-autostart default&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then edit the libvirt config at &lt;code&gt;/etc/libvirt/libvirtd.conf&lt;/code&gt;, and set the parameters:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;unix_sock_group&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;libvirt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;unix_sock_rw_perms&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;0770&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To actually make configurtion above work add your current user to the &lt;code&gt;libvirt&lt;/code&gt; group:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod -a -G libvirt &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;whoami&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;newgrp libvirt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then finally restart the libvirt daemon to apply the changes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo systemctl restart libvirtd.service&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that you should be able to launch &lt;code&gt;virt-manager&lt;/code&gt; and use KVM virtualization, but if you see some errors try rebooting your machine, if this does not help review your libvirt daemon logs and configuration.&lt;/p&gt;
+&lt;h3 id=&#34;enable-nested-virtualization-optional&#34;&gt;Enable nested virtualization (optional)&lt;/h3&gt;
+&lt;p&gt;Nested virtualization enables existing virtual machines to be run on third-party hypervisors and on other clouds without any modifications to the original virtual machines or their networking.&lt;/p&gt;
+&lt;p&gt;To enable it (non-permanently) use the following terminal commands:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo modprobe -r kvm_intel  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo modprobe kvm_intel &lt;span class=&#34;nv&#34;&gt;nested&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then to verify that it is enabled, check the output of the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat /sys/module/kvm_intel/parameters/nested&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;it should print &lt;code&gt;Y&lt;/code&gt; as output if Nested virtualization is enabled.&lt;/p&gt;
+&lt;p&gt;To make this change permanently applied when your machine is booted use command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;options kvm-intel nested=1&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo tee /etc/modprobe.d/kvm-intel.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/KVM&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Arch Wiki - KVM&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Wikipedia - KVM&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://git.kernel.org/pub/scm/virt/kvm/kvm.git&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Kernel Virtual machine source code&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

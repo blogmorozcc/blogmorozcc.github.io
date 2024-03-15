@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>KVM on The IT Blog</title>
+        <link>http://localhost:1313/tags/kvm/</link>
+        <description>Recent content in KVM on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Fri, 15 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/kvm/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to install KVM on Arch Linux</title>
+        <link>http://localhost:1313/post/how-to-install-kvm-on-arch-linux/</link>
+        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/how-to-install-kvm-on-arch-linux/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-install-kvm-on-arch-linux/header.png" alt="Featured image of post How to install KVM on Arch Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;KVM, which stands for Kernel-based Virtual Machine, is a virtualization solution for Linux operating systems. It allows you to run multiple virtual machines (VMs) on a single physical machine by leveraging hardware virtualization features built into modern processors.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a breakdown of what KVM offers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Hypervisor&lt;/strong&gt;: KVM acts as a hypervisor, which is a piece of software that creates and runs virtual machines. It utilizes the virtualization extensions present in modern processors (such as Intel VT-x or AMD-V) to provide hardware-assisted virtualization.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Kernel Integration&lt;/strong&gt;: KVM is integrated into the Linux kernel, which means it leverages the kernel&amp;rsquo;s functionality and benefits from ongoing kernel improvements. This integration provides better performance and stability for virtualized environments.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Full Virtualization&lt;/strong&gt;: KVM supports full virtualization, which allows guest operating systems to run unmodified. This means you can run a variety of operating systems, including Linux, Windows, and others, as virtual machines on a KVM-enabled host.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: KVM is known for its high performance, thanks to its hardware-assisted virtualization support and tight integration with the Linux kernel. This allows for efficient resource utilization and minimal overhead when running virtualized workloads.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Management Tools&lt;/strong&gt;: KVM can be managed through various tools, including command-line utilities like virsh and graphical interfaces like Virt-Manager. These tools provide administrators with the ability to create, configure, and manage virtual machines on KVM hosts.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Overall, KVM is a powerful and versatile virtualization solution for Linux-based systems, offering performance, flexibility, and ease of management for virtualized environments.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

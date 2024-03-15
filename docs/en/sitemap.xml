@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/</loc>
-    <lastmod>2024-03-10T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -14,6 +14,103 @@
                 hreflang="en"
                 href="https://blog.moroz.cc/"
                 />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/kvm/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/kvm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/kvm/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/linux/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/linux/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/post/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/virtualization/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/virtualization/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.moroz.cc/tags/authentication/</loc>
     <lastmod>2024-03-10T00:00:00+00:00</lastmod>
@@ -26,19 +123,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/authentication/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/</loc>
-    <lastmod>2024-03-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/</loc>
@@ -57,47 +141,8 @@
     <loc>https://blog.moroz.cc/categories/cybersecurity/</loc>
     <lastmod>2024-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.moroz.cc/tags/linux/</loc>
-    <lastmod>2024-03-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/linux/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/categories/linux/</loc>
-    <lastmod>2024-03-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/linux/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/categories/networking/</loc>
     <lastmod>2024-03-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.moroz.cc/post/</loc>
-    <lastmod>2024-03-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/post/"
-                />
   </url><url>
     <loc>https://blog.moroz.cc/tags/rsa/</loc>
     <lastmod>2024-03-10T00:00:00+00:00</lastmod>
@@ -123,19 +168,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/ssh/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/</loc>
-    <lastmod>2024-03-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/arch/</loc>
