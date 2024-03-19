@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="uk" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction GPU passthrough in KVM (Kernel-based Virtual Machine) refers to the process of directly assigning a physical GPU (Graphics Processing Unit) to a virtual machine running on a KVM hypervisor. This allows the virtual machine to have exclusive access to the GPU, essentially bypassing the hypervisor&amp;rsquo;s virtualization layer.
+For many people this can sound complicated, but with Linux and KVM it&amp;rsquo;s actually easy and setup includes this 5 steps:
+Identifying the GPU.'><title>Про GPU PCI до Windows KVM на Arch Linux</title>
+
+<link rel='canonical' href='http://localhost:1313/uk/post/%D0%BF%D1%80%D0%BE-gpu-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Про GPU PCI до Windows KVM на Arch Linux'>
+<meta property='og:description' content='Introduction GPU passthrough in KVM (Kernel-based Virtual Machine) refers to the process of directly assigning a physical GPU (Graphics Processing Unit) to a virtual machine running on a KVM hypervisor. This allows the virtual machine to have exclusive access to the GPU, essentially bypassing the hypervisor&amp;rsquo;s virtualization layer.
+For many people this can sound complicated, but with Linux and KVM it&amp;rsquo;s actually easy and setup includes this 5 steps:
+Identifying the GPU.'>
+<meta property='og:url' content='http://localhost:1313/uk/post/%D0%BF%D1%80%D0%BE-gpu-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/'>
+<meta property='og:site_name' content='Блог про IT'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='Virtualization' /><meta property='article:tag' content='PCI Passthrough' /><meta property='article:tag' content='GPU' /><meta property='article:tag' content='IOMMU' /><meta property='article:tag' content='VT-d' /><meta property='article:tag' content='AMD-Vi' /><meta property='article:tag' content='VFIO' /><meta property='article:published_time' content='2024-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-18T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.webp' />
+<meta name="twitter:title" content="Про GPU PCI до Windows KVM на Arch Linux">
+<meta name="twitter:description" content="Introduction GPU passthrough in KVM (Kernel-based Virtual Machine) refers to the process of directly assigning a physical GPU (Graphics Processing Unit) to a virtual machine running on a KVM hypervisor. This allows the virtual machine to have exclusive access to the GPU, essentially bypassing the hypervisor&amp;rsquo;s virtualization layer.
+For many people this can sound complicated, but with Linux and KVM it&amp;rsquo;s actually easy and setup includes this 5 steps:
+Identifying the GPU."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.webp' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Показати меню">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/uk/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/uk">Блог про IT</a></h1>
+            
+            
+            
+            <h2 class="site-description">Дмитра Мороза</h2>
+            
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/uk/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Головна</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Архіви</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Пошук</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" >English</option>
+                        
+                            <option value="http://localhost:1313/uk/" selected>Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Темна тема</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/uk/post/%D0%BF%D1%80%D0%BE-gpu-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/">
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_800x0_resize_q75_h2_box_2.webp"
+                        srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_800x0_resize_q75_h2_box_2.webp 800w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_1600x0_resize_q75_h2_box_2.webp 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post Про GPU PCI до Windows KVM на Arch Linux" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/uk/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/uk/categories/virtualization/" >
+                Virtualization
+            </a>
+        
+            <a href="/uk/categories/hardware/" >
+                Hardware
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/uk/post/%D0%BF%D1%80%D0%BE-gpu-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/">Про GPU PCI до Windows KVM на Arch Linux</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">18.03.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    Час читання: 13 хв
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<p>GPU passthrough in KVM (Kernel-based Virtual Machine) refers to the process of directly assigning a physical GPU (Graphics Processing Unit) to a virtual machine running on a KVM hypervisor. This allows the virtual machine to have exclusive access to the GPU, essentially bypassing the hypervisor&rsquo;s virtualization layer.</p>
+<p>For many people this can sound complicated, but with Linux and KVM it&rsquo;s actually easy and setup includes this 5 steps:</p>
+<ol>
+<li>
+<p><strong>Identifying the GPU</strong>. The first step is to ensure that the GPU you want to passthrough is compatible with your hardware and supports the necessary features for passthrough. This often requires VT-d (Intel Virtualization Technology for Directed I/O) or AMD-Vi (AMD Virtualization I/O) support on the CPU, as well as an IOMMU (Input-Output Memory Management Unit) on the motherboard.</p>
+</li>
+<li>
+<p><strong>Configuring the Host</strong>. You&rsquo;ll need to configure the host system to enable IOMMU, VT-d, or AMD-Vi in the BIOS/UEFI settings, as well as load necessary kernel modules and drivers.</p>
+</li>
+<li>
+<p><strong>Isolating the GPU</strong>. The GPU intended for passthrough needs to be isolated from the host operating system so that it can be exclusively assigned to the virtual machine. This is typically done by blacklisting the GPU driver from loading on the host.</p>
+</li>
+<li>
+<p><strong>Configuring the Virtual Machine</strong>. Within the KVM setup, you configure the virtual machine to use the passthrough GPU. This involves specifying the GPU as a PCI device to be passed through to the VM.</p>
+</li>
+<li>
+<p><strong>Driver Installation</strong>. Once the GPU is passed through to the virtual machine, you install the necessary drivers within the guest operating system just as you would on a physical machine.</p>
+</li>
+</ol>
+<h2 id="hardware-requirements">Hardware requirements</h2>
+<p>It is important to mention that this kind of setup requires your computer hardware to meet some requirements.</p>
+<h3 id="cpu">CPU</h3>
+<p>Your CPU must support hardware virtualization extensions such as Intel VT-x (Intel Virtualization Technology) or AMD-V (AMD Virtualization). Additionally, for GPU passthrough, you&rsquo;ll need support for Intel VT-d (Intel Virtualization Technology for Directed I/O) or AMD-Vi (AMD Virtualization I/O) extensions, which allow direct access to I/O devices from virtual machines.</p>
+<h3 id="motherboard">Motherboard</h3>
+<p>Your motherboard must have an IOMMU (Input-Output Memory Management Unit) that supports PCIe device isolation and passthrough. Most modern motherboards have this feature, but you should check your motherboard&rsquo;s specifications to ensure compatibility.</p>
+<h3 id="gpu">GPU</h3>
+<p>The GPU you must support UEFI. Ideal choice is a GPU that supports the necessary features for passthrough, such as AMD&rsquo;s Radeon Pro or Nvidia&rsquo;s Quadro series GPUs, as consumer-grade GPUs may have limitations or require workarounds.</p>
+<p>Also if you want the ability to use your host Linux OS at the same time with the guest Windows OS you need to have 2 GPU (one for host, another for guest) and it is recommended to have 2 monitors.</p>
+<p>If your CPU has built-in graphics unit and your motherboard has video output, it may be fine to have only 1 external PCI GPU. In that case the PCI GPU is passed to the VM, and Linux host uses CPU graphics for output.</p>
+<h2 id="gpu-passthrough-setup">GPU Passthrough setup</h2>
+<h3 id="review-your-hardware">Review your hardware</h3>
+<p>The very first step for the setup is to review the hardware you have. If you want achieve the same setup as in my example make sure you have 2 GPUs (at least one should be external PCI GPU).</p>
+<p>My hardware specifications are:</p>
+<ul>
+<li><strong>Motherboard</strong>: <a class="link" href="https://www.msi.com/Motherboard/MPG-Z490-GAMING-EDGE-WIFI"  target="_blank" rel="noopener"
+    >MSI MPG z490 Gaming Edge WiFi</a></li>
+<li><strong>CPU</strong>: <a class="link" href="https://ark.intel.com/content/www/us/en/ark/products/205904/intel-core-i9-10850k-processor-20m-cache-up-to-5-20-ghz.html"  target="_blank" rel="noopener"
+    >Intel Core i9-10850K</a></li>
+<li><strong>GPU 1</strong>: <a class="link" href="https://www.amd.com/en/products/graphics/amd-radeon-rx-6750-xt"  target="_blank" rel="noopener"
+    >AMD Radeon RX 6750XT</a> (for Linux <strong>HOST</strong>)</li>
+<li><strong>GPU 2</strong>: <a class="link" href="https://www.amd.com/en/products/graphics/amd-radeon-rx-6600"  target="_blank" rel="noopener"
+    >AMD Radeon RX 6600</a> (for Windows <strong>GUEST</strong>)</li>
+<li><strong>Monitors</strong>: 2 x FullHD 1920x1080 @ 75 Hz</li>
+</ul>
+<!-- raw HTML omitted -->
+<h3 id="install-and-configure-kvm">Install and configure KVM</h3>
+<p>This guide is written assuming you already have a working Linux system with installed and configured KVM (libvirt) and the software to manage your VMs (virt-manager, virt-viewer).</p>
+<p>If you don&rsquo;t have KVM installed yet, see my another guide: <a class="link" href="http://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux"  target="_blank" rel="noopener"
+    >How to install KVM on Arch Linux</a>.</p>
+<h3 id="modify-motherboard-bios-settings">Modify motherboard BIOS settings</h3>
+<p>In order for KVM to work on your system Virtualization Technology should be enabled. It may be named differently depending on your motherboard/CPU manufacturer, but usually it is VT-D for Intel and AMD-Vi for AMD respectively.</p>
+<!-- raw HTML omitted -->
+<p>If you have a setup with the integrated CPU graphics you also will need to change the graphics initialization priority. It is needed to prevent your external GPU initialization on BIOS POST startup, and delegate a video signal to integrated GPU instead. In my case I don&rsquo;t need this step, as I have 2 external PCI GPUs.</p>
+<!-- raw HTML omitted -->
+<h3 id="enable-iommu">Enable IOMMU</h3>
+<blockquote>
+<p>IOMMU is a generic name for Intel VT-d and AMD-Vi.</p>
+</blockquote>
+<p>To enable IOMMU in the Linux system you should pass the correct boot kernel parameter. Adding the kernel boot parameters may be different, depending on what bootloader you are using.</p>
+<p>If are using:</p>
+<ul>
+<li><strong>Intel CPU</strong> - add flags: <code>intel_iommu=on iommu=pt</code></li>
+<li><strong>AMD CPU</strong> - add flags: <code>iommu=pt</code></li>
+</ul>
+<p>In AMD case kernel detects if IOMMU should be on from BIOS, and <code>iommu=pt</code> prevents Linux from processing devices that can&rsquo;t be passed through.</p>
+<h4 id="option-1-grub">Option 1: GRUB</h4>
+<p>If you are using grub as your bootloader, you can modify your kernel parameters in file <code>/etc/default/grub</code> and append the flags to <code>GRUB_CMDLINE_LINUX</code> parameters, for example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;quiet splash intel_iommu=on iommu=pt&#34;</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then save the file and re-generate your GRUB config with the command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo grub-mkconfig -o /boot/grub/grub.cfg</span></span></code></pre></div>
+<h4 id="option-2-systemd-boot">Option 2: Systemd Boot</h4>
+<p>If you are using the systemd boot bootloader, you need to edit your boot entry file. In my case this file is located at <code>/boot/loader/entries/arch.conf</code>.</p>
+<p>Kernel parameters should be appended to the end of <code>options</code> parameter like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">options rw quiet splash <span class="nv">intel_iommu</span><span class="o">=</span>on <span class="nv">iommu</span><span class="o">=</span>pt
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After you added the correct kernel parameters to your bootloader, <code>reboot</code> your computer.</p>
+<h3 id="reviev-your-iommu-groups">Reviev your IOMMU groups</h3>
+<p>An IOMMU (Input-Output Memory Management Unit) group is a logical grouping of devices that are controlled by the same IOMMU. The primary purpose of an IOMMU group is to facilitate device isolation and management in virtualized environments, particularly when using technologies like GPU passthrough.</p>
+<p>It is important that you have only devices related to the GPU your intend to pass through in the same IOMMU group. Because if you have something else, it should be also passed to the VM or otherwise passthrough will not work.</p>
+<p>You can use the following script to verify your iommu groups:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">shopt</span> -s nullglob
+</span></span><span class="line"><span class="cl"><span class="k">for</span> g in <span class="k">$(</span>find /sys/kernel/iommu_groups/* -maxdepth <span class="m">0</span> -type d <span class="p">|</span> sort -V<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;IOMMU Group </span><span class="si">${</span><span class="nv">g</span><span class="p">##*/</span><span class="si">}</span><span class="s2">:&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> d in <span class="nv">$g</span>/devices/*<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> -e <span class="s2">&#34;\t</span><span class="k">$(</span>lspci -nns <span class="si">${</span><span class="nv">d</span><span class="p">##*/</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">done</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You need to save the script contents to some file (for example <code>iommu.sh</code>) and make this file executable (<code>chmod +x iommu.sh</code>), then you can just run it using <code>./iommu.sh</code>.</p>
+<p>In my case IOMMU groups are:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">IOMMU Group 0:
+</span></span><span class="line"><span class="cl">	00:00.0 Host bridge <span class="o">[</span>0600<span class="o">]</span>: Intel Corporation Comet Lake-S 6c Host Bridge/DRAM Controller <span class="o">[</span>8086:9b33<span class="o">]</span> <span class="o">(</span>rev 05<span class="o">)</span>
+</span></span><span class="line"><span class="cl">IOMMU Group 1:
+</span></span><span class="line"><span class="cl">	00:01.0 PCI bridge <span class="o">[</span>0604<span class="o">]</span>: Intel Corporation 6th-10th Gen Core Processor PCIe Controller <span class="o">(</span>x16<span class="o">)</span> <span class="o">[</span>8086:1901<span class="o">]</span> <span class="o">(</span>rev 05<span class="o">)</span>
+</span></span><span class="line"><span class="cl">	01:00.0 PCI bridge <span class="o">[</span>0604<span class="o">]</span>: Advanced Micro Devices, Inc. <span class="o">[</span>AMD/ATI<span class="o">]</span> Navi <span class="m">10</span> XL Upstream Port of PCI Express Switch <span class="o">[</span>1002:1478<span class="o">]</span> <span class="o">(</span>rev c0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">	02:00.0 PCI bridge <span class="o">[</span>0604<span class="o">]</span>: Advanced Micro Devices, Inc. <span class="o">[</span>AMD/ATI<span class="o">]</span> Navi <span class="m">10</span> XL Downstream Port of PCI Express Switch <span class="o">[</span>1002:1479<span class="o">]</span>
+</span></span><span class="line"><span class="cl">	03:00.0 VGA compatible controller <span class="o">[</span>0300<span class="o">]</span>: Advanced Micro Devices, Inc. <span class="o">[</span>AMD/ATI<span class="o">]</span> Navi <span class="m">22</span> <span class="o">[</span>Radeon RX 6700/6700 XT/6750 XT / 6800M/6850M XT<span class="o">]</span> <span class="o">[</span>1002:73df<span class="o">]</span> <span class="o">(</span>rev c0<span class="o">)</span>
+</span></span><span class="line"><span class="cl">	03:00.1 Audio device <span class="o">[</span>0403<span class="o">]</span>: Advanced Micro Devices, Inc. <span class="o">[</span>AMD/ATI<span class="o">]</span> Navi 21/23 HDMI/DP Audio Controller <span class="o">[</span>1002:ab28<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">IOMMU Group 18:
+</span></span><span class="line"><span class="cl">	07:00.0 VGA compatible controller <span class="o">[</span>0300<span class="o">]</span>: Advanced Micro Devices, Inc. <span class="o">[</span>AMD/ATI<span class="o">]</span> Navi <span class="m">23</span> <span class="o">[</span>Radeon RX 6600/6600 XT/6600M<span class="o">]</span> <span class="o">[</span>1002:73ff<span class="o">]</span> <span class="o">(</span>rev c7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">IOMMU Group 19:
+</span></span><span class="line"><span class="cl">	07:00.1 Audio device <span class="o">[</span>0403<span class="o">]</span>: Advanced Micro Devices, Inc. <span class="o">[</span>AMD/ATI<span class="o">]</span> Navi 21/23 HDMI/DP Audio Controller <span class="o">[</span>1002:ab28<span class="o">]</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Ensure that the GPU and its associated devices are not grouped with other critical system devices (e.g., USB controllers, Ethernet controllers) that you do not intend to pass through to the virtual machine. Having the GPU in its own isolated IOMMU group is crucial for reliable passthrough.</p>
+</blockquote>
+<p>In this case the <strong>AMD RX 6600 GPU</strong> that I want to pass to VM has 2 devices <strong>07:00.0</strong> and <strong>07:00.1</strong>, each in separate IOMMU groups <strong>18</strong> and <strong>19</strong>, and no other devices are in groups <strong>18</strong> and <strong>19</strong>. Than means I can passthrough it with no problem.</p>
+<p>If we look at the devices for <strong>AMD RX 6750 XT</strong> which are <strong>03:00.0</strong> and <strong>03:00.1</strong> in IOMMU group <strong>1</strong>, there are also some PCI birdge devices, which in theory does not prevent passthrough this GPU as well as long as you also pass this PCI bridges to VM. The real problem would be if for example IOMMU group <strong>1</strong> contained some brand another PCI device (like USB bridge or sound card).</p>
+<p>In case you have more devices than you need in IOMMU group with the GPU you could try:</p>
+<ul>
+<li>If your motherboard has many PCI Express slots, try to install GPU in different PCIE slots and see if it helps.</li>
+<li>In case you can not find optimal IOMMU group with no extra devices, you can patch your Linux kernel with <strong>ACS Override</strong> patch (but it is out of scope for this article).</li>
+</ul>
+<h3 id="isolate-your-gpu">Isolate your GPU</h3>
+<p>Isolating the GPU refers to the process of ensuring that the GPU is exclusively available for use by a specific virtual machine, typically through binding it to the VFIO (Virtual Function I/O) driver. This process involves several steps to prevent the GPU from being used by the host operating system or other virtual machines:</p>
+<ul>
+<li>
+<p><strong>Unbinding from Host Driver</strong>. Initially, the GPU is typically bound to a driver used by the host operating system for normal graphics operations. To isolate the GPU, this binding needs to be undone so that the GPU can be claimed by the VFIO driver. This step effectively detaches the GPU from the host OS.</p>
+</li>
+<li>
+<p><strong>Binding to VFIO Driver</strong>. Once unbound from the host driver, the GPU is then bound to the VFIO driver, which allows it to be passed through to the virtual machine. The VFIO driver provides the necessary functionality for direct device assignment (DDA) in virtualized environments, ensuring that the GPU is accessible to the virtual machine.</p>
+</li>
+</ul>
+<p>Isolating means that after you boot your host Linux system you can not use the isolated GPU (which is bound to <code>vfio</code> driver), you can only use it to pass to the VM.</p>
+<p>To isolate the GPU you need to know the deice IDs of your GPU video and audio PCI output device. You can use <code>iommu.sh</code> script from previous step to get this information. In my case the device IDs are: <code>1002:73df</code> and <code>1002:ab28</code>.</p>
+<h4 id="vfio-early-load">VFIO Early load</h4>
+<p>To load vfio early and bind the necessary GPU to vfio create a config at <code>/etc/modprobe.d/vfio.conf</code> which in my case looks like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">softdep amdgpu pre: vfio-pci
+</span></span><span class="line"><span class="cl">options vfio-pci <span class="nv">ids</span><span class="o">=</span>1002:73ff,1002:ab28 <span class="nv">disable_vga</span><span class="o">=</span><span class="m">1</span> kvm.ignore_msrs<span class="o">=</span><span class="m">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Here the line <code>softdep amdgpu pre: vfio-pci</code> allows <code>vfio-pci</code> driver to be forced to load before the <code>amdgpu</code> driver, I need this because I have 2 external PCI GPUs of the same manufacturer, and this allows to bind RX 6600 GPU to <code>vfio-pci</code> driver and then bind RX 6750 XT to the <code>amdgpu</code> driver.</p>
+<p>In your case if you have NVidia gpu then <code>vfio-pci</code> should be loaded before the <code>nvidia</code> (proprietary) or before the <code>nouveau</code> (free) driver.</p>
+<h4 id="initramfs-configuration">Initramfs configuration</h4>
+<p>In my case I use <code>mkinitcpio</code> as initramfs builder. To configure mkinitcpio edit the <code>/etc/mkinitcpio.conf</code> file.</p>
+<p>Add the necessary modules to the <code>MODULES</code> array:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="nv">MODULES</span><span class="o">=(</span>vfio_pci vfio vfio_iommu_type1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then ensure you have <code>modconf</code> hook defined in the <code>HOOKS</code> array:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="nv">HOOKS</span><span class="o">=(</span>... modconf ...<span class="o">)</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Save the file, and then execute a command for initramfs regeneration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo mkinitcpio -P</span></span></code></pre></div>
+<p>After that, you need to reboot the computer to apply changes.</p>
+<h3 id="setup-a-new-vm-and-install-windows-1011">Setup a new VM and install Windows 10/11</h3>
+<p>Now it is a time to setup a new VM and install a new Windows system. I recommend setup and install Windows without any passed PCI devices, and add them to the VM later after installation is finished.</p>
+<p>All the setup is easier to do using the <code>virt-manager</code> graphical application.</p>
+<ol>
+<li>
+<p>Open the <code>virt-manager</code> application.</p>
+</li>
+<li>
+<p>Click &ldquo;New Virtual Machine&rdquo;.</p>
+</li>
+<li>
+<p>Select Local install media. Ususally it should be Windows 10/11 iso file which can be downloaded from microsoft website.</p>
+</li>
+<li>
+<p>Browse to your Windows 10/11 iso. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as &ldquo;Windows 10&rdquo; or &ldquo;Windows 11&rdquo; at the bottom field.</p>
+</li>
+<li>
+<p>Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux <strong>host</strong> system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.</p>
+</li>
+<li>
+<p>Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windwos VM.</p>
+</li>
+</ol>
+<p>Then <strong>DO NOT CLICK FINISH</strong>, and do the following:</p>
+<ul>
+<li>Ensure Customize Configuration before install is checked.</li>
+<li>Give your VM a name.</li>
+<li>Under network selection, select Host device [your device ID] -&gt; Source Mode -&gt; Bridge).</li>
+<li>Now you can click Finish.</li>
+</ul>
+<p>Then install Windows as usual, after you have the system installed proceed to the next step.</p>
+<h3 id="adjust-specific-vm-settings">Adjust specific VM settings</h3>
+<p>There is a need to add some flags that allow to hide the fact that you are using VM from the GPU drivers installer.</p>
+<p>To edit the VM settings make sure your VM is not running and type this command in terminal:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo virsh edit win10</span></span></code></pre></div>
+<p>where you should replace <code>win10</code> with your actual VM name.</p>
+<p>Then do the following XML file modifications in the editor:</p>
+<ul>
+<li>Add <code>&lt;vendor_id state='on' value='randomid'/&gt;</code> to the <code>&lt;hyperv&gt;</code> section.</li>
+<li>Add <code>&lt;kvm&gt;&lt;hidden state='on'/&gt;&lt;/kvm&gt;</code> to the <code>&lt;features&gt;</code> section.</li>
+</ul>
+<p>As the result the structure should be like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">&lt;features&gt;
+</span></span><span class="line"><span class="cl">  ...
+</span></span><span class="line"><span class="cl">  &lt;hyperv&gt;
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">    &lt;vendor_id <span class="nv">state</span><span class="o">=</span><span class="s1">&#39;on&#39;</span> <span class="nv">value</span><span class="o">=</span><span class="s1">&#39;randomid&#39;</span>/&gt;
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">  &lt;/hyperv&gt;
+</span></span><span class="line"><span class="cl">  &lt;kvm&gt;
+</span></span><span class="line"><span class="cl">    &lt;hidden <span class="nv">state</span><span class="o">=</span><span class="s1">&#39;on&#39;</span>/&gt;
+</span></span><span class="line"><span class="cl">  &lt;/kvm&gt;
+</span></span><span class="line"><span class="cl">  ...
+</span></span><span class="line"><span class="cl">&lt;/features&gt;
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="passthrough-gpu-to-the-vm">Passthrough GPU to the VM</h3>
+<p>In the <code>virt-manager</code> applcation open your VM settings and navigate to your VM settings and here need to add 2 PCI host devices related to the GPU you intend to passthrough.</p>
+<ol>
+<li>
+<p>Click &ldquo;Add PCI Passthrough Devices&rdquo;.</p>
+</li>
+<li>
+<p>Click &ldquo;Add Hardware&rdquo;.</p>
+</li>
+<li>
+<p>Select PCI Host Device</p>
+</li>
+</ol>
+<p>Scroll down until you find the GPU you want to pass through. The ID&rsquo;s should match your outputs from earlier. For example, in my case:</p>
+<ul>
+<li><code>0000:07:00:0</code> Advanced Micro Devices, Inc. [AMD/ATI] Navi 23 [Radeon RX 6600/6600 XT/6600M]</li>
+<li><code>0000:07:00:1</code> Advanced Micro Devices, Inc. [AMD/ATI] Navi 21/23 HDMI/DP Audio Controller [1002:ab28]</li>
+</ul>
+<p>You need to do this twice for the GPU&rsquo;s video and audio device respectively.</p>
+<p>Then if you have a second monitor try to plug it to the video output of the GPU you passed to the VM and boot the VM, if everything is set up correctly you should see the VM video output on the separate monitor.</p>
+<h3 id="install-gpu-drivers">Install GPU drivers</h3>
+<p>After you successfully booted your Windows VM with external GPU working it&rsquo;s time to download and install latest drivers from your GPU manufacturer.</p>
+<ul>
+<li><a class="link" href="https://www.nvidia.com/download/index.aspx?lang=en"  target="_blank" rel="noopener"
+    >Official Nvidia GPU drivers</a></li>
+<li><a class="link" href="https://www.amd.com/en/support"  target="_blank" rel="noopener"
+    >Official AMD GPU drivers</a></li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Configured Windows VM with GPU passthrough can handle specific graphical apps (like gaming or video editing) with a near native performance, and as a result allows to use your host Linux system and a Windows guest system at the same time.</p>
+<p>Benefits of GPU passthrough in KVM include:</p>
+<ul>
+<li>
+<p>Improved Performance: By directly accessing the physical GPU, the virtual machine can achieve near-native performance for graphics-intensive tasks such as gaming, video editing, and 3D rendering.</p>
+</li>
+<li>
+<p>Reduced Overhead: Since the virtual machine bypasses the hypervisor&rsquo;s virtualization layer for GPU operations, there&rsquo;s less overhead compared to traditional GPU virtualization techniques like GPU emulation or virtual GPU (vGPU) solutions.</p>
+</li>
+<li>
+<p>Support for GPU-accelerated Workloads: GPU passthrough enables virtual machines to leverage hardware acceleration for tasks that rely on GPU processing power, leading to faster execution times and improved efficiency.</p>
+</li>
+<li>
+<p>Compatibility with GPU-specific Software: Certain applications and workflows require direct access to a physical GPU, which may not be possible with virtual GPU solutions. GPU passthrough allows such software to run seamlessly within a virtualized environment.</p>
+</li>
+<li>
+<p>Enhanced Gaming Experience: Gamers can benefit from GPU passthrough by running games within a virtual machine with minimal performance degradation, enabling them to utilize hardware-accelerated graphics without dual-booting or dedicating a separate physical machine for gaming.</p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/uk/tags/linux/">Linux</a>
+        
+            <a href="/uk/tags/kvm/">KVM</a>
+        
+            <a href="/uk/tags/virtualization/">Virtualization</a>
+        
+            <a href="/uk/tags/pci-passthrough/">PCI Passthrough</a>
+        
+            <a href="/uk/tags/gpu/">GPU</a>
+        
+            <a href="/uk/tags/iommu/">IOMMU</a>
+        
+            <a href="/uk/tags/vt-d/">VT-D</a>
+        
+            <a href="/uk/tags/amd-vi/">AMD-Vi</a>
+        
+            <a href="/uk/tags/vfio/">VFIO</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Схожі матеріали</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення системи віртуалізації KVM на Arch Linux"
+                        
+                        data-hash="md5-ILUOqaoOmtAx5tzmlcw7eQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення системи віртуалізації KVM на Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-ssh-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-rsa-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Налаштування SSH авторизації на основі RSA ключа"
+                        
+                        data-hash="md5-ikcOQeNwZ&#43;e7tI8xo&#43;mWEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Налаштування SSH авторизації на основі RSA ключа</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Як виправити помилку відсутності шрифтів формул для WPS Office на Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Як виправити помилку відсутності шрифтів формул для WPS Office на Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-lte-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BC%D1%83-%D0%B2%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA-thinkpad-%D0%BD%D0%B0-arch-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Налаштування LTE модему вбудованного в ноутбук ThinkPad на Arch Linux за допомогою FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Налаштування LTE модему вбудованного в ноутбук ThinkPad на Arch Linux за допомогою FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | Блог про IT
+    </section>
+    
+    <section class="powerby">
+        
+        Всі права захищено.
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Зміст</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#hardware-requirements">Hardware requirements</a>
+      <ol>
+        <li><a href="#cpu">CPU</a></li>
+        <li><a href="#motherboard">Motherboard</a></li>
+        <li><a href="#gpu">GPU</a></li>
+      </ol>
+    </li>
+    <li><a href="#gpu-passthrough-setup">GPU Passthrough setup</a>
+      <ol>
+        <li><a href="#review-your-hardware">Review your hardware</a></li>
+        <li><a href="#install-and-configure-kvm">Install and configure KVM</a></li>
+        <li><a href="#modify-motherboard-bios-settings">Modify motherboard BIOS settings</a></li>
+        <li><a href="#enable-iommu">Enable IOMMU</a>
+          <ol>
+            <li><a href="#option-1-grub">Option 1: GRUB</a></li>
+            <li><a href="#option-2-systemd-boot">Option 2: Systemd Boot</a></li>
+          </ol>
+        </li>
+        <li><a href="#reviev-your-iommu-groups">Reviev your IOMMU groups</a></li>
+        <li><a href="#isolate-your-gpu">Isolate your GPU</a>
+          <ol>
+            <li><a href="#vfio-early-load">VFIO Early load</a></li>
+            <li><a href="#initramfs-configuration">Initramfs configuration</a></li>
+          </ol>
+        </li>
+        <li><a href="#setup-a-new-vm-and-install-windows-1011">Setup a new VM and install Windows 10/11</a></li>
+        <li><a href="#adjust-specific-vm-settings">Adjust specific VM settings</a></li>
+        <li><a href="#passthrough-gpu-to-the-vm">Passthrough GPU to the VM</a></li>
+        <li><a href="#install-gpu-drivers">Install GPU drivers</a></li>
+      </ol>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
