@@ -6,10 +6,18 @@
         <description>Recent content in Categories on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Fri, 15 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hardware</title>
+        <link>https://blog.moroz.cc/categories/hardware/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/hardware/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Linux</title>
         <link>https://blog.moroz.cc/categories/linux/</link>
-        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/categories/linux/</guid>
         <description></description>
@@ -17,7 +25,7 @@
         <item>
         <title>Virtualization</title>
         <link>https://blog.moroz.cc/categories/virtualization/</link>
-        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/categories/virtualization/</guid>
         <description></description>
@@ -44,14 +52,6 @@
         <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/categories/office/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Hardware</title>
-        <link>https://blog.moroz.cc/categories/hardware/</link>
-        <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/categories/hardware/</guid>
         <description></description>
         </item>
         <item>

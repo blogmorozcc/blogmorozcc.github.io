@@ -6,10 +6,34 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Fri, 15 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>AMD-Vi</title>
+        <link>http://localhost:1313/tags/amd-vi/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/amd-vi/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>GPU</title>
+        <link>http://localhost:1313/tags/gpu/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/gpu/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>IOMMU</title>
+        <link>http://localhost:1313/tags/iommu/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/iommu/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>KVM</title>
         <link>http://localhost:1313/tags/kvm/</link>
-        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/tags/kvm/</guid>
         <description></description>
@@ -17,17 +41,41 @@
         <item>
         <title>Linux</title>
         <link>http://localhost:1313/tags/linux/</link>
-        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/tags/linux/</guid>
         <description></description>
         </item>
         <item>
+        <title>PCI Passthrough</title>
+        <link>http://localhost:1313/tags/pci-passthrough/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/pci-passthrough/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VFIO</title>
+        <link>http://localhost:1313/tags/vfio/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/vfio/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Virtualization</title>
         <link>http://localhost:1313/tags/virtualization/</link>
-        <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/tags/virtualization/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VT-D</title>
+        <link>http://localhost:1313/tags/vt-d/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/vt-d/</guid>
         <description></description>
         </item>
         <item>

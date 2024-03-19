@@ -6,7 +6,368 @@
         <description>Recent content in Віртуалізація on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Fri, 15 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/categories/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/categories/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Прокидання відеокарти PCI до Windows KVM на Arch Linux</title>
+        <link>https://blog.moroz.cc/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/</link>
+        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.webp" alt="Featured image of post Прокидання відеокарти PCI до Windows KVM на Arch Linux" /&gt;&lt;h2 id=&#34;вступ&#34;&gt;Вступ&lt;/h2&gt;
+&lt;p&gt;Прокидання GPU в KVM відноситься до процесу безпосереднього призначення фізичного GPU (графічного пристрою) віртуальній машині, що працює на гіпервізорі KVM. Це дозволяє віртуальній машині мати виключний доступ до GPU, обійшовши практично віртуалізаційний шар гіпервізора.&lt;/p&gt;
+&lt;p&gt;Для багатьох це може звучати складно, але з Linux та KVM це насправді легко, і налаштування включає наступні 5 кроків:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Перевірка GPU&lt;/strong&gt;. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу. Це часто потребує підтримки VT-d (віртуалізаційна технологія Intel для прямого введення/виведення) або AMD-Vi (AMD віртуалізація I/O) на процесорі, а також IOMMU (одиниця управління пам&amp;rsquo;яттю введення/виведення) на материнській платі.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Налаштування хоста&lt;/strong&gt;. Вам потрібно налаштувати систему хоста для активації IOMMU, VT-d або AMD-Vi в налаштуваннях BIOS/UEFI, а також завантажити необхідні модулі ядра та драйвери.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Ізоляція GPU&lt;/strong&gt;. GPU, призначений для прохідного доступу, потрібно ізолювати від операційної системи хоста таким чином, щоб його можна було виключно призначити для віртуальної машини. Це зазвичай робиться шляхом блокування завантаження драйвера GPU на хості.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Налаштування віртуальної машини&lt;/strong&gt;. У межах налаштування KVM ви налаштовуєте віртуальну машину для використання GPU, що прокидується. Це включає вказівку GPU як пристрій PCI для передачі до ВМ.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Встановлення драйверів&lt;/strong&gt;. Після передачі GPU віртуальній машині ви встановлюєте необхідні драйвери в гостьовій операційній системі так само, як і на фізичній машині.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;вимоги-до-обладнання&#34;&gt;Вимоги до обладнання&lt;/h2&gt;
+&lt;p&gt;Важливо відзначити, що для такого типу налаштувань необхідно, щоб ваше обладнання відповідало вимогам.&lt;/p&gt;
+&lt;h3 id=&#34;цп-процесор&#34;&gt;ЦП (процесор)&lt;/h3&gt;
+&lt;p&gt;Ваш процесор повинен підтримувати розширення апаратної віртуалізації, такі як Intel VT-x (Intel Virtualization Technology) або AMD-V (AMD Virtualization). Крім того, для пропускання GPU вам знадобиться підтримка розширень Intel VT-d (Intel Virtualization Technology for Directed I/O) або AMD-Vi (AMD Virtualization I/O), які дозволяють прямий доступ до пристроїв вводу-виводу з віртуальних машин.&lt;/p&gt;
+&lt;h3 id=&#34;материнська-плата&#34;&gt;Материнська плата&lt;/h3&gt;
+&lt;p&gt;Ваша материнська плата повинна мати IOMMU (Input-Output Memory Management Unit), яка підтримує ізоляцію та пропускання пристроїв PCIe. Більшість сучасних материнських плат мають цю функцію, але вам слід перевірити специфікації вашої материнської плати, щоб переконатися в сумісності.&lt;/p&gt;
+&lt;h3 id=&#34;gpu-графічний-процесор&#34;&gt;GPU (графічний процесор)&lt;/h3&gt;
+&lt;p&gt;Ваш графічний процесор повинен підтримувати UEFI. Ідеальним вибором буде GPU, який підтримує необхідні функції для пропускання, такі як GPU серії AMD Radeon Pro або Nvidia Quadro, оскільки в GPU для споживачів можуть бути обмеження або вимагати обхідних шляхів.&lt;/p&gt;
+&lt;h2 id=&#34;налаштування-пропускання-gpu&#34;&gt;Налаштування пропускання GPU&lt;/h2&gt;
+&lt;h3 id=&#34;перегляньте-ваше-обладнання&#34;&gt;Перегляньте ваше обладнання&lt;/h3&gt;
+&lt;p&gt;Першим кроком для налаштування є перегляд вашого обладнання. Якщо ви хочете досягти такого ж налаштування, як у моєму випадку, переконайтеся, що у вас є 2 відеокарти (або принаймні одна зовнішня відеокарта PCI).&lt;/p&gt;
+&lt;p&gt;Специфікації мого обладнання:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Материнська плата&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://www.msi.com/Motherboard/MPG-Z490-GAMING-EDGE-WIFI&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;MSI MPG z490 Gaming Edge WiFi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ЦП&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://ark.intel.com/content/www/us/en/ark/products/205904/intel-core-i9-10850k-processor-20m-cache-up-to-5-20-ghz.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Intel Core i9-10850K&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU 1&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://www.amd.com/en/products/graphics/amd-radeon-rx-6750-xt&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AMD Radeon RX 6750XT&lt;/a&gt; (для &lt;strong&gt;HOST&lt;/strong&gt; Linux)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU 2&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://www.amd.com/en/products/graphics/amd-radeon-rx-6600&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AMD Radeon RX 6600&lt;/a&gt; (для &lt;strong&gt;GUEST&lt;/strong&gt; Windows)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Монітори&lt;/strong&gt;: 2 x FullHD 1920x1080 @ 75 Гц&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;встановлення-та-налаштування-kvm&#34;&gt;Встановлення та налаштування KVM&lt;/h3&gt;
+&lt;p&gt;Цей посібник написаний з припущенням, що у вас вже працює система Linux з встановленим та налаштованим KVM (libvirt) та програмним забезпеченням для керування вашими віртуальними машинами (virt-manager, virt-viewer).&lt;/p&gt;
+&lt;p&gt;Якщо у вас ще не встановлено KVM, перегляньте мій інший посібник: &lt;a class=&#34;link&#34; href=&#34;http://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Як встановити KVM на Arch Linux&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;зміна-налаштувань-bios-материнської-плати&#34;&gt;Зміна налаштувань BIOS материнської плати&lt;/h3&gt;
+&lt;p&gt;Для того щоб KVM працював на вашій системі, технологія віртуалізації повинна бути включена. Вона може мати різні назви залежно від виробника материнської плати/процесора, але зазвичай це VT-D для Intel та AMD-Vi для AMD відповідно.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Якщо у вас є налаштування BIOS з інтегрованою графікою в процесорі, вам також потрібно буде змінити пріоритет ініціалізації графіки. Це потрібно для того, щоб запобігти ініціалізації зовнішнього GPU при старті BIOS POST, і делегувати відеосигнал інтегрованій графіці. У моєму випадку цей крок не потрібний, оскільки у мене є 2 зовнішні PCI GPU.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;увімкнення-iommu&#34;&gt;Увімкнення IOMMU&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;IOMMU - це загальна назва для Intel VT-d та AMD-Vi.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Для включення IOMMU в системі Linux вам слід передати правильний параметр завантаження ядра. Додавання параметрів завантаження ядра може відрізнятися в залежності від того, який завантажувач ви використовуєте.&lt;/p&gt;
+&lt;p&gt;Якщо ви використовуєте:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Процесор Intel&lt;/strong&gt; - додайте прапори: &lt;code&gt;intel_iommu=on iommu=pt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Процесор AMD&lt;/strong&gt; - додайте прапори: &lt;code&gt;iommu=pt&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;У випадку процесорів AMD ядро визначає, чи має бути увімкнений IOMMU з BIOS, і &lt;code&gt;iommu=pt&lt;/code&gt; запобігає обробці пристроїв, які не можуть бути пропущені через IOMMU.&lt;/p&gt;
+&lt;h4 id=&#34;варіант-1-grub&#34;&gt;Варіант 1: GRUB&lt;/h4&gt;
+&lt;p&gt;Якщо ви використовуєте grub як свій завантажувач, ви можете змінити параметри ядра в файлі &lt;code&gt;/etc/default/grub&lt;/code&gt; та додати прапори до параметрів &lt;code&gt;GRUB_CMDLINE_LINUX&lt;/code&gt;, наприклад:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;GRUB_CMDLINE_LINUX&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;quiet splash intel_iommu=on iommu=pt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Потім збережіть файл і перегенеруйте конфігурацію вашого GRUB за допомогою команди:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo grub-mkconfig -o /boot/grub/grub.cfg&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;опція-2-завантаження-через-systemd-boot&#34;&gt;Опція 2: Завантаження через systemd Boot&lt;/h4&gt;
+&lt;p&gt;Якщо ви використовуєте завантажувач systemd boot, вам потрібно відредагувати файл вашого завантаження. У моєму випадку цей файл розташований за адресою &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Параметри ядра слід додати в кінець параметра &lt;code&gt;options&lt;/code&gt;, наприклад:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;options rw quiet splash &lt;span class=&#34;nv&#34;&gt;intel_iommu&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;on &lt;span class=&#34;nv&#34;&gt;iommu&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Після додавання правильних параметрів ядра до вашого завантажувача, перезавантажте комп&amp;rsquo;ютер.&lt;/p&gt;
+&lt;h3 id=&#34;перевірка-групування-iommu&#34;&gt;Перевірка групування IOMMU&lt;/h3&gt;
+&lt;p&gt;Група IOMMU (Input-Output Memory Management Unit) - це логічне об&amp;rsquo;єднання пристроїв, які контролюються тією ж самою IOMMU. Основна мета групи IOMMU полягає в тому, щоб сприяти ізоляції та управлінню пристроями в віртуалізованих середовищах, зокрема при використанні технологій пропускання GPU.&lt;/p&gt;
+&lt;p&gt;Важливо, щоб у тій самій групі IOMMU були лише пристрої, пов&amp;rsquo;язані з GPU, який ви маєте намір пропустити через них. Оскільки, якщо ви маєте щось інше, воно також повинно бути передане в ВМ, інакше пропускання не працюватиме.&lt;/p&gt;
+&lt;p&gt;Ви можете скористатися наступним скриптом, щоб перевірити ваші групи iommu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;shopt&lt;/span&gt; -s nullglob
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; g in &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;find /sys/kernel/iommu_groups/* -maxdepth &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -type d &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sort -V&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;IOMMU Group &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;##*/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; d in &lt;span class=&#34;nv&#34;&gt;$g&lt;/span&gt;/devices/*&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;\t&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;lspci -nns &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;##*/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Вам потрібно зберегти вміст скрипта у файл (наприклад, &lt;code&gt;iommu.sh&lt;/code&gt;) і зробити цей файл виконуваним (&lt;code&gt;chmod +x iommu.sh&lt;/code&gt;), після чого ви можете просто запустити його за допомогою &lt;code&gt;./iommu.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;У моєму випадку групи IOMMU такі:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 0:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	00:00.0 Host bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0600&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Intel Corporation Comet Lake-S 6c Host Bridge/DRAM Controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;8086:9b33&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev 05&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 1:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	00:01.0 PCI bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0604&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Intel Corporation 6th-10th Gen Core Processor PCIe Controller &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;x16&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;8086:1901&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev 05&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	01:00.0 PCI bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0604&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; XL Upstream Port of PCI Express Switch &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:1478&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev c0&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	02:00.0 PCI bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0604&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; XL Downstream Port of PCI Express Switch &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:1479&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	03:00.0 VGA compatible controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0300&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Radeon RX 6700/6700 XT/6750 XT / 6800M/6850M XT&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:73df&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev c0&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	03:00.1 Audio device &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0403&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi 21/23 HDMI/DP Audio Controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:ab28&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 18:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	07:00.0 VGA compatible controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0300&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;23&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Radeon RX 6600/6600 XT/6600M&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:73ff&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev c7&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 19:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	07:00.1 Audio device &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0403&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi 21/23 HDMI/DP Audio Controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:ab28&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Переконайтеся, що GPU та пов&amp;rsquo;язані з ним пристрої не згруповані з іншими критичними системними пристроями (наприклад, контролерами USB, контролерами Ethernet), які ви не маєте наміру передавати у віртуальну машину. Важливо, щоб GPU був у власній ізольованій групі IOMMU для надійного пропускання.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;У цьому випадку &lt;strong&gt;AMD RX 6600 GPU&lt;/strong&gt;, який я хочу передати до ВМ, має 2 пристрої &lt;strong&gt;07:00.0&lt;/strong&gt; і &lt;strong&gt;07:00.1&lt;/strong&gt;, кожен у окремій групі IOMMU &lt;strong&gt;18&lt;/strong&gt; і &lt;strong&gt;19&lt;/strong&gt;, і жодні інші пристрої не знаходяться в групах &lt;strong&gt;18&lt;/strong&gt; і &lt;strong&gt;19&lt;/strong&gt;. Це означає, що я можу пропускати його без проблем.&lt;/p&gt;
+&lt;p&gt;Якщо ми подивимося на пристрої для &lt;strong&gt;AMD RX 6750 XT&lt;/strong&gt;, які є &lt;strong&gt;03:00.0&lt;/strong&gt; і &lt;strong&gt;03:00.1&lt;/strong&gt; у групі IOMMU &lt;strong&gt;1&lt;/strong&gt;, також є деякі пристрої PCI-мосту, які в теорії не заважатимуть пропусканню цього GPU, поки ви також передасте ці PCI-мости до ВМ. Справжньою проблемою було б, якщо, наприклад, група IOMMU &lt;strong&gt;1&lt;/strong&gt; містила б інший PCI-пристрій (наприклад, мост USB або звукову карту).&lt;/p&gt;
+&lt;p&gt;У випадку, якщо у вас більше пристроїв, ніж вам потрібно в групі IOMMU з GPU, ви можете спробувати:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Якщо ваша материнська плата має багато слотів PCI Express, спробуйте встановити GPU в різні слоти PCI Express і подивіться, чи допоможе це.&lt;/li&gt;
+&lt;li&gt;У випадку, якщо ви не можете знайти оптимальну групу IOMMU без зайвих пристроїв, ви можете патчити свій ядро Linux з патчем &lt;strong&gt;ACS Override&lt;/strong&gt; (але це виходить за рамки цієї статті).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;ізолюйте-ваш-gpu&#34;&gt;Ізолюйте ваш GPU&lt;/h3&gt;
+&lt;p&gt;Ізоляція GPU - це процес забезпечення того, що GPU доступний виключно для використання конкретною віртуальною машиною, зазвичай шляхом прив&amp;rsquo;язки його до драйвера VFIO (Virtual Function I/O). Цей процес включає кілька кроків для запобігання використання GPU операційною системою хоста або іншими віртуальними машинами:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Відв&amp;rsquo;язка від драйвера хоста&lt;/strong&gt;. Спочатку GPU зазвичай прив&amp;rsquo;язаний до драйвера, який використовується операційною системою хоста для звичайних графічних операцій. Для ізоляції GPU цю прив&amp;rsquo;язку потрібно скасувати, щоб GPU міг бути вибраний драйвером VFIO. Цей крок фактично відокремлює GPU від операційної системи хоста.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Прив&amp;rsquo;язка до драйвера VFIO&lt;/strong&gt;. Після відв&amp;rsquo;язки від драйвера хоста GPU прив&amp;rsquo;язується до драйвера VFIO, що дозволяє його передавати до віртуальної машини. Драйвер VFIO надає необхідну функціональність для прямого призначення пристроїв (DDA) в віртуалізованих середовищах, забезпечуючи доступність GPU для віртуальної машини.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ізоляція означає, що після того, як ви завантажите вашу хостову операційну систему Linux, ви не зможете використовувати ізольований GPU (який прив&amp;rsquo;язаний до драйвера &lt;code&gt;vfio&lt;/code&gt;), ви можете використовувати його лише для передачі в ВМ.&lt;/p&gt;
+&lt;p&gt;Для ізоляції GPU вам потрібно знати ідентифікатори пристроїв вашої відеокарти та аудіовиходу PCI. Ви можете використовувати скрипт &lt;code&gt;iommu.sh&lt;/code&gt; з попереднього кроку, щоб отримати цю інформацію. У моєму випадку ідентифікатори пристроїв - &lt;code&gt;1002:73df&lt;/code&gt; і &lt;code&gt;1002:ab28&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;раннє-завантаження-vfio&#34;&gt;Раннє завантаження VFIO&lt;/h4&gt;
+&lt;p&gt;Щоб завантажити vfio ранніше та прив&amp;rsquo;язати необхідний GPU до vfio, створіть конфігураційний файл за адресою &lt;code&gt;/etc/modprobe.d/vfio.conf&lt;/code&gt;, який у моєму випадку виглядає наступним чином:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;softdep amdgpu pre: vfio-pci
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;options vfio-pci &lt;span class=&#34;nv&#34;&gt;ids&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1002:73ff,1002:ab28 &lt;span class=&#34;nv&#34;&gt;disable_vga&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; kvm.ignore_msrs&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Тут рядок &lt;code&gt;softdep amdgpu pre: vfio-pci&lt;/code&gt; дозволяє примусово завантажити драйвер &lt;code&gt;vfio-pci&lt;/code&gt; перед драйвером &lt;code&gt;amdgpu&lt;/code&gt;. Мені це потрібно через те, що у мене є 2 зовнішні PCI GPU від одного виробника, і це дозволяє прив&amp;rsquo;язати GPU RX 6600 до драйвера &lt;code&gt;vfio-pci&lt;/code&gt;, а потім прив&amp;rsquo;язати RX 6750 XT до драйвера &lt;code&gt;amdgpu&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;У вашому випадку, якщо у вас є GPU NVidia, то &lt;code&gt;vfio-pci&lt;/code&gt; повинен бути завантажений перед драйвером &lt;code&gt;nvidia&lt;/code&gt; (пропрітарним) або перед драйвером &lt;code&gt;nouveau&lt;/code&gt; (вільним).&lt;/p&gt;
+&lt;h4 id=&#34;налаштування-initramfs&#34;&gt;Налаштування initramfs&lt;/h4&gt;
+&lt;p&gt;У моєму випадку я використовую &lt;code&gt;mkinitcpio&lt;/code&gt; як збирач initramfs. Для налаштування mkinitcpio відредагуйте файл &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Додайте необхідні модулі до масиву &lt;code&gt;MODULES&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;MODULES&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;vfio_pci vfio vfio_iommu_type1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Потім переконайтеся, що у вас визначений хук &lt;code&gt;modconf&lt;/code&gt; у масиві &lt;code&gt;HOOKS&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;HOOKS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;... modconf ...&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Збережіть файл, а потім виконайте команду для регенерації initramfs:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mkinitcpio -P&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Після цього потрібно перезавантажити комп&amp;rsquo;ютер, щоб зміни вступили в силу.&lt;/p&gt;
+&lt;h3 id=&#34;налаштування-нової-віртуальної-машини-та-установка-windows-1011&#34;&gt;Налаштування нової віртуальної машини та установка Windows 10/11&lt;/h3&gt;
+&lt;p&gt;Тепер час налаштувати нову віртуальну машину та встановити нову операційну систему Windows. Я рекомендую налаштовувати та встановлювати Windows без будь-яких переданих PCI-пристроїв, і додати їх до віртуальної машини пізніше після завершення встановлення.&lt;/p&gt;
+&lt;p&gt;Все налаштування легше виконувати за допомогою графічного додатка &lt;code&gt;virt-manager&lt;/code&gt;.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Відкрийте додаток &lt;code&gt;virt-manager&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Клацніть &amp;ldquo;Нова віртуальна машина&amp;rdquo;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Виберіть локальний носій для встановлення. Зазвичай це файл образу iso Windows 10/11, який можна завантажити з веб-сайту Microsoft.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Перейдіть до вашого файлу iso Windows 10/11. Рекомендується розташувати ваш iso десь у вашій домашній теки користувача, щоб уникнути проблем з правами доступу до файлів. Також важливо переконатися, що операційна система ідентифікована як &amp;ldquo;Windows 10&amp;rdquo; або &amp;ldquo;Windows 11&amp;rdquo; у нижньому полі.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Виділіть CPU та пам&amp;rsquo;ять. Переконайтеся, що зарезервовано принаймні 2 ядра CPU та деяку кількість оперативної пам&amp;rsquo;яті для вашої системи хоста Linux, щоб вона могла керувати мережею та іншими процесами. У моєму випадку я виділив 2 ядра CPU та 8 Гб оперативної пам&amp;rsquo;яті для ВМ, ви можете виділити більше, якщо потрібно.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Увімкніть зберігання для цієї віртуальної машини та створіть образ диску. Я рекомендую виділити принаймні 50 Гб для віртуальної машини Windows.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Потім &lt;strong&gt;НЕ НАТИСКАЙТЕ FINISH&lt;/strong&gt;, і виконайте наступне:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Переконайтеся, що позначено &amp;ldquo;Налаштування перед встановленням&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Дайте вашій ВМ назву.&lt;/li&gt;
+&lt;li&gt;У виборі мережі оберіть &amp;ldquo;Пристрій хоста [ваш ID пристрою] -&amp;gt; Режим джерела -&amp;gt; Місто&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Тепер ви можете натиснути &amp;ldquo;Закінчити&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Потім встановіть Windows, як зазвичай. Після встановлення системи перейдіть до наступного кроку.&lt;/p&gt;
+&lt;h3 id=&#34;налаштування-певних-параметрів-вм&#34;&gt;Налаштування певних параметрів ВМ&lt;/h3&gt;
+&lt;p&gt;Є необхідність додати деякі параметри, що дозволяють приховати той факт, що ви використовуєте віртуальну машину від програми встановлення драйверів GPU.&lt;/p&gt;
+&lt;p&gt;Для редагування налаштувань ВМ переконайтеся, що ваша ВМ не запущена, і введіть цю команду в термінал:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo virsh edit win10&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;де ви повинні замінити &lt;code&gt;win10&lt;/code&gt; на ім&amp;rsquo;я вашої ВМ.&lt;/p&gt;
+&lt;p&gt;Потім виконайте наступні зміни в файлі XML в редакторі:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Додайте &lt;code&gt;&amp;lt;vendor_id state=&#39;on&#39; value=&#39;randomid&#39;/&amp;gt;&lt;/code&gt; до розділу &lt;code&gt;&amp;lt;hyperv&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Додайте &lt;code&gt;&amp;lt;kvm&amp;gt;&amp;lt;hidden state=&#39;on&#39;/&amp;gt;&amp;lt;/kvm&amp;gt;&lt;/code&gt; до розділу &lt;code&gt;&amp;lt;features&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В результаті структура повинна виглядати так:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;lt;features&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;hyperv&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;lt;vendor_id &lt;span class=&#34;nv&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;on&amp;#39;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;randomid&amp;#39;&lt;/span&gt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;/hyperv&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;kvm&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;lt;hidden &lt;span class=&#34;nv&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;on&amp;#39;&lt;/span&gt;/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;/kvm&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;lt;/features&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;пропуск-gpu-до-вм&#34;&gt;Пропуск GPU до ВМ&lt;/h3&gt;
+&lt;p&gt;У програмі &lt;code&gt;virt-manager&lt;/code&gt; відкрийте налаштування вашої ВМ та перейдіть до відповідних налаштувань, де потрібно додати 2 PCI-пристрої хоста, пов&amp;rsquo;язані з GPU, який ви маєте намір пропустити.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Натисніть &amp;ldquo;Додати пристрої PCI-пропуску&amp;rdquo;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Натисніть &amp;ldquo;Додати обладнання&amp;rdquo;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Виберіть PCI-пристрій хоста&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Прокрутіть вниз, поки не знайдете GPU, який ви хочете пропустити. Ідентифікатори повинні відповідати виводам з попереднього етапу. Наприклад, у моєму випадку:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0000:07:00:0&lt;/code&gt; Advanced Micro Devices, Inc. [AMD/ATI] Navi 23 [Radeon RX 6600/6600 XT/6600M]&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0000:07:00:1&lt;/code&gt; Advanced Micro Devices, Inc. [AMD/ATI] Navi 21/23 HDMI/DP Audio Controller [1002:ab28]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Вам потрібно це зробити двічі для відеопристрою та аудіопристрою GPU відповідно.&lt;/p&gt;
+&lt;p&gt;Потім, якщо у вас є другий монітор, спробуйте підключити його до відеовиходу GPU, який ви пропустили до ВМ, та завантажте ВМ. Якщо все налаштовано правильно, ви повинні побачити відеовихід ВМ на окремому моніторі.&lt;/p&gt;
+&lt;h3 id=&#34;встановлення-драйверів-gpu&#34;&gt;Встановлення драйверів GPU&lt;/h3&gt;
+&lt;p&gt;Після успішного завантаження вашої Windows ВМ з зовнішнім GPU, час завантажити та встановити останні версії драйверів від виробника вашого GPU.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nvidia.com/download/index.aspx?lang=en&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Офіційні драйвери для GPU Nvidia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.amd.com/en/support&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Офіційні драйвери для GPU AMD&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;висновок&#34;&gt;Висновок&lt;/h2&gt;
+&lt;p&gt;Налаштована віртуальна машина Windows з пропусканням GPU може обробляти певні графічні програми (наприклад, геймінг або відеомонтаж) з майже нативною продуктивністю, що дозволяє використовувати вашу основну систему Linux та гостьову систему Windows одночасно.&lt;/p&gt;
+&lt;p&gt;Переваги пропускання GPU в KVM включають:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Покращена продуктивність: Шляхом безпосереднього доступу до фізичного GPU віртуальна машина може досягти майже нативної продуктивності для графічно інтенсивних завдань, таких як геймінг, відеомонтаж та 3D-моделювання.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Зменшення накладних витрат: Оскільки віртуальна машина обходить віртуалізаційний шар гіпервізора для операцій з GPU, накладні витрати менше порівняно з традиційними техніками віртуалізації GPU, такими як емуляція GPU або віртуальні рішення GPU (vGPU).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Підтримка завдань з апаратним прискоренням GPU: Пропускання GPU дозволяє віртуальним машинам використовувати апаратне прискорення для завдань, які покладаються на обробку GPU, що призводить до швидшого виконання та покращеної ефективності.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Сумісність з програмним забезпеченням, яке вимагає GPU: Деякі програми та робочі процеси вимагають прямого доступу до фізичного GPU, що можливо не здійснюється за допомогою віртуальних рішень GPU. Пропускання GPU дозволяє такому програмному забезпеченню працювати безперешкодно в віртуалізованому середовищі.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Геймінг: Гравці можуть скористатися пропусканням GPU, запускаючи ігри в межах віртуальної машини з мінімальним зниженням продуктивності, що дозволяє використовувати апаратно-прискорену графіку без подвійного завантаження або виділення окремої фізичної машини для геймінгу.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Встановлення системи віртуалізації KVM на Arch Linux</title>
         <link>https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/</link>
         <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
