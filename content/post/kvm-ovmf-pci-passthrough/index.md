@@ -70,7 +70,7 @@ My hardware specifications are:
 - **GPU 2**: [AMD Radeon RX 6600](https://www.amd.com/en/products/graphics/amd-radeon-rx-6600) (for Windows **GUEST**)
 - **Monitors**: 2 x FullHD 1920x1080 @ 75 Hz 
 
-<!-- ToDo add a photo of 2 GPUs -->
+![PCIE Hardware - Desktop workstation with 2 GPUs](gpu_hardware.jpg)
 
 ### Install and configure KVM
 
@@ -248,20 +248,34 @@ All the setup is easier to do using the `virt-manager` graphical application.
 
 3. Select Local install media. Ususally it should be Windows 10/11 iso file which can be downloaded from microsoft website. 
 
-4. Browse to your Windows 10/11 iso. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as "Windows 10" or "Windows 11" at the bottom field.
+![Virt Manager - Local install media](vm1.png)
+
+4. Browse to your Windows 10/11 `iso`. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as "Windows 10" or "Windows 11" at the bottom field.
+
+![Virt Manager - ISO path and OS type](vm2.png)
 
 5. Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux **host** system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.
 
+![Virt Manager - System resources allocation](vm3.png)
+
 6. Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windows VM.
+
+![Virt Manager - Storage allocation](vm4.png)
 
 Then **DO NOT CLICK FINISH**, and do the following:
 
 - Ensure Customize Configuration before install is checked.
 - Give your VM a name.
-- Under network selection, select Host device [your device ID] -> Source Mode -> Bridge).
+- Under network selection, select Host device [your device ID] -> Source Mode -> Bridge or NAT).
 - Now you can click Finish.
 
-Then install Windows as usual, after you have the system installed proceed to the next step.
+![Virt Manager - VM name, network seelction](vm5.png)
+
+- Ensure to select the **Q35** chipset in the "Overview" and the **UEFI** firmware. GPU Passthrough will not work on BIOS firmware, it requires to use the **UEFI**.
+
+![Virt Manager - VM Chipset and Firmware (Q35 UEFI).](vm6.png)
+
+Then click on "Begin Installation" and install Windows as usual, after you have the system installed proceed to the next step.
 
 ### Adjust specific VM settings
 
@@ -328,6 +342,8 @@ After you successfully booted your Windows VM with external GPU working it's tim
 ## Conclusion
 
 Configured Windows VM with GPU passthrough can handle specific graphical apps (like gaming or video editing) with a near native performance, and as a result allows to use your host Linux system and a Windows guest system at the same time.
+
+![Final GPU Passthrough result: Windows VM on the left, Linux host on the right](gpu_passthrough_result.jpg)
 
 Benefits of GPU passthrough in KVM include:
 

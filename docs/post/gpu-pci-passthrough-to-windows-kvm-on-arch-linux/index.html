@@ -389,7 +389,20 @@ Identifying the GPU."><meta name="twitter:card" content="summary_large_image">
     >AMD Radeon RX 6600</a> (for Windows <strong>GUEST</strong>)</li>
 <li><strong>Monitors</strong>: 2 x FullHD 1920x1080 @ 75 Hz</li>
 </ul>
-<!-- raw HTML omitted -->
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware.jpg"
+	width="3746"
+	height="2036"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_480x0_resize_q75_box.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="PCIE Hardware - Desktop workstation with 2 GPUs"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="183"
+		data-flex-basis="441px"
+	
+></p>
 <h3 id="install-and-configure-kvm">Install and configure KVM</h3>
 <p>This guide is written assuming you already have a working Linux system with installed and configured KVM (libvirt) and the software to manage your VMs (virt-manager, virt-viewer).</p>
 <p>If you don&rsquo;t have KVM installed yet, see my another guide: <a class="link" href="http://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux"  target="_blank" rel="noopener"
@@ -588,24 +601,111 @@ Identifying the GPU."><meta name="twitter:card" content="summary_large_image">
 <li>
 <p>Select Local install media. Ususally it should be Windows 10/11 iso file which can be downloaded from microsoft website.</p>
 </li>
-<li>
-<p>Browse to your Windows 10/11 iso. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as &ldquo;Windows 10&rdquo; or &ldquo;Windows 11&rdquo; at the bottom field.</p>
-</li>
-<li>
-<p>Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux <strong>host</strong> system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.</p>
-</li>
-<li>
-<p>Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windows VM.</p>
-</li>
 </ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1.png"
+	width="493"
+	height="493"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Local install media"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<ol start="4">
+<li>Browse to your Windows 10/11 <code>iso</code>. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as &ldquo;Windows 10&rdquo; or &ldquo;Windows 11&rdquo; at the bottom field.</li>
+</ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2.png"
+	width="494"
+	height="491"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - ISO path and OS type"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="241px"
+	
+></p>
+<ol start="5">
+<li>Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux <strong>host</strong> system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.</li>
+</ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3.png"
+	width="494"
+	height="492"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - System resources allocation"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<ol start="6">
+<li>Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windows VM.</li>
+</ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4.png"
+	width="491"
+	height="490"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Storage allocation"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
 <p>Then <strong>DO NOT CLICK FINISH</strong>, and do the following:</p>
 <ul>
 <li>Ensure Customize Configuration before install is checked.</li>
 <li>Give your VM a name.</li>
-<li>Under network selection, select Host device [your device ID] -&gt; Source Mode -&gt; Bridge).</li>
+<li>Under network selection, select Host device [your device ID] -&gt; Source Mode -&gt; Bridge or NAT).</li>
 <li>Now you can click Finish.</li>
 </ul>
-<p>Then install Windows as usual, after you have the system installed proceed to the next step.</p>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5.png"
+	width="492"
+	height="490"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - VM name, network seelction"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<ul>
+<li>Ensure to select the <strong>Q35</strong> chipset in the &ldquo;Overview&rdquo; and the <strong>UEFI</strong> firmware. GPU Passthrough will not work on BIOS firmware, it requires to use the <strong>UEFI</strong>.</li>
+</ul>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6.png"
+	width="1015"
+	height="802"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - VM Chipset and Firmware (Q35 UEFI)."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="126"
+		data-flex-basis="303px"
+	
+></p>
+<p>Then click on &ldquo;Begin Installation&rdquo; and install Windows as usual, after you have the system installed proceed to the next step.</p>
 <h3 id="adjust-specific-vm-settings">Adjust specific VM settings</h3>
 <p>There is a need to add some flags that allow to hide the fact that you are using VM from the GPU drivers installer.</p>
 <p>To edit the VM settings make sure your VM is not running and type this command in terminal:</p>
@@ -681,6 +781,20 @@ Identifying the GPU."><meta name="twitter:card" content="summary_large_image">
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <p>Configured Windows VM with GPU passthrough can handle specific graphical apps (like gaming or video editing) with a near native performance, and as a result allows to use your host Linux system and a Windows guest system at the same time.</p>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result.jpg"
+	width="4080"
+	height="1292"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_480x0_resize_q75_box.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="Final GPU Passthrough result: Windows VM on the left, Linux host on the right"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="315"
+		data-flex-basis="757px"
+	
+></p>
 <p>Benefits of GPU passthrough in KVM include:</p>
 <ul>
 <li>
