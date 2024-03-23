@@ -387,16 +387,55 @@
     >AMD Radeon RX 6600</a> (для <strong>GUEST</strong> Windows)</li>
 <li><strong>Монітори</strong>: 2 x FullHD 1920x1080 @ 75 Гц</li>
 </ul>
-<!-- raw HTML omitted -->
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware.jpg"
+	width="3746"
+	height="2036"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_480x0_resize_q75_box.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="Обладнання PCIE - Робоча станція з двома відеокартами"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="183"
+		data-flex-basis="441px"
+	
+></p>
 <h3 id="встановлення-та-налаштування-kvm">Встановлення та налаштування KVM</h3>
 <p>Цей посібник написаний з припущенням, що у вас вже працює система Linux з встановленим та налаштованим KVM (libvirt) та програмним забезпеченням для керування вашими віртуальними машинами (virt-manager, virt-viewer).</p>
 <p>Якщо у вас ще не встановлено KVM, перегляньте мій інший посібник: <a class="link" href="http://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux"  target="_blank" rel="noopener"
     >Як встановити KVM на Arch Linux</a>.</p>
 <h3 id="зміна-налаштувань-bios-материнської-плати">Зміна налаштувань BIOS материнської плати</h3>
 <p>Для того щоб KVM працював на вашій системі, технологія віртуалізації повинна бути включена. Вона може мати різні назви залежно від виробника материнської плати/процесора, але зазвичай це VT-D для Intel та AMD-Vi для AMD відповідно.</p>
-<!-- raw HTML omitted -->
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png"
+	width="1920"
+	height="1092"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Приклад налаштувань віртуалізації на материнській платі MSI Z490 і процесорі Intel"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
 <p>Якщо у вас є налаштування BIOS з інтегрованою графікою в процесорі, вам також потрібно буде змінити пріоритет ініціалізації графіки. Це потрібно для того, щоб запобігти ініціалізації зовнішнього GPU при старті BIOS POST, і делегувати відеосигнал інтегрованій графіці. У моєму випадку цей крок не потрібний, оскільки у мене є 2 зовнішні PCI GPU.</p>
-<!-- raw HTML omitted -->
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png"
+	width="1920"
+	height="1096"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Приклад налаштувань ініціалізації GPU на материнській платі MSI Z490"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="420px"
+	
+></p>
 <h3 id="увімкнення-iommu">Увімкнення IOMMU</h3>
 <blockquote>
 <p>IOMMU - це загальна назва для Intel VT-d та AMD-Vi.</p>
@@ -581,29 +620,116 @@
 <p>Відкрийте додаток <code>virt-manager</code>.</p>
 </li>
 <li>
-<p>Клацніть &ldquo;Нова віртуальна машина&rdquo;.</p>
+<p>Натисніть &ldquo;Нова віртуальна машина&rdquo;.</p>
 </li>
 <li>
 <p>Виберіть локальний носій для встановлення. Зазвичай це файл образу iso Windows 10/11, який можна завантажити з веб-сайту Microsoft.</p>
 </li>
-<li>
-<p>Перейдіть до вашого файлу iso Windows 10/11. Рекомендується розташувати ваш iso десь у вашій домашній теки користувача, щоб уникнути проблем з правами доступу до файлів. Також важливо переконатися, що операційна система ідентифікована як &ldquo;Windows 10&rdquo; або &ldquo;Windows 11&rdquo; у нижньому полі.</p>
-</li>
-<li>
-<p>Виділіть CPU та пам&rsquo;ять. Переконайтеся, що зарезервовано принаймні 2 ядра CPU та деяку кількість оперативної пам&rsquo;яті для вашої системи хоста Linux, щоб вона могла керувати мережею та іншими процесами. У моєму випадку я виділив 2 ядра CPU та 8 Гб оперативної пам&rsquo;яті для ВМ, ви можете виділити більше, якщо потрібно.</p>
-</li>
-<li>
-<p>Увімкніть зберігання для цієї віртуальної машини та створіть образ диску. Я рекомендую виділити принаймні 50 Гб для віртуальної машини Windows.</p>
-</li>
 </ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1.png"
+	width="493"
+	height="493"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Локальний образ для встановлення ОС"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<ol start="4">
+<li>Перейдіть до вашого файлу <code>iso</code> Windows 10/11. Рекомендується розташувати ваш iso десь у вашій домашній теки користувача, щоб уникнути проблем з правами доступу до файлів. Також важливо переконатися, що операційна система ідентифікована як &ldquo;Windows 10&rdquo; або &ldquo;Windows 11&rdquo; у нижньому полі.</li>
+</ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2.png"
+	width="494"
+	height="491"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Шлях до ISO та тип операційної системи"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="241px"
+	
+></p>
+<ol start="5">
+<li>Виділіть CPU та пам&rsquo;ять. Переконайтеся, що зарезервовано принаймні 2 ядра CPU та деяку кількість оперативної пам&rsquo;яті для вашої системи хоста Linux, щоб вона могла керувати мережею та іншими процесами. У моєму випадку я виділив 2 ядра CPU та 8 Гб оперативної пам&rsquo;яті для ВМ, ви можете виділити більше, якщо потрібно.</li>
+</ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3.png"
+	width="494"
+	height="492"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Виділення системних ресурсів"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<ol start="6">
+<li>Увімкніть зберігання для цієї віртуальної машини та створіть образ диску. Я рекомендую виділити принаймні 50 Гб для віртуальної машини Windows.</li>
+</ol>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4.png"
+	width="491"
+	height="490"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Виділення дискового простору"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
 <p>Потім <strong>НЕ НАТИСКАЙТЕ FINISH</strong>, і виконайте наступне:</p>
 <ul>
-<li>Переконайтеся, що позначено &ldquo;Налаштування перед встановленням&rdquo;.</li>
+<li>Переконайтеся, що увімкнено &ldquo;Customize Configuration before install&rdquo;.</li>
 <li>Дайте вашій ВМ назву.</li>
-<li>У виборі мережі оберіть &ldquo;Пристрій хоста [ваш ID пристрою] -&gt; Режим джерела -&gt; Місто&rdquo;.</li>
-<li>Тепер ви можете натиснути &ldquo;Закінчити&rdquo;.</li>
+<li>У виборі мережі оберіть &ldquo;Пристрій хоста [ваш ID пристрою] -&gt; Source Mode -&gt; Bridge або NAT&rdquo;.</li>
+<li>Тепер ви можете натиснути &ldquo;Finish&rdquo;.</li>
 </ul>
-<p>Потім встановіть Windows, як зазвичай. Після встановлення системи перейдіть до наступного кроку.</p>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5.png"
+	width="492"
+	height="490"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Назва ВМ, віртуальний мережевий адаптер"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<ul>
+<li>Переконайтеся, що в «Огляді» вибрано чіпсет <strong>Q35</strong> і мікропрограму <strong>UEFI</strong>. GPU Passthrough не працюватиме в мікропрограмі BIOS, для цього потрібно використовувати <strong>UEFI</strong>.</li>
+</ul>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6.png"
+	width="1015"
+	height="802"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Virt Manager - Конфігураціятипу та прошивки чіпсета (Q35 UEFI)."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="126"
+		data-flex-basis="303px"
+	
+></p>
+<p>Потім натисніть &ldquo;Begin installation&rdquo; та встановіть Windows, як зазвичай. Після встановлення системи перейдіть до наступного кроку.</p>
 <h3 id="налаштування-певних-параметрів-вм">Налаштування певних параметрів ВМ</h3>
 <p>Є необхідність додати деякі параметри, що дозволяють приховати той факт, що ви використовуєте віртуальну машину від програми встановлення драйверів GPU.</p>
 <p>Для редагування налаштувань ВМ переконайтеся, що ваша ВМ не запущена, і введіть цю команду в термінал:</p>
@@ -649,11 +775,11 @@
 </span></span><span class="line"><span class="cl">...
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="пропуск-gpu-до-вм">Пропуск GPU до ВМ</h3>
+</div><h3 id="прокидання-gpu-до-вм">Прокидання GPU до ВМ</h3>
 <p>У програмі <code>virt-manager</code> відкрийте налаштування вашої ВМ та перейдіть до відповідних налаштувань, де потрібно додати 2 PCI-пристрої хоста, пов&rsquo;язані з GPU, який ви маєте намір пропустити.</p>
 <ol>
 <li>
-<p>Натисніть &ldquo;Додати пристрої PCI-пропуску&rdquo;.</p>
+<p>Натисніть &ldquo;Додати пристрої PCI&rdquo;.</p>
 </li>
 <li>
 <p>Натисніть &ldquo;Додати обладнання&rdquo;.</p>
@@ -679,6 +805,20 @@
 </ul>
 <h2 id="висновок">Висновок</h2>
 <p>Налаштована віртуальна машина Windows з пропусканням GPU може обробляти певні графічні програми (наприклад, геймінг або відеомонтаж) з майже нативною продуктивністю, що дозволяє використовувати вашу основну систему Linux та гостьову систему Windows одночасно.</p>
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result.jpg"
+	width="4080"
+	height="1292"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_480x0_resize_q75_box.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="Результат GPU Passthrough: Windows ВМ ліворуч, Linux host праворуч"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="315"
+		data-flex-basis="757px"
+	
+></p>
 <p>Переваги пропускання GPU в KVM включають:</p>
 <ul>
 <li>
@@ -1064,7 +1204,7 @@
         </li>
         <li><a href="#налаштування-нової-віртуальної-машини-та-установка-windows-1011">Налаштування нової віртуальної машини та установка Windows 10/11</a></li>
         <li><a href="#налаштування-певних-параметрів-вм">Налаштування певних параметрів ВМ</a></li>
-        <li><a href="#пропуск-gpu-до-вм">Пропуск GPU до ВМ</a></li>
+        <li><a href="#прокидання-gpu-до-вм">Прокидання GPU до ВМ</a></li>
         <li><a href="#встановлення-драйверів-gpu">Встановлення драйверів GPU</a></li>
       </ol>
     </li>
