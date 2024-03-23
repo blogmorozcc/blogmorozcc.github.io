@@ -77,9 +77,35 @@
     &gt;How to install KVM on Arch Linux&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;modify-motherboard-bios-settings&#34;&gt;Modify motherboard BIOS settings&lt;/h3&gt;
 &lt;p&gt;In order for KVM to work on your system Virtualization Technology should be enabled. It may be named differently depending on your motherboard/CPU manufacturer, but usually it is VT-D for Intel and AMD-Vi for AMD respectively.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;1092&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of Virtualization settings on MSI Z490 motherboard and Intel CPU&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;If you have a setup with the integrated CPU graphics you also will need to change the graphics initialization priority. It is needed to prevent your external GPU initialization on BIOS POST startup, and delegate a video signal to integrated GPU instead. In my case I don&amp;rsquo;t need this step, as I have 2 external PCI GPUs.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;1096&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of GPU initialization settings on MSI Z490 motherboard&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;420px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;h3 id=&#34;enable-iommu&#34;&gt;Enable IOMMU&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;IOMMU is a generic name for Intel VT-d and AMD-Vi.&lt;/p&gt;

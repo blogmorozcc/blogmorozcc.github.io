@@ -75,9 +75,35 @@
     &gt;Як встановити KVM на Arch Linux&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;зміна-налаштувань-bios-материнської-плати&#34;&gt;Зміна налаштувань BIOS материнської плати&lt;/h3&gt;
 &lt;p&gt;Для того щоб KVM працював на вашій системі, технологія віртуалізації повинна бути включена. Вона може мати різні назви залежно від виробника материнської плати/процесора, але зазвичай це VT-D для Intel та AMD-Vi для AMD відповідно.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;1092&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Приклад налаштувань віртуалізації на материнській платі MSI Z490 і процесорі Intel&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Якщо у вас є налаштування BIOS з інтегрованою графікою в процесорі, вам також потрібно буде змінити пріоритет ініціалізації графіки. Це потрібно для того, щоб запобігти ініціалізації зовнішнього GPU при старті BIOS POST, і делегувати відеосигнал інтегрованій графіці. У моєму випадку цей крок не потрібний, оскільки у мене є 2 зовнішні PCI GPU.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;1096&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Приклад налаштувань ініціалізації GPU на материнській платі MSI Z490&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;420px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;h3 id=&#34;увімкнення-iommu&#34;&gt;Увімкнення IOMMU&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;IOMMU - це загальна назва для Intel VT-d та AMD-Vi.&lt;/p&gt;

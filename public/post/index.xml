@@ -6,18 +6,7 @@
         <description>Recent content in Posts on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Wed, 20 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>GPU PCI passthrough Looking glass streaming</title>
-        <link>http://localhost:1313/post/gpu-pci-passthrough-looking-glass-streaming/</link>
-        <pubDate>Wed, 20 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/post/gpu-pci-passthrough-looking-glass-streaming/</guid>
-        <description>&lt;img src="http://localhost:1313/post/gpu-pci-passthrough-looking-glass-streaming/header.png" alt="Featured image of post GPU PCI passthrough Looking glass streaming" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-</description>
-        </item>
-        <item>
+        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>GPU PCI passthrough to Windows KVM on Arch Linux</title>
         <link>http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/</link>
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
@@ -69,29 +58,54 @@
 &lt;li&gt;&lt;strong&gt;Monitors&lt;/strong&gt;: 2 x FullHD 1920x1080 @ 75 Hz&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware.jpg&#34;
-	width=&#34;3786&#34;
+	width=&#34;3746&#34;
 	height=&#34;2036&#34;
-	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1344173_480x0_resize_q75_box.jpg 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1344173_1024x0_resize_q75_box.jpg 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_480x0_resize_q75_box.jpg 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_1024x0_resize_q75_box.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;GPU Hardware&#34;
+		alt=&#34;PCIE Hardware - Desktop workstation with 2 GPUs&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;185&#34;
-		data-flex-basis=&#34;446px&#34;
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;441px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
 &lt;h3 id=&#34;install-and-configure-kvm&#34;&gt;Install and configure KVM&lt;/h3&gt;
 &lt;p&gt;This guide is written assuming you already have a working Linux system with installed and configured KVM (libvirt) and the software to manage your VMs (virt-manager, virt-viewer).&lt;/p&gt;
 &lt;p&gt;If you don&amp;rsquo;t have KVM installed yet, see my another guide: &lt;a class=&#34;link&#34; href=&#34;http://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;How to install KVM on Arch Linux&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;modify-motherboard-bios-settings&#34;&gt;Modify motherboard BIOS settings&lt;/h3&gt;
 &lt;p&gt;In order for KVM to work on your system Virtualization Technology should be enabled. It may be named differently depending on your motherboard/CPU manufacturer, but usually it is VT-D for Intel and AMD-Vi for AMD respectively.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;1092&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of Virtualization settings on MSI Z490 motherboard and Intel CPU&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;If you have a setup with the integrated CPU graphics you also will need to change the graphics initialization priority. It is needed to prevent your external GPU initialization on BIOS POST startup, and delegate a video signal to integrated GPU instead. In my case I don&amp;rsquo;t need this step, as I have 2 external PCI GPUs.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;1096&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of GPU initialization settings on MSI Z490 motherboard&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;420px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;h3 id=&#34;enable-iommu&#34;&gt;Enable IOMMU&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;IOMMU is a generic name for Intel VT-d and AMD-Vi.&lt;/p&gt;
@@ -281,24 +295,111 @@
 &lt;li&gt;
 &lt;p&gt;Select Local install media. Ususally it should be Windows 10/11 iso file which can be downloaded from microsoft website.&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Browse to your Windows 10/11 iso. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as &amp;ldquo;Windows 10&amp;rdquo; or &amp;ldquo;Windows 11&amp;rdquo; at the bottom field.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux &lt;strong&gt;host&lt;/strong&gt; system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windows VM.&lt;/p&gt;
-&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1.png&#34;
+	width=&#34;493&#34;
+	height=&#34;493&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Virt Manager - Local install media&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;240px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Browse to your Windows 10/11 &lt;code&gt;iso&lt;/code&gt;. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as &amp;ldquo;Windows 10&amp;rdquo; or &amp;ldquo;Windows 11&amp;rdquo; at the bottom field.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2.png&#34;
+	width=&#34;494&#34;
+	height=&#34;491&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Virt Manager - ISO path and OS type&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;241px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux &lt;strong&gt;host&lt;/strong&gt; system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3.png&#34;
+	width=&#34;494&#34;
+	height=&#34;492&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Virt Manager - System resources allocation&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;240px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windows VM.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4.png&#34;
+	width=&#34;491&#34;
+	height=&#34;490&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Virt Manager - Storage allocation&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;240px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Then &lt;strong&gt;DO NOT CLICK FINISH&lt;/strong&gt;, and do the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Ensure Customize Configuration before install is checked.&lt;/li&gt;
 &lt;li&gt;Give your VM a name.&lt;/li&gt;
-&lt;li&gt;Under network selection, select Host device [your device ID] -&amp;gt; Source Mode -&amp;gt; Bridge).&lt;/li&gt;
+&lt;li&gt;Under network selection, select Host device [your device ID] -&amp;gt; Source Mode -&amp;gt; Bridge or NAT).&lt;/li&gt;
 &lt;li&gt;Now you can click Finish.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Then install Windows as usual, after you have the system installed proceed to the next step.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5.png&#34;
+	width=&#34;492&#34;
+	height=&#34;490&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Virt Manager - VM name, network seelction&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;240px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ensure to select the &lt;strong&gt;Q35&lt;/strong&gt; chipset in the &amp;ldquo;Overview&amp;rdquo; and the &lt;strong&gt;UEFI&lt;/strong&gt; firmware. GPU Passthrough will not work on BIOS firmware, it requires to use the &lt;strong&gt;UEFI&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6.png&#34;
+	width=&#34;1015&#34;
+	height=&#34;802&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_480x0_resize_box_3.png 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Virt Manager - VM Chipset and Firmware (Q35 UEFI).&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;126&#34;
+		data-flex-basis=&#34;303px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Then click on &amp;ldquo;Begin Installation&amp;rdquo; and install Windows as usual, after you have the system installed proceed to the next step.&lt;/p&gt;
 &lt;h3 id=&#34;adjust-specific-vm-settings&#34;&gt;Adjust specific VM settings&lt;/h3&gt;
 &lt;p&gt;There is a need to add some flags that allow to hide the fact that you are using VM from the GPU drivers installer.&lt;/p&gt;
 &lt;p&gt;To edit the VM settings make sure your VM is not running and type this command in terminal:&lt;/p&gt;
@@ -374,6 +475,20 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Configured Windows VM with GPU passthrough can handle specific graphical apps (like gaming or video editing) with a near native performance, and as a result allows to use your host Linux system and a Windows guest system at the same time.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result.jpg&#34;
+	width=&#34;4080&#34;
+	height=&#34;1292&#34;
+	srcset=&#34;http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_480x0_resize_q75_box.jpg 480w, http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Final GPU Passthrough result: Windows VM on the left, Linux host on the right&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;315&#34;
+		data-flex-basis=&#34;757px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Benefits of GPU passthrough in KVM include:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;

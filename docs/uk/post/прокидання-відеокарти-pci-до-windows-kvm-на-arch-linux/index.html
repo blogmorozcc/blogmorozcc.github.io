@@ -407,9 +407,35 @@
     >Як встановити KVM на Arch Linux</a>.</p>
 <h3 id="зміна-налаштувань-bios-материнської-плати">Зміна налаштувань BIOS материнської плати</h3>
 <p>Для того щоб KVM працював на вашій системі, технологія віртуалізації повинна бути включена. Вона може мати різні назви залежно від виробника материнської плати/процесора, але зазвичай це VT-D для Intel та AMD-Vi для AMD відповідно.</p>
-<!-- raw HTML omitted -->
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png"
+	width="1920"
+	height="1092"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Приклад налаштувань віртуалізації на материнській платі MSI Z490 і процесорі Intel"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
 <p>Якщо у вас є налаштування BIOS з інтегрованою графікою в процесорі, вам також потрібно буде змінити пріоритет ініціалізації графіки. Це потрібно для того, щоб запобігти ініціалізації зовнішнього GPU при старті BIOS POST, і делегувати відеосигнал інтегрованій графіці. У моєму випадку цей крок не потрібний, оскільки у мене є 2 зовнішні PCI GPU.</p>
-<!-- raw HTML omitted -->
+<p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png"
+	width="1920"
+	height="1096"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Приклад налаштувань ініціалізації GPU на материнській платі MSI Z490"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="420px"
+	
+></p>
 <h3 id="увімкнення-iommu">Увімкнення IOMMU</h3>
 <blockquote>
 <p>IOMMU - це загальна назва для Intel VT-d та AMD-Vi.</p>

@@ -82,11 +82,11 @@ If you don't have KVM installed yet, see my another guide: [How to install KVM o
 
 In order for KVM to work on your system Virtualization Technology should be enabled. It may be named differently depending on your motherboard/CPU manufacturer, but usually it is VT-D for Intel and AMD-Vi for AMD respectively.
 
-<!-- ToDo add a photo of BIOS virtualization settings -->
+![Example of Virtualization settings on MSI Z490 motherboard and Intel CPU](bios_virtualization.png)
 
 If you have a setup with the integrated CPU graphics you also will need to change the graphics initialization priority. It is needed to prevent your external GPU initialization on BIOS POST startup, and delegate a video signal to integrated GPU instead. In my case I don't need this step, as I have 2 external PCI GPUs.
 
-<!-- ToDo add a photo of BIOS GPU order -->
+![Example of GPU initialization settings on MSI Z490 motherboard](bios_gpu_init_priority.png)
 
 ### Enable IOMMU
 
