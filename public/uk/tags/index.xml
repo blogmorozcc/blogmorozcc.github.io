@@ -6,7 +6,31 @@
         <description>Recent content in Tags on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux</title>
+        <link>http://localhost:1313/uk/tags/linux/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Zen</title>
+        <link>http://localhost:1313/uk/tags/zen/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/zen/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ядро</title>
+        <link>http://localhost:1313/uk/tags/%D1%8F%D0%B4%D1%80%D0%BE/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/%D1%8F%D0%B4%D1%80%D0%BE/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>AMD-Vi</title>
         <link>http://localhost:1313/uk/tags/amd-vi/</link>
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
@@ -36,14 +60,6 @@
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/uk/tags/kvm/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>http://localhost:1313/uk/tags/linux/</link>
-        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/uk/tags/linux/</guid>
         <description></description>
         </item>
         <item>

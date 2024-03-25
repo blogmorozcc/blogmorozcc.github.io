@@ -6,7 +6,31 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Kernel</title>
+        <link>https://blog.moroz.cc/tags/kernel/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/kernel/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/tags/linux/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Zen</title>
+        <link>https://blog.moroz.cc/tags/zen/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/zen/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>AMD-Vi</title>
         <link>https://blog.moroz.cc/tags/amd-vi/</link>
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
@@ -36,14 +60,6 @@
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/kvm/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/tags/linux/</link>
-        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/linux/</guid>
         <description></description>
         </item>
         <item>

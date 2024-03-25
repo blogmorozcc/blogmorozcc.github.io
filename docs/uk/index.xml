@@ -6,7 +6,93 @@
         <description>Recent content on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Встановлення кастомного ядра Linux ZEN на Arch Linux для покращення швидкодії системи</title>
+        <link>https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%BD%D1%8F-%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D0%BE%D0%B4%D1%96%D1%97-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%BD%D1%8F-%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D0%BE%D0%B4%D1%96%D1%97-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.png" alt="Featured image of post Встановлення кастомного ядра Linux ZEN на Arch Linux для покращення швидкодії системи" /&gt;&lt;h2 id=&#34;що-таке-linux-zen-kernel&#34;&gt;Що таке Linux Zen Kernel?&lt;/h2&gt;
+&lt;p&gt;Ядро Linux Zen Kernel — це модифікована версія ядра Linux, яка зосереджена на забезпеченні покращеної продуктивності, швидкості реагування та гнучкості для користувачів настільних комп’ютерів і робочих станцій. Він розроблений і підтримується проектом Zen Kernel, метою якого є оптимізація ядра для настільних комп’ютерів.&lt;/p&gt;
+&lt;p&gt;Ядро Zen містить різні виправлення та оптимізації, спрямовані на зменшення латентності, покращення реагування системи та підвищення загальної продуктивності системи. Ці оптимізації можуть включати налаштування планувальника (scheduler), покращення планувальника вводу-виводу (IO scheduler), покращення планування ЦП та інші налаштування, пов’язані з продуктивністю.&lt;/p&gt;
+&lt;p&gt;Користувачі, які надають перевагу продуктивності та швидкодії робочого столу чи робочої станції, можуть вибрати використання ядра Linux Zen замість стандартного ядра Linux, яке надається їхнім дистрибутивом. Однак важливо зазначити, що Zen Kernel є модифікацією сторонніх розробників і може офіційно підтримуватися не всіма дистрибутивами Linux. Користувачі, які бажають випробувати Zen Kernel, повинні переглянути документацію та інструкції, надані проектом Zen Kernel або спільнотою свого конкретного дистрибутива.&lt;/p&gt;
+&lt;h2 id=&#34;основні-переваги&#34;&gt;Основні переваги&lt;/h2&gt;
+&lt;p&gt;Ключові функції та оптимізації, що містяться в ядрі Linux Zen, включають такі основні переваги:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Набір патчів для зменшення затримки: ці патчі спрямовані на зменшення затримки ядра, покращення реагування, що особливо важливо для інтерактивного використання робочого столу, обробки звуку та ігор.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Планувальник вводу-виводу BFQ: ядро Zen часто містить планувальник вводу-виводу BFQ (Budget Fair Queueing), який визначає пріоритетність запитів вводу-виводу на основі процесу, який їх генерує, з метою забезпечення більш плавної роботи системи, особливо під час багатозадачності або під час роботи. з інтерактивними додатками.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— Додаткові планувальники ЦП: у деяких випадках ядро Zen включає альтернативні алгоритми планування ЦП або оптимізації для покращення продуктивності багатозадачності та швидкості реагування.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Підтримка випередження та реального часу: ядро може включати виправлення для покращення можливостей випередження та реального часу, зменшення затримок та покращення реагування на чутливі до часу завдання.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— Оптимізації за замовчуванням: деякі параметри ядра налаштовано за замовчуванням, щоб краще відповідати робочому навантаженню робочого столу та мультимедіа.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Стабільність і надійність: наголошуючи на покращенні продуктивності, розробники ядра Zen зазвичай забезпечують підтримку стабільності та надійності, хоча користувачі завжди повинні знати, що будь-які модифікації ядра можуть становити ризик.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;встановлення-arch-linux&#34;&gt;Встановлення (Arch Linux)&lt;/h2&gt;
+&lt;p&gt;Ядро Linux Zen включено в менеджер пакетів Arch Linux pacman і може бути легко встановлено за допомогою pacman:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S linux-zen linux-zen-headers&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Після цього ядро фактично буде встановлено у вашій системі, але тепер настав час налаштувати завантажувач (bootloader) на завантаження з ядром Linux Zen Kernel замість стандартного. Це може залежати від вашого завантажувача, у моєму випадку я використовую &lt;code&gt;systemd-boot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Записи завантаження знаходяться в каталозі &lt;code&gt;/boot/loader/entries&lt;/code&gt;, тому перейдіть туди:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /boot/loader/entries/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;І виведіть в термінал всі ваші записи для завантаження:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -la&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;У моєму випадку я маю лише один запис &lt;code&gt;arch.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;24&lt;/span&gt; 14:42 .
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;drwxr-xr-x &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;25&lt;/span&gt; 20:15 ..
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-rwxr-xr-x &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root  &lt;span class=&#34;m&#34;&gt;208&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;18&lt;/span&gt; 18:31 arch.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Я рекомендую залишити оригінальний запис завантаження (boot entry) та оригінальне ядро Linux для резервної копії, тож якщо нове ядро не завантажиться, ви завжди матимете можливість завантажитися зі стандартного ядра у завантажувачі.&lt;/p&gt;
+&lt;p&gt;Створіть дублікат початкового файлу запису завантаження:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp arch.conf arch-zen.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Потім відредагуйте файл &lt;code&gt;arch-zen.conf&lt;/code&gt; за допомогою обраного вами текстового редактора, у моєму випадку я використовую nano таким чином:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano arch-zen.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Потім змініть конфігурацію та замініть 3 параметри (title, linux, initrd) відповідно до прикладу вище:&lt;/p&gt;
+&lt;p&gt;Раніше (оригінальний файл &lt;code&gt;arch.conf&lt;/code&gt;):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;title Arch Linux
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;linux /vmlinuz-linux
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;initrd /initramfs-linux.img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Після (змінити у файлі &lt;code&gt;arch-zen.conf&lt;/code&gt;):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;title Arch Linux Zen
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;linux /vmlinuz-linux-zen
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;initrd /initramfs-linux-zen.img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Після збереження файлу перезавантажте систему та виберіть &lt;code&gt;Arch Linux Zen&lt;/code&gt; під час завантаження.&lt;/p&gt;
+&lt;h2 id=&#34;висновки&#34;&gt;Висновки&lt;/h2&gt;
+&lt;p&gt;Підводячи підсумок, ядро Linux Zen створено для користувачів, які надають перевагу швидкості реагування робочого столу, мультимедійній продуктивності та іграм. Однак користувачі повинні ретельно оцінити, чи відповідають конкретні оптимізації та виправлення, надані ядром Zen, їхнім потребам і вподобанням, оскільки деякі функції можуть послабити продуктивність загального призначення або сумісність для спеціальних випадків використання.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Прокидання відеокарти PCI до Windows KVM на Arch Linux</title>
         <link>https://blog.moroz.cc/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/</link>
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
