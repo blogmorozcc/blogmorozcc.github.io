@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='What is Linux Zen Kernel ? The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.
+The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance.'><title>Install Linux ZEN kernel on Arch Linux to improve PC performance</title>
+
+<link rel='canonical' href='http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Install Linux ZEN kernel on Arch Linux to improve PC performance'>
+<meta property='og:description' content='What is Linux Zen Kernel ? The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.
+The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance.'>
+<meta property='og:url' content='http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Kernel' /><meta property='article:tag' content='Zen' /><meta property='article:published_time' content='2024-03-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-25T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header.png' />
+<meta name="twitter:title" content="Install Linux ZEN kernel on Arch Linux to improve PC performance">
+<meta name="twitter:description" content="What is Linux Zen Kernel ? The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.
+The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">Dmitriy Moroz</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected>English</option>
+                        
+                            <option value="http://localhost:1313/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/">
+                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_800x0_resize_box_3.png"
+                        srcset="/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_800x0_resize_box_3.png 800w, /post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="367" 
+                        loading="lazy"
+                        alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve PC performance" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/">Install Linux ZEN kernel on Arch Linux to improve PC performance</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">25.03.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%BD%D1%8F-%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D0%BE%D0%B4%D1%96%D1%97-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="what-is-linux-zen-kernel-">What is Linux Zen Kernel ?</h2>
+<p>The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.</p>
+<p>The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance. These optimizations may include tweaks to the scheduler, I/O scheduler improvements, CPU scheduling enhancements, and other performance-related adjustments.</p>
+<p>Users who prioritize desktop or workstation performance and responsiveness may choose to use the Linux Zen Kernel over the standard Linux kernel provided by their distribution. However, it&rsquo;s important to note that the Zen Kernel is a third-party modification and may not be officially supported by all Linux distributions. Users interested in trying out the Zen Kernel should review documentation and instructions provided by the Zen Kernel project or their specific distribution&rsquo;s community.</p>
+<h2 id="key-benefits">Key benefits</h2>
+<p>Some of the key features and optimizations typically found in the Linux Zen kernel include:</p>
+<ul>
+<li>
+<p>Low-Latency Patchset: These patches aim to reduce the latency of the kernel, improving responsiveness, which is particularly important for interactive desktop use, audio processing, and gaming.</p>
+</li>
+<li>
+<p>BFQ I/O Scheduler: The Zen kernel often includes the BFQ (Budget Fair Queueing) I/O scheduler, which prioritizes I/O requests based on the process generating them, aiming to provide smoother system performance, especially during multitasking or when dealing with interactive applications.</p>
+</li>
+<li>
+<p>Additional CPU Schedulers: In some cases, Zen kernel includes alternative CPU scheduling algorithms or optimizations to improve multitasking performance and responsiveness.</p>
+</li>
+<li>
+<p>Preemption and Real-Time Support: The kernel may include patches to enhance preemption and real-time capabilities, reducing delays and improving responsiveness for time-sensitive tasks.</p>
+</li>
+<li>
+<p>Tuned Defaults: Some kernel parameters are tuned by default to better suit desktop and multimedia workloads.</p>
+</li>
+<li>
+<p>Stability and Reliability: While emphasizing performance improvements, Zen kernel developers typically ensure that stability and reliability are maintained, though users should always be aware that any kernel modifications may introduce risks.</p>
+</li>
+</ul>
+<h2 id="installation-arch-linux">Installation (Arch Linux)</h2>
+<p>Linux Zen Kernel is included in Arch Linux pacman package manager and can be easily installed using pacman:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo pacman -S linux-zen linux-zen-headers</span></span></code></pre></div>
+<p>After that kernel is actually installed on your system, but now it&rsquo;s time to tell your bootloader to boot with Linux Zen Kernel instead of the default one. This can depend on your bootloader, in my case I am using <code>systemd-boot</code> as my bootloader.</p>
+<p>The boot entries are located at <code>/boot/loader/entries</code> directory, so navigate there:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> /boot/loader/entries/</span></span></code></pre></div>
+<p>And list all your boot entries:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ls -la</span></span></code></pre></div>
+<p>In my case I have only one entry <code>arch.conf</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Feb <span class="m">24</span> 14:42 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Mar <span class="m">25</span> 20:15 ..
+</span></span><span class="line"><span class="cl">-rwxr-xr-x <span class="m">1</span> root root  <span class="m">208</span> Mar <span class="m">18</span> 18:31 arch.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I recommend to leave the original boot entry and original Linux Kernel for the backup, so if new kernel fails to boot you will always have an option to boot from the stock kernel in the bootloader.</p>
+<p>Create a duplicate of the original boot entry file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo cp arch.conf arch-zen.conf</span></span></code></pre></div>
+<p>Then edit the <code>arch-zen.conf</code> file using your text editor of choice, in my case I use nano like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano arch-zen.conf</span></span></code></pre></div>
+<p>Then modify the config and replace 3 params (title, linux, initrd) according to the example above:</p>
+<p>Before (original <code>arch.conf</code> file):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">title Arch Linux
+</span></span><span class="line"><span class="cl">linux /vmlinuz-linux
+</span></span><span class="line"><span class="cl">initrd /initramfs-linux.img
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After (modify in <code>arch-zen.conf</code> file):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">title Arch Linux Zen
+</span></span><span class="line"><span class="cl">linux /vmlinuz-linux-zen
+</span></span><span class="line"><span class="cl">initrd /initramfs-linux-zen.img
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After saving the file reboot your system, and select the <code>Arch Linux Zen</code> during boot.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>To sum up, the Linux Zen kernel is tailored for users who prioritize desktop responsiveness, multimedia performance, and gaming experience. However, users should carefully evaluate whether the specific optimizations and patches provided by the Zen kernel align with their needs and preferences, as some features may trade off general-purpose performance or compatibility for specialized use cases.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/kernel/">Kernel</a>
+        
+            <a href="/tags/zen/">Zen</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post GPU PCI passthrough to Windows KVM on Arch Linux"
+                        
+                        data-hash="md5-TLyVJ9Na7g2IhRyLNMTSGA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GPU PCI passthrough to Windows KVM on Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-install-kvm-on-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to install KVM on Arch Linux"
+                        
+                        data-hash="md5-ILUOqaoOmtAx5tzmlcw7eQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to install KVM on Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/configure-ssh-authorization-based-on-rsa-key/">
+        
+        
+            <div class="article-image">
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Configure SSH authorization based on RSA key"
+                        
+                        data-hash="md5-ikcOQeNwZ&#43;e7tI8xo&#43;mWEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Configure SSH authorization based on RSA key</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/arch-linux-install-guide-uefi--encrypted-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Arch Linux install guide (UEFI &#43; encrypted LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/fix-missing-formula-fonts-for-wps-office-on-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Fix missing formula fonts for WPS Office on Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fix missing formula fonts for WPS Office on Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | The IT Blog
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#what-is-linux-zen-kernel-">What is Linux Zen Kernel ?</a></li>
+    <li><a href="#key-benefits">Key benefits</a></li>
+    <li><a href="#installation-arch-linux">Installation (Arch Linux)</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

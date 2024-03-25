@@ -6,7 +6,97 @@
         <description>Recent content in Posts on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Install Linux ZEN kernel on Arch Linux to improve PC performance</title>
+        <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/</guid>
+        <description>&lt;img src="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header.png" alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve PC performance" /&gt;&lt;h2 id=&#34;what-is-linux-zen-kernel-&#34;&gt;What is Linux Zen Kernel ?&lt;/h2&gt;
+&lt;p&gt;The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.&lt;/p&gt;
+&lt;p&gt;The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance. These optimizations may include tweaks to the scheduler, I/O scheduler improvements, CPU scheduling enhancements, and other performance-related adjustments.&lt;/p&gt;
+&lt;p&gt;Users who prioritize desktop or workstation performance and responsiveness may choose to use the Linux Zen Kernel over the standard Linux kernel provided by their distribution. However, it&amp;rsquo;s important to note that the Zen Kernel is a third-party modification and may not be officially supported by all Linux distributions. Users interested in trying out the Zen Kernel should review documentation and instructions provided by the Zen Kernel project or their specific distribution&amp;rsquo;s community.&lt;/p&gt;
+&lt;h2 id=&#34;key-benefits&#34;&gt;Key benefits&lt;/h2&gt;
+&lt;p&gt;Some of the key features and optimizations typically found in the Linux Zen kernel include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Low-Latency Patchset: These patches aim to reduce the latency of the kernel, improving responsiveness, which is particularly important for interactive desktop use, audio processing, and gaming.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;BFQ I/O Scheduler: The Zen kernel often includes the BFQ (Budget Fair Queueing) I/O scheduler, which prioritizes I/O requests based on the process generating them, aiming to provide smoother system performance, especially during multitasking or when dealing with interactive applications.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Additional CPU Schedulers: In some cases, Zen kernel includes alternative CPU scheduling algorithms or optimizations to improve multitasking performance and responsiveness.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Preemption and Real-Time Support: The kernel may include patches to enhance preemption and real-time capabilities, reducing delays and improving responsiveness for time-sensitive tasks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Tuned Defaults: Some kernel parameters are tuned by default to better suit desktop and multimedia workloads.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Stability and Reliability: While emphasizing performance improvements, Zen kernel developers typically ensure that stability and reliability are maintained, though users should always be aware that any kernel modifications may introduce risks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;installation-arch-linux&#34;&gt;Installation (Arch Linux)&lt;/h2&gt;
+&lt;p&gt;Linux Zen Kernel is included in Arch Linux pacman package manager and can be easily installed using pacman:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S linux-zen linux-zen-headers&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that kernel is actually installed on your system, but now it&amp;rsquo;s time to tell your bootloader to boot with Linux Zen Kernel instead of the default one. This can depend on your bootloader, in my case I am using &lt;code&gt;systemd-boot&lt;/code&gt; as my bootloader.&lt;/p&gt;
+&lt;p&gt;The boot entries are located at &lt;code&gt;/boot/loader/entries&lt;/code&gt; directory, so navigate there:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /boot/loader/entries/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And list all your boot entries:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -la&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case I have only one entry &lt;code&gt;arch.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;drwxr-xr-x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Feb &lt;span class=&#34;m&#34;&gt;24&lt;/span&gt; 14:42 .
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;drwxr-xr-x &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; root root &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;25&lt;/span&gt; 20:15 ..
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-rwxr-xr-x &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; root root  &lt;span class=&#34;m&#34;&gt;208&lt;/span&gt; Mar &lt;span class=&#34;m&#34;&gt;18&lt;/span&gt; 18:31 arch.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;I recommend to leave the original boot entry and original Linux Kernel for the backup, so if new kernel fails to boot you will always have an option to boot from the stock kernel in the bootloader.&lt;/p&gt;
+&lt;p&gt;Create a duplicate of the original boot entry file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp arch.conf arch-zen.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then edit the &lt;code&gt;arch-zen.conf&lt;/code&gt; file using your text editor of choice, in my case I use nano like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano arch-zen.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then modify the config and replace 3 params (title, linux, initrd) according to the example above:&lt;/p&gt;
+&lt;p&gt;Before (original &lt;code&gt;arch.conf&lt;/code&gt; file):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;title Arch Linux
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;linux /vmlinuz-linux
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;initrd /initramfs-linux.img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After (modify in &lt;code&gt;arch-zen.conf&lt;/code&gt; file):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;title Arch Linux Zen
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;linux /vmlinuz-linux-zen
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;initrd /initramfs-linux-zen.img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After saving the file reboot your system, and select the &lt;code&gt;Arch Linux Zen&lt;/code&gt; during boot.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;To sum up, the Linux Zen kernel is tailored for users who prioritize desktop responsiveness, multimedia performance, and gaming experience. However, users should carefully evaluate whether the specific optimizations and patches provided by the Zen kernel align with their needs and preferences, as some features may trade off general-purpose performance or compatibility for specialized use cases.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>GPU PCI passthrough to Windows KVM on Arch Linux</title>
         <link>http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/</link>
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>

@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/uk/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -14,6 +14,100 @@
                 hreflang="uk"
                 href="http://localhost:1313/uk/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/uk/categories/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/categories/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/linux/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/linux/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/categories/linux/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/categories/linux/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/post/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/zen/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/zen/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/zen/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%BD%D1%8F-%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D0%BE%D0%B4%D1%96%D1%97-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%BD%D1%8F-%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D0%BE%D0%B4%D1%96%D1%97-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/%D1%8F%D0%B4%D1%80%D0%BE/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/uk/tags/amd-vi/</loc>
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
@@ -26,19 +120,6 @@
                 rel="alternate"
                 hreflang="uk"
                 href="http://localhost:1313/uk/tags/amd-vi/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/uk/categories/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/categories/"
                 />
   </url><url>
     <loc>http://localhost:1313/uk/tags/gpu/</loc>
@@ -80,32 +161,6 @@
                 href="http://localhost:1313/uk/tags/kvm/"
                 />
   </url><url>
-    <loc>http://localhost:1313/uk/tags/linux/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/linux/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/uk/categories/linux/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/categories/linux/"
-                />
-  </url><url>
     <loc>http://localhost:1313/uk/tags/pci-passthrough/</loc>
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -117,32 +172,6 @@
                 rel="alternate"
                 hreflang="uk"
                 href="http://localhost:1313/uk/tags/pci-passthrough/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/uk/post/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/post/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/uk/tags/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/"
                 />
   </url><url>
     <loc>http://localhost:1313/uk/tags/vfio/</loc>

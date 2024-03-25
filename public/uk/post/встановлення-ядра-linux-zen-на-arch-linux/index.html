@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="uk" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Що таке Linux Zen Kernel? Ядро Linux Zen Kernel — це модифікована версія ядра Linux, яка зосереджена на забезпеченні покращеної продуктивності, швидкості реагування та гнучкості для користувачів настільних комп’ютерів і робочих станцій. Він розроблений і підтримується проектом Zen Kernel, метою якого є оптимізація ядра для настільних комп’ютерів.
+Ядро Zen містить різні виправлення та оптимізації, спрямовані на зменшення латентності, покращення реагування системи та підвищення загальної продуктивності системи. Ці оптимізації можуть включати налаштування планувальника (scheduler), покращення планувальника вводу-виводу (IO scheduler), покращення планування ЦП та інші налаштування, пов’язані з продуктивністю.'><title>Встановлення ядра Linux ZEN на Arch Linux</title>
+
+<link rel='canonical' href='http://localhost:1313/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Встановлення ядра Linux ZEN на Arch Linux'>
+<meta property='og:description' content='Що таке Linux Zen Kernel? Ядро Linux Zen Kernel — це модифікована версія ядра Linux, яка зосереджена на забезпеченні покращеної продуктивності, швидкості реагування та гнучкості для користувачів настільних комп’ютерів і робочих станцій. Він розроблений і підтримується проектом Zen Kernel, метою якого є оптимізація ядра для настільних комп’ютерів.
+Ядро Zen містить різні виправлення та оптимізації, спрямовані на зменшення латентності, покращення реагування системи та підвищення загальної продуктивності системи. Ці оптимізації можуть включати налаштування планувальника (scheduler), покращення планувальника вводу-виводу (IO scheduler), покращення планування ЦП та інші налаштування, пов’язані з продуктивністю.'>
+<meta property='og:url' content='http://localhost:1313/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux/'>
+<meta property='og:site_name' content='Блог про IT'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Ядро' /><meta property='article:tag' content='Zen' /><meta property='article:published_time' content='2024-03-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-25T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux/header.png' />
+<meta name="twitter:title" content="Встановлення ядра Linux ZEN на Arch Linux">
+<meta name="twitter:description" content="Що таке Linux Zen Kernel? Ядро Linux Zen Kernel — це модифікована версія ядра Linux, яка зосереджена на забезпеченні покращеної продуктивності, швидкості реагування та гнучкості для користувачів настільних комп’ютерів і робочих станцій. Він розроблений і підтримується проектом Zen Kernel, метою якого є оптимізація ядра для настільних комп’ютерів.
+Ядро Zen містить різні виправлення та оптимізації, спрямовані на зменшення латентності, покращення реагування системи та підвищення загальної продуктивності системи. Ці оптимізації можуть включати налаштування планувальника (scheduler), покращення планувальника вводу-виводу (IO scheduler), покращення планування ЦП та інші налаштування, пов’язані з продуктивністю."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux/header.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Показати меню">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/uk/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/uk">Блог про IT</a></h1>
+            
+            
+            
+            <h2 class="site-description">Дмитра Мороза</h2>
+            
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/uk/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Головна</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Архіви</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/uk/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Пошук</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" >English</option>
+                        
+                            <option value="http://localhost:1313/uk/" selected>Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Темна тема</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux/">
+                <img src="/post/install-linux-zen-kernel-on-arch-linux/header_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_800x0_resize_box_3.png"
+                        srcset="/post/install-linux-zen-kernel-on-arch-linux/header_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_800x0_resize_box_3.png 800w, /post/install-linux-zen-kernel-on-arch-linux/header_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="367" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення ядра Linux ZEN на Arch Linux" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/uk/categories/linux/" >
+                Linux
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%8F%D0%B4%D1%80%D0%B0-linux-zen-%D0%BD%D0%B0-arch-linux/">Встановлення ядра Linux ZEN на Arch Linux</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">25.03.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    Час читання: 3 хв
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="що-таке-linux-zen-kernel">Що таке Linux Zen Kernel?</h2>
+<p>Ядро Linux Zen Kernel — це модифікована версія ядра Linux, яка зосереджена на забезпеченні покращеної продуктивності, швидкості реагування та гнучкості для користувачів настільних комп’ютерів і робочих станцій. Він розроблений і підтримується проектом Zen Kernel, метою якого є оптимізація ядра для настільних комп’ютерів.</p>
+<p>Ядро Zen містить різні виправлення та оптимізації, спрямовані на зменшення латентності, покращення реагування системи та підвищення загальної продуктивності системи. Ці оптимізації можуть включати налаштування планувальника (scheduler), покращення планувальника вводу-виводу (IO scheduler), покращення планування ЦП та інші налаштування, пов’язані з продуктивністю.</p>
+<p>Користувачі, які надають перевагу продуктивності та швидкодії робочого столу чи робочої станції, можуть вибрати використання ядра Linux Zen замість стандартного ядра Linux, яке надається їхнім дистрибутивом. Однак важливо зазначити, що Zen Kernel є модифікацією сторонніх розробників і може офіційно підтримуватися не всіма дистрибутивами Linux. Користувачі, які бажають випробувати Zen Kernel, повинні переглянути документацію та інструкції, надані проектом Zen Kernel або спільнотою свого конкретного дистрибутива.</p>
+<h2 id="основні-переваги">Основні переваги</h2>
+<p>Ключові функції та оптимізації, що містяться в ядрі Linux Zen, включають такі основні переваги:</p>
+<ul>
+<li>
+<p>Набір патчів для зменшення затримки: ці патчі спрямовані на зменшення затримки ядра, покращення реагування, що особливо важливо для інтерактивного використання робочого столу, обробки звуку та ігор.</p>
+</li>
+<li>
+<p>Планувальник вводу-виводу BFQ: ядро Zen часто містить планувальник вводу-виводу BFQ (Budget Fair Queueing), який визначає пріоритетність запитів вводу-виводу на основі процесу, який їх генерує, з метою забезпечення більш плавної роботи системи, особливо під час багатозадачності або під час роботи. з інтерактивними додатками.</p>
+</li>
+</ul>
+<p>— Додаткові планувальники ЦП: у деяких випадках ядро Zen включає альтернативні алгоритми планування ЦП або оптимізації для покращення продуктивності багатозадачності та швидкості реагування.</p>
+<ul>
+<li>Підтримка випередження та реального часу: ядро може включати виправлення для покращення можливостей випередження та реального часу, зменшення затримок та покращення реагування на чутливі до часу завдання.</li>
+</ul>
+<p>— Оптимізації за замовчуванням: деякі параметри ядра налаштовано за замовчуванням, щоб краще відповідати робочому навантаженню робочого столу та мультимедіа.</p>
+<ul>
+<li>Стабільність і надійність: наголошуючи на покращенні продуктивності, розробники ядра Zen зазвичай забезпечують підтримку стабільності та надійності, хоча користувачі завжди повинні знати, що будь-які модифікації ядра можуть становити ризик.</li>
+</ul>
+<h2 id="встановлення-arch-linux">Встановлення (Arch Linux)</h2>
+<p>Ядро Linux Zen включено в менеджер пакетів Arch Linux pacman і може бути легко встановлено за допомогою pacman:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo pacman -S linux-zen linux-zen-headers</span></span></code></pre></div>
+<p>Після цього ядро фактично буде встановлено у вашій системі, але тепер настав час налаштувати завантажувач (bootloader) на завантаження з ядром Linux Zen Kernel замість стандартного. Це може залежати від вашого завантажувача, у моєму випадку я використовую <code>systemd-boot</code>.</p>
+<p>Записи завантаження знаходяться в каталозі <code>/boot/loader/entries</code>, тому перейдіть туди:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> /boot/loader/entries/</span></span></code></pre></div>
+<p>І виведіть в термінал всі ваші записи для завантаження:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ls -la</span></span></code></pre></div>
+<p>У моєму випадку я маю лише один запис <code>arch.conf</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Feb <span class="m">24</span> 14:42 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Mar <span class="m">25</span> 20:15 ..
+</span></span><span class="line"><span class="cl">-rwxr-xr-x <span class="m">1</span> root root  <span class="m">208</span> Mar <span class="m">18</span> 18:31 arch.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Я рекомендую залишити оригінальний запис завантаження (boot entry) та оригінальне ядро Linux для резервної копії, тож якщо нове ядро не завантажиться, ви завжди матимете можливість завантажитися зі стандартного ядра у завантажувачі.</p>
+<p>Створіть дублікат початкового файлу запису завантаження:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo cp arch.conf arch-zen.conf</span></span></code></pre></div>
+<p>Потім відредагуйте файл <code>arch-zen.conf</code> за допомогою обраного вами текстового редактора, у моєму випадку я використовую nano таким чином:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo nano arch-zen.conf</span></span></code></pre></div>
+<p>Потім змініть конфігурацію та замініть 3 параметри (title, linux, initrd) відповідно до прикладу вище:</p>
+<p>Раніше (оригінальний файл <code>arch.conf</code>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">title Arch Linux
+</span></span><span class="line"><span class="cl">linux /vmlinuz-linux
+</span></span><span class="line"><span class="cl">initrd /initramfs-linux.img
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Після (змінити у файлі <code>arch-zen.conf</code>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">title Arch Linux Zen
+</span></span><span class="line"><span class="cl">linux /vmlinuz-linux-zen
+</span></span><span class="line"><span class="cl">initrd /initramfs-linux-zen.img
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Після збереження файлу перезавантажте систему та виберіть <code>Arch Linux Zen</code> під час завантаження.</p>
+<h2 id="висновки">Висновки</h2>
+<p>Підводячи підсумок, ядро Linux Zen створено для користувачів, які надають перевагу швидкості реагування робочого столу, мультимедійній продуктивності та іграм. Однак користувачі повинні ретельно оцінити, чи відповідають конкретні оптимізації та виправлення, надані ядром Zen, їхнім потребам і вподобанням, оскільки деякі функції можуть послабити продуктивність загального призначення або сумісність для спеціальних випадків використання.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/uk/tags/linux/">Linux</a>
+        
+            <a href="/uk/tags/%D1%8F%D0%B4%D1%80%D0%BE/">Ядро</a>
+        
+            <a href="/uk/tags/zen/">Zen</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Схожі матеріали</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Прокидання відеокарти PCI до Windows KVM на Arch Linux"
+                        
+                        data-hash="md5-TLyVJ9Na7g2IhRyLNMTSGA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Прокидання відеокарти PCI до Windows KVM на Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення системи віртуалізації KVM на Arch Linux"
+                        
+                        data-hash="md5-ILUOqaoOmtAx5tzmlcw7eQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення системи віртуалізації KVM на Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-ssh-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97-%D0%BD%D0%B0-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%96-rsa-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Налаштування SSH авторизації на основі RSA ключа"
+                        
+                        data-hash="md5-ikcOQeNwZ&#43;e7tI8xo&#43;mWEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Налаштування SSH авторизації на основі RSA ключа</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/">
+        
+        
+            <div class="article-image">
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
+                        
+                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Встановлення Arch Linux (UEFI &#43; зашифрований LVM)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/uk/post/%D1%8F%D0%BA-%D0%B2%D0%B8%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B8-%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D1%83-%D0%B2%D1%96%D0%B4%D1%81%D1%83%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%96-%D1%88%D1%80%D0%B8%D1%84%D1%82%D1%96%D0%B2-%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB-%D0%B4%D0%BB%D1%8F-wps-office-%D0%BD%D0%B0-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/fix-missing-formula-fonts-for-wps-office-on-linux/header.5a9ccd94ce951dec8e0eb4d199714fbe_huca727e626e0e83a19f41e4803138b60e_99475_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Як виправити помилку відсутності шрифтів формул для WPS Office на Linux"
+                        
+                        data-hash="md5-WpzNlM6VHeyODrTRmXFPvg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Як виправити помилку відсутності шрифтів формул для WPS Office на Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | Блог про IT
+    </section>
+    
+    <section class="powerby">
+        
+        Всі права захищено.
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Зміст</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#що-таке-linux-zen-kernel">Що таке Linux Zen Kernel?</a></li>
+    <li><a href="#основні-переваги">Основні переваги</a></li>
+    <li><a href="#встановлення-arch-linux">Встановлення (Arch Linux)</a></li>
+    <li><a href="#висновки">Висновки</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
