@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
+How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware.'><title>Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</title>
+
+<link rel='canonical' href='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server'>
+<meta property='og:description' content='Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
+How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware.'>
+<meta property='og:url' content='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='KVM over IP' /><meta property='article:tag' content='PiKVM' /><meta property='article:tag' content='Raspberry PI' /><meta property='article:tag' content='HDMI' /><meta property='article:tag' content='USB' /><meta property='article:tag' content='VNC' /><meta property='article:published_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.webp' />
+<meta name="twitter:title" content="Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server">
+<meta name="twitter:description" content="Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
+How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.webp' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">Dmitriy Moroz</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected>English</option>
+                        
+                            <option value="http://localhost:1313/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/">
+                <img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_800x0_resize_q75_h2_box_2.webp"
+                        srcset="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_800x0_resize_q75_h2_box_2.webp 800w, /post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_1600x0_resize_q75_h2_box_2.webp 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/diy/" >
+                DIY
+            </a>
+        
+            <a href="/categories/hardware/" >
+                Hardware
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/">Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">29.03.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction-to-kvm-over-ip">Introduction to KVM over IP</h2>
+<p>KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&rsquo;s or PC&rsquo;s console as if they were physically present at the machine, regardless of their location. Here&rsquo;s how it works and its advantages over software remote desktop solutions:</p>
+<h3 id="how-it-works">How it works</h3>
+<ul>
+<li>
+<p><strong>Hardware Device</strong>: KVM over IP typically involves a hardware device installed on the server or integrated into the server&rsquo;s hardware. This device connects to the server&rsquo;s keyboard, video, and mouse ports.</p>
+</li>
+<li>
+<p><strong>Network Connection</strong>: The KVM over IP device is then connected to the network, allowing remote access to the server.</p>
+</li>
+<li>
+<p><strong>Access Software</strong>: Users can access the server&rsquo;s console remotely using specialized software provided by the KVM over IP device manufacturer. This software allows users to view the server&rsquo;s screen, control the keyboard and mouse input, and interact with the server as if they were physically present.</p>
+</li>
+<li>
+<p><strong>Security Features</strong>: KVM over IP solutions often come with security features such as encryption and authentication to ensure secure remote access to the server.</p>
+</li>
+</ul>
+<h3 id="advantages-over-software-remote-desktop">Advantages over software remote desktop</h3>
+<ul>
+<li>
+<p><strong>Low-Level Access</strong>: KVM over IP provides low-level access to the server&rsquo;s console, allowing users to interact with the server or PC at the BIOS level and during the boot process. This level of access is not typically available with software remote desktop solutions, which operate within the operating system environment.</p>
+</li>
+<li>
+<p><strong>Operating System Independence</strong>: Since KVM over IP operates at a hardware level, it is independent of the server&rsquo;s operating system. This means it can be used to troubleshoot and manage servers even if the operating system is unresponsive or malfunctioning.</p>
+</li>
+<li>
+<p><strong>Out-of-Band Management</strong>: KVM over IP provides out-of-band management capabilities, allowing administrators to remotely access and manage servers even if the network or operating system is down. This can be crucial for troubleshooting and maintenance tasks.</p>
+</li>
+<li>
+<p><strong>Performance</strong>: KVM over IP solutions often offer better performance compared to software remote desktop solutions, especially for tasks that require low-latency and high-resolution video output.</p>
+</li>
+<li>
+<p><strong>No Software Installation Required</strong>: Since KVM over IP is a hardware-based solution, it does not require any software installation on the server side, which can simplify deployment and maintenance.</p>
+</li>
+</ul>
+<h2 id="hardware-solutions-overview">Hardware solutions overview</h2>
+<h3 id="commercial-kvm-switches">Commercial KVM switches</h3>
+<p>There are plenty of KMV over IP devices available on the market, but they have some disatvantages in case you need some sort of solution for personal use, which includes this key points:</p>
+<ul>
+<li>
+<p><strong>Cost</strong>: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services. Open-source solutions like LibreEMS and IPMI are more cost-effective in terms of hardware expenses.</p>
+</li>
+<li>
+<p><strong>Non-free software</strong>: Most of the KVM switches that are manufactured for production use in server rooms and critical infrastructure datacenters are bundled with closed source software that has proprietary license.</p>
+</li>
+</ul>
+<h3 id="pikvm">PiKVM</h3>
+<p>The best solution for the personal home-lab server room or remote management of the PC is <a class="link" href="https://pikvm.org/"  target="_blank" rel="noopener"
+    >PiKVM</a> - and open and inexpensive IP-KVM solution based on <a class="link" href="https://www.raspberrypi.com/products/"  target="_blank" rel="noopener"
+    >Raspberry Pi</a> single board ARM computer.</p>
+<p>The <a class="link" href="https://pikvm.org/"  target="_blank" rel="noopener"
+    >PiKVM</a> device has many useful features to control remote machine, for example:</p>
+<ul>
+<li>
+<p>Storage simulation: this allows you to attach local *.iso file to the remote machine, it allows you to reinstall any OS remotely.</p>
+</li>
+<li>
+<p>USB removal/insertion simulation.</p>
+</li>
+<li>
+<p>ATX power control.</p>
+</li>
+</ul>
+<p>If you want to have a <a class="link" href="https://pikvm.org/"  target="_blank" rel="noopener"
+    >PiKVM</a> device for yourself there are 2 options:</p>
+<ul>
+<li>
+<p>Order a pre-built device on the official website.</p>
+</li>
+<li>
+<p>Buy one of the Raspberry Pi boards that are <a class="link" href="https://docs.pikvm.org/v2/"  target="_blank" rel="noopener"
+    >supported</a> as well as some components and assemble the DIY device.</p>
+</li>
+</ul>
+<h2 id="building-own-pikvm-v2-device">Building own PiKVM v2 device</h2>
+<p>I decided to build PiKVM v2 device myself, as there are no delivery of pre-built devices available for my country. Also DIY build gives more flexibility: you can build device according to needed features, you can choose whatever components you want.</p>
+<h3 id="choosing-components">Choosing components</h3>
+<p>After investigating the PiKVM official documentation it&rsquo;s obvious that the best version to build is PiKVM v2. To assemble the device I used this list of hardware components:</p>
+<ul>
+<li>1 x <a class="link" href="https://www.raspberrypi.com/products/raspberry-pi-4-model-b/"  target="_blank" rel="noopener"
+    >Raspberry Pi 4 Model B</a> with 2 Gb of RAM.</li>
+<li>1 x <a class="link" href="https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?token=v2%3AFhRGDfXrgW-JeeoVxg4uJB3qmxltBSE89kSZYPuKxJGqL49CUkKuRZgMYkJJl50TnXWK_qvyZRVxL1syJB87F-e4NWzotHV185XO4MTe0i6RhA_4zvZ-bBXOukyL0_KO&amp;campaign_id=3563069&amp;product_id=2056074929&amp;source=prom%3Acompany%3Apage&amp;locale=uk&amp;category_ids=71109&amp;from_spa=true"  target="_blank" rel="noopener"
+    >Power adapter GAN 65W PD</a></li>
+<li>1 x <a class="link" href="https://www.aliexpress.com/item/1005001880861192.html?spm=a2g0o.order_list.order_list_main.11.6b4f1802HEgPtC"  target="_blank" rel="noopener"
+    >HDMI USB video capture card</a></li>
+<li>1 x Kingston SD Card 32 Gb 10 class.</li>
+<li>2 x USB-A to USB-C cables (to build cusom power cable).</li>
+<li>1 X HDMI male-male cable.</li>
+<li>1 x 80mm FAN (for active cooling).</li>
+</ul>
+<h3 id="building-cusom-power-cable">Building cusom power cable</h3>
+<p>To be able to operate the remote machinve wiht our DIY KVM device computer should be able to recognize our device as HID USB device that will be treated by the computer just like another keyboard or mouse (the computer keyboard and mouse are also HID device).</p>
+<p>The problem with Raspberry Pi 4 Model B board - it has only one USB-C port that is able to act as a HID device and that port is also used to power the device. To fix this there is workaround that requires tou build a special cable that can simultanously act as USB Device for the target host and receive external power from the power adapter.</p>
+<p>To build this custom power cable you need 2 x <strong>USB-A male to USB-C male</strong> cables. I recommend choosing good quality cables because board requires 3 amp current power. The process of building cable includes this steps:</p>
+<ol>
+<li>
+<p>Take the first cable and cut the isolation. Leave the data line wires (green and white) as is, and cut the power +5V (red) and ground (black) wires.</p>
+</li>
+<li>
+<p>Take the second cable and cut it completely. You need only the USB-A part of it.</p>
+</li>
+<li>
+<p>Solder power +5V (red) wire of the second USB-A cable part with the power +5V (red) wire of the USB-C cable part.</p>
+</li>
+<li>
+<p>Solder all of the 3 ground (black) wires of all the cable parts together.</p>
+</li>
+<li>
+<p>Isolate everything with the electric tape.</p>
+</li>
+</ol>
+<p>So the USB-C connector should be plugged in Raspberry Pi board, USB-A connector of the second cable (the one with power wired) should be plugged in power adapter, and the USB-A connector of the first cable (the one with data wires) should be plugged to the PC you want to control. For better understanding there is a cable soldering scheme below.</p>
+<p><img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering.png"
+	width="977"
+	height="485"
+	srcset="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering_hu6c0a50c5e819cc1e50a4b06df2ada8b9_58260_480x0_resize_box_3.png 480w, /post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering_hu6c0a50c5e819cc1e50a4b06df2ada8b9_58260_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="PiKVM v2 custom cable scheme"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="483px"
+	
+></p>
+<p>Also I recommend this video on YouTube from the PiKVM developer which explains the full process of making this custom cable.</p>
+<div class="video-wrapper">
+    <iframe loading="lazy" 
+            src="https://www.youtube.com/embed/uLuBuQUF61o" 
+            allowfullscreen 
+            title="YouTube Video"
+    >
+    </iframe>
+</div>
+
+<!-- raw HTML omitted -->
+<h3 id="assenble-a-custom-case">Assenble a custom case</h3>
+<p>The components I use to build the device include external HDMI video signal capture card that should be connected to the specific USB port of the Raspberry Pi board. For my needs the device should be portable, so there is a risk of using the wrong port if I should connect the card every time. Considering this, the official Raspberry Pi case is not an option, also it costs too much in my opinion. So I decided to assamble the device in a single case for better portability and plug &amp; play experience, every time I need to use it with another PC I simply need connect HDMI and USB cables to it.</p>
+<p>Also it&rsquo;s not a secret that Rasperry Pi boards can get overheated when working in extreme CPU load conditions or with 24/7 uptime. Taking that to account, I decided to construct a case in a way that all of the hardware will be cooled with 80mm fan.</p>
+<p>Unfortunately, I have no 3D printer to engineer accurate case, so my case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.</p>
+<!-- raw HTML omitted -->
+<p>The fan can be connected to the appropriate GPIO pins on the board. For that I used pin #2 for +5v (red wire) and pin #6 for ground (black wire) to power the fan.</p>
+<p><img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2.png"
+	width="2064"
+	height="1185"
+	srcset="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2_hu20745d9a0e6a686d1237970946b3c339_145198_480x0_resize_box_3.png 480w, /post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2_hu20745d9a0e6a686d1237970946b3c339_145198_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Raspberry Pi 4 Model B GPIO Pinout scheme"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="174"
+		data-flex-basis="418px"
+	
+></p>
+<!-- raw HTML omitted -->
+<p>Also I decided to include the RJ-45 Ethernet port on the side, because the quality of stream is better and the latency is less when using cable internet connection instead of Wi-Fi. For that I made a custom cable extension and mounted the port near the HDMI input.</p>
+<!-- raw HTML omitted -->
+<h3 id="flashing-pikvm-os">Flashing PiKVM OS</h3>
+<h3 id="configuring-wi-fi-connection">Configuring Wi-Fi connection</h3>
+<h3 id="setting-up-tailscale-vpn">Setting up Tailscale VPN</h3>
+<h2 id="how-to-use-pikvm-device-to-control-pc--laptop--server">How to use PiKVM device to control PC / Laptop / Server</h2>
+<h2 id="conclusion">Conclusion</h2>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/kvm/">KVM</a>
+        
+            <a href="/tags/kvm-over-ip/">KVM Over IP</a>
+        
+            <a href="/tags/pikvm/">PiKVM</a>
+        
+            <a href="/tags/raspberry-pi/">Raspberry PI</a>
+        
+            <a href="/tags/hdmi/">HDMI</a>
+        
+            <a href="/tags/usb/">USB</a>
+        
+            <a href="/tags/vnc/">VNC</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post GPU PCI passthrough to Windows KVM on Arch Linux"
+                        
+                        data-hash="md5-TLyVJ9Na7g2IhRyLNMTSGA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GPU PCI passthrough to Windows KVM on Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | The IT Blog
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction-to-kvm-over-ip">Introduction to KVM over IP</a>
+      <ol>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#advantages-over-software-remote-desktop">Advantages over software remote desktop</a></li>
+      </ol>
+    </li>
+    <li><a href="#hardware-solutions-overview">Hardware solutions overview</a>
+      <ol>
+        <li><a href="#commercial-kvm-switches">Commercial KVM switches</a></li>
+        <li><a href="#pikvm">PiKVM</a></li>
+      </ol>
+    </li>
+    <li><a href="#building-own-pikvm-v2-device">Building own PiKVM v2 device</a>
+      <ol>
+        <li><a href="#choosing-components">Choosing components</a></li>
+        <li><a href="#building-cusom-power-cable">Building cusom power cable</a></li>
+        <li><a href="#assenble-a-custom-case">Assenble a custom case</a></li>
+        <li><a href="#flashing-pikvm-os">Flashing PiKVM OS</a></li>
+        <li><a href="#configuring-wi-fi-connection">Configuring Wi-Fi connection</a></li>
+        <li><a href="#setting-up-tailscale-vpn">Setting up Tailscale VPN</a></li>
+      </ol>
+    </li>
+    <li><a href="#how-to-use-pikvm-device-to-control-pc--laptop--server">How to use PiKVM device to control PC / Laptop / Server</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

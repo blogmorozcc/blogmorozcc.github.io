@@ -6,20 +6,28 @@
         <description>Recent content in Categories on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Linux</title>
-        <link>http://localhost:1313/categories/linux/</link>
-        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DIY</title>
+        <link>http://localhost:1313/categories/diy/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/linux/</guid>
+        <guid>http://localhost:1313/categories/diy/</guid>
         <description></description>
         </item>
         <item>
         <title>Hardware</title>
         <link>http://localhost:1313/categories/hardware/</link>
-        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/categories/hardware/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>http://localhost:1313/categories/linux/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/linux/</guid>
         <description></description>
         </item>
         <item>

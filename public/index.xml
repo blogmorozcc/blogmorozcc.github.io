@@ -6,7 +6,180 @@
         <description>Recent content on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</title>
+        <link>http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</guid>
+        <description>&lt;img src="http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.webp" alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" /&gt;&lt;h2 id=&#34;introduction-to-kvm-over-ip&#34;&gt;Introduction to KVM over IP&lt;/h2&gt;
+&lt;p&gt;KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:&lt;/p&gt;
+&lt;h3 id=&#34;how-it-works&#34;&gt;How it works&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Hardware Device&lt;/strong&gt;: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware. This device connects to the server&amp;rsquo;s keyboard, video, and mouse ports.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Network Connection&lt;/strong&gt;: The KVM over IP device is then connected to the network, allowing remote access to the server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Access Software&lt;/strong&gt;: Users can access the server&amp;rsquo;s console remotely using specialized software provided by the KVM over IP device manufacturer. This software allows users to view the server&amp;rsquo;s screen, control the keyboard and mouse input, and interact with the server as if they were physically present.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Security Features&lt;/strong&gt;: KVM over IP solutions often come with security features such as encryption and authentication to ensure secure remote access to the server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;advantages-over-software-remote-desktop&#34;&gt;Advantages over software remote desktop&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Low-Level Access&lt;/strong&gt;: KVM over IP provides low-level access to the server&amp;rsquo;s console, allowing users to interact with the server or PC at the BIOS level and during the boot process. This level of access is not typically available with software remote desktop solutions, which operate within the operating system environment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Operating System Independence&lt;/strong&gt;: Since KVM over IP operates at a hardware level, it is independent of the server&amp;rsquo;s operating system. This means it can be used to troubleshoot and manage servers even if the operating system is unresponsive or malfunctioning.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Out-of-Band Management&lt;/strong&gt;: KVM over IP provides out-of-band management capabilities, allowing administrators to remotely access and manage servers even if the network or operating system is down. This can be crucial for troubleshooting and maintenance tasks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: KVM over IP solutions often offer better performance compared to software remote desktop solutions, especially for tasks that require low-latency and high-resolution video output.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;No Software Installation Required&lt;/strong&gt;: Since KVM over IP is a hardware-based solution, it does not require any software installation on the server side, which can simplify deployment and maintenance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hardware-solutions-overview&#34;&gt;Hardware solutions overview&lt;/h2&gt;
+&lt;h3 id=&#34;commercial-kvm-switches&#34;&gt;Commercial KVM switches&lt;/h3&gt;
+&lt;p&gt;There are plenty of KMV over IP devices available on the market, but they have some disatvantages in case you need some sort of solution for personal use, which includes this key points:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Cost&lt;/strong&gt;: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services. Open-source solutions like LibreEMS and IPMI are more cost-effective in terms of hardware expenses.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Non-free software&lt;/strong&gt;: Most of the KVM switches that are manufactured for production use in server rooms and critical infrastructure datacenters are bundled with closed source software that has proprietary license.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;pikvm&#34;&gt;PiKVM&lt;/h3&gt;
+&lt;p&gt;The best solution for the personal home-lab server room or remote management of the PC is &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; - and open and inexpensive IP-KVM solution based on &lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/products/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Raspberry Pi&lt;/a&gt; single board ARM computer.&lt;/p&gt;
+&lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; device has many useful features to control remote machine, for example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Storage simulation: this allows you to attach local *.iso file to the remote machine, it allows you to reinstall any OS remotely.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;USB removal/insertion simulation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ATX power control.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you want to have a &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; device for yourself there are 2 options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Order a pre-built device on the official website.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Buy one of the Raspberry Pi boards that are &lt;a class=&#34;link&#34; href=&#34;https://docs.pikvm.org/v2/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;supported&lt;/a&gt; as well as some components and assemble the DIY device.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;building-own-pikvm-v2-device&#34;&gt;Building own PiKVM v2 device&lt;/h2&gt;
+&lt;p&gt;I decided to build PiKVM v2 device myself, as there are no delivery of pre-built devices available for my country. Also DIY build gives more flexibility: you can build device according to needed features, you can choose whatever components you want.&lt;/p&gt;
+&lt;h3 id=&#34;choosing-components&#34;&gt;Choosing components&lt;/h3&gt;
+&lt;p&gt;After investigating the PiKVM official documentation it&amp;rsquo;s obvious that the best version to build is PiKVM v2. To assemble the device I used this list of hardware components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 x &lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/products/raspberry-pi-4-model-b/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Raspberry Pi 4 Model B&lt;/a&gt; with 2 Gb of RAM.&lt;/li&gt;
+&lt;li&gt;1 x &lt;a class=&#34;link&#34; href=&#34;https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?token=v2%3AFhRGDfXrgW-JeeoVxg4uJB3qmxltBSE89kSZYPuKxJGqL49CUkKuRZgMYkJJl50TnXWK_qvyZRVxL1syJB87F-e4NWzotHV185XO4MTe0i6RhA_4zvZ-bBXOukyL0_KO&amp;amp;campaign_id=3563069&amp;amp;product_id=2056074929&amp;amp;source=prom%3Acompany%3Apage&amp;amp;locale=uk&amp;amp;category_ids=71109&amp;amp;from_spa=true&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Power adapter GAN 65W PD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;1 x &lt;a class=&#34;link&#34; href=&#34;https://www.aliexpress.com/item/1005001880861192.html?spm=a2g0o.order_list.order_list_main.11.6b4f1802HEgPtC&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;HDMI USB video capture card&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;1 x Kingston SD Card 32 Gb 10 class.&lt;/li&gt;
+&lt;li&gt;2 x USB-A to USB-C cables (to build cusom power cable).&lt;/li&gt;
+&lt;li&gt;1 X HDMI male-male cable.&lt;/li&gt;
+&lt;li&gt;1 x 80mm FAN (for active cooling).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;building-cusom-power-cable&#34;&gt;Building cusom power cable&lt;/h3&gt;
+&lt;p&gt;To be able to operate the remote machinve wiht our DIY KVM device computer should be able to recognize our device as HID USB device that will be treated by the computer just like another keyboard or mouse (the computer keyboard and mouse are also HID device).&lt;/p&gt;
+&lt;p&gt;The problem with Raspberry Pi 4 Model B board - it has only one USB-C port that is able to act as a HID device and that port is also used to power the device. To fix this there is workaround that requires tou build a special cable that can simultanously act as USB Device for the target host and receive external power from the power adapter.&lt;/p&gt;
+&lt;p&gt;To build this custom power cable you need 2 x &lt;strong&gt;USB-A male to USB-C male&lt;/strong&gt; cables. I recommend choosing good quality cables because board requires 3 amp current power. The process of building cable includes this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Take the first cable and cut the isolation. Leave the data line wires (green and white) as is, and cut the power +5V (red) and ground (black) wires.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Take the second cable and cut it completely. You need only the USB-A part of it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solder power +5V (red) wire of the second USB-A cable part with the power +5V (red) wire of the USB-C cable part.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solder all of the 3 ground (black) wires of all the cable parts together.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Isolate everything with the electric tape.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;So the USB-C connector should be plugged in Raspberry Pi board, USB-A connector of the second cable (the one with power wired) should be plugged in power adapter, and the USB-A connector of the first cable (the one with data wires) should be plugged to the PC you want to control. For better understanding there is a cable soldering scheme below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering.png&#34;
+	width=&#34;977&#34;
+	height=&#34;485&#34;
+	srcset=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering_hu6c0a50c5e819cc1e50a4b06df2ada8b9_58260_480x0_resize_box_3.png 480w, http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering_hu6c0a50c5e819cc1e50a4b06df2ada8b9_58260_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PiKVM v2 custom cable scheme&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;483px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Also I recommend this video on YouTube from the PiKVM developer which explains the full process of making this custom cable.&lt;/p&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;iframe loading=&#34;lazy&#34; 
+            src=&#34;https://www.youtube.com/embed/uLuBuQUF61o&#34; 
+            allowfullscreen 
+            title=&#34;YouTube Video&#34;
+    &gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;assenble-a-custom-case&#34;&gt;Assenble a custom case&lt;/h3&gt;
+&lt;p&gt;The components I use to build the device include external HDMI video signal capture card that should be connected to the specific USB port of the Raspberry Pi board. For my needs the device should be portable, so there is a risk of using the wrong port if I should connect the card every time. Considering this, the official Raspberry Pi case is not an option, also it costs too much in my opinion. So I decided to assamble the device in a single case for better portability and plug &amp;amp; play experience, every time I need to use it with another PC I simply need connect HDMI and USB cables to it.&lt;/p&gt;
+&lt;p&gt;Also it&amp;rsquo;s not a secret that Rasperry Pi boards can get overheated when working in extreme CPU load conditions or with 24/7 uptime. Taking that to account, I decided to construct a case in a way that all of the hardware will be cooled with 80mm fan.&lt;/p&gt;
+&lt;p&gt;Unfortunately, I have no 3D printer to engineer accurate case, so my case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;The fan can be connected to the appropriate GPIO pins on the board. For that I used pin #2 for +5v (red wire) and pin #6 for ground (black wire) to power the fan.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2.png&#34;
+	width=&#34;2064&#34;
+	height=&#34;1185&#34;
+	srcset=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2_hu20745d9a0e6a686d1237970946b3c339_145198_480x0_resize_box_3.png 480w, http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2_hu20745d9a0e6a686d1237970946b3c339_145198_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Raspberry Pi 4 Model B GPIO Pinout scheme&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;174&#34;
+		data-flex-basis=&#34;418px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Also I decided to include the RJ-45 Ethernet port on the side, because the quality of stream is better and the latency is less when using cable internet connection instead of Wi-Fi. For that I made a custom cable extension and mounted the port near the HDMI input.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;flashing-pikvm-os&#34;&gt;Flashing PiKVM OS&lt;/h3&gt;
+&lt;h3 id=&#34;configuring-wi-fi-connection&#34;&gt;Configuring Wi-Fi connection&lt;/h3&gt;
+&lt;h3 id=&#34;setting-up-tailscale-vpn&#34;&gt;Setting up Tailscale VPN&lt;/h3&gt;
+&lt;h2 id=&#34;how-to-use-pikvm-device-to-control-pc--laptop--server&#34;&gt;How to use PiKVM device to control PC / Laptop / Server&lt;/h2&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+</description>
+        </item>
+        <item>
         <title>Install Linux ZEN kernel on Arch Linux to improve performance</title>
         <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>

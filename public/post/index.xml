@@ -6,13 +6,56 @@
         <description>Recent content in Posts on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Install Linux ZEN kernel on Arch Linux to improve PC performance</title>
-        <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/</link>
+        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</title>
+        <link>http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</guid>
+        <description>&lt;img src="http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.webp" alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" /&gt;&lt;h2 id=&#34;introduction-to-kvm-over-ip&#34;&gt;Introduction to KVM over IP&lt;/h2&gt;
+&lt;p&gt;KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:&lt;/p&gt;
+&lt;h3 id=&#34;how-it-works&#34;&gt;How it works&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Hardware Device&lt;/strong&gt;: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware. This device connects to the server&amp;rsquo;s keyboard, video, and mouse ports.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Network Connection&lt;/strong&gt;: The KVM over IP device is then connected to the network, allowing remote access to the server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Access Software&lt;/strong&gt;: Users can access the server&amp;rsquo;s console remotely using specialized software provided by the KVM over IP device manufacturer. This software allows users to view the server&amp;rsquo;s screen, control the keyboard and mouse input, and interact with the server as if they were physically present.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Security Features&lt;/strong&gt;: KVM over IP solutions often come with security features such as encryption and authentication to ensure secure remote access to the server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;advantages-over-software-remote-desktop&#34;&gt;Advantages over software remote desktop&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Low-Level Access&lt;/strong&gt;: KVM over IP provides low-level access to the server&amp;rsquo;s console, allowing users to interact with the server or PC at the BIOS level and during the boot process. This level of access is not typically available with software remote desktop solutions, which operate within the operating system environment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Operating System Independence&lt;/strong&gt;: Since KVM over IP operates at a hardware level, it is independent of the server&amp;rsquo;s operating system. This means it can be used to troubleshoot and manage servers even if the operating system is unresponsive or malfunctioning.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Out-of-Band Management&lt;/strong&gt;: KVM over IP provides out-of-band management capabilities, allowing administrators to remotely access and manage servers even if the network or operating system is down. This can be crucial for troubleshooting and maintenance tasks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: KVM over IP solutions often offer better performance compared to software remote desktop solutions, especially for tasks that require low-latency and high-resolution video output.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;No Software Installation Required&lt;/strong&gt;: Since KVM over IP is a hardware-based solution, it does not require any software installation on the server side, which can simplify deployment and maintenance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Install Linux ZEN kernel on Arch Linux to improve performance</title>
+        <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/</guid>
-        <description>&lt;img src="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header.png" alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve PC performance" /&gt;&lt;h2 id=&#34;what-is-linux-zen-kernel-&#34;&gt;What is Linux Zen Kernel ?&lt;/h2&gt;
+        <guid>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</guid>
+        <description>&lt;img src="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.png" alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve performance" /&gt;&lt;h2 id=&#34;what-is-linux-zen-kernel-&#34;&gt;What is Linux Zen Kernel ?&lt;/h2&gt;
 &lt;p&gt;The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.&lt;/p&gt;
 &lt;p&gt;The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance. These optimizations may include tweaks to the scheduler, I/O scheduler improvements, CPU scheduling enhancements, and other performance-related adjustments.&lt;/p&gt;
 &lt;p&gt;Users who prioritize desktop or workstation performance and responsiveness may choose to use the Linux Zen Kernel over the standard Linux kernel provided by their distribution. However, it&amp;rsquo;s important to note that the Zen Kernel is a third-party modification and may not be officially supported by all Linux distributions. Users interested in trying out the Zen Kernel should review documentation and instructions provided by the Zen Kernel project or their specific distribution&amp;rsquo;s community.&lt;/p&gt;
