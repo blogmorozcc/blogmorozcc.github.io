@@ -7,12 +7,12 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Install Linux ZEN kernel on Arch Linux to improve PC performance</title>
-        <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/</link>
+        <title>Install Linux ZEN kernel on Arch Linux to improve performance</title>
+        <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/</guid>
-        <description>&lt;img src="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-pc-performance/header.png" alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve PC performance" /&gt;&lt;h2 id=&#34;what-is-linux-zen-kernel-&#34;&gt;What is Linux Zen Kernel ?&lt;/h2&gt;
+        <guid>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</guid>
+        <description>&lt;img src="http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.png" alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve performance" /&gt;&lt;h2 id=&#34;what-is-linux-zen-kernel-&#34;&gt;What is Linux Zen Kernel ?&lt;/h2&gt;
 &lt;p&gt;The Linux Zen Kernel is a customized version of the Linux kernel that focuses on providing improved performance, responsiveness, and flexibility for desktop and workstation users. It is developed and maintained by the Zen Kernel project, which aims to optimize the kernel for desktop use cases.&lt;/p&gt;
 &lt;p&gt;The Zen Kernel incorporates various patches and optimizations aimed at reducing latency, improving system responsiveness, and enhancing overall system performance. These optimizations may include tweaks to the scheduler, I/O scheduler improvements, CPU scheduling enhancements, and other performance-related adjustments.&lt;/p&gt;
 &lt;p&gt;Users who prioritize desktop or workstation performance and responsiveness may choose to use the Linux Zen Kernel over the standard Linux kernel provided by their distribution. However, it&amp;rsquo;s important to note that the Zen Kernel is a third-party modification and may not be officially supported by all Linux distributions. Users interested in trying out the Zen Kernel should review documentation and instructions provided by the Zen Kernel project or their specific distribution&amp;rsquo;s community.&lt;/p&gt;

@@ -6,7 +6,95 @@
         <description>Recent content in Tags on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>GPIO</title>
+        <link>https://blog.moroz.cc/uk/tags/gpio/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/gpio/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>HDMI</title>
+        <link>https://blog.moroz.cc/uk/tags/hdmi/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/hdmi/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>KVM</title>
+        <link>https://blog.moroz.cc/uk/tags/kvm/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/kvm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>KVM Через IP</title>
+        <link>https://blog.moroz.cc/uk/tags/kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>PiKVM</title>
+        <link>https://blog.moroz.cc/uk/tags/pikvm/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/pikvm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Raspberry PI</title>
+        <link>https://blog.moroz.cc/uk/tags/raspberry-pi/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/raspberry-pi/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tailscale</title>
+        <link>https://blog.moroz.cc/uk/tags/tailscale/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/tailscale/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>USB</title>
+        <link>https://blog.moroz.cc/uk/tags/usb/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/usb/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VNC</title>
+        <link>https://blog.moroz.cc/uk/tags/vnc/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/vnc/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPN</title>
+        <link>https://blog.moroz.cc/uk/tags/vpn/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Саморобні Прилади</title>
+        <link>https://blog.moroz.cc/uk/tags/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Linux</title>
         <link>https://blog.moroz.cc/uk/tags/linux/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
@@ -52,14 +140,6 @@
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/uk/tags/iommu/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>KVM</title>
-        <link>https://blog.moroz.cc/uk/tags/kvm/</link>
-        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/uk/tags/kvm/</guid>
         <description></description>
         </item>
         <item>
