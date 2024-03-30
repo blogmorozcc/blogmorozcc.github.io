@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -15,8 +15,11 @@
                 href="https://blog.moroz.cc/"
                 />
   </url><url>
+    <loc>https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.moroz.cc/categories/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -27,6 +30,81 @@
                 hreflang="en"
                 href="https://blog.moroz.cc/categories/"
                 />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/diy/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/diy/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/gpio/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/categories/hardware/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/hdmi/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/kvm/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/kvm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/kvm/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/kvm-over-ip/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/pikvm/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/post/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/raspberry-pi/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/tailscale/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/usb/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/vnc/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/tags/vpn/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.moroz.cc/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</loc>
     <lastmod>2024-03-25T00:00:00+00:00</lastmod>
@@ -68,32 +146,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/categories/linux/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/post/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/post/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/zen/</loc>
@@ -148,9 +200,6 @@
                 href="https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/categories/hardware/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://blog.moroz.cc/tags/iommu/</loc>
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -162,19 +211,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://blog.moroz.cc/tags/iommu/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/tags/kvm/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/kvm/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/kvm/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/tags/pci-passthrough/</loc>

@@ -6,7 +6,756 @@
         <description>Recent content in Hardware on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/hardware/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/hardware/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</title>
+        <link>https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/IMG_20240330_085717_015.jpg" alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" /&gt;&lt;h2 id=&#34;introduction-to-kvm-over-ip&#34;&gt;Introduction to KVM over IP&lt;/h2&gt;
+&lt;p&gt;KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:&lt;/p&gt;
+&lt;h3 id=&#34;how-it-works&#34;&gt;How it works&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Hardware Device&lt;/strong&gt;: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware. This device connects to the server&amp;rsquo;s keyboard, video, and mouse ports.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Network Connection&lt;/strong&gt;: The KVM over IP device is then connected to the network, allowing remote access to the server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Access Software&lt;/strong&gt;: Users can access the server&amp;rsquo;s console remotely using specialized software provided by the KVM over IP device manufacturer. This software allows users to view the server&amp;rsquo;s screen, control the keyboard and mouse input, and interact with the server as if they were physically present.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Security Features&lt;/strong&gt;: KVM over IP solutions often come with security features such as encryption and authentication to ensure secure remote access to the server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;advantages-over-software-remote-desktop&#34;&gt;Advantages over software remote desktop&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Low-Level Access&lt;/strong&gt;: KVM over IP provides low-level access to the server&amp;rsquo;s console, allowing users to interact with the server or PC at the BIOS level and during the boot process. This level of access is not typically available with software remote desktop solutions, which operate within the operating system environment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Operating System Independence&lt;/strong&gt;: Since KVM over IP operates at a hardware level, it is independent of the server&amp;rsquo;s operating system. This means it can be used to troubleshoot and manage servers even if the operating system is unresponsive or malfunctioning.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Out-of-Band Management&lt;/strong&gt;: KVM over IP provides out-of-band management capabilities, allowing administrators to remotely access and manage servers even if the network or operating system is down. This can be crucial for troubleshooting and maintenance tasks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: KVM over IP solutions often offer better performance compared to software remote desktop solutions, especially for tasks that require low-latency and high-resolution video output.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;No Software Installation Required&lt;/strong&gt;: Since KVM over IP is a hardware-based solution, it does not require any software installation on the server side, which can simplify deployment and maintenance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hardware-solutions-overview&#34;&gt;Hardware solutions overview&lt;/h2&gt;
+&lt;h3 id=&#34;commercial-kvm-switches&#34;&gt;Commercial KVM switches&lt;/h3&gt;
+&lt;p&gt;There are plenty of KMV over IP devices available on the market, but they have some disatvantages in case you need some sort of solution for personal use, which includes this key points:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Cost&lt;/strong&gt;: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services. Open-source solutions like LibreEMS and IPMI are more cost-effective in terms of hardware expenses.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Non-free software&lt;/strong&gt;: Most of the KVM switches that are manufactured for production use in server rooms and critical infrastructure datacenters are bundled with closed source software that has proprietary license.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;pikvm&#34;&gt;PiKVM&lt;/h3&gt;
+&lt;p&gt;The best solution for the personal home-lab server room or remote management of the PC is &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; - and open and inexpensive IP-KVM solution based on &lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/products/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Raspberry Pi&lt;/a&gt; single board ARM computer.&lt;/p&gt;
+&lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; device has many useful features to control remote machine, for example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Storage simulation: this allows you to attach local *.iso file to the remote machine, it allows you to reinstall any OS remotely.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;USB removal/insertion simulation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ATX power control.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you want to have a &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; device for yourself there are 2 options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Order a pre-built device on the official website.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Buy one of the Raspberry Pi boards that are &lt;a class=&#34;link&#34; href=&#34;https://docs.pikvm.org/v2/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;supported&lt;/a&gt; as well as some components and assemble the DIY device.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;building-own-pikvm-v2-device&#34;&gt;Building own PiKVM v2 device&lt;/h2&gt;
+&lt;p&gt;I decided to build PiKVM v2 device myself, as there are no delivery of pre-built devices available for my country. Also DIY build gives more flexibility: you can build device according to needed features, you can choose whatever components you want.&lt;/p&gt;
+&lt;h3 id=&#34;choosing-components&#34;&gt;Choosing components&lt;/h3&gt;
+&lt;p&gt;After investigating the PiKVM official documentation it&amp;rsquo;s obvious that the best version to build is PiKVM v2. To assemble the device I used this list of hardware components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 x &lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/products/raspberry-pi-4-model-b/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Raspberry Pi 4 Model B&lt;/a&gt; with 2 Gb of RAM.&lt;/li&gt;
+&lt;li&gt;1 x &lt;a class=&#34;link&#34; href=&#34;https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?token=v2%3AFhRGDfXrgW-JeeoVxg4uJB3qmxltBSE89kSZYPuKxJGqL49CUkKuRZgMYkJJl50TnXWK_qvyZRVxL1syJB87F-e4NWzotHV185XO4MTe0i6RhA_4zvZ-bBXOukyL0_KO&amp;amp;campaign_id=3563069&amp;amp;product_id=2056074929&amp;amp;source=prom%3Acompany%3Apage&amp;amp;locale=uk&amp;amp;category_ids=71109&amp;amp;from_spa=true&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Power adapter GAN 65W PD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;1 x &lt;a class=&#34;link&#34; href=&#34;https://www.aliexpress.com/item/1005001880861192.html?spm=a2g0o.order_list.order_list_main.11.6b4f1802HEgPtC&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;HDMI USB video capture card&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;1 x Kingston SD Card 32 Gb 10 class.&lt;/li&gt;
+&lt;li&gt;2 x USB-A to USB-C cables (to build cusom power cable).&lt;/li&gt;
+&lt;li&gt;1 X HDMI male-male cable.&lt;/li&gt;
+&lt;li&gt;1 x 80mm FAN (for active cooling).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;building-cusom-power-cable&#34;&gt;Building cusom power cable&lt;/h3&gt;
+&lt;p&gt;To be able to operate the remote machinve wiht our DIY KVM device computer should be able to recognize our device as HID USB device that will be treated by the computer just like another keyboard or mouse (the computer keyboard and mouse are also HID device).&lt;/p&gt;
+&lt;p&gt;The problem with Raspberry Pi 4 Model B board - it has only one USB-C port that is able to act as a HID device and that port is also used to power the device. To fix this there is workaround that requires tou build a special cable that can simultanously act as USB Device for the target host and receive external power from the power adapter.&lt;/p&gt;
+&lt;p&gt;To build this custom power cable you need 2 x &lt;strong&gt;USB-A male to USB-C male&lt;/strong&gt; cables. I recommend choosing good quality cables because board requires 3 amp current power. The process of building cable includes this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Take the first cable and cut the isolation. Leave the data line wires (green and white) as is, and cut the power +5V (red) and ground (black) wires.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Take the second cable and cut it completely. You need only the USB-A part of it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solder power +5V (red) wire of the second USB-A cable part with the power +5V (red) wire of the USB-C cable part.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solder all of the 3 ground (black) wires of all the cable parts together.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Isolate everything with the electric tape.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;So the USB-C connector should be plugged in Raspberry Pi board, USB-A connector of the second cable (the one with power wired) should be plugged in power adapter, and the USB-A connector of the first cable (the one with data wires) should be plugged to the PC you want to control. For better understanding there is a cable soldering scheme below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering.png&#34;
+	width=&#34;977&#34;
+	height=&#34;485&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering_hu6c0a50c5e819cc1e50a4b06df2ada8b9_58260_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/v2_splitter_soldering_hu6c0a50c5e819cc1e50a4b06df2ada8b9_58260_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PiKVM v2 custom cable scheme.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;483px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Also I recommend this video on YouTube from the PiKVM developer which explains the full process of making this custom cable.&lt;/p&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;iframe loading=&#34;lazy&#34; 
+            src=&#34;https://www.youtube.com/embed/uLuBuQUF61o&#34; 
+            allowfullscreen 
+            title=&#34;YouTube Video&#34;
+    &gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Here is the photo of cable I built. I labeled all the sides of the cable for myself to avoid mix up when connecting the hardware. The black USB-A cable should go to the power adapther, white USB-A cable should be connected to the computer, and the USB-C connector is for Raspberry Pi board.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_11.jpg&#34;
+	width=&#34;1880&#34;
+	height=&#34;2566&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_11_hu09e224a2a06d0a46170f5381c1759f98_652808_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_11_hu09e224a2a06d0a46170f5381c1759f98_652808_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Final look of my custom power cable.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;73&#34;
+		data-flex-basis=&#34;175px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;assemble-device-in-a-custom-case&#34;&gt;Assemble device in a custom case&lt;/h3&gt;
+&lt;p&gt;The components I use to build the device include external HDMI video signal capture card that should be connected to the specific USB port of the Raspberry Pi board. For my needs the device should be portable, so there is a risk of using the wrong port if I should connect the card every time. Considering this, the official Raspberry Pi case is not an option, also it costs too much in my opinion. So I decided to assamble the device in a single case for better portability and plug &amp;amp; play experience, every time I need to use it with another PC I simply need connect HDMI and USB cables to it.&lt;/p&gt;
+&lt;p&gt;Also it&amp;rsquo;s not a secret that Rasperry Pi boards can get overheated when working in extreme CPU load conditions or with 24/7 uptime. Taking that to account, I decided to construct a case in a way that all of the hardware will be cooled with 80mm fan.&lt;/p&gt;
+&lt;p&gt;Unfortunately, I have no 3D printer to engineer and create a good quality case that will look like manufactured one. My case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_15.jpg&#34;
+	width=&#34;2566&#34;
+	height=&#34;1736&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_15_hua3989e2342e6f577621222e3c4dec977_424447_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_15_hua3989e2342e6f577621222e3c4dec977_424447_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PiKVM v2 device assembled in a custom hand made case.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;354px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_12.jpg&#34;
+	width=&#34;2652&#34;
+	height=&#34;1143&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_12_hu89b3567ea8afe2a3e69b15f97c08e7e1_441990_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_12_hu89b3567ea8afe2a3e69b15f97c08e7e1_441990_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PiKVM v2 device internal mount structure.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;232&#34;
+		data-flex-basis=&#34;556px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;The fan can be connected to the appropriate GPIO pins on the board. For that I used pin #2 for +5v (red wire) and pin #6 for ground (black wire) to power the fan.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2.png&#34;
+	width=&#34;2064&#34;
+	height=&#34;1185&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2_hu20745d9a0e6a686d1237970946b3c339_145198_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2_hu20745d9a0e6a686d1237970946b3c339_145198_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Raspberry Pi 4 Model B GPIO Pinout scheme.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;174&#34;
+		data-flex-basis=&#34;418px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;I used native connector that fan already had, but I had to place the pins on that connector in the correct order.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_13.jpg&#34;
+	width=&#34;2540&#34;
+	height=&#34;1896&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_13_hucd2714a8b61cda6aac3fb0344f985c9e_504295_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_13_hucd2714a8b61cda6aac3fb0344f985c9e_504295_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Fan connected to the Raspberry Pi GPIO interface.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;321px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Also I decided to include the RJ-45 Ethernet port on the side, because the quality of stream is better and the latency is less when using cable internet connection instead of Wi-Fi. For that I made a custom cable extension and mounted the port near the HDMI input.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_14.jpg&#34;
+	width=&#34;2106&#34;
+	height=&#34;1810&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_14_hu4c5280479bf847aca1483cf1d916e53b_271432_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_14_hu4c5280479bf847aca1483cf1d916e53b_271432_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Ethernet RJ-45 and HDMI Input ports mounted on the side of the custom case.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;116&#34;
+		data-flex-basis=&#34;279px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;flashing-pikvm-os&#34;&gt;Flashing PiKVM OS&lt;/h3&gt;
+&lt;p&gt;In order for Raspberry Pi to be able to act as a hardware KVM device the open source PiKVM OS should be flashed to the SD Card.&lt;/p&gt;
+&lt;p&gt;The correct image of the PiKVM OS that is suitable for particular Raspberry Pi model can be found on &lt;a class=&#34;link&#34; href=&#34;https://docs.pikvm.org/flashing_os/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM Flashing OS&lt;/a&gt; page. In my case I downloaded DIY PiKVM V2 Platform, Raspberry Pi 4 for USB Dongle image. Because it matches the hardware I used (Raspblerry Pi 4 Model B and HDMI USB Video capture card).&lt;/p&gt;
+&lt;p&gt;To flash the OS image to the SD card there is the &lt;a class=&#34;link&#34; href=&#34;https://github.com/raspberrypi/rpi-imager&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;RPI Imager&lt;/a&gt; software availabe. As I am happy Arch Linux user (btw), I intalled it from official &lt;a class=&#34;link&#34; href=&#34;https://archlinux.org/packages/extra/x86_64/rpi-imager/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;rpi-imager&lt;/a&gt; package:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S rpi-imager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then connect your SD card to the computer. As my computer does not have any built-in card reader I use micro-SD to USB-A adapter.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_10.jpg&#34;
+	width=&#34;1864&#34;
+	height=&#34;1310&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_10_hu66f4f5c9319c97310bb7f0bde69324b4_383175_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_10_hu66f4f5c9319c97310bb7f0bde69324b4_383175_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Micro-SD to USB-A adapter.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;142&#34;
+		data-flex-basis=&#34;341px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;To flash the downloaded image follow this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the RPI Imager.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img0.png&#34;
+	width=&#34;1166&#34;
+	height=&#34;520&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img0_huc7d1753c1ec6cbd077adde08aadb601e_36727_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img0_huc7d1753c1ec6cbd077adde08aadb601e_36727_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;RPI Imager software.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;538px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Press &amp;ldquo;Choose device&amp;rdquo; and select the model of your Raspberry Pi board. I selected &amp;ldquo;Raspberry Pi 4&amp;rdquo; here.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img1.png&#34;
+	width=&#34;1161&#34;
+	height=&#34;581&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img1_hu038aae7fd0d6651f9cfe77b5f4065344_72837_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img1_hu038aae7fd0d6651f9cfe77b5f4065344_72837_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Device model selection.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;199&#34;
+		data-flex-basis=&#34;479px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Click &amp;ldquo;Choose OS&amp;rdquo;, scroll down to the bottom and select &amp;ldquo;Use custom image&amp;rdquo; option. Then in the file picker select the downloaded PiKVM image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img2.png&#34;
+	width=&#34;1161&#34;
+	height=&#34;577&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img2_huac2dddb6a660d237e9d133abda9f6544_89103_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img2_huac2dddb6a660d237e9d133abda9f6544_89103_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Custom image selection.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;482px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img3.png&#34;
+	width=&#34;618&#34;
+	height=&#34;403&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img3_hu04ee34074fd52025600175c373fccb2b_80606_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img3_hu04ee34074fd52025600175c373fccb2b_80606_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Image file selection.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;368px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Click &amp;ldquo;Choose storage&amp;rdquo; and select your SD-card. Be careful to select the correct device here because RPI imager will format the selected device.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img4.png&#34;
+	width=&#34;1164&#34;
+	height=&#34;579&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img4_hu1a3073a28c7affa1748a6f52440cac16_25163_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img4_hu1a3073a28c7affa1748a6f52440cac16_25163_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Target device selection.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;482px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Ensure all fields are set correctly, then click next.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img5.png&#34;
+	width=&#34;1159&#34;
+	height=&#34;574&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img5_hucc1402b0b704529c62350fab922ae453_41912_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img5_hucc1402b0b704529c62350fab922ae453_41912_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Preparing to flash.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;484px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;You will see a modal dialog asking if you want to customize some settings, click &amp;ldquo;NO&amp;rdquo;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img6.png&#34;
+	width=&#34;1160&#34;
+	height=&#34;579&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img6_hud949d562d1399afac36693a221632472_49075_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img6_hud949d562d1399afac36693a221632472_49075_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Customization options modal.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;200&#34;
+		data-flex-basis=&#34;480px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;Finally confirm the device flash process and wait until RPI Imager finished flashing and validating the image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img7.png&#34;
+	width=&#34;1160&#34;
+	height=&#34;577&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img7_hu28ef20fc720fc077e93ea22143a84ecc_49369_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-img7_hu28ef20fc720fc077e93ea22143a84ecc_49369_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Confirm device flash.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;201&#34;
+		data-flex-basis=&#34;482px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;configuring-wi-fi-connection-optional&#34;&gt;Configuring Wi-Fi connection (optional)&lt;/h3&gt;
+&lt;p&gt;As I mentioned earlier, it is always better to use Ethernet RJ-45 internet connection because it is more reliable and results in better video stream performance and lower latency. However as I want the device to be portable so I can take it with me and connect to another PC laptop, there might be no available Ethernet RJ-45 connection. For that purpose I set the Wi-Fi credentials of the &amp;ldquo;Mobile Hotspot&amp;rdquo; network of my Android phone that I always have with me, so when Raspberry Pi board boots without Ethernet cable connected, it will use its built-in Wi-Fi adapter and connect to my Android phone.&lt;/p&gt;
+&lt;p&gt;To setup Wi-Fi follow this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Connect the SD-card to the computer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You will see that SD-card has more that one partition, you need to mount the first partition, which is called &amp;ldquo;PIBOOT&amp;rdquo;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-wifi0.png&#34;
+	width=&#34;209&#34;
+	height=&#34;163&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-wifi0_hu26c9dd65a81815de64b6d9ab233224d0_3993_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/rpi-wifi0_hu26c9dd65a81815de64b6d9ab233224d0_3993_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;SD-card partitions.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;128&#34;
+		data-flex-basis=&#34;307px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Look for the file &lt;code&gt;pikvm.txt&lt;/code&gt; in the root folder of the &amp;ldquo;PIBOOT&amp;rdquo; partition. If the file doest not exist - create it manually, in case file already exists don&amp;rsquo;t delete any configurations from it you need to add 2 parameters to the bottom of the file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Add 2 parameters to the end of the file. Replace the credentials in the example to match your Wi-Fi network credentians.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;WIFI_ESSID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;my_wifi_network&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;WIFI_PASSWD&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;the_most_secure_password_ever&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Save the file. Then safely unmount the partition and eject the SD-card. Install the SD-card to the board.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;first-boot&#34;&gt;First boot&lt;/h3&gt;
+&lt;p&gt;It is important step, because during the first boot PiKVM OS initializes the necessary settings and generates the unique SSH keys and security certificates.&lt;/p&gt;
+&lt;p&gt;First boot steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Install the SD-card with flashed PiKVM OS to the Raspberry Pi board.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Connect the Raspbery Pi board to your Wi-Fi router using Ethernet RJ-45 cable. If you don&amp;rsquo;t have ability to use Ethernet during the first boot, you can configure Wi-Fi credentials (as shown in previous step), but before booting make sure that the Wi-Fi network is available.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Boot the Raspberry Pi board. To do this connect the 5V 3A power source to the USB-C port of the board.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_9.jpg&#34;
+	width=&#34;2652&#34;
+	height=&#34;1997&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_9_huab44cedb2c529fac1d527511855068e4_502813_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_9_huab44cedb2c529fac1d527511855068e4_502813_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;First boot of my custom PiKVM device.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;132&#34;
+		data-flex-basis=&#34;318px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Wait some time until the PiKVM OS finishes the first boot initialization. This process may take up to 10 minutes.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔴 &lt;strong&gt;IMPORTANT:&lt;/strong&gt; do not unplug the power cable from Rasperry Pi board until the first boot initialization is finished.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;After first boot process is finished, PiKVM device will connect to the network and get Local IP address in the Local network of your router. To detect what IP address was obtained by the PiKVM you can go to your router admin settings page, and look for the connected devices.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In my case board obtained IP address &lt;code&gt;192.168.0.222&lt;/code&gt;, so I will use it in the all follwing exampels. In your case IP-address will be different.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/router.jpg&#34;
+	width=&#34;1056&#34;
+	height=&#34;955&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/router_hud775384d6e1de19a81664cb136eec910_203590_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/router_hud775384d6e1de19a81664cb136eec910_203590_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PiKVM device shows up in router clients list.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;110&#34;
+		data-flex-basis=&#34;265px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Then you need a computer or smartphone that is connected to the same Local network as PiKVM device. Open the web browser and navigate to the IP-addres url &lt;code&gt;https://192.168.0.222&lt;/code&gt;. The default credentials are login &lt;code&gt;admin&lt;/code&gt; with password &lt;code&gt;admin&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Change the default passwords to keep your device secure. There is a detailed description on how to do this in the &lt;a class=&#34;link&#34; href=&#34;https://docs.pikvm.org/v2/#first-launch-and-usage&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pw_change.png&#34;
+	width=&#34;752&#34;
+	height=&#34;547&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pw_change_hu85a3d161c463c2a8e4028f25888b034c_103913_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pw_change_hu85a3d161c463c2a8e4028f25888b034c_103913_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;How to change the default password.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;137&#34;
+		data-flex-basis=&#34;329px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;updating-the-pikvm-os-software&#34;&gt;Updating the PiKVM OS software&lt;/h3&gt;
+&lt;p&gt;PiKVM OS is open source operating system based on Arch Linux. It is important to egularly update your PiKVM OS to receive security updates and new features. Like on any Linux system update is done via the terminal, you can use either ssh shell or the Terminal in PiKVM web browser interface.&lt;/p&gt;
+&lt;p&gt;To update the OS do the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open the terminal in the PiKVM web interface. Alternatively you can use ssh connection.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Obtain the root access by typing &lt;code&gt;su -&lt;/code&gt; command and entering the root password.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;pikvm-update&lt;/code&gt; command and wait until process finished. Please make sure your PiKVM device does not lose power and internet connection during the update process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;setting-up-tailscale-vpn-optional&#34;&gt;Setting up Tailscale VPN (optional)&lt;/h3&gt;
+&lt;p&gt;There can be some edge case situations with not being able to have the access to the same Local network with PiKVM board, for example when I have PiKVM connected to my home server, and I am physically not at home and I need remote access to my server.&lt;/p&gt;
+&lt;p&gt;Also considering that I want my PiKVM device to be as portable as possible, I also want to be able to borrow my PiKVM device to someone, so that person can take it and connect to their home PC and local network, and I can connect to that PC remotely and help reinstalling OS for example.&lt;/p&gt;
+&lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://tailscale.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tailscale VPN&lt;/a&gt; is a free tool (for the personal use) that can be used as a solution to the cases I described above. It allows to access PiKVM from the Internet. To setup it follow this steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open the terminal in the PiKVM web interface. Alternatively you can use ssh connection.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install tailscale systemd service by entering this command sequence to the terminal:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;su -
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rw
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pacman -S tailscale-pikvm
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; --now tailscaled
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tailscale up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;The terminal will show a link that you need to copy and follow in your web browser. After following the link login or sign up to Tailscale VPN, and finally your PiKVM device will be attached to that account.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install the Tailscale Client to the system you want to use (not the PC you want to control over the PiKVM) and connect it to the VPN. To do this follow the instructions &lt;a class=&#34;link&#34; href=&#34;https://tailscale.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;After setting up client on your system visit &lt;a class=&#34;link&#34; href=&#34;https://login.tailscale.com/admin/machines&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tailscale Admin Page&lt;/a&gt;. If you did everything correctly you should see your PiKVM device and the system that is used for the remote connection to PiKVM.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/tailscale_admin1.jpg&#34;
+	width=&#34;1163&#34;
+	height=&#34;516&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/tailscale_admin1_hud775384d6e1de19a81664cb136eec910_115475_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/tailscale_admin1_hud775384d6e1de19a81664cb136eec910_115475_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;TailScale Admin Dashboard showing the connected devices.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;225&#34;
+		data-flex-basis=&#34;540px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;In the screenshot above I highlighted the example of IP address that should be used in the browser to connect to the PiKVM remotely.&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Make sure you disable expiration for the PiKVM device. To do this clich &amp;ldquo;three dots&amp;rdquo; icon on the right side of your PiKVM device in list and select the &amp;ldquo;Disable key expiry&amp;rdquo; option.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;After setup is complete, every time the PiKVM device is booted it will be automatically connected to the VPN network, so if I need remote access to it from anywhere, I can just connect my laptop to the same VPN and manage my PiKVM device.&lt;/p&gt;
+&lt;h2 id=&#34;how-to-use-pikvm-device-to-control-pc--laptop--server&#34;&gt;How to use PiKVM device to control PC / Laptop / Server&lt;/h2&gt;
+&lt;p&gt;This is the istruction for using PiKVM board as a portable device. To assemble the connection you need to have: &lt;strong&gt;PiKVM&lt;/strong&gt; device, &lt;strong&gt;machine&lt;/strong&gt; you want to control, custom power cable and adapter, Ethernet RJ-45 cable, HDMI cable.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Take the &lt;strong&gt;Ethernet RJ-45&lt;/strong&gt; cable and connect it to the &lt;strong&gt;PiKVM&lt;/strong&gt; device and your &lt;strong&gt;Wi-Fi router&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_8.jpg&#34;
+	width=&#34;1743&#34;
+	height=&#34;1552&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_8_hu8ae3752eac41388f19a10bf67a81ab02_219384_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_8_hu8ae3752eac41388f19a10bf67a81ab02_219384_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Ethernet RJ-45 connected to PiKVM.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;269px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_7.jpg&#34;
+	width=&#34;2383&#34;
+	height=&#34;1541&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_7_hu74b9b5b57a892731ac9c81e6808bbf33_254552_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_7_hu74b9b5b57a892731ac9c81e6808bbf33_254552_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Ethernet RJ-45 connected to the Wi-Fi router.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;154&#34;
+		data-flex-basis=&#34;371px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_6.jpg&#34;
+	width=&#34;2188&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_6_hud7857a01b83b38d3957adad93e3924b8_255045_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_6_hud7857a01b83b38d3957adad93e3924b8_255045_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Network connection between router and PiKVM.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;166&#34;
+		data-flex-basis=&#34;398px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Take tha &lt;strong&gt;HDMI&lt;/strong&gt; male to male cable and connect it to the &lt;strong&gt;PiKVM&lt;/strong&gt; device and the &lt;strong&gt;machine&lt;/strong&gt; you want to control.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_5.jpg&#34;
+	width=&#34;1611&#34;
+	height=&#34;1362&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_5_hu8093925005cee8f07cf027c32fe25c50_182083_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_5_hu8093925005cee8f07cf027c32fe25c50_182083_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;HDMI cable connected to PiKVM.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;118&#34;
+		data-flex-basis=&#34;283px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_4.jpg&#34;
+	width=&#34;2110&#34;
+	height=&#34;1357&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_4_hufd4b1e1fa61071ef59412b29910f93b6_481952_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_4_hufd4b1e1fa61071ef59412b29910f93b6_481952_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;HDMI cable connected to the laptop (will act as a monitor in target system).&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;155&#34;
+		data-flex-basis=&#34;373px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_3.jpg&#34;
+	width=&#34;1665&#34;
+	height=&#34;2477&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_3_hu4ae61f008976483bf6b233e5c2c2bdcc_528222_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_3_hu4ae61f008976483bf6b233e5c2c2bdcc_528222_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;HDMI connection between PiKVM and laptop.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;67&#34;
+		data-flex-basis=&#34;161px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Take the custom power cable and connect:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;USB-C&lt;/strong&gt; connector to the &lt;strong&gt;PiKVM&lt;/strong&gt; device.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;USB-A&lt;/strong&gt; connector labeled &lt;em&gt;&amp;ldquo;PC/Laptop&amp;rdquo;&lt;/em&gt; to the &lt;strong&gt;machine&lt;/strong&gt; you want to control.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;USB-A&lt;/strong&gt; connector labeled &lt;em&gt;&amp;ldquo;Power&amp;rdquo;&lt;/em&gt; to the &lt;strong&gt;power adapter&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_2.jpg&#34;
+	width=&#34;1557&#34;
+	height=&#34;2036&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_2_hu2b7b479cd638049f7588cf4abe2e329d_302553_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_2_hu2b7b479cd638049f7588cf4abe2e329d_302553_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;USB-C power connection to PiKVM device.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;76&#34;
+		data-flex-basis=&#34;183px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_1.jpg&#34;
+	width=&#34;1916&#34;
+	height=&#34;1203&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_1_hu0dd505c5261d2ba565bbf9e9a2752b4e_281555_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_1_hu0dd505c5261d2ba565bbf9e9a2752b4e_281555_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;USB-A data cable connected to the laptop (will act as USB keyboard/mouse in target system).&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;159&#34;
+		data-flex-basis=&#34;382px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG.jpg&#34;
+	width=&#34;1842&#34;
+	height=&#34;2150&#34;
+	srcset=&#34;https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_huf65e2596ab9c8eb8831b0510e44ed3dc_323499_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_huf65e2596ab9c8eb8831b0510e44ed3dc_323499_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;USB-A power cable connected to the power 5V 3A adapter.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;85&#34;
+		data-flex-basis=&#34;205px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Plug the &lt;strong&gt;power adapter&lt;/strong&gt; to the electric outlet. The &lt;strong&gt;PiKVM&lt;/strong&gt; device should boot and connect to the network.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Power up the machine you want to control.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;After that you should be able to connect to the &lt;strong&gt;PiKVM&lt;/strong&gt; device and control your &lt;strong&gt;machine&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;As a result of this project the portable KVM over IP device was assembled that has many useful features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Device can use both Ethernet and Wi-Fi connection.&lt;/li&gt;
+&lt;li&gt;Device can be fully managed remotely using VPN.&lt;/li&gt;
+&lt;li&gt;Device assembled in a custom unique hand made case and uses active cooling that prevents the device from overheat so it can be safely used 24/7.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>GPU PCI passthrough to Windows KVM on Arch Linux</title>
         <link>https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/</link>
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
