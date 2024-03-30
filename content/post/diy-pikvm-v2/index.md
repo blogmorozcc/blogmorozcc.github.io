@@ -2,6 +2,7 @@
 title = "Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server"
 date = "2024-03-29"
 tags = [
+    "DIY",
     "KVM",
     "KVM over IP",
     "PiKVM",
@@ -115,13 +116,13 @@ Also I recommend this video on YouTube from the PiKVM developer which explains t
 
 <!-- https://www.youtube.com/watch?v=uLuBuQUF61o -->
 
-### Assenble a custom case
+### Assemble device in a custom case
 
 The components I use to build the device include external HDMI video signal capture card that should be connected to the specific USB port of the Raspberry Pi board. For my needs the device should be portable, so there is a risk of using the wrong port if I should connect the card every time. Considering this, the official Raspberry Pi case is not an option, also it costs too much in my opinion. So I decided to assamble the device in a single case for better portability and plug & play experience, every time I need to use it with another PC I simply need connect HDMI and USB cables to it.
 
 Also it's not a secret that Rasperry Pi boards can get overheated when working in extreme CPU load conditions or with 24/7 uptime. Taking that to account, I decided to construct a case in a way that all of the hardware will be cooled with 80mm fan.
 
-Unfortunately, I have no 3D printer to engineer accurate case, so my case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time. 
+Unfortunately, I have no 3D printer to engineer and create a good quality case that will look like manufactured one. My case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time. 
 
 <!-- ToDo photo -->
 
@@ -136,6 +137,18 @@ Also I decided to include the RJ-45 Ethernet port on the side, because the quali
 <!-- ToDo photo -->
 
 ### Flashing PiKVM OS
+
+In order for Raspberry Pi to be able to act as a hardware KVM device the open source PiKVM OS should be flashed to the SD Card. 
+
+The correct image of the PiKVM OS that is suitable for particular Raspberry Pi model can be found on [PiKVM Flashing OS](https://docs.pikvm.org/flashing_os/) page. In my case I downloaded DIY PiKVM V2 Platform, Raspberry Pi 4 for USB Dongle image. Because it matches the hardware I used (Raspblerry Pi 4 Model B and HDMI USB Video capture card). 
+
+To flash the OS image to the SD card there is the [RPI Imager](https://github.com/raspberrypi/rpi-imager) software availabe. As I am happy Arch Linux user (btw), I intalled it from official [rpi-imager](https://archlinux.org/packages/extra/x86_64/rpi-imager/) package:
+
+{{< highlight shell "linenos=false" >}}
+sudo pacman -S rpi-imager
+{{< / highlight >}}
+
+
 
 ### Configuring Wi-Fi connection
 

@@ -149,10 +149,10 @@
 &lt;/div&gt;
 
 &lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;assenble-a-custom-case&#34;&gt;Assenble a custom case&lt;/h3&gt;
+&lt;h3 id=&#34;assemble-device-in-a-custom-case&#34;&gt;Assemble device in a custom case&lt;/h3&gt;
 &lt;p&gt;The components I use to build the device include external HDMI video signal capture card that should be connected to the specific USB port of the Raspberry Pi board. For my needs the device should be portable, so there is a risk of using the wrong port if I should connect the card every time. Considering this, the official Raspberry Pi case is not an option, also it costs too much in my opinion. So I decided to assamble the device in a single case for better portability and plug &amp;amp; play experience, every time I need to use it with another PC I simply need connect HDMI and USB cables to it.&lt;/p&gt;
 &lt;p&gt;Also it&amp;rsquo;s not a secret that Rasperry Pi boards can get overheated when working in extreme CPU load conditions or with 24/7 uptime. Taking that to account, I decided to construct a case in a way that all of the hardware will be cooled with 80mm fan.&lt;/p&gt;
-&lt;p&gt;Unfortunately, I have no 3D printer to engineer accurate case, so my case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.&lt;/p&gt;
+&lt;p&gt;Unfortunately, I have no 3D printer to engineer and create a good quality case that will look like manufactured one. My case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;The fan can be connected to the appropriate GPIO pins on the board. For that I used pin #2 for +5v (red wire) and pin #6 for ground (black wire) to power the fan.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2.png&#34;
@@ -173,6 +173,13 @@
 &lt;p&gt;Also I decided to include the RJ-45 Ethernet port on the side, because the quality of stream is better and the latency is less when using cable internet connection instead of Wi-Fi. For that I made a custom cable extension and mounted the port near the HDMI input.&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h3 id=&#34;flashing-pikvm-os&#34;&gt;Flashing PiKVM OS&lt;/h3&gt;
+&lt;p&gt;In order for Raspberry Pi to be able to act as a hardware KVM device the open source PiKVM OS should be flashed to the SD Card.&lt;/p&gt;
+&lt;p&gt;The correct image of the PiKVM OS that is suitable for particular Raspberry Pi model can be found on &lt;a class=&#34;link&#34; href=&#34;https://docs.pikvm.org/flashing_os/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM Flashing OS&lt;/a&gt; page. In my case I downloaded DIY PiKVM V2 Platform, Raspberry Pi 4 for USB Dongle image. Because it matches the hardware I used (Raspblerry Pi 4 Model B and HDMI USB Video capture card).&lt;/p&gt;
+&lt;p&gt;To flash the OS image to the SD card there is the &lt;a class=&#34;link&#34; href=&#34;https://github.com/raspberrypi/rpi-imager&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;RPI Imager&lt;/a&gt; software availabe. As I am happy Arch Linux user (btw), I intalled it from official &lt;a class=&#34;link&#34; href=&#34;https://archlinux.org/packages/extra/x86_64/rpi-imager/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;rpi-imager&lt;/a&gt; package:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo pacman -S rpi-imager&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&#34;configuring-wi-fi-connection&#34;&gt;Configuring Wi-Fi connection&lt;/h3&gt;
 &lt;h3 id=&#34;setting-up-tailscale-vpn&#34;&gt;Setting up Tailscale VPN&lt;/h3&gt;
 &lt;h2 id=&#34;how-to-use-pikvm-device-to-control-pc--laptop--server&#34;&gt;How to use PiKVM device to control PC / Laptop / Server&lt;/h2&gt;

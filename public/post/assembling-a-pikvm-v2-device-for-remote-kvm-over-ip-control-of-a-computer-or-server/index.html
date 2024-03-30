@@ -11,7 +11,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware.'>
 <meta property='og:url' content='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/'>
 <meta property='og:site_name' content='The IT Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='KVM over IP' /><meta property='article:tag' content='PiKVM' /><meta property='article:tag' content='Raspberry PI' /><meta property='article:tag' content='HDMI' /><meta property='article:tag' content='USB' /><meta property='article:tag' content='VNC' /><meta property='article:published_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.webp' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='DIY' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='KVM over IP' /><meta property='article:tag' content='PiKVM' /><meta property='article:tag' content='Raspberry PI' /><meta property='article:tag' content='HDMI' /><meta property='article:tag' content='USB' /><meta property='article:tag' content='VNC' /><meta property='article:published_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.webp' />
 <meta name="twitter:title" content="Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server">
 <meta name="twitter:description" content="Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
 How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware."><meta name="twitter:card" content="summary_large_image">
@@ -455,10 +455,10 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 </div>
 
 <!-- raw HTML omitted -->
-<h3 id="assenble-a-custom-case">Assenble a custom case</h3>
+<h3 id="assemble-device-in-a-custom-case">Assemble device in a custom case</h3>
 <p>The components I use to build the device include external HDMI video signal capture card that should be connected to the specific USB port of the Raspberry Pi board. For my needs the device should be portable, so there is a risk of using the wrong port if I should connect the card every time. Considering this, the official Raspberry Pi case is not an option, also it costs too much in my opinion. So I decided to assamble the device in a single case for better portability and plug &amp; play experience, every time I need to use it with another PC I simply need connect HDMI and USB cables to it.</p>
 <p>Also it&rsquo;s not a secret that Rasperry Pi boards can get overheated when working in extreme CPU load conditions or with 24/7 uptime. Taking that to account, I decided to construct a case in a way that all of the hardware will be cooled with 80mm fan.</p>
-<p>Unfortunately, I have no 3D printer to engineer accurate case, so my case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.</p>
+<p>Unfortunately, I have no 3D printer to engineer and create a good quality case that will look like manufactured one. My case is fully hand made. I used mostly some old pieces of plastic panels that I had at the time.</p>
 <!-- raw HTML omitted -->
 <p>The fan can be connected to the appropriate GPIO pins on the board. For that I used pin #2 for +5v (red wire) and pin #6 for ground (black wire) to power the fan.</p>
 <p><img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/GPIO-Pinout-Diagram-2.png"
@@ -479,6 +479,13 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 <p>Also I decided to include the RJ-45 Ethernet port on the side, because the quality of stream is better and the latency is less when using cable internet connection instead of Wi-Fi. For that I made a custom cable extension and mounted the port near the HDMI input.</p>
 <!-- raw HTML omitted -->
 <h3 id="flashing-pikvm-os">Flashing PiKVM OS</h3>
+<p>In order for Raspberry Pi to be able to act as a hardware KVM device the open source PiKVM OS should be flashed to the SD Card.</p>
+<p>The correct image of the PiKVM OS that is suitable for particular Raspberry Pi model can be found on <a class="link" href="https://docs.pikvm.org/flashing_os/"  target="_blank" rel="noopener"
+    >PiKVM Flashing OS</a> page. In my case I downloaded DIY PiKVM V2 Platform, Raspberry Pi 4 for USB Dongle image. Because it matches the hardware I used (Raspblerry Pi 4 Model B and HDMI USB Video capture card).</p>
+<p>To flash the OS image to the SD card there is the <a class="link" href="https://github.com/raspberrypi/rpi-imager"  target="_blank" rel="noopener"
+    >RPI Imager</a> software availabe. As I am happy Arch Linux user (btw), I intalled it from official <a class="link" href="https://archlinux.org/packages/extra/x86_64/rpi-imager/"  target="_blank" rel="noopener"
+    >rpi-imager</a> package:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo pacman -S rpi-imager</span></span></code></pre></div>
 <h3 id="configuring-wi-fi-connection">Configuring Wi-Fi connection</h3>
 <h3 id="setting-up-tailscale-vpn">Setting up Tailscale VPN</h3>
 <h2 id="how-to-use-pikvm-device-to-control-pc--laptop--server">How to use PiKVM device to control PC / Laptop / Server</h2>
@@ -490,6 +497,8 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
     <footer class="article-footer">
     
     <section class="article-tags">
+        
+            <a href="/tags/diy/">DIY</a>
         
             <a href="/tags/kvm/">KVM</a>
         
@@ -762,7 +771,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
       <ol>
         <li><a href="#choosing-components">Choosing components</a></li>
         <li><a href="#building-cusom-power-cable">Building cusom power cable</a></li>
-        <li><a href="#assenble-a-custom-case">Assenble a custom case</a></li>
+        <li><a href="#assemble-device-in-a-custom-case">Assemble device in a custom case</a></li>
         <li><a href="#flashing-pikvm-os">Flashing PiKVM OS</a></li>
         <li><a href="#configuring-wi-fi-connection">Configuring Wi-Fi connection</a></li>
         <li><a href="#setting-up-tailscale-vpn">Setting up Tailscale VPN</a></li>
