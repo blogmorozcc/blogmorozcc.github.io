@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location.
 How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware.'><title>Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</title>
 
 <link rel='canonical' href='https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/'>
 
 <link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server'>
-<meta property='og:description' content='Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
+<meta property='og:description' content='Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location.
 How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware.'>
 <meta property='og:url' content='https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/'>
 <meta property='og:site_name' content='The IT Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='DIY' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='KVM over IP' /><meta property='article:tag' content='PiKVM' /><meta property='article:tag' content='Raspberry PI' /><meta property='article:tag' content='GPIO' /><meta property='article:tag' content='HDMI' /><meta property='article:tag' content='USB' /><meta property='article:tag' content='VNC' /><meta property='article:tag' content='VPN' /><meta property='article:tag' content='Tailscale' /><meta property='article:published_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/IMG_20240330_085717_015.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='DIY' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='KVM over IP' /><meta property='article:tag' content='PiKVM' /><meta property='article:tag' content='Raspberry PI' /><meta property='article:tag' content='GPIO' /><meta property='article:tag' content='HDMI' /><meta property='article:tag' content='USB' /><meta property='article:tag' content='VNC' /><meta property='article:tag' content='VPN' /><meta property='article:tag' content='Tailscale' /><meta property='article:published_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-29T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.jpg' />
 <meta name="twitter:title" content="Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server">
-<meta name="twitter:description" content="Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:
+<meta name="twitter:description" content="Introduction to KVM over IP KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location.
 How it works Hardware Device: KVM over IP typically involves a hardware device installed on the server or integrated into the server&amp;rsquo;s hardware."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://blog.moroz.cc/IMG_20240330_085717_015.jpg' />
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.jpg' />
     </head>
     <body class="
     article-page
@@ -242,8 +242,12 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
     <header class="article-header">
         <div class="article-image">
             <a href="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/">
-                
-                    <img src="/IMG_20240330_085717_015.jpg" loading="lazy" alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" />
+                <img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header_huaf7132429931ddcde60d8d9ee0a89d27_286083_800x0_resize_q75_box.jpg"
+                        srcset="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header_huaf7132429931ddcde60d8d9ee0a89d27_286083_800x0_resize_q75_box.jpg 800w, /post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header_huaf7132429931ddcde60d8d9ee0a89d27_286083_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="477" 
+                        loading="lazy"
+                        alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" />
                 
             </a>
         </div>
@@ -308,6 +312,25 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
     
 
     
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D1%81%D1%82%D1%80%D0%BE%D1%8E-pikvm-v2-%D0%B4%D0%BB%D1%8F-%D0%B2%D1%96%D0%B4%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BA%D0%B5%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BA%D0%BE%D0%BC%D0%BF%D1%8E%D1%82%D0%B5%D1%80%D0%BE%D0%BC-%D0%B0%D0%B1%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%BC-kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
 </div>
 </header>
 
@@ -315,7 +338,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
     
     
     <h2 id="introduction-to-kvm-over-ip">Introduction to KVM over IP</h2>
-<p>KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&rsquo;s or PC&rsquo;s console as if they were physically present at the machine, regardless of their location. Here&rsquo;s how it works and its advantages over software remote desktop solutions:</p>
+<p>KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&rsquo;s or PC&rsquo;s console as if they were physically present at the machine, regardless of their location.</p>
 <h3 id="how-it-works">How it works</h3>
 <ul>
 <li>
@@ -354,7 +377,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 <p>There are plenty of KMV over IP devices available on the market, but they have some disatvantages in case you need some sort of solution for personal use, which includes this key points:</p>
 <ul>
 <li>
-<p><strong>Cost</strong>: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services. Open-source solutions like LibreEMS and IPMI are more cost-effective in terms of hardware expenses.</p>
+<p><strong>Cost</strong>: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services.</p>
 </li>
 <li>
 <p><strong>Non-free software</strong>: Most of the KVM switches that are manufactured for production use in server rooms and critical infrastructure datacenters are bundled with closed source software that has proprietary license.</p>
@@ -362,7 +385,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 </ul>
 <h3 id="pikvm">PiKVM</h3>
 <p>The best solution for the personal home-lab server room or remote management of the PC is <a class="link" href="https://pikvm.org/"  target="_blank" rel="noopener"
-    >PiKVM</a> - and open and inexpensive IP-KVM solution based on <a class="link" href="https://www.raspberrypi.com/products/"  target="_blank" rel="noopener"
+    >PiKVM</a> - an open and inexpensive IP-KVM solution based on <a class="link" href="https://www.raspberrypi.com/products/"  target="_blank" rel="noopener"
     >Raspberry Pi</a> single board ARM computer.</p>
 <p>The <a class="link" href="https://pikvm.org/"  target="_blank" rel="noopener"
     >PiKVM</a> device has many useful features to control remote machine, for example:</p>
@@ -395,7 +418,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 <ul>
 <li>1 x <a class="link" href="https://www.raspberrypi.com/products/raspberry-pi-4-model-b/"  target="_blank" rel="noopener"
     >Raspberry Pi 4 Model B</a> with 2 Gb of RAM.</li>
-<li>1 x <a class="link" href="https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?token=v2%3AFhRGDfXrgW-JeeoVxg4uJB3qmxltBSE89kSZYPuKxJGqL49CUkKuRZgMYkJJl50TnXWK_qvyZRVxL1syJB87F-e4NWzotHV185XO4MTe0i6RhA_4zvZ-bBXOukyL0_KO&amp;campaign_id=3563069&amp;product_id=2056074929&amp;source=prom%3Acompany%3Apage&amp;locale=uk&amp;category_ids=71109&amp;from_spa=true"  target="_blank" rel="noopener"
+<li>1 x <a class="link" href="https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?product_id=2056074929&amp;category_ids=71109"  target="_blank" rel="noopener"
     >Power adapter GAN 65W PD</a></li>
 <li>1 x <a class="link" href="https://www.aliexpress.com/item/1005001880861192.html?spm=a2g0o.order_list.order_list_main.11.6b4f1802HEgPtC"  target="_blank" rel="noopener"
     >HDMI USB video capture card</a></li>
@@ -944,7 +967,7 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 	
 ></p>
 <ol start="2">
-<li>Take tha <strong>HDMI</strong> male to male cable and connect it to the <strong>PiKVM</strong> device and the <strong>machine</strong> you want to control.</li>
+<li>Take the <strong>HDMI</strong> male to male cable and connect it to the <strong>PiKVM</strong> device and the <strong>machine</strong> you want to control.</li>
 </ol>
 <p><img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_5.jpg"
 	width="1611"
@@ -1048,6 +1071,20 @@ How it works Hardware Device: KVM over IP typically involves a hardware device i
 </li>
 </ol>
 <p>After that you should be able to connect to the <strong>PiKVM</strong> device and control your <strong>machine</strong>.</p>
+<p><img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pikvm-web.png"
+	width="1892"
+	height="1024"
+	srcset="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pikvm-web_hu1bb9d6c990cc5a3030d322ce3deddfd4_936811_480x0_resize_box_3.png 480w, /post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pikvm-web_hu1bb9d6c990cc5a3030d322ce3deddfd4_936811_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Example of laptop KVM remote control session via PiKVM web interface."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="184"
+		data-flex-basis="443px"
+	
+></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>As a result of this project the portable KVM over IP device was assembled that has many useful features:</p>
 <ul>

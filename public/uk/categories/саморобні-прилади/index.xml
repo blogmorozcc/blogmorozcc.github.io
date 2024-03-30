@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Саморобні Прилади on Блог про IT</title>
+        <link>http://localhost:1313/uk/categories/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</link>
+        <description>Recent content in Саморобні Прилади on Блог про IT</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>uk</language>
+        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/categories/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server</title>
+        <link>http://localhost:1313/uk/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</link>
+        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</guid>
+        <description>&lt;img src="http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.jpg" alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" /&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

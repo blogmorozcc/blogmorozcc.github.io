@@ -18,12 +18,12 @@ categories = [
     "DIY",
     "Hardware",
 ]
-image = "IMG_20240330_085717_015.jpg"
+image = "header.jpg"
 +++
 
 ## Introduction to KVM over IP
 
-KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server's or PC's console as if they were physically present at the machine, regardless of their location. Here's how it works and its advantages over software remote desktop solutions:
+KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server's or PC's console as if they were physically present at the machine, regardless of their location. 
 
 ### How it works
 
@@ -53,13 +53,13 @@ KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote 
 
 There are plenty of KMV over IP devices available on the market, but they have some disatvantages in case you need some sort of solution for personal use, which includes this key points:
 
-- **Cost**: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services. Open-source solutions like LibreEMS and IPMI are more cost-effective in terms of hardware expenses.
+- **Cost**: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services.
 
 - **Non-free software**: Most of the KVM switches that are manufactured for production use in server rooms and critical infrastructure datacenters are bundled with closed source software that has proprietary license.
 
 ### PiKVM
 
-The best solution for the personal home-lab server room or remote management of the PC is [PiKVM](https://pikvm.org/) - and open and inexpensive IP-KVM solution based on [Raspberry Pi](https://www.raspberrypi.com/products/) single board ARM computer.
+The best solution for the personal home-lab server room or remote management of the PC is [PiKVM](https://pikvm.org/) - an open and inexpensive IP-KVM solution based on [Raspberry Pi](https://www.raspberrypi.com/products/) single board ARM computer.
 
 The [PiKVM](https://pikvm.org/) device has many useful features to control remote machine, for example:
 
@@ -84,7 +84,7 @@ I decided to build PiKVM v2 device myself, as there are no delivery of pre-built
 After investigating the PiKVM official documentation it's obvious that the best version to build is PiKVM v2. To assemble the device I used this list of hardware components:
 
 - 1 x [Raspberry Pi 4 Model B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) with 2 Gb of RAM.
-- 1 x [Power adapter GAN 65W PD](https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?token=v2%3AFhRGDfXrgW-JeeoVxg4uJB3qmxltBSE89kSZYPuKxJGqL49CUkKuRZgMYkJJl50TnXWK_qvyZRVxL1syJB87F-e4NWzotHV185XO4MTe0i6RhA_4zvZ-bBXOukyL0_KO&campaign_id=3563069&product_id=2056074929&source=prom%3Acompany%3Apage&locale=uk&category_ids=71109&from_spa=true)
+- 1 x [Power adapter GAN 65W PD](https://prom.ua/ua/p2056074929-blok-zhivlennya-gan.html?product_id=2056074929&category_ids=71109)
 - 1 x [HDMI USB video capture card](https://www.aliexpress.com/item/1005001880861192.html?spm=a2g0o.order_list.order_list_main.11.6b4f1802HEgPtC)
 - 1 x Kingston SD Card 32 Gb 10 class.
 - 2 x USB-A to USB-C cables (to build cusom power cable).
@@ -304,7 +304,7 @@ This is the istruction for using PiKVM board as a portable device. To assemble t
 ![Ethernet RJ-45 connected to the Wi-Fi router.](img/IMG_7.jpg)
 ![Network connection between router and PiKVM.](img/IMG_6.jpg)
 
-2. Take tha **HDMI** male to male cable and connect it to the **PiKVM** device and the **machine** you want to control.
+2. Take the **HDMI** male to male cable and connect it to the **PiKVM** device and the **machine** you want to control.
 
 ![HDMI cable connected to PiKVM.](img/IMG_5.jpg)
 ![HDMI cable connected to the laptop (will act as a monitor in target system).](img/IMG_4.jpg)
@@ -324,6 +324,8 @@ This is the istruction for using PiKVM board as a portable device. To assemble t
 5. Power up the machine you want to control.
 
 After that you should be able to connect to the **PiKVM** device and control your **machine**.
+
+![Example of laptop KVM remote control session via PiKVM web interface.](pikvm-web.png)
 
 ## Conclusion
 
