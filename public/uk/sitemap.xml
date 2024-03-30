@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/uk/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/uk/categories/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -27,6 +27,174 @@
                 hreflang="uk"
                 href="http://localhost:1313/uk/categories/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/gpio/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/gpio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/gpio/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/hdmi/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/hdmi/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/hdmi/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/kvm/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/kvm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/kvm/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/pikvm/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/pikvm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/pikvm/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/post/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/raspberry-pi/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/raspberry-pi/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/raspberry-pi/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/tailscale/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/tailscale/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/tailscale/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/usb/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/usb/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/usb/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/vnc/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/vnc/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/vnc/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/vpn/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/vpn/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/vpn/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/post/%D0%B2%D0%B8%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D1%81%D1%82%D1%80%D0%BE%D1%8E-pikvm-v2-%D0%B4%D0%BB%D1%8F-%D0%B2%D1%96%D0%B4%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BA%D0%B5%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BA%D0%BE%D0%BC%D0%BF%D1%8E%D1%82%D0%B5%D1%80%D0%BE%D0%BC-%D0%B0%D0%B1%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%BC-kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/%D0%B2%D0%B8%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D1%81%D1%82%D1%80%D0%BE%D1%8E-pikvm-v2-%D0%B4%D0%BB%D1%8F-%D0%B2%D1%96%D0%B4%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BA%D0%B5%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BA%D0%BE%D0%BC%D0%BF%D1%8E%D1%82%D0%B5%D1%80%D0%BE%D0%BC-%D0%B0%D0%B1%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%BC-kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/categories/%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/uk/categories/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</loc>
+    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/uk/tags/linux/</loc>
     <lastmod>2024-03-25T00:00:00+00:00</lastmod>
@@ -52,32 +220,6 @@
                 rel="alternate"
                 hreflang="uk"
                 href="http://localhost:1313/uk/categories/linux/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/uk/post/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/post/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/uk/tags/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/"
                 />
   </url><url>
     <loc>http://localhost:1313/uk/tags/zen/</loc>
@@ -148,19 +290,6 @@
                 href="http://localhost:1313/uk/tags/iommu/"
                 />
   </url><url>
-    <loc>http://localhost:1313/uk/tags/kvm/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/kvm/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/kvm/"
-                />
-  </url><url>
     <loc>http://localhost:1313/uk/tags/pci-passthrough/</loc>
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -204,9 +333,6 @@
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/uk/categories/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/uk/categories/%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F/</loc>
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/</loc>

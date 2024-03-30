@@ -13,7 +13,7 @@
         
         <guid>http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/</guid>
         <description>&lt;img src="http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.jpg" alt="Featured image of post Assembling a PiKVM v2 device for remote KVM over IP control of a computer or server" /&gt;&lt;h2 id=&#34;introduction-to-kvm-over-ip&#34;&gt;Introduction to KVM over IP&lt;/h2&gt;
-&lt;p&gt;KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location. Here&amp;rsquo;s how it works and its advantages over software remote desktop solutions:&lt;/p&gt;
+&lt;p&gt;KVM over IP (Keyboard, Video, Mouse over IP) is a technology that allows remote access and control of a computer or server through a network connection. It enables users to manage the server&amp;rsquo;s or PC&amp;rsquo;s console as if they were physically present at the machine, regardless of their location.&lt;/p&gt;
 &lt;h3 id=&#34;how-it-works&#34;&gt;How it works&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -52,7 +52,7 @@
 &lt;p&gt;There are plenty of KMV over IP devices available on the market, but they have some disatvantages in case you need some sort of solution for personal use, which includes this key points:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Cost&lt;/strong&gt;: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services. Open-source solutions like LibreEMS and IPMI are more cost-effective in terms of hardware expenses.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Cost&lt;/strong&gt;: Commercial hardware KVM solutions typically involve higher upfront costs compared to open-source solutions, as they often come with additional features and support services.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Non-free software&lt;/strong&gt;: Most of the KVM switches that are manufactured for production use in server rooms and critical infrastructure datacenters are bundled with closed source software that has proprietary license.&lt;/p&gt;
@@ -60,7 +60,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;pikvm&#34;&gt;PiKVM&lt;/h3&gt;
 &lt;p&gt;The best solution for the personal home-lab server room or remote management of the PC is &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;PiKVM&lt;/a&gt; - and open and inexpensive IP-KVM solution based on &lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/products/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PiKVM&lt;/a&gt; - an open and inexpensive IP-KVM solution based on &lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/products/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Raspberry Pi&lt;/a&gt; single board ARM computer.&lt;/p&gt;
 &lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://pikvm.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;PiKVM&lt;/a&gt; device has many useful features to control remote machine, for example:&lt;/p&gt;
@@ -642,7 +642,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Take tha &lt;strong&gt;HDMI&lt;/strong&gt; male to male cable and connect it to the &lt;strong&gt;PiKVM&lt;/strong&gt; device and the &lt;strong&gt;machine&lt;/strong&gt; you want to control.&lt;/li&gt;
+&lt;li&gt;Take the &lt;strong&gt;HDMI&lt;/strong&gt; male to male cable and connect it to the &lt;strong&gt;PiKVM&lt;/strong&gt; device and the &lt;strong&gt;machine&lt;/strong&gt; you want to control.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_5.jpg&#34;
 	width=&#34;1611&#34;
@@ -746,6 +746,20 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;After that you should be able to connect to the &lt;strong&gt;PiKVM&lt;/strong&gt; device and control your &lt;strong&gt;machine&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pikvm-web.png&#34;
+	width=&#34;1892&#34;
+	height=&#34;1024&#34;
+	srcset=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pikvm-web_hu1bb9d6c990cc5a3030d322ce3deddfd4_936811_480x0_resize_box_3.png 480w, http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/pikvm-web_hu1bb9d6c990cc5a3030d322ce3deddfd4_936811_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Example of laptop KVM remote control session via PiKVM web interface.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;184&#34;
+		data-flex-basis=&#34;443px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;As a result of this project the portable KVM over IP device was assembled that has many useful features:&lt;/p&gt;
 &lt;ul&gt;

@@ -91,6 +91,8 @@ After investigating the PiKVM official documentation it's obvious that the best 
 - 1 X HDMI male-male cable.
 - 1 x 80mm FAN (for active cooling).
 
+![Components for building PiKVM.](img/IMG_20240330_172625_917.jpg)
+
 ### Building cusom power cable
 
 To be able to operate the remote machinve wiht our DIY KVM device computer should be able to recognize our device as HID USB device that will be treated by the computer just like another keyboard or mouse (the computer keyboard and mouse are also HID device). 
