@@ -3,6 +3,7 @@ title: "My projects"
 date: 2024-06-02
 slug: "projects"
 layout: "single"
+comments: false
 menu:
     main:
         weight: 4
