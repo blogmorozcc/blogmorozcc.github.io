@@ -6,114 +6,75 @@
         <description>Recent content in Virtualization on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Mon, 18 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/categories/virtualization/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>GPU PCI passthrough to Windows KVM on Arch Linux</title>
-        <link>http://localhost:1313/uk/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/</link>
-        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
+        <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/categories/virtualization/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)</title>
+        <link>http://localhost:1313/uk/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/uk/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/</guid>
-        <description>&lt;img src="http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.webp" alt="Featured image of post GPU PCI passthrough to Windows KVM on Arch Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;GPU passthrough in KVM (Kernel-based Virtual Machine) refers to the process of directly assigning a physical GPU (Graphics Processing Unit) to a virtual machine running on a KVM hypervisor. This allows the virtual machine to have exclusive access to the GPU, essentially bypassing the hypervisor&amp;rsquo;s virtualization layer.&lt;/p&gt;
-&lt;p&gt;For many people this can sound complicated, but with Linux and KVM it&amp;rsquo;s actually easy and setup includes this 5 steps:&lt;/p&gt;
+        <guid>http://localhost:1313/uk/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.png" alt="Featured image of post How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &amp;ldquo;AUTOMATIC1111&amp;rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&amp;rsquo;s capabilities.&lt;/p&gt;
+&lt;h3 id=&#34;why-i-run-automatic1111-inside-vm&#34;&gt;Why I run AUTOMATIC1111 inside VM&lt;/h3&gt;
+&lt;p&gt;In one of my previous articles I mentioned that I use dual AMD-GPU custom desktop system with Arch Linux as main host OS. Personally for me, running AUTOMATIC1111 inside a KVM-based virtual machine with AMD GPU passthrough offers several key benefits:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Identifying the GPU&lt;/strong&gt;. The first step is to ensure that the GPU you want to passthrough is compatible with your hardware and supports the necessary features for passthrough. This often requires VT-d (Intel Virtualization Technology for Directed I/O) or AMD-Vi (AMD Virtualization I/O) support on the CPU, as well as an IOMMU (Input-Output Memory Management Unit) on the motherboard.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Portability&lt;/strong&gt;. As I use Arch Linux as my main host OS on different computers it is sometimes can be tricky to manage dependencies that are required to run AUTOMATIC1111. For example, at the time of writing this article (02.06.2024), AUTOMATIC1111 requires Python 3.10 and the bleeding edge Python version in the official arch repositories is 3.12. In case of running AUTOMATIC1111 inside a VM I can setup the dependencies once inside that VM, and I don&amp;rsquo;t have to worry about messing the dependencies on each Arch update.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Configuring the Host&lt;/strong&gt;. You&amp;rsquo;ll need to configure the host system to enable IOMMU, VT-d, or AMD-Vi in the BIOS/UEFI settings, as well as load necessary kernel modules and drivers.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Isolating the GPU&lt;/strong&gt;. The GPU intended for passthrough needs to be isolated from the host operating system so that it can be exclusively assigned to the virtual machine. This is typically done by blacklisting the GPU driver from loading on the host.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Configuring the Virtual Machine&lt;/strong&gt;. Within the KVM setup, you configure the virtual machine to use the passthrough GPU. This involves specifying the GPU as a PCI device to be passed through to the VM.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Driver Installation&lt;/strong&gt;. Once the GPU is passed through to the virtual machine, you install the necessary drivers within the guest operating system just as you would on a physical machine.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Snapshot and Restore&lt;/strong&gt;. As I have a VM storage as single *.qcow2 file, I can backup it, transfer to my another machine or server in my homelab. It&amp;rsquo;s also easy to keep my checkpoints, loras, etc inside a single VM, and in case I need to transfer AUTOMATIC1111 installation to another host machine, I need only to copy VM backup. There is no need to do the dependencies installation, models setup every time.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;hardware-requirements&#34;&gt;Hardware requirements&lt;/h2&gt;
-&lt;p&gt;It is important to mention that this kind of setup requires your computer hardware to meet some requirements.&lt;/p&gt;
-&lt;h3 id=&#34;cpu&#34;&gt;CPU&lt;/h3&gt;
-&lt;p&gt;Your CPU must support hardware virtualization extensions such as Intel VT-x (Intel Virtualization Technology) or AMD-V (AMD Virtualization). Additionally, for GPU passthrough, you&amp;rsquo;ll need support for Intel VT-d (Intel Virtualization Technology for Directed I/O) or AMD-Vi (AMD Virtualization I/O) extensions, which allow direct access to I/O devices from virtual machines.&lt;/p&gt;
-&lt;h3 id=&#34;motherboard&#34;&gt;Motherboard&lt;/h3&gt;
-&lt;p&gt;Your motherboard must have an IOMMU (Input-Output Memory Management Unit) that supports PCIe device isolation and passthrough. Most modern motherboards have this feature, but you should check your motherboard&amp;rsquo;s specifications to ensure compatibility.&lt;/p&gt;
-&lt;h3 id=&#34;gpu&#34;&gt;GPU&lt;/h3&gt;
-&lt;p&gt;The GPU you must support UEFI. Ideal choice is a GPU that supports the necessary features for passthrough, such as AMD&amp;rsquo;s Radeon Pro or Nvidia&amp;rsquo;s Quadro series GPUs, as consumer-grade GPUs may have limitations or require workarounds.&lt;/p&gt;
-&lt;p&gt;Also if you want the ability to use your host Linux OS at the same time with the guest Windows OS you need to have 2 GPU (one for host, another for guest) and it is recommended to have 2 monitors.&lt;/p&gt;
-&lt;p&gt;If your CPU has built-in graphics unit and your motherboard has video output, it may be fine to have only 1 external PCI GPU. In that case the PCI GPU is passed to the VM, and Linux host uses CPU graphics for output.&lt;/p&gt;
-&lt;h2 id=&#34;gpu-passthrough-setup&#34;&gt;GPU Passthrough setup&lt;/h2&gt;
-&lt;h3 id=&#34;review-your-hardware&#34;&gt;Review your hardware&lt;/h3&gt;
-&lt;p&gt;The very first step for the setup is to review the hardware you have. If you want achieve the same setup as in my example make sure you have 2 GPUs (at least one should be external PCI GPU).&lt;/p&gt;
-&lt;p&gt;My hardware specifications are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Motherboard&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://www.msi.com/Motherboard/MPG-Z490-GAMING-EDGE-WIFI&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;MSI MPG z490 Gaming Edge WiFi&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;CPU&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://ark.intel.com/content/www/us/en/ark/products/205904/intel-core-i9-10850k-processor-20m-cache-up-to-5-20-ghz.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Intel Core i9-10850K&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;GPU 1&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://www.amd.com/en/products/graphics/amd-radeon-rx-6750-xt&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;AMD Radeon RX 6750XT&lt;/a&gt; (for Linux &lt;strong&gt;HOST&lt;/strong&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;GPU 2&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://www.amd.com/en/products/graphics/amd-radeon-rx-6600&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;AMD Radeon RX 6600&lt;/a&gt; (for Windows &lt;strong&gt;GUEST&lt;/strong&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Monitors&lt;/strong&gt;: 2 x FullHD 1920x1080 @ 75 Hz&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;install-and-configure-kvm&#34;&gt;Install and configure KVM&lt;/h3&gt;
-&lt;p&gt;This guide is written assuming you already have a working Linux system with installed and configured KVM (libvirt) and the software to manage your VMs (virt-manager, virt-viewer).&lt;/p&gt;
-&lt;p&gt;If you don&amp;rsquo;t have KVM installed yet, see my another guide: &lt;a class=&#34;link&#34; href=&#34;http://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;How to install KVM on Arch Linux&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;modify-motherboard-bios-settings&#34;&gt;Modify motherboard BIOS settings&lt;/h3&gt;
-&lt;p&gt;In order for KVM to work on your system Virtualization Technology should be enabled. It may be named differently depending on your motherboard/CPU manufacturer, but usually it is VT-D for Intel and AMD-Vi for AMD respectively.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;If you have a setup with the integrated CPU graphics you also will need to change the graphics initialization priority. It is needed to prevent your external GPU initialization on BIOS POST startup, and delegate a video signal to integrated GPU instead. In my case I don&amp;rsquo;t need this step, as I have 2 external PCI GPUs.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;enable-iommu&#34;&gt;Enable IOMMU&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;IOMMU is a generic name for Intel VT-d and AMD-Vi.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;To enable IOMMU in the Linux system you should pass the correct boot kernel parameter. Adding the kernel boot parameters may be different, depending on what bootloader you are using.&lt;/p&gt;
-&lt;p&gt;If are using:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Intel CPU&lt;/strong&gt; - add flags: &lt;code&gt;intel_iommu=on iommu=pt&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;AMD CPU&lt;/strong&gt; - add flags: &lt;code&gt;iommu=pt&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In AMD case kernel detects if IOMMU should be on from BIOS, and &lt;code&gt;iommu=pt&lt;/code&gt; prevents Linux from processing devices that can&amp;rsquo;t be passed through.&lt;/p&gt;
-&lt;h4 id=&#34;option-1-grub&#34;&gt;Option 1: GRUB&lt;/h4&gt;
-&lt;p&gt;If you are using grub as your bootloader, you can modify your kernel parameters in file &lt;code&gt;/etc/default/grub&lt;/code&gt; and append the flags to &lt;code&gt;GRUB_CMDLINE_LINUX&lt;/code&gt; parameters, for example:&lt;/p&gt;
+&lt;h3 id=&#34;why-i-need-automatic1111&#34;&gt;Why I need AUTOMATIC1111&lt;/h3&gt;
+&lt;p&gt;AUTOMATIC1111 software is crucial for me as I develop free and open source &lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SDAI - Stable Diffusion Android client application&lt;/a&gt; that can connect to any AUTOMATIC1111 server or other supported AI Image generation provider. I need many different isolated AUTOMATIC1111 instances to perform testing of my android application.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;h3 id=&#34;create-a-new-linux-vm&#34;&gt;Create a new Linux VM&lt;/h3&gt;
+&lt;p&gt;First we need to create a new Linux VM with GPU Passthrough of PCI devices to that VM. I already covered creation of VM in the article &amp;ldquo;&lt;a class=&#34;link&#34; href=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/#setup-a-new-vm-and-install-windows-1011&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GPU PCI passthrough to Windows KVM on Arch Linux&lt;/a&gt;&amp;rdquo;, but this time I will use &lt;a class=&#34;link&#34; href=&#34;https://releases.ubuntu.com/22.04/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Ubuntu Sever 22.04 LTS&lt;/a&gt; as a OS for Guest VM. I have chosen Ubuntu Server 22.04 for the guest OS because for the moment of writing this article (02.06.2024) this is the latest release that is supported by proprietary AMD ROCM driver that is needed to run AI on the power of GPU.&lt;/p&gt;
+&lt;h3 id=&#34;update-the-os-packages&#34;&gt;Update the OS packages&lt;/h3&gt;
+&lt;p&gt;After installing the OS first thing you need to do is to update the system packages to the latest available versions.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;GRUB_CMDLINE_LINUX&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;quiet splash intel_iommu=on iommu=pt&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt upgrade
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Then save the file and re-generate your GRUB config with the command:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo grub-mkconfig -o /boot/grub/grub.cfg&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id=&#34;option-2-systemd-boot&#34;&gt;Option 2: Systemd Boot&lt;/h4&gt;
-&lt;p&gt;If you are using the systemd boot bootloader, you need to edit your boot entry file. In my case this file is located at &lt;code&gt;/boot/loader/entries/arch.conf&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Kernel parameters should be appended to the end of &lt;code&gt;options&lt;/code&gt; parameter like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;options rw quiet splash &lt;span class=&#34;nv&#34;&gt;intel_iommu&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;on &lt;span class=&#34;nv&#34;&gt;iommu&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;pt
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;After you added the correct kernel parameters to your bootloader, &lt;code&gt;reboot&lt;/code&gt; your computer.&lt;/p&gt;
-&lt;h3 id=&#34;reviev-your-iommu-groups&#34;&gt;Reviev your IOMMU groups&lt;/h3&gt;
-&lt;p&gt;An IOMMU (Input-Output Memory Management Unit) group is a logical grouping of devices that are controlled by the same IOMMU. The primary purpose of an IOMMU group is to facilitate device isolation and management in virtualized environments, particularly when using technologies like GPU passthrough.&lt;/p&gt;
-&lt;p&gt;It is important that you have only devices related to the GPU your intend to pass through in the same IOMMU group. Because if you have something else, it should be also passed to the VM or otherwise passthrough will not work.&lt;/p&gt;
-&lt;p&gt;You can use the following script to verify your iommu groups:&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;install-needed-dependencies&#34;&gt;Install needed dependencies&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install -y git python3-pip python3-venv python3-dev libstdc++-12-dev libgl1-mesa-glx&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;install-amd-rocm-driver&#34;&gt;Install AMD ROCM driver&lt;/h3&gt;
+&lt;p&gt;I used official instructions from the &lt;a class=&#34;link&#34; href=&#34;https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AMD documentation&lt;/a&gt; to install the ROCM driver.&lt;/p&gt;
+&lt;p&gt;First, install headers and extras for the current kernel:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install -y &lt;span class=&#34;s2&#34;&gt;&amp;#34;linux-headers-&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;linux-modules-extra-&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then, ensure your current user is a part of &lt;code&gt;video&lt;/code&gt; and &lt;code&gt;render&lt;/code&gt; groups. To add the current user to the groups use command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod -a -G render,video &lt;span class=&#34;nv&#34;&gt;$LOGNAME&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Download installer deb package and install it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://repo.radeon.com/amdgpu-install/6.1.1/ubuntu/jammy/amdgpu-install_6.1.60101-1_all.deb
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dpkg -i amdgpu-install_6.1.60101-1_all.deb&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Install the DKMS module and rocm packages:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install amdgpu-dkms rocm&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, reboot the VM:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo reboot&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;install-automatic1111-software&#34;&gt;Install AUTOMATIC1111 software&lt;/h3&gt;
+&lt;p&gt;The most easy and convinient way is just to clone the official git repository. After cloning, navigate to the cloned directory.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; stable-diffusion-webui&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Setup Python virtual environment:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 -m venv venv
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; venv/bin/activate&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Install python dependencies needed by AUTOMATIC1111:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip3 install -r requirements.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Uninstall generic torch dependencies and replace them with ROCM:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip3 uninstall torch torchvision
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;create-custom-automatic1111-launch-script&#34;&gt;Create custom AUTOMATIC1111 launch script&lt;/h3&gt;
+&lt;p&gt;I will use nano to create a new file &lt;code&gt;nano launch.sh&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -124,248 +85,54 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;shopt&lt;/span&gt; -s nullglob
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; g in &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;find /sys/kernel/iommu_groups/* -maxdepth &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -type d &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sort -V&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;IOMMU Group &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;##*/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;:&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; d in &lt;span class=&#34;nv&#34;&gt;$g&lt;/span&gt;/devices/*&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;\t&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;lspci -nns &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;##*/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;You need to save the script contents to some file (for example &lt;code&gt;iommu.sh&lt;/code&gt;) and make this file executable (&lt;code&gt;chmod +x iommu.sh&lt;/code&gt;), then you can just run it using &lt;code&gt;./iommu.sh&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;In my case IOMMU groups are:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 0:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	00:00.0 Host bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0600&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Intel Corporation Comet Lake-S 6c Host Bridge/DRAM Controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;8086:9b33&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev 05&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 1:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	00:01.0 PCI bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0604&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Intel Corporation 6th-10th Gen Core Processor PCIe Controller &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;x16&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;8086:1901&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev 05&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	01:00.0 PCI bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0604&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; XL Upstream Port of PCI Express Switch &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:1478&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev c0&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	02:00.0 PCI bridge &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0604&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt; XL Downstream Port of PCI Express Switch &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:1479&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	03:00.0 VGA compatible controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0300&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;22&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Radeon RX 6700/6700 XT/6750 XT / 6800M/6850M XT&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:73df&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev c0&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	03:00.1 Audio device &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0403&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi 21/23 HDMI/DP Audio Controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:ab28&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; venv/bin/activate
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HSA_OVERRIDE_GFX_VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;10.3.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HIP_VISIBLE_DEVICES&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;PYTORCH_HIP_ALLOC_CONF&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;garbage_collection_threshold:0.8,max_split_size_mb:512
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 18:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	07:00.0 VGA compatible controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0300&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi &lt;span class=&#34;m&#34;&gt;23&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Radeon RX 6600/6600 XT/6600M&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:73ff&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;rev c7&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IOMMU Group 19:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	07:00.1 Audio device &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;0403&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Advanced Micro Devices, Inc. &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;AMD/ATI&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Navi 21/23 HDMI/DP Audio Controller &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1002:ab28&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 launch.py --api --listen --enable-insecure-extension-access --opt-sdp-attention
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;Ensure that the GPU and its associated devices are not grouped with other critical system devices (e.g., USB controllers, Ethernet controllers) that you do not intend to pass through to the virtual machine. Having the GPU in its own isolated IOMMU group is crucial for reliable passthrough.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;In this case the &lt;strong&gt;AMD RX 6600 GPU&lt;/strong&gt; that I want to pass to VM has 2 devices &lt;strong&gt;07:00.0&lt;/strong&gt; and &lt;strong&gt;07:00.1&lt;/strong&gt;, each in separate IOMMU groups &lt;strong&gt;18&lt;/strong&gt; and &lt;strong&gt;19&lt;/strong&gt;, and no other devices are in groups &lt;strong&gt;18&lt;/strong&gt; and &lt;strong&gt;19&lt;/strong&gt;. Than means I can passthrough it with no problem.&lt;/p&gt;
-&lt;p&gt;If we look at the devices for &lt;strong&gt;AMD RX 6750 XT&lt;/strong&gt; which are &lt;strong&gt;03:00.0&lt;/strong&gt; and &lt;strong&gt;03:00.1&lt;/strong&gt; in IOMMU group &lt;strong&gt;1&lt;/strong&gt;, there are also some PCI birdge devices, which in theory does not prevent passthrough this GPU as well as long as you also pass this PCI bridges to VM. The real problem would be if for example IOMMU group &lt;strong&gt;1&lt;/strong&gt; contained some brand another PCI device (like USB bridge or sound card).&lt;/p&gt;
-&lt;p&gt;In case you have more devices than you need in IOMMU group with the GPU you could try:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;If your motherboard has many PCI Express slots, try to install GPU in different PCIE slots and see if it helps.&lt;/li&gt;
-&lt;li&gt;In case you can not find optimal IOMMU group with no extra devices, you can patch your Linux kernel with &lt;strong&gt;ACS Override&lt;/strong&gt; patch (but it is out of scope for this article).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;isolate-your-gpu&#34;&gt;Isolate your GPU&lt;/h3&gt;
-&lt;p&gt;Isolating the GPU refers to the process of ensuring that the GPU is exclusively available for use by a specific virtual machine, typically through binding it to the VFIO (Virtual Function I/O) driver. This process involves several steps to prevent the GPU from being used by the host operating system or other virtual machines:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Unbinding from Host Driver&lt;/strong&gt;. Initially, the GPU is typically bound to a driver used by the host operating system for normal graphics operations. To isolate the GPU, this binding needs to be undone so that the GPU can be claimed by the VFIO driver. This step effectively detaches the GPU from the host OS.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Binding to VFIO Driver&lt;/strong&gt;. Once unbound from the host driver, the GPU is then bound to the VFIO driver, which allows it to be passed through to the virtual machine. The VFIO driver provides the necessary functionality for direct device assignment (DDA) in virtualized environments, ensuring that the GPU is accessible to the virtual machine.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Isolating means that after you boot your host Linux system you can not use the isolated GPU (which is bound to &lt;code&gt;vfio&lt;/code&gt; driver), you can only use it to pass to the VM.&lt;/p&gt;
-&lt;p&gt;To isolate the GPU you need to know the deice IDs of your GPU video and audio PCI output device. You can use &lt;code&gt;iommu.sh&lt;/code&gt; script from previous step to get this information. In my case the device IDs are: &lt;code&gt;1002:73df&lt;/code&gt; and &lt;code&gt;1002:ab28&lt;/code&gt;.&lt;/p&gt;
-&lt;h4 id=&#34;vfio-early-load&#34;&gt;VFIO Early load&lt;/h4&gt;
-&lt;p&gt;To load vfio early and bind the necessary GPU to vfio create a config at &lt;code&gt;/etc/modprobe.d/vfio.conf&lt;/code&gt; which in my case looks like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;softdep amdgpu pre: vfio-pci
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;options vfio-pci &lt;span class=&#34;nv&#34;&gt;ids&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1002:73ff,1002:ab28 &lt;span class=&#34;nv&#34;&gt;disable_vga&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; kvm.ignore_msrs&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Here the line &lt;code&gt;softdep amdgpu pre: vfio-pci&lt;/code&gt; allows &lt;code&gt;vfio-pci&lt;/code&gt; driver to be forced to load before the &lt;code&gt;amdgpu&lt;/code&gt; driver, I need this because I have 2 external PCI GPUs of the same manufacturer, and this allows to bind RX 6600 GPU to &lt;code&gt;vfio-pci&lt;/code&gt; driver and then bind RX 6750 XT to the &lt;code&gt;amdgpu&lt;/code&gt; driver.&lt;/p&gt;
-&lt;p&gt;In your case if you have NVidia gpu then &lt;code&gt;vfio-pci&lt;/code&gt; should be loaded before the &lt;code&gt;nvidia&lt;/code&gt; (proprietary) or before the &lt;code&gt;nouveau&lt;/code&gt; (free) driver.&lt;/p&gt;
-&lt;h4 id=&#34;initramfs-configuration&#34;&gt;Initramfs configuration&lt;/h4&gt;
-&lt;p&gt;In my case I use &lt;code&gt;mkinitcpio&lt;/code&gt; as initramfs builder. To configure mkinitcpio edit the &lt;code&gt;/etc/mkinitcpio.conf&lt;/code&gt; file.&lt;/p&gt;
-&lt;p&gt;Add the necessary modules to the &lt;code&gt;MODULES&lt;/code&gt; array:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;MODULES&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;vfio_pci vfio vfio_iommu_type1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Then ensure you have &lt;code&gt;modconf&lt;/code&gt; hook defined in the &lt;code&gt;HOOKS&lt;/code&gt; array:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;HOOKS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;... modconf ...&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Save the file, and then execute a command for initramfs regeneration:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mkinitcpio -P&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;After that, you need to reboot the computer to apply changes.&lt;/p&gt;
-&lt;h3 id=&#34;setup-a-new-vm-and-install-windows-1011&#34;&gt;Setup a new VM and install Windows 10/11&lt;/h3&gt;
-&lt;p&gt;Now it is a time to setup a new VM and install a new Windows system. I recommend setup and install Windows without any passed PCI devices, and add them to the VM later after installation is finished.&lt;/p&gt;
-&lt;p&gt;All the setup is easier to do using the &lt;code&gt;virt-manager&lt;/code&gt; graphical application.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Open the &lt;code&gt;virt-manager&lt;/code&gt; application.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Click &amp;ldquo;New Virtual Machine&amp;rdquo;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Select Local install media. Ususally it should be Windows 10/11 iso file which can be downloaded from microsoft website.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Browse to your Windows 10/11 iso. It is recommended that your iso to be located somewhere in your home user folder to avouid file permission problems. Also it is important to make sure to identify the OS as &amp;ldquo;Windows 10&amp;rdquo; or &amp;ldquo;Windows 11&amp;rdquo; at the bottom field.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Allocate CPU and Memory. Be sure to reserve at least 2 CPU cores and some RAM for your linux &lt;strong&gt;host&lt;/strong&gt; system to handle networking and some other stuff. In my case I allocated 2 CPU cores and 8 Gb of RAM to the VM, you can allocate more if you want.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Enable storage for this virtual machine and Create a disk image. I recommend to give at least 50 Gb for the Windwos VM.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Then &lt;strong&gt;DO NOT CLICK FINISH&lt;/strong&gt;, and do the following:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Ensure Customize Configuration before install is checked.&lt;/li&gt;
-&lt;li&gt;Give your VM a name.&lt;/li&gt;
-&lt;li&gt;Under network selection, select Host device [your device ID] -&amp;gt; Source Mode -&amp;gt; Bridge).&lt;/li&gt;
-&lt;li&gt;Now you can click Finish.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Then install Windows as usual, after you have the system installed proceed to the next step.&lt;/p&gt;
-&lt;h3 id=&#34;adjust-specific-vm-settings&#34;&gt;Adjust specific VM settings&lt;/h3&gt;
-&lt;p&gt;There is a need to add some flags that allow to hide the fact that you are using VM from the GPU drivers installer.&lt;/p&gt;
-&lt;p&gt;To edit the VM settings make sure your VM is not running and type this command in terminal:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo virsh edit win10&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;where you should replace &lt;code&gt;win10&lt;/code&gt; with your actual VM name.&lt;/p&gt;
-&lt;p&gt;Then do the following XML file modifications in the editor:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Add &lt;code&gt;&amp;lt;vendor_id state=&#39;on&#39; value=&#39;randomid&#39;/&amp;gt;&lt;/code&gt; to the &lt;code&gt;&amp;lt;hyperv&amp;gt;&lt;/code&gt; section.&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;&amp;lt;kvm&amp;gt;&amp;lt;hidden state=&#39;on&#39;/&amp;gt;&amp;lt;/kvm&amp;gt;&lt;/code&gt; to the &lt;code&gt;&amp;lt;features&amp;gt;&lt;/code&gt; section.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As the result the structure should be like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;lt;features&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;hyperv&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;lt;vendor_id &lt;span class=&#34;nv&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;on&amp;#39;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;randomid&amp;#39;&lt;/span&gt;/&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;/hyperv&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;kvm&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;lt;hidden &lt;span class=&#34;nv&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;on&amp;#39;&lt;/span&gt;/&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &amp;lt;/kvm&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;lt;/features&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;passthrough-gpu-to-the-vm&#34;&gt;Passthrough GPU to the VM&lt;/h3&gt;
-&lt;p&gt;In the &lt;code&gt;virt-manager&lt;/code&gt; applcation open your VM settings and navigate to your VM settings and here need to add 2 PCI host devices related to the GPU you intend to passthrough.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Click &amp;ldquo;Add PCI Passthrough Devices&amp;rdquo;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Click &amp;ldquo;Add Hardware&amp;rdquo;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Select PCI Host Device&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Scroll down until you find the GPU you want to pass through. The ID&amp;rsquo;s should match your outputs from earlier. For example, in my case:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;0000:07:00:0&lt;/code&gt; Advanced Micro Devices, Inc. [AMD/ATI] Navi 23 [Radeon RX 6600/6600 XT/6600M]&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;0000:07:00:1&lt;/code&gt; Advanced Micro Devices, Inc. [AMD/ATI] Navi 21/23 HDMI/DP Audio Controller [1002:ab28]&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;You need to do this twice for the GPU&amp;rsquo;s video and audio device respectively.&lt;/p&gt;
-&lt;p&gt;Then if you have a second monitor try to plug it to the video output of the GPU you passed to the VM and boot the VM, if everything is set up correctly you should see the VM video output on the separate monitor.&lt;/p&gt;
-&lt;h3 id=&#34;install-gpu-drivers&#34;&gt;Install GPU drivers&lt;/h3&gt;
-&lt;p&gt;After you successfully booted your Windows VM with external GPU working it&amp;rsquo;s time to download and install latest drivers from your GPU manufacturer.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nvidia.com/download/index.aspx?lang=en&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Official Nvidia GPU drivers&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.amd.com/en/support&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Official AMD GPU drivers&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/div&gt;&lt;p&gt;Then save the file &lt;code&gt;Ctrl + O&lt;/code&gt; and exit nano &lt;code&gt;Ctrl + X&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;launch-automatic1111&#34;&gt;Launch AUTOMATIC1111&lt;/h3&gt;
+&lt;p&gt;Every time you need to launch AUTOMATIC1111 navigate to the cloned &lt;code&gt;stable-diffusion-webui&lt;/code&gt; directory and launch created &lt;code&gt;launch.sh&lt;/code&gt; script like in the following example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; stable-diffusion-webui
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bash launch.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As the result, you will see that AUTOMATIC1111 running successfully.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch.png&#34;
+	width=&#34;1047&#34;
+	height=&#34;395&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Running AUTOMATIC1111 instance.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;265&#34;
+		data-flex-basis=&#34;636px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Configured Windows VM with GPU passthrough can handle specific graphical apps (like gaming or video editing) with a near native performance, and as a result allows to use your host Linux system and a Windows guest system at the same time.&lt;/p&gt;
-&lt;p&gt;Benefits of GPU passthrough in KVM include:&lt;/p&gt;
+&lt;p&gt;Stable Diffusion is a powerful model for generating images from text descriptions, and AUTOMATIC1111 is a user-friendly interface that makes it easier to use Stable Diffusion&amp;rsquo;s capabilities effectively. Together, they enable a wide range of creative and practical applications in the realm of generative art and image synthesis. By leveraging a KVM-based virtual machine with AMD GPU passthrough, you can achieve a powerful, secure, and flexible environment for running AUTOMATIC1111 and harnessing the capabilities of Stable Diffusion efficiently.&lt;/p&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Improved Performance: By directly accessing the physical GPU, the virtual machine can achieve near-native performance for graphics-intensive tasks such as gaming, video editing, and 3D rendering.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Reduced Overhead: Since the virtual machine bypasses the hypervisor&amp;rsquo;s virtualization layer for GPU operations, there&amp;rsquo;s less overhead compared to traditional GPU virtualization techniques like GPU emulation or virtual GPU (vGPU) solutions.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Support for GPU-accelerated Workloads: GPU passthrough enables virtual machines to leverage hardware acceleration for tasks that rely on GPU processing power, leading to faster execution times and improved efficiency.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Compatibility with GPU-specific Software: Certain applications and workflows require direct access to a physical GPU, which may not be possible with virtual GPU solutions. GPU passthrough allows such software to run seamlessly within a virtualized environment.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Enhanced Gaming Experience: Gamers can benefit from GPU passthrough by running games within a virtual machine with minimal performance degradation, enabling them to utilize hardware-accelerated graphics without dual-booting or dedicating a separate physical machine for gaming.&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://releases.ubuntu.com/22.04/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Ubuntu Sever 22.04 LTS Jammy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AMD ROCM Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/AUTOMATIC1111/stable-diffusion-webui&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AUTOMATIC1111&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SDAI - Stable Diffusion Android client application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://gist.github.com/evshiron/8cf4de34aa01e217ce178b8ed54a2c43&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Custom stable-diffusion-webui launch script&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>

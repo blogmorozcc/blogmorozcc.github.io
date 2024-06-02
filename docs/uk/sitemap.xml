@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/uk/</loc>
-    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -15,8 +15,34 @@
                 href="https://blog.moroz.cc/uk/"
                 />
   </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/amd/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/amd/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/amd/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/automatic1111/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/automatic1111/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/automatic1111/"
+                />
+  </url><url>
     <loc>https://blog.moroz.cc/uk/categories/</loc>
-    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -27,6 +53,148 @@
                 hreflang="uk"
                 href="https://blog.moroz.cc/uk/categories/"
                 />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/gpu/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/gpu/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/gpu/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/kvm/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/kvm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/kvm/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/categories/linux/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/categories/linux/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/post/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/rocm/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/rocm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/rocm/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/stable-diffusion/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/stable-diffusion/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/stable-diffusion/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/ubuntu-server/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/ubuntu-server/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/ubuntu-server/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/virtio/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/tags/virtio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/tags/virtio/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/categories/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-stable-diffusion-%D1%83-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%96%D0%B9-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%96-%D0%BD%D0%B0-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D1%96-amd-automatic1111--kvm--gpu-passthrough/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-stable-diffusion-%D1%83-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%96%D0%B9-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%96-%D0%BD%D0%B0-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D1%96-amd-automatic1111--kvm--gpu-passthrough/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/categories/%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/tags/%D1%88%D1%96/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/categories/%D1%88%D1%96/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/gpio/</loc>
     <lastmod>2024-03-29T00:00:00+00:00</lastmod>
@@ -54,19 +222,6 @@
                 href="https://blog.moroz.cc/uk/tags/hdmi/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/uk/tags/kvm/</loc>
-    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/kvm/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/kvm/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/uk/tags/kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/</loc>
     <lastmod>2024-03-29T00:00:00+00:00</lastmod>
   </url><url>
@@ -83,19 +238,6 @@
                 href="https://blog.moroz.cc/uk/tags/pikvm/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/uk/post/</loc>
-    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/post/"
-                />
-  </url><url>
     <loc>https://blog.moroz.cc/uk/tags/raspberry-pi/</loc>
     <lastmod>2024-03-29T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -107,19 +249,6 @@
                 rel="alternate"
                 hreflang="uk"
                 href="https://blog.moroz.cc/uk/tags/raspberry-pi/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/uk/tags/</loc>
-    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/tailscale/</loc>
@@ -187,9 +316,6 @@
                 href="https://blog.moroz.cc/uk/post/%D0%B2%D0%B8%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D0%BF%D1%80%D0%B8%D1%81%D1%82%D1%80%D0%BE%D1%8E-pikvm-v2-%D0%B4%D0%BB%D1%8F-%D0%B2%D1%96%D0%B4%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BA%D0%B5%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BA%D0%BE%D0%BC%D0%BF%D1%8E%D1%82%D0%B5%D1%80%D0%BE%D0%BC-%D0%B0%D0%B1%D0%BE-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%BC-kvm-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-ip/"
                 />
   </url><url>
-    <loc>https://blog.moroz.cc/uk/categories/%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F/</loc>
-    <lastmod>2024-03-29T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://blog.moroz.cc/uk/tags/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</loc>
     <lastmod>2024-03-29T00:00:00+00:00</lastmod>
   </url><url>
@@ -207,19 +333,6 @@
                 rel="alternate"
                 hreflang="uk"
                 href="https://blog.moroz.cc/uk/tags/linux/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/uk/categories/linux/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/categories/linux/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/zen/</loc>
@@ -262,19 +375,6 @@
                 rel="alternate"
                 hreflang="uk"
                 href="https://blog.moroz.cc/uk/tags/amd-vi/"
-                />
-  </url><url>
-    <loc>https://blog.moroz.cc/uk/tags/gpu/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/tags/gpu/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/tags/gpu/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/iommu/</loc>
@@ -330,9 +430,6 @@
                 />
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</loc>
-    <lastmod>2024-03-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.moroz.cc/uk/categories/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</loc>
     <lastmod>2024-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.moroz.cc/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/</loc>

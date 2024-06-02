@@ -8,7 +8,7 @@ setfont ter-132b Налаштуйте підключення до Інтерне
 
 <link rel='canonical' href='https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-arch-linux-uefi--%D0%B7%D0%B0%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-lvm/'>
 
-<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Встановлення Arch Linux (UEFI &#43; зашифрований LVM)'>
+<link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Встановлення Arch Linux (UEFI &#43; зашифрований LVM)'>
 <meta property='og:description' content='Вступ Це мій власний мануал із встановлення Arch Linux на машину з UEFI, зашифрованим LVM і окремим розділом /home.
 Кроки Спочатку вам потрібно створити та запустити інсталяитор на вашому ПК, у результаті ви завантажитесь у звичайну консоль.
 Збільшити розмір шрифту Оскільки більшість сучасних ноутбуків/ПК мають дисплеї з великою роздільною здатністю, я рекомендую збільшити розмір шрифту:
@@ -22,6 +22,9 @@ setfont ter-132b Налаштуйте підключення до Інтерне
 Збільшити розмір шрифту Оскільки більшість сучасних ноутбуків/ПК мають дисплеї з великою роздільною здатністю, я рекомендую збільшити розмір шрифту:
 setfont ter-132b Налаштуйте підключення до Інтернету У цьому прикладі використовується ПК із модемом Wi-Fi, тому я буду використовувати iwd для налаштування підключення до Інтернету."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://blog.moroz.cc/post/arch-linux-install-guide-uefi--encrypted-lvm/header.png' />
+  
+
+
     </head>
     <body class="
     article-page
@@ -29,9 +32,7 @@ setfont ter-132b Налаштуйте підключення до Інтерне
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "dark");
         })();
     </script><script>
     (function() {
@@ -65,7 +66,7 @@ setfont ter-132b Налаштуйте підключення до Інтерне
                     
                     
                         
-                        <img src="/img/avatar_hu0465dcb74ff2a38e7af18dc89903c071_234506_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -82,7 +83,7 @@ setfont ter-132b Налаштуйте підключення до Інтерне
             
             
             
-            <h2 class="site-description">Дмитра Мороза</h2>
+            <h2 class="site-description">by ShiftHackZ</h2>
             
             
         </div>
@@ -219,26 +220,6 @@ setfont ter-132b Налаштуйте підключення до Інтерне
                 </li>
             
             
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                    <span>Темна тема</span>
-                </li>
             
         </div>
     </ol>
@@ -794,7 +775,7 @@ setfont ter-132b Налаштуйте підключення до Інтерне
         
             2016 - 
         
-        2024 | Блог про IT
+        2024 | ShiftHackZ
     </section>
     
     <section class="powerby">
