@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.moroz.cc/uk/</loc>
-    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-02T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -13,6 +13,32 @@
                 rel="alternate"
                 hreflang="uk"
                 href="https://blog.moroz.cc/uk/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/page/</loc>
+    <lastmod>2024-06-02T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/page/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/page/"
+                />
+  </url><url>
+    <loc>https://blog.moroz.cc/uk/projects/</loc>
+    <lastmod>2024-06-02T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://blog.moroz.cc/projects/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="https://blog.moroz.cc/uk/projects/"
                 />
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/amd/</loc>
@@ -864,19 +890,6 @@
   </url><url>
     <loc>https://blog.moroz.cc/uk/tags/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80/</loc>
     <lastmod>2022-07-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.moroz.cc/uk/page/</loc>
-    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://blog.moroz.cc/page/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="https://blog.moroz.cc/uk/page/"
-                />
   </url><url>
     <loc>https://blog.moroz.cc/uk/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>

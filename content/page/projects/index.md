@@ -11,7 +11,9 @@ menu:
             icon: infinity
 ---
 
-## SDAI - Stable Diffusion Android application
+## SDAI 
+
+**Stable Diffusion Android application**
 
 ![](https://github.com/ShiftHackZ/Stable-Diffusion-Android/raw/master/docs/assets/github-header-image.png)
 
@@ -24,3 +26,16 @@ Stable Diffusion AI is an easy-to-use app that lets you quickly generate images 
 
 -----
 
+## WooCommerce Mobile
+
+**Flutter Android/iOS WooCommerce client application**
+
+![](https://github.com/ShiftHackZ/WooCommerceMobile/raw/master/.github/assets/woo_app_banner.png)
+
+Flutter mobile WooCommerce application for your customers. Convert your working WooComerce online store into full-featured mobile application, that allow customers to look for products, add them to cart, make orders, and more.
+
+- GitHub release: https://github.com/ShiftHackZ/WooCommerceMobile/releases/
+- Source code: https://github.com/ShiftHackZ/WooCommerceMobile
+- Contact: woo@moroz.cc
+
+-----

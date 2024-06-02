@@ -6,7 +6,55 @@
         <description>Recent content on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Мої проекти</title>
+        <link>http://localhost:1313/uk/projects/</link>
+        <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/projects/</guid>
+        <description>&lt;h2 id=&#34;sdai&#34;&gt;SDAI&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Stable Diffusion додаток для Android&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android/raw/master/docs/assets/github-header-image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Stable Diffusion AI — це мобільний додаток, що дозволяє швидко створювати зображення з тексту чи інших зображень лише в декілька кліків. За допомогою цієї програми ви можете використовувати своій власний сервер для створення високоякісних зображеннь за лічені секунди.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Google Play: &lt;a class=&#34;link&#34; href=&#34;https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;F-Droid: &lt;a class=&#34;link&#34; href=&#34;https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Вихідний код: &lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/ShiftHackZ/Stable-Diffusion-Android&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Зворотній зв&amp;rsquo;язок: &lt;a class=&#34;link&#34; href=&#34;mailto:sdai@moroz.cc&#34; &gt;sdai@moroz.cc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;woocommerce-mobile&#34;&gt;WooCommerce Mobile&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Flutter Android/iOS WooCommerce додаток&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/ShiftHackZ/WooCommerceMobile/raw/master/.github/assets/woo_app_banner.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Мобільний Flutter додаток WooCommerce для ваших клієнтів. Перетворіть свій робочий інтернет-магазин WooComerce на повнофункціональний мобільний додаток, який дозволить клієнтам шукати продукти, додавати їх у кошик, робити замовлення тощо.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub реліз: &lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/WooCommerceMobile/releases/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/ShiftHackZ/WooCommerceMobile/releases/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Вихідний код: &lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/WooCommerceMobile&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/ShiftHackZ/WooCommerceMobile&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Зворотній зв&amp;rsquo;язок: &lt;a class=&#34;link&#34; href=&#34;mailto:woo@moroz.cc&#34; &gt;woo@moroz.cc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+        </item>
+        <item>
         <title>Запуск Stable Diffusion у віртуальній машині на відеокарті AMD (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)</title>
         <link>http://localhost:1313/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-stable-diffusion-%D1%83-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%96%D0%B9-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%96-%D0%BD%D0%B0-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D1%96-amd-automatic1111--kvm--gpu-passthrough/</link>
         <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
