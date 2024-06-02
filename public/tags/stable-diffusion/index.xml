@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Stable Diffusion on The IT Blog</title>
+        <link>http://localhost:1313/tags/stable-diffusion/</link>
+        <description>Recent content in Stable Diffusion on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/stable-diffusion/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)</title>
+        <link>http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.png" alt="Featured image of post How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &amp;ldquo;AUTOMATIC1111&amp;rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&amp;rsquo;s capabilities.&lt;/p&gt;
+&lt;h3 id=&#34;why-i-run-automatic1111-inside-vm&#34;&gt;Why I run AUTOMATIC1111 inside VM&lt;/h3&gt;
+&lt;p&gt;In one of my previous articles I mentioned that I use dual AMD-GPU custom desktop system with Arch Linux as main host OS. Personally for me, running AUTOMATIC1111 inside a KVM-based virtual machine with AMD GPU passthrough offers several key benefits:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Portability&lt;/strong&gt;. As I use Arch Linux as my main host OS on different computers it is sometimes can be tricky to manage dependencies that are required to run AUTOMATIC1111. For example, at the time of writing this article (02.06.2024), AUTOMATIC1111 requires Python 3.10 and the bleeding edge Python version in the official arch repositories is 3.12. In case of running AUTOMATIC1111 inside a VM I can setup the dependencies once inside that VM, and I don&amp;rsquo;t have to worry about messing the dependencies on each Arch update.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Snapshot and Restore&lt;/strong&gt;. As I have a VM storage as single *.qcow2 file, I can backup it, transfer to my another machine or server in my homelab. It&amp;rsquo;s also easy to keep my checkpoints, loras, etc inside a single VM, and in case I need to transfer AUTOMATIC1111 installation to another host machine, I need only to copy VM backup. There is no need to do the dependencies installation, models setup every time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;why-i-need-automatic1111&#34;&gt;Why I need AUTOMATIC1111&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android/raw/master/docs/assets/github-header-image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;AUTOMATIC1111 software is crucial for me as I develop free and open source &lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SDAI - Stable Diffusion Android client application&lt;/a&gt; that can connect to any AUTOMATIC1111 server or other supported AI Image generation provider. I need many different isolated AUTOMATIC1111 instances to perform testing of my android application.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;h3 id=&#34;create-a-new-linux-vm&#34;&gt;Create a new Linux VM&lt;/h3&gt;
+&lt;p&gt;First we need to create a new Linux VM with GPU Passthrough of PCI devices to that VM. I already covered creation of VM in the article &amp;ldquo;&lt;a class=&#34;link&#34; href=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/#setup-a-new-vm-and-install-windows-1011&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GPU PCI passthrough to Windows KVM on Arch Linux&lt;/a&gt;&amp;rdquo;, but this time I will use &lt;a class=&#34;link&#34; href=&#34;https://releases.ubuntu.com/22.04/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Ubuntu Sever 22.04 LTS&lt;/a&gt; as a OS for Guest VM. I have chosen Ubuntu Server 22.04 for the guest OS because for the moment of writing this article (02.06.2024) this is the latest release that is supported by proprietary AMD ROCM driver that is needed to run AI on the power of GPU.&lt;/p&gt;
+&lt;h3 id=&#34;update-the-os-packages&#34;&gt;Update the OS packages&lt;/h3&gt;
+&lt;p&gt;After installing the OS first thing you need to do is to update the system packages to the latest available versions.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt upgrade
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;install-needed-dependencies&#34;&gt;Install needed dependencies&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install -y git python3-pip python3-venv python3-dev libstdc++-12-dev libgl1-mesa-glx&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;install-amd-rocm-driver&#34;&gt;Install AMD ROCM driver&lt;/h3&gt;
+&lt;p&gt;I used official instructions from the &lt;a class=&#34;link&#34; href=&#34;https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AMD documentation&lt;/a&gt; to install the ROCM driver.&lt;/p&gt;
+&lt;p&gt;First, install headers and extras for the current kernel:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install -y &lt;span class=&#34;s2&#34;&gt;&amp;#34;linux-headers-&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;linux-modules-extra-&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then, ensure your current user is a part of &lt;code&gt;video&lt;/code&gt; and &lt;code&gt;render&lt;/code&gt; groups. To add the current user to the groups use command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod -a -G render,video &lt;span class=&#34;nv&#34;&gt;$LOGNAME&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Download installer deb package and install it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://repo.radeon.com/amdgpu-install/6.1.1/ubuntu/jammy/amdgpu-install_6.1.60101-1_all.deb
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dpkg -i amdgpu-install_6.1.60101-1_all.deb&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Install the DKMS module and rocm packages:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install amdgpu-dkms rocm&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, reboot the VM:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo reboot&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;install-automatic1111-software&#34;&gt;Install AUTOMATIC1111 software&lt;/h3&gt;
+&lt;p&gt;The most easy and convinient way is just to clone the official git repository. After cloning, navigate to the cloned directory.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; stable-diffusion-webui&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Setup Python virtual environment:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 -m venv venv
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; venv/bin/activate&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Install python dependencies needed by AUTOMATIC1111:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip3 install -r requirements.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Uninstall generic torch dependencies and replace them with ROCM:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip3 uninstall torch torchvision
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;create-custom-automatic1111-launch-script&#34;&gt;Create custom AUTOMATIC1111 launch script&lt;/h3&gt;
+&lt;p&gt;I will use nano to create a new file &lt;code&gt;nano launch.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; venv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HSA_OVERRIDE_GFX_VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;10.3.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HIP_VISIBLE_DEVICES&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;PYTORCH_HIP_ALLOC_CONF&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;garbage_collection_threshold:0.8,max_split_size_mb:512
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python3 launch.py --api --listen --enable-insecure-extension-access --opt-sdp-attention
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then save the file &lt;code&gt;Ctrl + O&lt;/code&gt; and exit nano &lt;code&gt;Ctrl + X&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;launch-automatic1111&#34;&gt;Launch AUTOMATIC1111&lt;/h3&gt;
+&lt;p&gt;Every time you need to launch AUTOMATIC1111 navigate to the cloned &lt;code&gt;stable-diffusion-webui&lt;/code&gt; directory and launch created &lt;code&gt;launch.sh&lt;/code&gt; script like in the following example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; stable-diffusion-webui
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bash launch.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As the result, you will see that AUTOMATIC1111 running successfully.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch.png&#34;
+	width=&#34;1047&#34;
+	height=&#34;395&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Running AUTOMATIC1111 instance.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;265&#34;
+		data-flex-basis=&#34;636px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Stable Diffusion is a powerful model for generating images from text descriptions, and AUTOMATIC1111 is a user-friendly interface that makes it easier to use Stable Diffusion&amp;rsquo;s capabilities effectively. Together, they enable a wide range of creative and practical applications in the realm of generative art and image synthesis. By leveraging a KVM-based virtual machine with AMD GPU passthrough, you can achieve a powerful, secure, and flexible environment for running AUTOMATIC1111 and harnessing the capabilities of Stable Diffusion efficiently.&lt;/p&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://releases.ubuntu.com/22.04/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Ubuntu Sever 22.04 LTS Jammy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AMD ROCM Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/AUTOMATIC1111/stable-diffusion-webui&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AUTOMATIC1111&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/ShiftHackZ/Stable-Diffusion-Android&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SDAI - Stable Diffusion Android client application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://gist.github.com/evshiron/8cf4de34aa01e217ce178b8ed54a2c43&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Custom stable-diffusion-webui launch script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

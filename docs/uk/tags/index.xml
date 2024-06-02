@@ -6,7 +6,79 @@
         <description>Recent content in Tags on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>AMD</title>
+        <link>https://blog.moroz.cc/uk/tags/amd/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/amd/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>AUTOMATIC1111</title>
+        <link>https://blog.moroz.cc/uk/tags/automatic1111/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/automatic1111/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>GPU</title>
+        <link>https://blog.moroz.cc/uk/tags/gpu/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/gpu/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>KVM</title>
+        <link>https://blog.moroz.cc/uk/tags/kvm/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/kvm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ROCM</title>
+        <link>https://blog.moroz.cc/uk/tags/rocm/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/rocm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Stable Diffusion</title>
+        <link>https://blog.moroz.cc/uk/tags/stable-diffusion/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/stable-diffusion/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ubuntu Server</title>
+        <link>https://blog.moroz.cc/uk/tags/ubuntu-server/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/ubuntu-server/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Virtio</title>
+        <link>https://blog.moroz.cc/uk/tags/virtio/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/virtio/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ШІ</title>
+        <link>https://blog.moroz.cc/uk/tags/%D1%88%D1%96/</link>
+        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/tags/%D1%88%D1%96/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>GPIO</title>
         <link>https://blog.moroz.cc/uk/tags/gpio/</link>
         <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
@@ -20,14 +92,6 @@
         <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/uk/tags/hdmi/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>KVM</title>
-        <link>https://blog.moroz.cc/uk/tags/kvm/</link>
-        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/uk/tags/kvm/</guid>
         <description></description>
         </item>
         <item>
@@ -124,14 +188,6 @@
         <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/uk/tags/amd-vi/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>GPU</title>
-        <link>https://blog.moroz.cc/uk/tags/gpu/</link>
-        <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/uk/tags/gpu/</guid>
         <description></description>
         </item>
         <item>

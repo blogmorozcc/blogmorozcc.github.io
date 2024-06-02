@@ -102,6 +102,20 @@
 &lt;li&gt;1 X HDMI male-male cable.&lt;/li&gt;
 &lt;li&gt;1 x 80mm FAN (for active cooling).&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_20240330_172625_917.jpg&#34;
+	width=&#34;2393&#34;
+	height=&#34;1639&#34;
+	srcset=&#34;http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_20240330_172625_917_huf09becead95e4936f5fbf6ace7e10919_547854_480x0_resize_q75_box.jpg 480w, http://localhost:1313/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/img/IMG_20240330_172625_917_huf09becead95e4936f5fbf6ace7e10919_547854_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Components for building PiKVM.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;350px&#34;
+	
+&gt;&lt;/p&gt;
 &lt;h3 id=&#34;building-cusom-power-cable&#34;&gt;Building cusom power cable&lt;/h3&gt;
 &lt;p&gt;To be able to operate the remote machinve wiht our DIY KVM device computer should be able to recognize our device as HID USB device that will be treated by the computer just like another keyboard or mouse (the computer keyboard and mouse are also HID device).&lt;/p&gt;
 &lt;p&gt;The problem with Raspberry Pi 4 Model B board - it has only one USB-C port that is able to act as a HID device and that port is also used to power the device. To fix this there is workaround that requires tou build a special cable that can simultanously act as USB Device for the target host and receive external power from the power adapter.&lt;/p&gt;
