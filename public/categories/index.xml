@@ -6,12 +6,20 @@
         <description>Recent content in Categories on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>AI</title>
-        <link>http://localhost:1313/categories/ai/</link>
+        <lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux</title>
+        <link>http://localhost:1313/categories/linux/</link>
+        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Artificial Intelligence</title>
+        <link>http://localhost:1313/categories/artificial-intelligence/</link>
         <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/ai/</guid>
+        <guid>http://localhost:1313/categories/artificial-intelligence/</guid>
         <description></description>
         </item>
         <item>
@@ -20,14 +28,6 @@
         <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/categories/hardware/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>http://localhost:1313/categories/linux/</link>
-        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/categories/linux/</guid>
         <description></description>
         </item>
         <item>

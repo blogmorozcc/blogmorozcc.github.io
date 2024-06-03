@@ -2,7 +2,6 @@
 title = "How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 + KVM + GPU Passthrough)"
 date = "2024-06-01"
 tags = [
-    "AI",
     "AUTOMATIC1111",
     "Stable Diffusion",
     "KVM",
@@ -15,7 +14,7 @@ tags = [
 categories = [
     "Linux",
     "Hardware",
-    "AI",
+    "Artificial Intelligence",
     "Virtualization",
 ]
 image = "header.png"
