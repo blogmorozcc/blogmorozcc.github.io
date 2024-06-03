@@ -2,7 +2,6 @@
 title = "Запуск Stable Diffusion у віртуальній машині на відеокарті AMD (AUTOMATIC1111 + KVM + GPU Passthrough)"
 date = "2024-06-01"
 tags = [
-    "ШІ",
     "AUTOMATIC1111",
     "Stable Diffusion",
     "KVM",
@@ -15,7 +14,7 @@ tags = [
 categories = [
     "Linux",
     "Обладнання",
-    "ШІ",
+    "Штучний Інтелект",
     "Віртуалізація",
 ]
 image = "header.png"
