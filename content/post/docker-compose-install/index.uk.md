@@ -136,7 +136,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 Перевірте встановлення, роздрукувавши версію Docker Compose:
 
 {{< highlight shell "linenos=false" >}}
-docker compose --version
+docker-compose --version
 {{< / highlight >}}
 
 Крім того, ви можете створити тестовий файл `docker-compose.yml` з декількома демонстраційними службами (наприклад, веб-сервер і база даних):

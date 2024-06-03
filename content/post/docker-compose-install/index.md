@@ -136,7 +136,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 Verify the installition by printing out Docker Compose version:
 
 {{< highlight shell "linenos=false" >}}
-docker compose --version
+docker-compose --version
 {{< / highlight >}}
 
 In addition, you can create a test `docker-compose.yml` file with a couple of demo services (for example web server and database):
