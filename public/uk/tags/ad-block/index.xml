@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Ad Block on Блог про IT</title>
+        <link>http://localhost:1313/uk/tags/ad-block/</link>
+        <description>Recent content in Ad Block on Блог про IT</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>uk</language>
+        <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/ad-block/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to deploy Pi-hole as a docker container in local network to block ads</title>
+        <link>http://localhost:1313/uk/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/</guid>
+        <description>&lt;img src="http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.png" alt="Featured image of post How to deploy Pi-hole as a docker container in local network to block ads" /&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

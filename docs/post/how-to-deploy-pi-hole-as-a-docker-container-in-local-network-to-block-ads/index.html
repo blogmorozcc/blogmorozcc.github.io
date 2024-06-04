@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.
+What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines.'><title>How to deploy Pi-hole as a docker container in local network to block ads</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/'>
+
+<link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='How to deploy Pi-hole as a docker container in local network to block ads'>
+<meta property='og:description' content='Introduction Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.
+What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines.'>
+<meta property='og:url' content='https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Docker' /><meta property='article:tag' content='Docker Compose' /><meta property='article:tag' content='Containerization' /><meta property='article:tag' content='Pi-hole' /><meta property='article:tag' content='DNS' /><meta property='article:tag' content='Homelab' /><meta property='article:tag' content='Ad block' /><meta property='article:published_time' content='2024-06-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-04T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.png' />
+<meta name="twitter:title" content="How to deploy Pi-hole as a docker container in local network to block ads">
+<meta name="twitter:description" content="Introduction Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.
+What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.png' />
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">by ShiftHackZ</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/projects/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
+</svg>
+
+
+
+                
+                <span>My projects</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" selected>English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/">
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu228a1f9ac33fe18663808d2fd8f88170_216388_800x0_resize_box_3.png"
+                        srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu228a1f9ac33fe18663808d2fd8f88170_216388_800x0_resize_box_3.png 800w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu228a1f9ac33fe18663808d2fd8f88170_216388_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post How to deploy Pi-hole as a docker container in local network to block ads" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/">How to deploy Pi-hole as a docker container in local network to block ads</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">04.06.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D0%BD%D1%83%D1%82%D0%B8-pi-hole-%D1%8F%D0%BA-%D0%B4%D0%BE%D0%BA%D0%B5%D1%80-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80-%D1%83-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%96%D0%B9-%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D1%96-%D0%B4%D0%BB%D1%8F-%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B8/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<p>Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.</p>
+<h3 id="what-is-pi-hole">What is Pi-hole?</h3>
+<p>Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines. It intercepts DNS requests from devices on your local network and filters out domains known to serve ads, tracking, and malicious content.</p>
+<h3 id="reasons-for-using-pi-hole">Reasons for using Pi-hole</h3>
+<ol>
+<li>
+<p>Network-wide Ad Blocking: Unlike browser-based ad blockers, Pi-hole blocks ads for every device on your network, including smartphones, tablets, smart TVs, and other IoT devices.</p>
+</li>
+<li>
+<p>Enhanced Privacy: By blocking trackers, Pi-hole helps to protect your privacy across all devices. It prevents your data from being sent to third-party tracking services.</p>
+</li>
+<li>
+<p>Improved Performance: Since ads and trackers are blocked before they are downloaded, pages can load faster, and there is reduced bandwidth usage.</p>
+</li>
+<li>
+<p>Centralized Management: Pi-hole offers a web-based interface where you can view statistics, add custom block or allow lists, and manage settings, making it easy to control and monitor ad blocking for the entire network.</p>
+</li>
+<li>
+<p>Device Compatibility: Pi-hole works with any device that uses your network&rsquo;s DNS, making it a versatile solution for ad blocking.</p>
+</li>
+</ol>
+<h3 id="can-pi-hole-block-ads">Can Pi-hole Block Ads?</h3>
+<p>Yes, Pi-hole can block ads effectively. It maintains a list of known ad-serving domains and blocks DNS requests to these domains. When a device on your network requests an ad domain, Pi-hole intercepts the request and prevents the ad content from being loaded. This results in fewer ads being displayed across all devices on the network, regardless of the application or browser being used.</p>
+<h3 id="pi-hole-features">Pi-hole features</h3>
+<ul>
+<li>
+<p>DNS Requests: Devices on your network send DNS requests to translate domain names (like example.com) into IP addresses.</p>
+</li>
+<li>
+<p>Filtering: Pi-hole compares these DNS requests against its blocklists. If the domain is known to serve ads or track users, Pi-hole blocks the request.</p>
+</li>
+<li>
+<p>Sinkholing: Blocked requests are redirected to a &ldquo;sinkhole,&rdquo; typically an IP address that does nothing, ensuring the ad or tracker is not loaded.</p>
+</li>
+<li>
+<p>Permitting: If the domain is not on the blocklist, Pi-hole forwards the request to an upstream DNS server (such as Google&rsquo;s DNS or your ISP&rsquo;s DNS) and returns the result to the requesting device.</p>
+</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="deploy-as-a-docker-container">Deploy as a docker container</h3>
+<p>Create a <code>docker-compose.yml</code> file with the following configuration:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pihole</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">pihole</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">pihole/pihole:latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;53:53/tcp&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;53:53/udp&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;8002:80/tcp&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Europe/Kiev&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">WEBPASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;pihole&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s1">&#39;./etc-pihole:/etc/pihole&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s1">&#39;./etc-dnsmasq.d:/etc/dnsmasq.d&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">unless-stopped</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Explanation of important configuration parameters:</p>
+<ul>
+<li><code>53:53/tcp</code> and <code>53:53/udp</code>: Binding both TCP and UDP 53 port of container to the same 53 port of host.</li>
+<li><code>8002:80/tcp</code>: Binding 80 port of container to 8002 port of host, as the result web intarface will be available at 8002 port.</li>
+<li><code>TZ: 'Europe/Kiev'</code>: Setting correct timezone (your timezone might be different).</li>
+<li><code>WEBPASSWORD: 'pihole'</code>: Setting a password for admin interface.</li>
+<li><code>volumes</code> section: Binding configuration folders from container to local folders so they persist in case container gets updated, etc.</li>
+</ul>
+<p>After saving the file, start the container:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker compose up -d</span></span></code></pre></div>
+<h3 id="check-the-admin-interface">Check the admin interface</h3>
+<p>Then use the host IP of your server in the local network, and navigate to url with the port in your browser, (I am using url <code>http://192.168.0.37:8002/admin</code> in this example). You should see the pihole login page:</p>
+<p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302.png"
+	width="1324"
+	height="884"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Pi-hole authentication web page."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="149"
+		data-flex-basis="359px"
+	
+></p>
+<p>Enter the password defined in config earlier, then you should be able to log in:</p>
+<p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446.png"
+	width="1324"
+	height="884"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Pi-hole admin interface."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="149"
+		data-flex-basis="359px"
+	
+></p>
+<h3 id="ensure-port-53-is-bound">Ensure port 53 is bound</h3>
+<p>It is recommended to check if port 53 is listened by your server host machine. To check it ssh into your server and run command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo netstat -tuwpan <span class="p">|</span> grep <span class="m">53</span></span></span></code></pre></div>
+<p>If port is listening, you should see output like this:</p>
+<p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820.png"
+	width="980"
+	height="307"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Correctly listened tcp/udp port 53 on host server."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="319"
+		data-flex-basis="766px"
+	
+></p>
+<h3 id="define-your-pi-hole-dns-server-as-primary-in-your-router">Define your Pi-hole DNS server as primary in your router</h3>
+<p>To actually make use of your Pi-hole service for all the devices in the local network you should set you Pi-hole sever as a primary DNS server in the router settings. Use IP address of your host server (in my case 192.168.0.37) in the router setting. This procedure is different for every router, so I just show the result here:</p>
+<p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254.png"
+	width="1324"
+	height="884"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="DNS Settings"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="149"
+		data-flex-basis="359px"
+	
+></p>
+<p>After that you should see some queries in Pi-hole admin interface:</p>
+<p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540.png"
+	width="1324"
+	height="884"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Pi-hole queries"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="149"
+		data-flex-basis="359px"
+	
+></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Pi-hole is a powerful tool for network-wide ad blocking, offering enhanced privacy, improved performance, and centralized control over DNS filtering. It is recommended for anyone looking to reduce ads and trackers across all devices in their home or small office network.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/docker/">Docker</a>
+        
+            <a href="/tags/docker-compose/">Docker Compose</a>
+        
+            <a href="/tags/containerization/">Containerization</a>
+        
+            <a href="/tags/pi-hole/">Pi-Hole</a>
+        
+            <a href="/tags/dns/">DNS</a>
+        
+            <a href="/tags/homelab/">Homelab</a>
+        
+            <a href="/tags/ad-block/">Ad Block</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/what-is-docker-and-docker-compose-and-how-to-install-and-use-it-on-debian/">
+        
+        
+            <div class="article-image">
+                <img src="/post/what-is-docker-and-docker-compose-and-how-to-install-and-use-it-on-debian/header.7288771413f2882dc424a80a992e84bd_hub514da7001493284666285be454a18d2_432280_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post What is Docker and Docker Compose and how to install and use it on Debian"
+                        
+                        data-hash="md5-coh3FBPyiC3EJKgKmS6EvQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">What is Docker and Docker Compose and how to install and use it on Debian</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.7c20b2784b6bda086e9624c99b0ff5a9_hu3aafa9004173c931941da8e2c440d12d_732838_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)"
+                        
+                        data-hash="md5-fCCyeEtr2ghuliTJmw/1qQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/">
+        
+        
+            <div class="article-image">
+                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Install Linux ZEN kernel on Arch Linux to improve performance"
+                        
+                        data-hash="md5-BqK8KTdn5Umktk9wdFss&#43;g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Install Linux ZEN kernel on Arch Linux to improve performance</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post GPU PCI passthrough to Windows KVM on Arch Linux"
+                        
+                        data-hash="md5-TLyVJ9Na7g2IhRyLNMTSGA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GPU PCI passthrough to Windows KVM on Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-install-kvm-on-arch-linux/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to install KVM on Arch Linux"
+                        
+                        data-hash="md5-ILUOqaoOmtAx5tzmlcw7eQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to install KVM on Arch Linux</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | ShiftHackZ
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a>
+      <ol>
+        <li><a href="#what-is-pi-hole">What is Pi-hole?</a></li>
+        <li><a href="#reasons-for-using-pi-hole">Reasons for using Pi-hole</a></li>
+        <li><a href="#can-pi-hole-block-ads">Can Pi-hole Block Ads?</a></li>
+        <li><a href="#pi-hole-features">Pi-hole features</a></li>
+      </ol>
+    </li>
+    <li><a href="#installation">Installation</a>
+      <ol>
+        <li><a href="#deploy-as-a-docker-container">Deploy as a docker container</a></li>
+        <li><a href="#check-the-admin-interface">Check the admin interface</a></li>
+        <li><a href="#ensure-port-53-is-bound">Ensure port 53 is bound</a></li>
+        <li><a href="#define-your-pi-hole-dns-server-as-primary-in-your-router">Define your Pi-hole DNS server as primary in your router</a></li>
+      </ol>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
