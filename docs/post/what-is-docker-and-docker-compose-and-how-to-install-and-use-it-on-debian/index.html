@@ -440,6 +440,10 @@ Docker is a platform that uses containerization to deploy, manage, and run appli
 </div>
 </div><p>And then to start it use the command:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker compose up</span></span></code></pre></div>
+<h2 id="extras">Extras</h2>
+<p>If you want to run docker or docker compose commands without sudo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo usermod -a -G docker <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl">newgrp docker</span></span></code></pre></div>
 <h2 id="conclusion">Conclusion</h2>
 <p>This example illustrates how to install Docker and Docker Compose on Debian system to complement each other in developing, deploying, and managing applications efficiently.</p>
 
@@ -781,6 +785,7 @@ Docker is a platform that uses containerization to deploy, manage, and run appli
     </li>
     <li><a href="#docker-installation">Docker installation</a></li>
     <li><a href="#docker-compose-installation">Docker Compose installation</a></li>
+    <li><a href="#extras">Extras</a></li>
     <li><a href="#conclusion">Conclusion</a></li>
   </ol>
 </nav>

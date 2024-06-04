@@ -160,6 +160,15 @@ And then to start it use the command:
 docker compose up
 {{< / highlight >}}
 
+## Extras
+
+If you want to run docker or docker compose commands without sudo:
+
+{{< highlight shell "linenos=false" >}}
+sudo usermod -a -G docker $USER
+newgrp docker
+{{< / highlight >}}
+
 ## Conclusion
 
 This example illustrates how to install Docker and Docker Compose on Debian system to complement each other in developing, deploying, and managing applications efficiently.

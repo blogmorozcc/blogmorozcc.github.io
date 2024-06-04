@@ -440,6 +440,10 @@ Docker — це платформа, яка використовує контей
 </div>
 </div><p>А потім, щоб запустити його, використовуйте команду:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker compose up</span></span></code></pre></div>
+<h2 id="додатково">Додатково</h2>
+<p>Якщо ви хочете запускати docker чи docker compose команди без sudo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo usermod -a -G docker <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl">newgrp docker</span></span></code></pre></div>
 <h2 id="висновок">Висновок</h2>
 <p>У цьому прикладі показано, як інсталювати Docker і Docker Compose у системі Debian, щоб вони доповнювали один одного під час розробки, розгортання та ефективного керування програмами.</p>
 
@@ -781,6 +785,7 @@ Docker — це платформа, яка використовує контей
     </li>
     <li><a href="#встановлення-docker">Встановлення Docker</a></li>
     <li><a href="#встановлення-docker-compose">Встановлення Docker Compose</a></li>
+    <li><a href="#додатково">Додатково</a></li>
     <li><a href="#висновок">Висновок</a></li>
   </ol>
 </nav>

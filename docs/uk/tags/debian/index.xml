@@ -116,6 +116,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;А потім, щоб запустити його, використовуйте команду:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose up&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;додатково&#34;&gt;Додатково&lt;/h2&gt;
+&lt;p&gt;Якщо ви хочете запускати docker чи docker compose команди без sudo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod -a -G docker &lt;span class=&#34;nv&#34;&gt;$USER&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;newgrp docker&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&#34;висновок&#34;&gt;Висновок&lt;/h2&gt;
 &lt;p&gt;У цьому прикладі показано, як інсталювати Docker і Docker Compose у системі Debian, щоб вони доповнювали один одного під час розробки, розгортання та ефективного керування програмами.&lt;/p&gt;
 </description>
