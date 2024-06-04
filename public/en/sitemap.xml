@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -15,8 +15,11 @@
                 href="http://localhost:1313/"
                 />
   </url><url>
+    <loc>http://localhost:1313/tags/ad-block/</loc>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -29,23 +32,13 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/containerization/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/debian/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/debian/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/debian/"
-                />
+    <loc>http://localhost:1313/tags/dns/</loc>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/docker/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -58,7 +51,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/docker-compose/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -70,8 +63,14 @@
                 href="http://localhost:1313/tags/docker-compose/"
                 />
   </url><url>
+    <loc>http://localhost:1313/tags/homelab/</loc>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/</loc>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/categories/linux/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -83,8 +82,11 @@
                 href="http://localhost:1313/categories/linux/"
                 />
   </url><url>
+    <loc>http://localhost:1313/tags/pi-hole/</loc>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -97,7 +99,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -107,6 +109,19 @@
                 rel="alternate"
                 hreflang="en"
                 href="http://localhost:1313/tags/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/debian/</loc>
+    <lastmod>2024-06-03T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/debian/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/debian/"
                 />
   </url><url>
     <loc>http://localhost:1313/post/what-is-docker-and-docker-compose-and-how-to-install-and-use-it-on-debian/</loc>

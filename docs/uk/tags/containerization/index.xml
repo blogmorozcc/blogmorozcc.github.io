@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Containerization on Блог про IT</title>
+        <link>https://blog.moroz.cc/uk/tags/containerization/</link>
+        <description>Recent content in Containerization on Блог про IT</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>uk</language>
+        <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/containerization/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Як розгорнути Pi-hole як докер-контейнер у локальній мережі для блокування реклами</title>
+        <link>https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D0%BD%D1%83%D1%82%D0%B8-pi-hole-%D1%8F%D0%BA-%D0%B4%D0%BE%D0%BA%D0%B5%D1%80-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80-%D1%83-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%96%D0%B9-%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D1%96-%D0%B4%D0%BB%D1%8F-%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B8/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/uk/post/%D1%8F%D0%BA-%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D0%BD%D1%83%D1%82%D0%B8-pi-hole-%D1%8F%D0%BA-%D0%B4%D0%BE%D0%BA%D0%B5%D1%80-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80-%D1%83-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%96%D0%B9-%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D1%96-%D0%B4%D0%BB%D1%8F-%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B8/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.png" alt="Featured image of post Як розгорнути Pi-hole як докер-контейнер у локальній мережі для блокування реклами" /&gt;&lt;h2 id=&#34;вступ&#34;&gt;Вступ&lt;/h2&gt;
+&lt;p&gt;Pi-hole — це загальномережеве блокування реклами, яке діє як воронка DNS. Він призначений для блокування реклами та трекерів на рівні мережі, тобто будь-який пристрій, підключений до вашої мережі, може використовувати його без додаткового програмного забезпечення.&lt;/p&gt;
+&lt;h3 id=&#34;що-таке-pi-hole&#34;&gt;Що таке Pi-hole?&lt;/h3&gt;
+&lt;p&gt;Pi-hole — це проект програмного забезпечення з відкритим вихідним кодом, який виконує функцію DNS (системи доменних імен) sinkhole. Зазвичай він працює на пристрої з низьким енергоспоживанням, як-от Raspberry Pi, але також може бути встановлений на іншому апаратному забезпеченні або на віртуальних машинах. Він перехоплює запити DNS від пристроїв у вашій локальній мережі та фільтрує домени, які, як відомо, показують рекламу, відстежують і зловмисний вміст.&lt;/p&gt;
+&lt;h3 id=&#34;причини-для-використання-pi-hole&#34;&gt;Причини для використання Pi-hole&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Блокування реклами в усій мережі: на відміну від блокувальників реклами в браузері, Pi-hole блокує рекламу на кожному пристрої у вашій мережі, включаючи смартфони, планшети, смарт-телевізори та інші пристрої IoT.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Покращена конфіденційність: блокуючи трекери, Pi-hole допомагає захистити вашу конфіденційність на всіх пристроях. Це запобігає надсиланню ваших даних до сторонніх служб відстеження.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Покращена продуктивність: оскільки реклама та засоби відстеження блокуються до їх завантаження, сторінки можуть завантажуватися швидше, а використання пропускної спроможності зменшується.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Централізоване керування: Pi-hole пропонує веб-інтерфейс, де можна переглядати статистику, додавати власні списки блокувань або дозволів і керувати налаштуваннями, що полегшує контроль і моніторинг блокування реклами для всієї мережі.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Сумісність пристроїв: Pi-hole працює з будь-яким пристроєм, який використовує DNS вашої мережі, що робить його універсальним рішенням для блокування реклами.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;чи-може-pi-hole-блокувати-рекламу&#34;&gt;Чи може Pi-hole блокувати рекламу?&lt;/h3&gt;
+&lt;p&gt;Так, Pi-hole може ефективно блокувати рекламу. Він підтримує список відомих доменів розміщення реклами та блокує запити DNS до цих доменів. Коли пристрій у вашій мережі запитує рекламний домен, Pi-hole перехоплює запит і запобігає завантаженню рекламного вмісту. Це призводить до того, що на всіх пристроях у мережі відображається менше реклами, незалежно від використовуваної програми чи браузера.&lt;/p&gt;
+&lt;h3 id=&#34;як-функціонує-pi-hole&#34;&gt;Як функціонує Pi-hole&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;DNS-запити: пристрої у вашій мережі надсилають DNS-запити для перекладу доменних імен (наприклад, example.com) на IP-адреси.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Фільтрування: Pi-hole порівнює ці DNS-запити зі своїми списками блокування. Якщо відомо, що домен показує рекламу або відстежує користувачів, Pi-hole блокує запит.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sinkholing: заблоковані запити перенаправляються на &amp;ldquo;sinkhole&amp;rdquo;, як правило, на IP-адресу, яка нічого не робить, гарантуючи, що оголошення або трекер не завантажується.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Дозвіл: якщо домену немає в списку блокувань, Pi-hole пересилає запит на DNS-сервер вище за течією (наприклад, DNS Google або DNS вашого провайдера) і повертає результат на пристрій, який запитує.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;встановлення&#34;&gt;Встановлення&lt;/h2&gt;
+&lt;h3 id=&#34;розгортання-docker-контейнера&#34;&gt;Розгортання docker контейнера&lt;/h3&gt;
+&lt;p&gt;Створіть файл &lt;code&gt;docker-compose.yml&lt;/code&gt; із такою конфігурацією:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;pihole&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;container_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;pihole&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;pihole/pihole:latest&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;s2&#34;&gt;&amp;#34;53:53/tcp&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;s2&#34;&gt;&amp;#34;53:53/udp&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;s2&#34;&gt;&amp;#34;8002:80/tcp&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;TZ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Europe/Kiev&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;WEBPASSWORD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;pihole&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;volumes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;s1&#34;&gt;&amp;#39;./etc-pihole:/etc/pihole&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;s1&#34;&gt;&amp;#39;./etc-dnsmasq.d:/etc/dnsmasq.d&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;restart&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;unless-stopped&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Пояснення важливих параметрів конфігурації:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;53:53/tcp&lt;/code&gt; і &lt;code&gt;53:53/udp&lt;/code&gt;: прив’язка портів 53 TCP і UDP контейнера до портів 53 хоста.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;8002:80/tcp&lt;/code&gt;: прив’язка порту 80 контейнера до порту 8002 хосту, в результаті веб-інтерфейс буде доступним на порту 8002.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TZ: &#39;Європа/Київ&#39;&lt;/code&gt;: встановлення правильного часового поясу (ваш часовий пояс може бути іншим).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;WEBPASSWORD: &#39;pihole&#39;&lt;/code&gt;: встановлення пароля для інтерфейсу адміністратора.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;volumes&lt;/code&gt;: прив’язка папок конфігурації з контейнера до локальних папок, щоб вони зберігалися у випадку оновлення контейнера тощо.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Після збереження файлу запустіть контейнер:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose up -d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;перевірте-інтерфейс-адміністратора&#34;&gt;Перевірте інтерфейс адміністратора&lt;/h3&gt;
+&lt;p&gt;Потім скористайтеся IP-адресою хоста вашого сервера в локальній мережі та перейдіть до URL-адреси з портом у вашому браузері (у цьому прикладі я використовую URL-адресу &lt;code&gt;http://192.168.0.37:8002/admin&lt;/code&gt;). Ви повинні побачити сторінку входу в pihole:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302.png&#34;
+	width=&#34;1324&#34;
+	height=&#34;884&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pi-hole веб-сторінка авторизації.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;149&#34;
+		data-flex-basis=&#34;359px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Введіть пароль, визначений у конфігурації раніше, тоді ви зможете увійти:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446.png&#34;
+	width=&#34;1324&#34;
+	height=&#34;884&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pi-hole веб-інтерфейс адміністрування.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;149&#34;
+		data-flex-basis=&#34;359px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;переконайтеся-що-порт-53-привязаний&#34;&gt;Переконайтеся, що порт 53 прив’язаний&lt;/h3&gt;
+&lt;p&gt;Рекомендується перевірити, чи порт 53 прослуховується на стороні хост-машини вашого сервера. Щоб перевірити це, підключіться через ssh до консолі на вашому сервері та запустіть команду:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo netstat -tuwpan &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;m&#34;&gt;53&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Якщо порт прослуховується, ви повинні побачити такий вивід:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820.png&#34;
+	width=&#34;980&#34;
+	height=&#34;307&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Біндінг порта 53 tcp/udp на хост-сервері.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;319&#34;
+		data-flex-basis=&#34;766px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;визначте-свій-dns-сервер-pi-hole-як-основний-у-своєму-маршрутизаторі&#34;&gt;Визначте свій DNS-сервер Pi-hole як основний у своєму маршрутизаторі&lt;/h3&gt;
+&lt;p&gt;Щоб фактично використовувати службу Pi-hole для всіх пристроїв у локальній мережі, вам слід встановити сервер Pi-hole як основний сервер DNS у налаштуваннях маршрутизатора. Використовуйте IP-адресу вашого хост-сервера (у моєму випадку 192.168.0.37) у налаштуваннях маршрутизатора. Ця процедура відрізняється для кожного маршрутизатора, тому я просто покажу результат тут:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254.png&#34;
+	width=&#34;1324&#34;
+	height=&#34;884&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;DNS Налаштування&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;149&#34;
+		data-flex-basis=&#34;359px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Після цього ви повинні побачити деякі запити в інтерфейсі адміністратора Pi-hole:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540.png&#34;
+	width=&#34;1324&#34;
+	height=&#34;884&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pi-hole запити&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;149&#34;
+		data-flex-basis=&#34;359px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;висновок&#34;&gt;Висновок&lt;/h2&gt;
+&lt;p&gt;Pi-hole — це потужний інструмент для блокування реклами в усій мережі, що пропонує підвищену конфіденційність, покращену продуктивність і централізований контроль над фільтрацією DNS. Рекомендовано всім, хто хоче зменшити рекламу та трекери на всіх пристроях у своїй домашній чи невеликій офісній мережі.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
