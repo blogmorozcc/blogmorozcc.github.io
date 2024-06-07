@@ -12,6 +12,8 @@ tags = [
 ]
 categories = [
     "Linux",
+    "Networking",
+    "Cybersecurity",
 ]
 image = "header.png"
 +++

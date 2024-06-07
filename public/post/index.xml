@@ -6,7 +6,16 @@
         <description>Recent content in Posts on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Easy deploy OpenVPN service on any Linux server using custom script</title>
+        <link>http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</guid>
+        <description>&lt;img src="http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png" alt="Featured image of post Easy deploy OpenVPN service on any Linux server using custom script" /&gt;&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
+</description>
+        </item>
+        <item>
         <title>How to deploy Pi-hole as a docker container in local network to block ads</title>
         <link>http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/</link>
         <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>

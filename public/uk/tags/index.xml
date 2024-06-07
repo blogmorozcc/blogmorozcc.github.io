@@ -6,18 +6,26 @@
         <description>Recent content in Tags on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Debian</title>
-        <link>http://localhost:1313/uk/tags/debian/</link>
-        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
+        <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Containerization</title>
+        <link>http://localhost:1313/uk/tags/containerization/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/uk/tags/debian/</guid>
+        <guid>http://localhost:1313/uk/tags/containerization/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>DNS</title>
+        <link>http://localhost:1313/uk/tags/dns/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/dns/</guid>
         <description></description>
         </item>
         <item>
         <title>Docker</title>
         <link>http://localhost:1313/uk/tags/docker/</link>
-        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/uk/tags/docker/</guid>
         <description></description>
@@ -25,9 +33,41 @@
         <item>
         <title>Docker Compose</title>
         <link>http://localhost:1313/uk/tags/docker-compose/</link>
-        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/uk/tags/docker-compose/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Homelab</title>
+        <link>http://localhost:1313/uk/tags/homelab/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/homelab/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Pi-Hole</title>
+        <link>http://localhost:1313/uk/tags/pi-hole/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/pi-hole/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Блокування Реклами</title>
+        <link>http://localhost:1313/uk/tags/%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B8/</link>
+        <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B8/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Debian</title>
+        <link>http://localhost:1313/uk/tags/debian/</link>
+        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/debian/</guid>
         <description></description>
         </item>
         <item>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>OpenVPN on The IT Blog</title>
+        <link>https://blog.moroz.cc/tags/openvpn/</link>
+        <description>Recent content in OpenVPN on The IT Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/openvpn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Easy deploy OpenVPN service on any Linux server using custom script</title>
+        <link>https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png" alt="Featured image of post Easy deploy OpenVPN service on any Linux server using custom script" /&gt;&lt;h2 id=&#34;openvpn-overview&#34;&gt;OpenVPN overview&lt;/h2&gt;
+&lt;p&gt;OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.&lt;/p&gt;
+&lt;h3 id=&#34;key-features-of-openvpn-server&#34;&gt;Key Features of OpenVPN Server&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Encryption and Security:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN uses robust encryption methods to secure data transmission. It supports various encryption algorithms such as AES (Advanced Encryption Standard), which is widely trusted for its security.&lt;/li&gt;
+&lt;li&gt;It uses SSL/TLS for key exchange, ensuring that even if the connection is intercepted, the data cannot be easily decrypted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Cross-Platform Compatibility:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN is compatible with multiple operating systems, including Windows, Linux, macOS, iOS, and Android. This makes it a versatile choice for a wide range of devices.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Authentication:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;It supports multiple authentication methods, including username/password, certificate-based, and multi-factor authentication (MFA). This flexibility allows for enhanced security tailored to different use cases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Configurability and Flexibility:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN can be configured to run on any port, using either TCP or UDP, which helps it avoid network restrictions and makes it easier to penetrate firewalls.&lt;/li&gt;
+&lt;li&gt;It supports both site-to-site VPNs, which connect entire networks, and client-to-server VPNs, which connect individual devices to a network.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Scalability:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN can be scaled to support a large number of users and complex network configurations, making it suitable for both small businesses and large enterprises.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Open Source:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Being open-source means that the software&amp;rsquo;s code is publicly available for review, making it more transparent and allowing the community to contribute to its security and development.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;Support for Various Network Topologies:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;It can be used in routed or bridged configurations and can create secure connections over NAT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;8&#34;&gt;
+&lt;li&gt;Bypass Restrictions:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN is effective at bypassing network restrictions, making it a popular choice for users in regions with heavy internet censorship.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;advantages-and-disadvantages&#34;&gt;Advantages and Disadvantages&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;High security with strong encryption and various authentication options.&lt;/li&gt;
+&lt;li&gt;Flexibility in configuration and adaptability to different network environments.&lt;/li&gt;
+&lt;li&gt;Compatibility with multiple operating systems and devices.&lt;/li&gt;
+&lt;li&gt;Being open-source ensures transparency and community-driven improvements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Disadvantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Initial setup and configuration can be complex, especially for users without networking experience.&lt;/li&gt;
+&lt;li&gt;Performance can be impacted by factors such as server load and network latency.&lt;/li&gt;
+&lt;li&gt;Requires maintenance and updates to ensure ongoing security and functionality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;h3 id=&#34;obtain-install-script&#34;&gt;Obtain install script&lt;/h3&gt;
+&lt;p&gt;The easiest way to install OpenVPN service on any Linux OS is using custom &lt;a class=&#34;link&#34; href=&#34;https://github.com/angristan/openvpn-install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;openvpn-install script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;First, login to your remote server using SSH, then download a script and make it executable:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo chmod +x openvpn-install.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;deploy-openvpn-service&#34;&gt;Deploy OpenVPN service&lt;/h3&gt;
+&lt;p&gt;Run the installation script, also make sure running it with root privileges:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ./openvpn-install.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The script is interactive, and next install steps require you just answering the questions, or leaving the default answer.&lt;/p&gt;
+&lt;h4 id=&#34;define-listen-address&#34;&gt;Define listen address&lt;/h4&gt;
+&lt;p&gt;It is a LAN network address that OpenVPN service will bind and listen.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722.png&#34;
+	width=&#34;980&#34;
+	height=&#34;208&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;471&#34;
+		data-flex-basis=&#34;1130px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;define-public-ip-address&#34;&gt;Define public IP address&lt;/h4&gt;
+&lt;p&gt;It is a public internet IP address of your server. The script assuming you have static global IP.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828.png&#34;
+	width=&#34;978&#34;
+	height=&#34;94&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1040&#34;
+		data-flex-basis=&#34;2497px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;set-up-ipv6-support&#34;&gt;Set up IPv6 support&lt;/h4&gt;
+&lt;p&gt;As I don&amp;rsquo;t have IPv6 support neither in my LAN, nor my internet provider supprots it, I will just disable IPv6.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037.png&#34;
+	width=&#34;980&#34;
+	height=&#34;126&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;777&#34;
+		data-flex-basis=&#34;1866px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;define-listen-port&#34;&gt;Define listen port&lt;/h4&gt;
+&lt;p&gt;You can choose any port that OpenVPN service will bind and listen incoming connections.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121.png&#34;
+	width=&#34;980&#34;
+	height=&#34;127&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;771&#34;
+		data-flex-basis=&#34;1851px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;define-protocol&#34;&gt;Define protocol&lt;/h4&gt;
+&lt;p&gt;It is recommended to use UDP unless you need TCP for some specific configurations or due to limitations on your server networking stack.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216.png&#34;
+	width=&#34;978&#34;
+	height=&#34;124&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;788&#34;
+		data-flex-basis=&#34;1892px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;choose-primary-dns-serveer&#34;&gt;Choose primary DNS serveer&lt;/h4&gt;
+&lt;p&gt;Here you can choose any public known DNS resolver, or even define your custom DNS server. I recomment using OpenDNS resolver.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303.png&#34;
+	width=&#34;980&#34;
+	height=&#34;336&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;291&#34;
+		data-flex-basis=&#34;700px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;disable-compression&#34;&gt;Disable compression&lt;/h4&gt;
+&lt;p&gt;It is highly recommended not to use compression due to known security limitations.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414.png&#34;
+	width=&#34;980&#34;
+	height=&#34;60&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1633&#34;
+		data-flex-basis=&#34;3920px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;customize-encryption-settings&#34;&gt;Customize encryption settings&lt;/h4&gt;
+&lt;p&gt;At this step you can customize encryption settings if you need some specific tweaks, but is&amp;rsquo;s also fine to use pre-defined configuration.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504.png&#34;
+	width=&#34;980&#34;
+	height=&#34;183&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;535&#34;
+		data-flex-basis=&#34;1285px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;verify-parameters&#34;&gt;Verify parameters&lt;/h4&gt;
+&lt;p&gt;After you defined all the parameters, you can scroll your terminal and verify your answers to the wizard. If everything is ok, just press any button to continue installation.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600.png&#34;
+	width=&#34;978&#34;
+	height=&#34;80&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1222&#34;
+		data-flex-basis=&#34;2934px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;setup-first-client&#34;&gt;Setup first client&lt;/h4&gt;
+&lt;p&gt;It is required step to create at least one client configuration.&lt;/p&gt;
+&lt;p&gt;First, define the client name:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317.png&#34;
+	width=&#34;978&#34;
+	height=&#34;83&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1178&#34;
+		data-flex-basis=&#34;2827px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next, you have an option to protect *.ovpn configuration with password:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352.png&#34;
+	width=&#34;980&#34;
+	height=&#34;123&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;796&#34;
+		data-flex-basis=&#34;1912px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;download-client-configuration&#34;&gt;Download client configuration&lt;/h3&gt;
+&lt;p&gt;The most secure way is to use SFTP connection to your filesystem server, you can use a single command in local terminal to download it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;scp shifthackz@192.168.0.37:/home/shifthackz/pixel7pro.ovpn ~&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Where you should replace with your values:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;shifthackz@192.168.0.37&lt;/code&gt;: here define your server user and IP address.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home/shifthackz/pixel7pro.ovpn&lt;/code&gt;: this is a path of file on REMOTE server.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~&lt;/code&gt;: this is a destination download folder path on LOCAL computer (in my case ~ is current user home directory).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then transfer this file to the device that you want to use as client to connect to your openvpn server.&lt;/p&gt;
+&lt;h3 id=&#34;test-client-connection&#34;&gt;Test client connection&lt;/h3&gt;
+&lt;p&gt;In this example I will connect to my VPN network using Android phone. First, transfer downloaded *.ovpn file to your phone, and import it.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1.png&#34;
+	width=&#34;436&#34;
+	height=&#34;875&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Add new OpenVPN profile.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;49&#34;
+		data-flex-basis=&#34;119px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2.png&#34;
+	width=&#34;436&#34;
+	height=&#34;873&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Confirm import.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;49&#34;
+		data-flex-basis=&#34;119px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3.png&#34;
+	width=&#34;436&#34;
+	height=&#34;875&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Verify connection to OpenVPN server.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;49&#34;
+		data-flex-basis=&#34;119px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;After that try to open some website in browser and verify that internet connection works. In addition try to check your IP address on some public IP checker websites, you should have public IP address of OpenVPN server. Also you should be able to access some local device in the same LAN as OpenVPN sever.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Overall, OpenVPN server is a powerful tool for creating secure, flexible, and reliable VPN connections, making it a popular choice for both individuals and organizations looking to protect their data and network communications.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
