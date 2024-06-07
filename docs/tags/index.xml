@@ -6,7 +6,39 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Automation</title>
+        <link>https://blog.moroz.cc/tags/automation/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/automation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Debian</title>
+        <link>https://blog.moroz.cc/tags/debian/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/debian/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>OpenVPN</title>
+        <link>https://blog.moroz.cc/tags/openvpn/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/openvpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPN</title>
+        <link>https://blog.moroz.cc/tags/vpn/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Ad Block</title>
         <link>https://blog.moroz.cc/tags/ad-block/</link>
         <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
@@ -60,14 +92,6 @@
         <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/pi-hole/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Debian</title>
-        <link>https://blog.moroz.cc/tags/debian/</link>
-        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/debian/</guid>
         <description></description>
         </item>
         <item>
@@ -207,11 +231,11 @@
         <description></description>
         </item>
         <item>
-        <title>VPN</title>
-        <link>https://blog.moroz.cc/tags/vpn/</link>
-        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+        <title>Arch</title>
+        <link>https://blog.moroz.cc/tags/arch/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.moroz.cc/tags/vpn/</guid>
+        <guid>https://blog.moroz.cc/tags/arch/</guid>
         <description></description>
         </item>
         <item>
@@ -308,14 +332,6 @@
         <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/ssh/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Arch</title>
-        <link>https://blog.moroz.cc/tags/arch/</link>
-        <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/arch/</guid>
         <description></description>
         </item>
         <item>

@@ -2,6 +2,7 @@
 title = "Install Linux ZEN kernel on Arch Linux to improve performance"
 date = "2024-03-25"
 tags = [
+    "Arch",
     "Linux",
     "Kernel",
     "Zen",

@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='OpenVPN overview OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.
+Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission.'><title>Easy deploy OpenVPN service on any Linux server using custom script</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/'>
+
+<link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Easy deploy OpenVPN service on any Linux server using custom script'>
+<meta property='og:description' content='OpenVPN overview OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.
+Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission.'>
+<meta property='og:url' content='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Debian' /><meta property='article:tag' content='VPN' /><meta property='article:tag' content='OpenVPN' /><meta property='article:tag' content='Automation' /><meta property='article:published_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png' />
+<meta name="twitter:title" content="Easy deploy OpenVPN service on any Linux server using custom script">
+<meta name="twitter:description" content="OpenVPN overview OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.
+Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png' />
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">by ShiftHackZ</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/projects/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
+</svg>
+
+
+
+                
+                <span>My projects</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" selected>English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/">
+                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_huae4787578a5876ddb42874325345f68a_470994_800x0_resize_box_3.png"
+                        srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_huae4787578a5876ddb42874325345f68a_470994_800x0_resize_box_3.png 800w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_huae4787578a5876ddb42874325345f68a_470994_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="400" 
+                        loading="lazy"
+                        alt="Featured image of post Easy deploy OpenVPN service on any Linux server using custom script" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/categories/networking/" >
+                Networking
+            </a>
+        
+            <a href="/categories/cybersecurity/" >
+                Cybersecurity
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/">Easy deploy OpenVPN service on any Linux server using custom script</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">07.06.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="openvpn-overview">OpenVPN overview</h2>
+<p>OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.</p>
+<h3 id="key-features-of-openvpn-server">Key Features of OpenVPN Server</h3>
+<ol>
+<li>Encryption and Security:</li>
+</ol>
+<ul>
+<li>OpenVPN uses robust encryption methods to secure data transmission. It supports various encryption algorithms such as AES (Advanced Encryption Standard), which is widely trusted for its security.</li>
+<li>It uses SSL/TLS for key exchange, ensuring that even if the connection is intercepted, the data cannot be easily decrypted.</li>
+</ul>
+<ol start="2">
+<li>Cross-Platform Compatibility:</li>
+</ol>
+<ul>
+<li>OpenVPN is compatible with multiple operating systems, including Windows, Linux, macOS, iOS, and Android. This makes it a versatile choice for a wide range of devices.</li>
+</ul>
+<ol start="3">
+<li>Authentication:</li>
+</ol>
+<ul>
+<li>It supports multiple authentication methods, including username/password, certificate-based, and multi-factor authentication (MFA). This flexibility allows for enhanced security tailored to different use cases.</li>
+</ul>
+<ol start="4">
+<li>Configurability and Flexibility:</li>
+</ol>
+<ul>
+<li>OpenVPN can be configured to run on any port, using either TCP or UDP, which helps it avoid network restrictions and makes it easier to penetrate firewalls.</li>
+<li>It supports both site-to-site VPNs, which connect entire networks, and client-to-server VPNs, which connect individual devices to a network.</li>
+</ul>
+<ol start="5">
+<li>Scalability:</li>
+</ol>
+<ul>
+<li>OpenVPN can be scaled to support a large number of users and complex network configurations, making it suitable for both small businesses and large enterprises.</li>
+</ul>
+<ol start="6">
+<li>Open Source:</li>
+</ol>
+<ul>
+<li>Being open-source means that the software&rsquo;s code is publicly available for review, making it more transparent and allowing the community to contribute to its security and development.</li>
+</ul>
+<ol start="7">
+<li>Support for Various Network Topologies:</li>
+</ol>
+<ul>
+<li>It can be used in routed or bridged configurations and can create secure connections over NAT.</li>
+</ul>
+<ol start="8">
+<li>Bypass Restrictions:</li>
+</ol>
+<ul>
+<li>OpenVPN is effective at bypassing network restrictions, making it a popular choice for users in regions with heavy internet censorship.</li>
+</ul>
+<h3 id="advantages-and-disadvantages">Advantages and Disadvantages</h3>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>High security with strong encryption and various authentication options.</li>
+<li>Flexibility in configuration and adaptability to different network environments.</li>
+<li>Compatibility with multiple operating systems and devices.</li>
+<li>Being open-source ensures transparency and community-driven improvements.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Initial setup and configuration can be complex, especially for users without networking experience.</li>
+<li>Performance can be impacted by factors such as server load and network latency.</li>
+<li>Requires maintenance and updates to ensure ongoing security and functionality.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="obtain-install-script">Obtain install script</h3>
+<p>The easiest way to install OpenVPN service on any Linux OS is using custom <a class="link" href="https://github.com/angristan/openvpn-install"  target="_blank" rel="noopener"
+    >openvpn-install script</a>.</p>
+<p>First, login to your remote server using SSH, then download a script and make it executable:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">wget https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+</span></span><span class="line"><span class="cl">sudo chmod +x openvpn-install.sh</span></span></code></pre></div>
+<h3 id="deploy-openvpn-service">Deploy OpenVPN service</h3>
+<p>Run the installation script, also make sure running it with root privileges:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo ./openvpn-install.sh</span></span></code></pre></div>
+<p>The script is interactive, and next install steps require you just answering the questions, or leaving the default answer.</p>
+<h4 id="define-listen-address">Define listen address</h4>
+<p>It is a LAN network address that OpenVPN service will bind and listen.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722.png"
+	width="980"
+	height="208"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="471"
+		data-flex-basis="1130px"
+	
+></p>
+<h4 id="define-public-ip-address">Define public IP address</h4>
+<p>It is a public internet IP address of your server. The script assuming you have static global IP.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828.png"
+	width="978"
+	height="94"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1040"
+		data-flex-basis="2497px"
+	
+></p>
+<h4 id="set-up-ipv6-support">Set up IPv6 support</h4>
+<p>As I don&rsquo;t have IPv6 support neither in my LAN, nor my internet provider supprots it, I will just disable IPv6.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037.png"
+	width="980"
+	height="126"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="777"
+		data-flex-basis="1866px"
+	
+></p>
+<h4 id="define-listen-port">Define listen port</h4>
+<p>You can choose any port that OpenVPN service will bind and listen incoming connections.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121.png"
+	width="980"
+	height="127"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="771"
+		data-flex-basis="1851px"
+	
+></p>
+<h4 id="define-protocol">Define protocol</h4>
+<p>It is recommended to use UDP unless you need TCP for some specific configurations or due to limitations on your server networking stack.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216.png"
+	width="978"
+	height="124"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="788"
+		data-flex-basis="1892px"
+	
+></p>
+<h4 id="choose-primary-dns-serveer">Choose primary DNS serveer</h4>
+<p>Here you can choose any public known DNS resolver, or even define your custom DNS server. I recomment using OpenDNS resolver.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303.png"
+	width="980"
+	height="336"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="291"
+		data-flex-basis="700px"
+	
+></p>
+<h4 id="disable-compression">Disable compression</h4>
+<p>It is highly recommended not to use compression due to known security limitations.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414.png"
+	width="980"
+	height="60"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1633"
+		data-flex-basis="3920px"
+	
+></p>
+<h4 id="customize-encryption-settings">Customize encryption settings</h4>
+<p>At this step you can customize encryption settings if you need some specific tweaks, but is&rsquo;s also fine to use pre-defined configuration.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504.png"
+	width="980"
+	height="183"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="535"
+		data-flex-basis="1285px"
+	
+></p>
+<h4 id="verify-parameters">Verify parameters</h4>
+<p>After you defined all the parameters, you can scroll your terminal and verify your answers to the wizard. If everything is ok, just press any button to continue installation.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600.png"
+	width="978"
+	height="80"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1222"
+		data-flex-basis="2934px"
+	
+></p>
+<h4 id="setup-first-client">Setup first client</h4>
+<p>It is required step to create at least one client configuration.</p>
+<p>First, define the client name:</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317.png"
+	width="978"
+	height="83"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1178"
+		data-flex-basis="2827px"
+	
+></p>
+<p>Next, you have an option to protect *.ovpn configuration with password:</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352.png"
+	width="980"
+	height="123"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="796"
+		data-flex-basis="1912px"
+	
+></p>
+<h3 id="download-client-configuration">Download client configuration</h3>
+<p>The most secure way is to use SFTP connection to your filesystem server, you can use a single command in local terminal to download it:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">scp shifthackz@192.168.0.37:/home/shifthackz/pixel7pro.ovpn ~</span></span></code></pre></div>
+<p>Where you should replace with your values:</p>
+<ul>
+<li><code>shifthackz@192.168.0.37</code>: here define your server user and IP address.</li>
+<li><code>/home/shifthackz/pixel7pro.ovpn</code>: this is a path of file on REMOTE server.</li>
+<li><code>~</code>: this is a destination download folder path on LOCAL computer (in my case ~ is current user home directory).</li>
+</ul>
+<p>Then transfer this file to the device that you want to use as client to connect to your openvpn server.</p>
+<h3 id="test-client-connection">Test client connection</h3>
+<p>In this example I will connect to my VPN network using Android phone. First, transfer downloaded *.ovpn file to your phone, and import it.</p>
+<p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1.png"
+	width="436"
+	height="875"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Add new OpenVPN profile."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="49"
+		data-flex-basis="119px"
+	
+>
+<img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2.png"
+	width="436"
+	height="873"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Confirm import."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="49"
+		data-flex-basis="119px"
+	
+>
+<img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3.png"
+	width="436"
+	height="875"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Verify connection to OpenVPN server."
+	
+	
+		class="gallery-image" 
+		data-flex-grow="49"
+		data-flex-basis="119px"
+	
+></p>
+<p>After that try to open some website in browser and verify that internet connection works. In addition try to check your IP address on some public IP checker websites, you should have public IP address of OpenVPN server. Also you should be able to access some local device in the same LAN as OpenVPN sever.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Overall, OpenVPN server is a powerful tool for creating secure, flexible, and reliable VPN connections, making it a popular choice for both individuals and organizations looking to protect their data and network communications.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/debian/">Debian</a>
+        
+            <a href="/tags/vpn/">VPN</a>
+        
+            <a href="/tags/openvpn/">OpenVPN</a>
+        
+            <a href="/tags/automation/">Automation</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu228a1f9ac33fe18663808d2fd8f88170_216388_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to deploy Pi-hole as a docker container in local network to block ads"
+                        
+                        data-hash="md5-rDdXCdzOwoMLf3L824YtVg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to deploy Pi-hole as a docker container in local network to block ads</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/configure-ssh-authorization-based-on-rsa-key/">
+        
+        
+            <div class="article-image">
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Configure SSH authorization based on RSA key"
+                        
+                        data-hash="md5-ikcOQeNwZ&#43;e7tI8xo&#43;mWEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Configure SSH authorization based on RSA key</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/automatic-server-backup-to-the-mega.nz-cloud/">
+        
+        
+            <div class="article-image">
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Automatic server backup to the Mega.nz cloud"
+                        
+                        data-hash="md5-pJE9cbvfkTY1g5wjrDVyFg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Automatic server backup to the Mega.nz cloud</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/port-forwarding-using-an-ssh-tunnel/">
+        
+        
+            <div class="article-image">
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Port forwarding using an SSH tunnel"
+                        
+                        data-hash="md5-uhvQM97BaXSmn9UTt9VaUQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Port forwarding using an SSH tunnel</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | ShiftHackZ
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#openvpn-overview">OpenVPN overview</a>
+      <ol>
+        <li><a href="#key-features-of-openvpn-server">Key Features of OpenVPN Server</a></li>
+        <li><a href="#advantages-and-disadvantages">Advantages and Disadvantages</a></li>
+      </ol>
+    </li>
+    <li><a href="#installation">Installation</a>
+      <ol>
+        <li><a href="#obtain-install-script">Obtain install script</a></li>
+        <li><a href="#deploy-openvpn-service">Deploy OpenVPN service</a>
+          <ol>
+            <li><a href="#define-listen-address">Define listen address</a></li>
+            <li><a href="#define-public-ip-address">Define public IP address</a></li>
+            <li><a href="#set-up-ipv6-support">Set up IPv6 support</a></li>
+            <li><a href="#define-listen-port">Define listen port</a></li>
+            <li><a href="#define-protocol">Define protocol</a></li>
+            <li><a href="#choose-primary-dns-serveer">Choose primary DNS serveer</a></li>
+            <li><a href="#disable-compression">Disable compression</a></li>
+            <li><a href="#customize-encryption-settings">Customize encryption settings</a></li>
+            <li><a href="#verify-parameters">Verify parameters</a></li>
+            <li><a href="#setup-first-client">Setup first client</a></li>
+          </ol>
+        </li>
+        <li><a href="#download-client-configuration">Download client configuration</a></li>
+        <li><a href="#test-client-connection">Test client connection</a></li>
+      </ol>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

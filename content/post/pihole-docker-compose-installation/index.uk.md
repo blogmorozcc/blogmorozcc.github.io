@@ -12,6 +12,8 @@ tags = [
 ]
 categories = [
     "Linux",
+    "Мережі",
+    "Кібер-безпека",
 ]
 image = "header.png"
 +++
