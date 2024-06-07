@@ -7,19 +7,35 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Automation</title>
-        <link>http://localhost:1313/tags/automation/</link>
+        <title>HAProxy</title>
+        <link>http://localhost:1313/tags/haproxy/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/tags/automation/</guid>
+        <guid>http://localhost:1313/tags/haproxy/</guid>
         <description></description>
         </item>
         <item>
-        <title>Debian</title>
-        <link>http://localhost:1313/tags/debian/</link>
+        <title>HTTPS</title>
+        <link>http://localhost:1313/tags/https/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/tags/debian/</guid>
+        <guid>http://localhost:1313/tags/https/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Load Balancing</title>
+        <link>http://localhost:1313/tags/load-balancing/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/load-balancing/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Network Traffic</title>
+        <link>http://localhost:1313/tags/network-traffic/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/network-traffic/</guid>
         <description></description>
         </item>
         <item>
@@ -31,11 +47,43 @@
         <description></description>
         </item>
         <item>
+        <title>SSL Termination</title>
+        <link>http://localhost:1313/tags/ssl-termination/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/ssl-termination/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>VPN</title>
         <link>http://localhost:1313/tags/vpn/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/tags/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Web Server</title>
+        <link>http://localhost:1313/tags/web-server/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/web-server/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Automation</title>
+        <link>http://localhost:1313/tags/automation/</link>
+        <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/automation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Debian</title>
+        <link>http://localhost:1313/tags/debian/</link>
+        <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/debian/</guid>
         <description></description>
         </item>
         <item>

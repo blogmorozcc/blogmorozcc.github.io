@@ -28,17 +28,30 @@
                 href="http://localhost:1313/uk/categories/"
                 />
   </url><url>
-    <loc>http://localhost:1313/uk/tags/debian/</loc>
+    <loc>http://localhost:1313/uk/tags/haproxy/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/tags/debian/"
+                href="http://localhost:1313/tags/haproxy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
-                href="http://localhost:1313/uk/tags/debian/"
+                href="http://localhost:1313/uk/tags/haproxy/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/https/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/https/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/https/"
                 />
   </url><url>
     <loc>http://localhost:1313/uk/categories/linux/</loc>
@@ -80,6 +93,19 @@
                 href="http://localhost:1313/uk/post/"
                 />
   </url><url>
+    <loc>http://localhost:1313/uk/tags/ssl-termination/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/ssl-termination/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/ssl-termination/"
+                />
+  </url><url>
     <loc>http://localhost:1313/uk/tags/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -106,17 +132,52 @@
                 href="http://localhost:1313/uk/tags/vpn/"
                 />
   </url><url>
-    <loc>http://localhost:1313/uk/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</loc>
+    <loc>http://localhost:1313/uk/tags/%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BD%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/uk/tags/%D0%B2%D0%B5%D0%B1-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-https-%D1%96-openvpn-%D0%BD%D0%B0-%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%D1%83-%D0%BF%D0%BE%D1%80%D1%82%D1%83-443-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0-%D0%BD%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F-haproxy/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-https-%D1%96-openvpn-%D0%BD%D0%B0-%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%D1%83-%D0%BF%D0%BE%D1%80%D1%82%D1%83-443-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0-%D0%BD%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F-haproxy/"
+                />
+  </url><url>
     <loc>http://localhost:1313/uk/categories/%D0%BA%D1%96%D0%B1%D0%B5%D1%80-%D0%B1%D0%B5%D0%B7%D0%BF%D0%B5%D0%BA%D0%B0/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D0%B5%D0%B2%D0%B8%D0%B9-%D1%82%D1%80%D0%B0%D1%84%D1%96%D0%BA/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/uk/categories/%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D1%96/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/uk/tags/debian/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/debian/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/debian/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/uk/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/</loc>
-    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"

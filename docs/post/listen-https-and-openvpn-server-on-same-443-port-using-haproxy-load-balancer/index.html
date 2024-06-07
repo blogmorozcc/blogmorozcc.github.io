@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Purpose of having OpenVPN and Web server at port 443 Let&amp;rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.'><title>Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer</title>
+
+<link rel='canonical' href='https://blog.moroz.cc/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/'>
+
+<link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer'>
+<meta property='og:description' content='Introduction Purpose of having OpenVPN and Web server at port 443 Let&amp;rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.'>
+<meta property='og:url' content='https://blog.moroz.cc/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/'>
+<meta property='og:site_name' content='The IT Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HAProxy' /><meta property='article:tag' content='VPN' /><meta property='article:tag' content='OpenVPN' /><meta property='article:tag' content='Load balancing' /><meta property='article:tag' content='HTTPS' /><meta property='article:tag' content='SSL Termination' /><meta property='article:tag' content='Network traffic' /><meta property='article:tag' content='Web Server' /><meta property='article:published_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.png' />
+<meta name="twitter:title" content="Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer">
+<meta name="twitter:description" content="Introduction Purpose of having OpenVPN and Web server at port 443 Let&amp;rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.moroz.cc/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.png' />
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💻</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">The IT Blog</a></h1>
+            
+            
+            
+            
+            <h2 class="site-description">by ShiftHackZ</h2>
+            
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/ShiftHackZ'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/moroz-dm-m'
+                        target="_blank"
+                        title="LinkedIn"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+  <path d="M8 11l0 5" />
+  <path d="M8 8l0 .01" />
+  <path d="M12 16l0 -5" />
+  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/projects/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
+</svg>
+
+
+
+                
+                <span>My projects</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://blog.moroz.cc/" selected>English</option>
+                        
+                            <option value="https://blog.moroz.cc/uk/" >Українська</option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/">
+                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu38aeca524a31a58e580a8f8774f7f217_36945_800x0_resize_box_3.png"
+                        srcset="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu38aeca524a31a58e580a8f8774f7f217_36945_800x0_resize_box_3.png 800w, /post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu38aeca524a31a58e580a8f8774f7f217_36945_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="288" 
+                        loading="lazy"
+                        alt="Featured image of post Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+            <a href="/categories/networking/" >
+                Networking
+            </a>
+        
+            <a href="/categories/cybersecurity/" >
+                Cybersecurity
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/">Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">07.06.2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://blog.moroz.cc/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-https-%D1%96-openvpn-%D0%BD%D0%B0-%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%D1%83-%D0%BF%D0%BE%D1%80%D1%82%D1%83-443-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0-%D0%BD%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F-haproxy/" class="link">Українська</a>
+                
+            </div>
+        </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction</h2>
+<h3 id="purpose-of-having-openvpn-and-web-server-at-port-443">Purpose of having OpenVPN and Web server at port 443</h3>
+<p>Let&rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.</p>
+<p>In this particular case you can try moving your OpenVPN service to listen on port 443. But what to do if you also use your server for hosting some websites so port 443 is already in use? To solve this problem it is reasonable to use some proxy or load balancing solution and redirect network traffic from incoming port 443 to appropriate local service port 1194, 8080, etc.</p>
+<h3 id="how-it-works">How it works</h3>
+<p>You can configure HAProxy to terminate SSL and then route traffic based on SNI (Server Name Indication) or other criteria to either your OpenVPN server or to different websites. Here&rsquo;s a high-level overview of how you can achieve this:</p>
+<ol>
+<li>
+<p><strong>SSL Termination:</strong> HAProxy will handle incoming SSL connections on port 443. It will decrypt the traffic, inspect it, and then decide where to forward it.</p>
+</li>
+<li>
+<p><strong>Traffic Routing:</strong> Based on criteria such as the requested hostname or the content of the initial packets, HAProxy can route traffic to different backend servers:</p>
+</li>
+</ol>
+<ul>
+<li>HTTPS traffic can be forwarded to your web servers.</li>
+<li>OpenVPN traffic can be forwarded to the OpenVPN server.</li>
+</ul>
+<ol start="3">
+<li><strong>Hiding VPN Traffic:</strong> By serving OpenVPN on port 443, it becomes harder for network administrators to distinguish between regular HTTPS traffic and VPN traffic. This can help in environments where VPN usage is restricted or monitored.</li>
+</ol>
+<h2 id="setup">Setup</h2>
+<p>The setup guide assumes that you already have up and running this services on your system:</p>
+<ul>
+<li>OpenVPN service running in TCP mode.</li>
+<li>One or multiple http web services.</li>
+</ul>
+<p>Personally I run every web service as a docker (docker compose) containers and bind their http ports to some free port on localhost (for example multiple web apps are on local interface, but different port <code>http://localhost:20001</code>, <code>http://localhost:20002</code>, etc).</p>
+<h3 id="install-haproxy">Install HAProxy</h3>
+<p>First, install HAProxy on your system:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt install haproxy</span></span></code></pre></div>
+<p>Then enable and start HAProxy systemd daemon:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> --now haproxy.service</span></span></code></pre></div>
+<h3 id="configure-haproxy">Configure HAProxy</h3>
+<p>Plaсe your SSL certificates to <code>/etc/ssl/haproxy</code>. The directory and certificates should be accessible only for root user. For example, if you have <code>domain1.com</code>, <code>domain2.com</code> domains that you want to host web services for, you should have certificate and key pairs for each domain in the directory with appropriate naming, for example:</p>
+<ul>
+<li>domain1.com.pem</li>
+<li>domain1.com.pem.key</li>
+<li>domain2.com.pem</li>
+<li>domain2.com.pem.key</li>
+</ul>
+<p>Then edit the file <code>/etc/haproxy/haporxy.cfg</code>, and add the needed sections.</p>
+<h3 id="define-backends-for-web-apps-and-openvpn">Define backends for Web apps and OpenVPN.</h3>
+<p>For example, if I have 2 web sites listening on ports 20001, 20002 and OpenVPN listening on port 1194, the configuration will be:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">backend openvpn
+</span></span><span class="line"><span class="cl">    mode tcp
+</span></span><span class="line"><span class="cl">    timeout connect 30s
+</span></span><span class="line"><span class="cl">    timeout server 30s
+</span></span><span class="line"><span class="cl">    retries 3
+</span></span><span class="line"><span class="cl">    server vpn 127.0.0.1:1194
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">backend app1
+</span></span><span class="line"><span class="cl">    mode http
+</span></span><span class="line"><span class="cl">    server node01 127.0.0.1:20001
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">backend app2
+</span></span><span class="line"><span class="cl">    mode http
+</span></span><span class="line"><span class="cl">    server node01 127.0.0.1:20002
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="configure-https-balancing">Configure HTTPS balancing</h3>
+<p>Next we need to create a frontend which will be bound to <code>localhost:8443</code> and will manage redirect based on domain. It will allow to host web apps for multiple domains. Also backend for <code>localhost:8443</code> should be created, it will be used later to connect from port frontend which will be listened on incoming port 443.</p>
+<p>In this example connection is redirected to corresponding web app based on domain SNI check, for example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">frontend</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bind</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8443</span> <span class="n">ssl</span> <span class="n">crt</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="o">-</span><span class="n">request</span> <span class="n">redirect</span> <span class="n">scheme</span> <span class="n">https</span> <span class="n">unless</span> <span class="p">{</span> <span class="n">ssl_fc</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="o">-</span><span class="n">request</span> <span class="n">set</span><span class="o">-</span><span class="n">header</span> <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">Proto</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="o">-</span><span class="n">response</span> <span class="n">set</span><span class="o">-</span><span class="n">header</span> <span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span> <span class="s2">&#34;max-age=16000000; includeSubDomains; preload;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_backend</span> <span class="n">app1</span> <span class="k">if</span> <span class="p">{</span> <span class="n">ssl_fc_sni</span> <span class="n">domain1</span><span class="o">.</span><span class="n">com</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_backend</span> <span class="n">app2</span> <span class="k">if</span> <span class="p">{</span> <span class="n">ssl_fc_sni</span> <span class="n">domain2</span><span class="o">.</span><span class="n">com</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">backend</span> <span class="n">tcp_to_https</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">tcp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span> <span class="n">https</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8443</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="configure-incoming-frontend-for-public-443-port">Configure incoming frontend for public 443 port</h3>
+<p>This is main frontend which is listened on public 443 port and manages regirect to needed backend based on SNI.</p>
+<p>First it checks if SNI ends with some of mathing domains (domain1.com or domain2.com), this kind of checks allows to host any subdomain in future (for example <code>dev.domain1.com</code>, <code>prod.domain2.com</code>, etc). And in the end if no SNI check passed it means that we have a connection to OpenVPN, this rule is defined as the default.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">frontend tls
+</span></span><span class="line"><span class="cl">    bind *:443
+</span></span><span class="line"><span class="cl">    mode tcp
+</span></span><span class="line"><span class="cl">    option tcplog
+</span></span><span class="line"><span class="cl">    tcp-request inspect-delay 5s
+</span></span><span class="line"><span class="cl">    tcp-request content accept if { req_ssl_hello_type 1 } or !{ req_ssl_hello_type 1 }
+</span></span><span class="line"><span class="cl">    use_backend tcp_to_https if { req_ssl_sni -m end .domain1.com }
+</span></span><span class="line"><span class="cl">    use_backend tcp_to_https if { req_ssl_sni -m end .domain2.com }
+</span></span><span class="line"><span class="cl">    default_backend openvpn
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="full-configuration-example">Full configuration example</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">global</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">log</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="nb">log</span>	<span class="n">local0</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">log</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="nb">log</span>	<span class="n">local1</span> <span class="n">notice</span>
+</span></span><span class="line"><span class="cl">    <span class="n">chroot</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">haproxy</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stats</span> <span class="n">socket</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">admin</span><span class="o">.</span><span class="n">sock</span> <span class="n">mode</span> <span class="mi">660</span> <span class="n">level</span> <span class="n">admin</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stats</span> <span class="n">timeout</span> <span class="mi">30</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user</span> <span class="n">haproxy</span>
+</span></span><span class="line"><span class="cl">    <span class="n">group</span> <span class="n">haproxy</span>
+</span></span><span class="line"><span class="cl">    <span class="n">daemon</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Default SSL material locations</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ca</span><span class="o">-</span><span class="n">base</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">certs</span>
+</span></span><span class="line"><span class="cl">    <span class="n">crt</span><span class="o">-</span><span class="n">base</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">private</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># See: https://ssl-config.mozilla.org/#server=haproxy&amp;server-version=2.0.3&amp;config=intermediate</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ssl</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">bind</span><span class="o">-</span><span class="n">ciphers</span> <span class="n">ECDHE</span><span class="o">-</span><span class="n">ECDSA</span><span class="o">-</span><span class="n">AES128</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA256</span><span class="p">:</span><span class="n">ECDHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">AES128</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA256</span><span class="p">:</span><span class="n">ECDHE</span><span class="o">-</span><span class="n">ECDSA</span><span class="o">-</span><span class="n">AES256</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA384</span><span class="p">:</span><span class="n">ECDHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">AES256</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA384</span><span class="p">:</span><span class="n">ECDHE</span><span class="o">-</span><span class="n">ECDSA</span><span class="o">-</span><span class="n">CHACHA20</span><span class="o">-</span><span class="n">POLY1305</span><span class="p">:</span><span class="n">ECDHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">CHACHA20</span><span class="o">-</span><span class="n">POLY1305</span><span class="p">:</span><span class="n">DHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">AES128</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA256</span><span class="p">:</span><span class="n">DHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">AES256</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA384</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ssl</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">bind</span><span class="o">-</span><span class="n">ciphersuites</span> <span class="n">TLS_AES_128_GCM_SHA256</span><span class="p">:</span><span class="n">TLS_AES_256_GCM_SHA384</span><span class="p">:</span><span class="n">TLS_CHACHA20_POLY1305_SHA256</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ssl</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">bind</span><span class="o">-</span><span class="n">options</span> <span class="n">ssl</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="n">ver</span> <span class="n">TLSv1</span><span class="o">.</span><span class="mi">2</span> <span class="n">no</span><span class="o">-</span><span class="n">tls</span><span class="o">-</span><span class="n">tickets</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">defaults</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">log</span>	<span class="n">global</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">option</span> <span class="n">httplog</span>
+</span></span><span class="line"><span class="cl">    <span class="n">option</span> <span class="n">dontlognull</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">5000</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeout</span> <span class="n">client</span>  <span class="mi">50000</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeout</span> <span class="n">server</span>  <span class="mi">50000</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">400</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">400.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">403</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">403.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">408</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">408.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">500</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">500.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">502</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">502.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">503</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">503.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">errorfile</span> <span class="mi">504</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">504.</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">frontend</span> <span class="n">tls</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bind</span> <span class="o">*</span><span class="p">:</span><span class="mi">443</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">tcp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">option</span> <span class="n">tcplog</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tcp</span><span class="o">-</span><span class="n">request</span> <span class="n">inspect</span><span class="o">-</span><span class="n">delay</span> <span class="mi">5</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tcp</span><span class="o">-</span><span class="n">request</span> <span class="n">content</span> <span class="n">accept</span> <span class="k">if</span> <span class="p">{</span> <span class="n">req_ssl_hello_type</span> <span class="mi">1</span> <span class="p">}</span> <span class="ow">or</span> <span class="o">!</span><span class="p">{</span> <span class="n">req_ssl_hello_type</span> <span class="mi">1</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_backend</span> <span class="n">tcp_to_https</span> <span class="k">if</span> <span class="p">{</span> <span class="n">req_ssl_sni</span> <span class="o">-</span><span class="n">m</span> <span class="n">end</span> <span class="o">.</span><span class="n">domain1</span><span class="o">.</span><span class="n">com</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_backend</span> <span class="n">tcp_to_https</span> <span class="k">if</span> <span class="p">{</span> <span class="n">req_ssl_sni</span> <span class="o">-</span><span class="n">m</span> <span class="n">end</span> <span class="o">.</span><span class="n">domain2</span><span class="o">.</span><span class="n">com</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">default_backend</span> <span class="n">openvpn</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">frontend</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bind</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8443</span> <span class="n">ssl</span> <span class="n">crt</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="o">-</span><span class="n">request</span> <span class="n">redirect</span> <span class="n">scheme</span> <span class="n">https</span> <span class="n">unless</span> <span class="p">{</span> <span class="n">ssl_fc</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="o">-</span><span class="n">request</span> <span class="n">set</span><span class="o">-</span><span class="n">header</span> <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">Proto</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="o">-</span><span class="n">response</span> <span class="n">set</span><span class="o">-</span><span class="n">header</span> <span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span> <span class="s2">&#34;max-age=16000000; includeSubDomains; preload;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_backend</span> <span class="n">app1</span> <span class="k">if</span> <span class="p">{</span> <span class="n">ssl_fc_sni</span> <span class="n">domain1</span><span class="o">.</span><span class="n">com</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">use_backend</span> <span class="n">app2</span> <span class="k">if</span> <span class="p">{</span> <span class="n">ssl_fc_sni</span> <span class="n">domain2</span><span class="o">.</span><span class="n">com</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">backend</span> <span class="n">tcp_to_https</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">tcp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span> <span class="n">https</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8443</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">backend</span> <span class="n">openvpn</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">tcp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">30</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeout</span> <span class="n">server</span> <span class="mi">30</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl">    <span class="n">retries</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span> <span class="n">vpn</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">1194</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">backend</span> <span class="n">app1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span> <span class="n">node01</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">20001</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">backend</span> <span class="n">app2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mode</span> <span class="n">http</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span> <span class="n">node01</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">20002</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="extras">Extras</h2>
+<h3 id="how-to-validate-haproxy-configuration">How to validate HAProxy configuration</h3>
+<p>HAProxy can validate the configuration file and tell you if there is any error.</p>
+<p>To check the configuration, run:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo haporxy -c -f /etc/haproxy/haproxy.cfg</span></span></code></pre></div>
+<h3 id="how-to-apply-haproxy-changes">How to apply HAProxy changes</h3>
+<p>To apply changes to HAProxy configuration, simply restart the daemon:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl restart --now haproxy.service</span></span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>Using HAProxy to handle SSL termination and multiplexing traffic over port 443 can be an effective way to hide VPN usage and bypass network restrictions. This setup can be particularly useful in environments where only port 443 is open or VPN traffic is actively monitored and restricted. By carefully configuring HAProxy, you can create a flexible and secure solution that meets your needs.</p>
+<h3 id="benefits">Benefits</h3>
+<ol>
+<li>
+<p><strong>Port Multiplexing:</strong> using port 443 for both VPN and web traffic allows you to work around network restrictions that only allow port 443.</p>
+</li>
+<li>
+<p><strong>Hiding VPN Usage:</strong> by serving OpenVPN on port 443, the VPN traffic blends in with normal HTTPS traffic, making it harder to detect and block.</p>
+</li>
+<li>
+<p><strong>Flexibility:</strong> you can handle multiple services on a single IP and port, reducing the number of open ports and simplifying firewall rules.</p>
+</li>
+</ol>
+<h3 id="considerations">Considerations</h3>
+<ol>
+<li>
+<p><strong>Detection:</strong> while this method can help bypass some restrictions, sophisticated network monitoring tools can still potentially detect OpenVPN traffic based on traffic patterns and behavior, even on port 443.</p>
+</li>
+<li>
+<p><strong>Performance:</strong> HAProxy needs to decrypt and inspect SSL traffic, which can add overhead. Ensure your server has sufficient resources to handle the additional load.</p>
+</li>
+<li>
+<p><strong>Security:</strong> terminating SSL at HAProxy means it handles the encryption and decryption. Make sure HAProxy and the server it’s running on are secured and kept up to date.</p>
+</li>
+</ol>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/haproxy/">HAProxy</a>
+        
+            <a href="/tags/vpn/">VPN</a>
+        
+            <a href="/tags/openvpn/">OpenVPN</a>
+        
+            <a href="/tags/load-balancing/">Load Balancing</a>
+        
+            <a href="/tags/https/">HTTPS</a>
+        
+            <a href="/tags/ssl-termination/">SSL Termination</a>
+        
+            <a href="/tags/network-traffic/">Network Traffic</a>
+        
+            <a href="/tags/web-server/">Web Server</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/">
+        
+        
+            <div class="article-image">
+                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_huae4787578a5876ddb42874325345f68a_470994_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Easy deploy OpenVPN service on any Linux server using custom script"
+                        
+                        data-hash="md5-pv/MgUDDCJN0hOxGpwKb8Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Easy deploy OpenVPN service on any Linux server using custom script</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu228a1f9ac33fe18663808d2fd8f88170_216388_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to deploy Pi-hole as a docker container in local network to block ads"
+                        
+                        data-hash="md5-rDdXCdzOwoMLf3L824YtVg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to deploy Pi-hole as a docker container in local network to block ads</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/configure-ssh-authorization-based-on-rsa-key/">
+        
+        
+            <div class="article-image">
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Configure SSH authorization based on RSA key"
+                        
+                        data-hash="md5-ikcOQeNwZ&#43;e7tI8xo&#43;mWEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Configure SSH authorization based on RSA key</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
+        
+        
+            <div class="article-image">
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock"
+                        
+                        data-hash="md5-cnktuneQTNhozqrEBJE0IQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/automatic-server-backup-to-the-mega.nz-cloud/">
+        
+        
+            <div class="article-image">
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Automatic server backup to the Mega.nz cloud"
+                        
+                        data-hash="md5-pJE9cbvfkTY1g5wjrDVyFg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Automatic server backup to the Mega.nz cloud</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="blogmorozcc/blogmorozcc.github.io"
+    data-repo-id="R_kgDOHsfYjw"
+    data-category="General"
+    data-category-id="DIC_kwDOHsfYj84CbRdO"
+    data-mapping="url"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-theme="light"
+    data-lang="en"
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('noborder_dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 | ShiftHackZ
+    </section>
+    
+    <section class="powerby">
+        
+        
+        All rights reserved.
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a>
+      <ol>
+        <li><a href="#purpose-of-having-openvpn-and-web-server-at-port-443">Purpose of having OpenVPN and Web server at port 443</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+      </ol>
+    </li>
+    <li><a href="#setup">Setup</a>
+      <ol>
+        <li><a href="#install-haproxy">Install HAProxy</a></li>
+        <li><a href="#configure-haproxy">Configure HAProxy</a></li>
+        <li><a href="#define-backends-for-web-apps-and-openvpn">Define backends for Web apps and OpenVPN.</a></li>
+        <li><a href="#configure-https-balancing">Configure HTTPS balancing</a></li>
+        <li><a href="#configure-incoming-frontend-for-public-443-port">Configure incoming frontend for public 443 port</a></li>
+        <li><a href="#full-configuration-example">Full configuration example</a></li>
+      </ol>
+    </li>
+    <li><a href="#extras">Extras</a>
+      <ol>
+        <li><a href="#how-to-validate-haproxy-configuration">How to validate HAProxy configuration</a></li>
+        <li><a href="#how-to-apply-haproxy-changes">How to apply HAProxy changes</a></li>
+      </ol>
+    </li>
+    <li><a href="#conclusion">Conclusion</a>
+      <ol>
+        <li><a href="#benefits">Benefits</a></li>
+        <li><a href="#considerations">Considerations</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

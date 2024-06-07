@@ -6,10 +6,10 @@
         <description>Recent content in Debian on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/debian/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 06 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/uk/tags/debian/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Розгортання служби OpenVPN на будь-якому сервері Linux за допомогою скрипта</title>
         <link>https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/</link>
-        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/</guid>
         <description>&lt;img src="https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png" alt="Featured image of post Розгортання служби OpenVPN на будь-якому сервері Linux за допомогою скрипта" /&gt;&lt;h2 id=&#34;огляд-openvpn&#34;&gt;Огляд OpenVPN&lt;/h2&gt;
