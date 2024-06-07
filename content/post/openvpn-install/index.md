@@ -1,6 +1,6 @@
 +++
 title = "Easy deploy OpenVPN service on any Linux server using custom script"
-date = "2024-06-07"
+date = "2024-06-06"
 tags = [
     "Debian",
     "VPN",

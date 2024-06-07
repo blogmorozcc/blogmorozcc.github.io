@@ -7,19 +7,35 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Automation</title>
-        <link>https://blog.moroz.cc/tags/automation/</link>
+        <title>HAProxy</title>
+        <link>https://blog.moroz.cc/tags/haproxy/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.moroz.cc/tags/automation/</guid>
+        <guid>https://blog.moroz.cc/tags/haproxy/</guid>
         <description></description>
         </item>
         <item>
-        <title>Debian</title>
-        <link>https://blog.moroz.cc/tags/debian/</link>
+        <title>HTTPS</title>
+        <link>https://blog.moroz.cc/tags/https/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.moroz.cc/tags/debian/</guid>
+        <guid>https://blog.moroz.cc/tags/https/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Load Balancing</title>
+        <link>https://blog.moroz.cc/tags/load-balancing/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/load-balancing/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Network Traffic</title>
+        <link>https://blog.moroz.cc/tags/network-traffic/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/network-traffic/</guid>
         <description></description>
         </item>
         <item>
@@ -31,11 +47,43 @@
         <description></description>
         </item>
         <item>
+        <title>SSL Termination</title>
+        <link>https://blog.moroz.cc/tags/ssl-termination/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/ssl-termination/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>VPN</title>
         <link>https://blog.moroz.cc/tags/vpn/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Web Server</title>
+        <link>https://blog.moroz.cc/tags/web-server/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/web-server/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Automation</title>
+        <link>https://blog.moroz.cc/tags/automation/</link>
+        <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/automation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Debian</title>
+        <link>https://blog.moroz.cc/tags/debian/</link>
+        <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/debian/</guid>
         <description></description>
         </item>
         <item>

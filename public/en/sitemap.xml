@@ -15,9 +15,6 @@
                 href="http://localhost:1313/"
                 />
   </url><url>
-    <loc>http://localhost:1313/tags/automation/</loc>
-    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -34,30 +31,30 @@
     <loc>http://localhost:1313/categories/cybersecurity/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/debian/</loc>
+    <loc>http://localhost:1313/tags/haproxy/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
-                href="http://localhost:1313/uk/tags/debian/"
+                href="http://localhost:1313/uk/tags/haproxy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/tags/debian/"
+                href="http://localhost:1313/tags/haproxy/"
                 />
   </url><url>
-    <loc>http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</loc>
+    <loc>http://localhost:1313/tags/https/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
-                href="http://localhost:1313/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/"
+                href="http://localhost:1313/uk/tags/https/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/"
+                href="http://localhost:1313/tags/https/"
                 />
   </url><url>
     <loc>http://localhost:1313/categories/linux/</loc>
@@ -72,6 +69,25 @@
                 hreflang="en"
                 href="http://localhost:1313/categories/linux/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-https-%D1%96-openvpn-%D0%BD%D0%B0-%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%D1%83-%D0%BF%D0%BE%D1%80%D1%82%D1%83-443-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0-%D0%BD%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F-haproxy/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/load-balancing/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/network-traffic/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/networking/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
@@ -102,6 +118,19 @@
                 href="http://localhost:1313/post/"
                 />
   </url><url>
+    <loc>http://localhost:1313/tags/ssl-termination/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/ssl-termination/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/ssl-termination/"
+                />
+  </url><url>
     <loc>http://localhost:1313/tags/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -126,6 +155,38 @@
                 rel="alternate"
                 hreflang="en"
                 href="http://localhost:1313/tags/vpn/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/web-server/</loc>
+    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/automation/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/debian/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/debian/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/debian/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/ad-block/</loc>
