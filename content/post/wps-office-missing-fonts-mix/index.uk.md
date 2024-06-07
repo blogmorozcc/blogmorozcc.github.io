@@ -9,7 +9,7 @@ tags = [
 ]
 categories = [
     "Linux",
-    "Офіс",
+    "Програмне забезпечення",
 ]
 image = "header.png"
 +++

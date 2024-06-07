@@ -9,7 +9,7 @@ tags = [
 ]
 categories = [
     "Linux",
-    "Office",
+    "Software",
 ]
 image = "header.png"
 +++

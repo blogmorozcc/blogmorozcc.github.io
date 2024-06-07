@@ -7,12 +7,301 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
         <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Easy deploy OpenVPN service on any Linux server using custom script</title>
-        <link>http://localhost:1313/uk/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</link>
+        <title>Розгортання служби OpenVPN на будь-якому сервері Linux за допомогою скрипта</title>
+        <link>http://localhost:1313/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/uk/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/</guid>
-        <description>&lt;img src="http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png" alt="Featured image of post Easy deploy OpenVPN service on any Linux server using custom script" /&gt;</description>
+        <guid>http://localhost:1313/uk/post/%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B8-openvpn-%D0%BD%D0%B0-%D0%B1%D1%83%D0%B4%D1%8C-%D1%8F%D0%BA%D0%BE%D0%BC%D1%83-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%96-linux-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%BE%D1%8E-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%B0/</guid>
+        <description>&lt;img src="http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png" alt="Featured image of post Розгортання служби OpenVPN на будь-якому сервері Linux за допомогою скрипта" /&gt;&lt;h2 id=&#34;огляд-openvpn&#34;&gt;Огляд OpenVPN&lt;/h2&gt;
+&lt;p&gt;OpenVPN — це популярне програмне забезпечення з відкритим кодом, яке реалізує методи віртуальної приватної мережі (VPN) для створення безпечних з’єднань «точка-точка» або «сайт-сайт». Він широко використовується завдяки своїй гнучкості, надійній безпеці та здатності проходити транслятори мережевих адрес (NAT) і брандмауери. Зокрема, сервер OpenVPN — це сервер, налаштований для обробки підключень OpenVPN, що дозволяє клієнтам безпечно підключатися через мережу, як правило, через Інтернет.&lt;/p&gt;
+&lt;h3 id=&#34;основні-характеристики-openvpn&#34;&gt;Основні характеристики OpenVPN&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Шифрування та безпека:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN використовує надійні методи шифрування для безпечної передачі даних. Він підтримує різні алгоритми шифрування, такі як AES (Advanced Encryption Standard), який користується широкою довірою через його безпеку.&lt;/li&gt;
+&lt;li&gt;Він використовує SSL/TLS для обміну ключами, гарантуючи, що навіть якщо з&amp;rsquo;єднання перехоплено, дані не можуть бути легко розшифровані.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Кросплатформна сумісність:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN сумісний з кількома операційними системами, включаючи Windows, Linux, macOS, iOS і Android. Це робить його універсальним вибором для широкого діапазону пристроїв.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Автентифікація:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Він підтримує кілька методів автентифікації, включаючи ім&amp;rsquo;я користувача/пароль, на основі сертифіката та багатофакторну автентифікацію (MFA). Ця гнучкість забезпечує підвищену безпеку, адаптовану до різних випадків використання.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Конфігурація та гнучкість:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN можна налаштувати для роботи на будь-якому порту за допомогою TCP або UDP, що допомагає уникнути мережевих обмежень і спрощує проникнення через брандмауери.&lt;/li&gt;
+&lt;li&gt;Він підтримує як мережі VPN типу &amp;ldquo;сайт-сайт&amp;rdquo;, які з&amp;rsquo;єднують цілі мережі, так і мережі VPN &amp;ldquo;клієнт-сервер&amp;rdquo;, які підключають окремі пристрої до мережі.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Масштабованість:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN можна масштабувати для підтримки великої кількості користувачів і складних конфігурацій мережі, що робить його придатним як для малих, так і для великих підприємств.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Відкритий код:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Відкритий код означає, що код програмного забезпечення є загальнодоступним для перегляду, що робить його більш прозорим і дозволяє спільноті робити внесок у його безпеку та розвиток.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;Підтримка різних мережевих топологій:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Його можна використовувати в маршрутизованих або мостових конфігураціях і створювати безпечні з&amp;rsquo;єднання через NAT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;8&#34;&gt;
+&lt;li&gt;Обхід обмежень:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenVPN ефективно обходить мережеві обмеження, що робить його популярним вибором для користувачів у регіонах із жорсткою інтернет-цензурою.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;переваги-та-недоліки&#34;&gt;Переваги та недоліки&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Переваги:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Високий рівень безпеки з надійним шифруванням і різними параметрами автентифікації.&lt;/li&gt;
+&lt;li&gt;Гнучкість конфігурації та адаптованість до різних мережевих середовищ.&lt;/li&gt;
+&lt;li&gt;Сумісність з кількома операційними системами та пристроями.&lt;/li&gt;
+&lt;li&gt;Відкритий вихідний код забезпечує прозорість і вдосконалення, керовані спільнотою.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Недоліки:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Початкове налаштування та налаштування можуть бути складними, особливо для користувачів без досвіду роботи в мережі.&lt;/li&gt;
+&lt;li&gt;На продуктивність можуть впливати такі фактори, як завантаження сервера та затримка мережі.&lt;/li&gt;
+&lt;li&gt;Вимагає обслуговування та оновлень для забезпечення постійної безпеки та функціональності.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;встановлення&#34;&gt;Встановлення&lt;/h2&gt;
+&lt;h3 id=&#34;завантаження-скрипта&#34;&gt;Завантаження скрипта&lt;/h3&gt;
+&lt;p&gt;Найпростіший спосіб інсталювати послугу OpenVPN на будь-якій ОС Linux – це використовувати спеціальний &lt;a class=&#34;link&#34; href=&#34;https://github.com/angristan/openvpn-install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;скрипт інсталяції openvpn&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Спочатку увійдіть на віддалений сервер за допомогою SSH, потім завантажте сценарій і зробіть його виконуваним:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo chmod +x openvpn-install.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;розгорніть-службу-openvpn&#34;&gt;Розгорніть службу OpenVPN&lt;/h3&gt;
+&lt;p&gt;Запустіть інсталяційний сценарій, також переконайтеся, що він запущений з правами root:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ./openvpn-install.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Сценарій є інтерактивним, і наступні кроки встановлення вимагають лише відповісти на запитання або залишити відповідь за умовчанням.&lt;/p&gt;
+&lt;h4 id=&#34;визначте-адресу-прослуховування&#34;&gt;Визначте адресу прослуховування&lt;/h4&gt;
+&lt;p&gt;Це мережева адреса локальної мережі, яку служба OpenVPN прив’язуватиме та прослуховуватиме.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722.png&#34;
+	width=&#34;980&#34;
+	height=&#34;208&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;471&#34;
+		data-flex-basis=&#34;1130px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;визначте-публічну-ip-адресу&#34;&gt;Визначте публічну IP-адресу&lt;/h4&gt;
+&lt;p&gt;Це загальнодоступна IP-адреса вашого сервера в Інтернеті. Сценарій припускає, що у вас статичний глобальний IP.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828.png&#34;
+	width=&#34;978&#34;
+	height=&#34;94&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1040&#34;
+		data-flex-basis=&#34;2497px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;налаштування-підтримки-ipv6&#34;&gt;Налаштування підтримки IPv6&lt;/h4&gt;
+&lt;p&gt;Оскільки я не маю підтримки IPv6 ні в моїй локальній мережі, ні мій інтернет-провайдер не підтримує її, я просто вимкну IPv6.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037.png&#34;
+	width=&#34;980&#34;
+	height=&#34;126&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;777&#34;
+		data-flex-basis=&#34;1866px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;визначте-порт-прослуховування&#34;&gt;Визначте порт прослуховування&lt;/h4&gt;
+&lt;p&gt;Ви можете вибрати будь-який порт, який служба OpenVPN буде прив’язувати та прослуховувати вхідні з’єднання.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121.png&#34;
+	width=&#34;980&#34;
+	height=&#34;127&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;771&#34;
+		data-flex-basis=&#34;1851px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;визначте-протокол&#34;&gt;Визначте протокол&lt;/h4&gt;
+&lt;p&gt;Рекомендується використовувати UDP, якщо вам не потрібен TCP для певних конфігурацій або через обмеження мережевого стеку вашого сервера.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216.png&#34;
+	width=&#34;978&#34;
+	height=&#34;124&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;788&#34;
+		data-flex-basis=&#34;1892px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;виберіть-основний-сервер-dns&#34;&gt;Виберіть основний сервер DNS&lt;/h4&gt;
+&lt;p&gt;Тут ви можете вибрати будь-який загальнодоступний відомий розпізнавач DNS або навіть визначити власний DNS-сервер. Я рекомендую використовувати резолвер OpenDNS.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303.png&#34;
+	width=&#34;980&#34;
+	height=&#34;336&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;291&#34;
+		data-flex-basis=&#34;700px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;вимкнути-стиснення&#34;&gt;Вимкнути стиснення&lt;/h4&gt;
+&lt;p&gt;Настійно не рекомендується використовувати стиснення через відомі обмеження безпеки.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414.png&#34;
+	width=&#34;980&#34;
+	height=&#34;60&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1633&#34;
+		data-flex-basis=&#34;3920px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;налаштування-параметрів-шифрування&#34;&gt;Налаштування параметрів шифрування&lt;/h4&gt;
+&lt;p&gt;На цьому кроці ви можете налаштувати параметри шифрування, якщо вам потрібні певні налаштування, але також добре використовувати попередньо визначену конфігурацію.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504.png&#34;
+	width=&#34;980&#34;
+	height=&#34;183&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;535&#34;
+		data-flex-basis=&#34;1285px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;перевірте-параметри&#34;&gt;Перевірте параметри&lt;/h4&gt;
+&lt;p&gt;Після того, як ви визначили всі параметри, ви можете прокрутити термінал і перевірити свої відповіді майстру. Якщо все в порядку, просто натисніть будь-яку кнопку, щоб продовжити встановлення.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600.png&#34;
+	width=&#34;978&#34;
+	height=&#34;80&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1222&#34;
+		data-flex-basis=&#34;2934px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;налаштування-конфігурації-клієнта&#34;&gt;Налаштування конфігурації клієнта&lt;/h4&gt;
+&lt;p&gt;Необхідний крок для створення принаймні однієї конфігурації клієнта.&lt;/p&gt;
+&lt;p&gt;Спочатку визначте ім&amp;rsquo;я клієнта:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317.png&#34;
+	width=&#34;978&#34;
+	height=&#34;83&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1178&#34;
+		data-flex-basis=&#34;2827px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Далі у вас є можливість захистити конфігурацію *.ovpn паролем:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352.png&#34;
+	width=&#34;980&#34;
+	height=&#34;123&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;796&#34;
+		data-flex-basis=&#34;1912px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;завантажте-конфігурацію-клієнта&#34;&gt;Завантажте конфігурацію клієнта&lt;/h3&gt;
+&lt;p&gt;Найбезпечнішим способом є використання SFTP-з’єднання з сервером вашої файлової системи, ви можете скористатися однією командою в локальному терміналі, щоб завантажити його:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;scp shifthackz@192.168.0.37:/home/shifthackz/pixel7pro.ovpn ~&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Де слід замінити своїми значеннями:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;shifthackz@192.168.0.37&lt;/code&gt;: тут визначте користувача вашого сервера та IP-адресу.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home/shifthackz/pixel7pro.ovpn&lt;/code&gt;: це шлях до файлу на ВІДДАЛЕНОМУ сервері.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~&lt;/code&gt;: це шлях до цільової папки завантаження на ЛОКАЛЬНОМУ комп’ютері (у моєму випадку ~ це домашній каталог поточного користувача).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Потім передайте цей файл на пристрій, який ви хочете використовувати як клієнт для підключення до вашого сервера openvpn.&lt;/p&gt;
+&lt;h3 id=&#34;перевірте-підключення-клієнта&#34;&gt;Перевірте підключення клієнта&lt;/h3&gt;
+&lt;p&gt;У цьому прикладі я буду підключатися до своєї мережі VPN за допомогою телефону Android. Спочатку перенесіть завантажений файл *.ovpn на свій телефон та імпортуйте його.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1.png&#34;
+	width=&#34;436&#34;
+	height=&#34;875&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Додайте новий профіль OpenVPN.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;49&#34;
+		data-flex-basis=&#34;119px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2.png&#34;
+	width=&#34;436&#34;
+	height=&#34;873&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Підтвердити імпорт.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;49&#34;
+		data-flex-basis=&#34;119px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3.png&#34;
+	width=&#34;436&#34;
+	height=&#34;875&#34;
+	srcset=&#34;http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_480x0_resize_box_3.png 480w, http://localhost:1313/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Перевірте підключення до сервера OpenVPN.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;49&#34;
+		data-flex-basis=&#34;119px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Після цього спробуйте відкрити якийсь веб-сайт у браузері та переконайтеся, що підключення до Інтернету працює. Крім того, спробуйте перевірити свою IP-адресу на деяких загальнодоступних веб-сайтах перевірки IP-адреси, у вас повинна бути публічна IP-адреса сервера OpenVPN. Також ви повинні мати доступ до деяких локальних пристроїв у тій самій локальній мережі, що й сервер OpenVPN.&lt;/p&gt;
+&lt;h2 id=&#34;висновок&#34;&gt;Висновок&lt;/h2&gt;
+&lt;p&gt;Загалом сервер OpenVPN є потужним інструментом для створення безпечних, гнучких і надійних VPN-з’єднань, що робить його популярним вибором як для окремих осіб, так і для організацій, які прагнуть захистити свої дані та мережеві комунікації.&lt;/p&gt;
+</description>
         </item>
         
     </channel>

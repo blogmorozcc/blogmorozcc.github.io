@@ -6,7 +6,39 @@
         <description>Recent content in Tags on Блог про IT</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>uk</language>
-        <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/uk/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Debian</title>
+        <link>http://localhost:1313/uk/tags/debian/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/debian/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>OpenVPN</title>
+        <link>http://localhost:1313/uk/tags/openvpn/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/openvpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPN</title>
+        <link>http://localhost:1313/uk/tags/vpn/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Автоматизація</title>
+        <link>http://localhost:1313/uk/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</link>
+        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Containerization</title>
         <link>http://localhost:1313/uk/tags/containerization/</link>
         <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
@@ -60,14 +92,6 @@
         <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/uk/tags/%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B8/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Debian</title>
-        <link>http://localhost:1313/uk/tags/debian/</link>
-        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/uk/tags/debian/</guid>
         <description></description>
         </item>
         <item>
@@ -207,19 +231,19 @@
         <description></description>
         </item>
         <item>
-        <title>VPN</title>
-        <link>http://localhost:1313/uk/tags/vpn/</link>
-        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/uk/tags/vpn/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Саморобні Прилади</title>
         <link>http://localhost:1313/uk/tags/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</link>
         <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/uk/tags/%D1%81%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B1%D0%BD%D1%96-%D0%BF%D1%80%D0%B8%D0%BB%D0%B0%D0%B4%D0%B8/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Arch</title>
+        <link>http://localhost:1313/uk/tags/arch/</link>
+        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/uk/tags/arch/</guid>
         <description></description>
         </item>
         <item>
@@ -316,14 +340,6 @@
         <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/uk/tags/ssh/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Arch</title>
-        <link>http://localhost:1313/uk/tags/arch/</link>
-        <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/uk/tags/arch/</guid>
         <description></description>
         </item>
         <item>
