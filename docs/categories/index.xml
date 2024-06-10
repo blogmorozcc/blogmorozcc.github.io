@@ -6,7 +6,23 @@
         <description>Recent content in Categories on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 10 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DIY</title>
+        <link>https://blog.moroz.cc/categories/diy/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/diy/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Hardware</title>
+        <link>https://blog.moroz.cc/categories/hardware/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/hardware/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Cybersecurity</title>
         <link>https://blog.moroz.cc/categories/cybersecurity/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
@@ -39,27 +55,11 @@
         <description></description>
         </item>
         <item>
-        <title>Hardware</title>
-        <link>https://blog.moroz.cc/categories/hardware/</link>
-        <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/categories/hardware/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Virtualization</title>
         <link>https://blog.moroz.cc/categories/virtualization/</link>
         <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/categories/virtualization/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>DIY</title>
-        <link>https://blog.moroz.cc/categories/diy/</link>
-        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/categories/diy/</guid>
         <description></description>
         </item>
         <item>

@@ -6,7 +6,55 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 10 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>3.5mm Jack</title>
+        <link>https://blog.moroz.cc/tags/3.5mm-jack/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/3.5mm-jack/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Adapter</title>
+        <link>https://blog.moroz.cc/tags/adapter/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/adapter/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>DIY</title>
+        <link>https://blog.moroz.cc/tags/diy/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/diy/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Line Out</title>
+        <link>https://blog.moroz.cc/tags/line-out/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/line-out/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Mic In</title>
+        <link>https://blog.moroz.cc/tags/mic-in/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/mic-in/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Sound</title>
+        <link>https://blog.moroz.cc/tags/sound/</link>
+        <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/sound/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>HAProxy</title>
         <link>https://blog.moroz.cc/tags/haproxy/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
@@ -204,14 +252,6 @@
         <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/virtio/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>DIY</title>
-        <link>https://blog.moroz.cc/tags/diy/</link>
-        <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/diy/</guid>
         <description></description>
         </item>
         <item>

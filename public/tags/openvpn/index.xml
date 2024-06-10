@@ -90,7 +90,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    server node01 127.0.0.1:20002
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h4 id=&#34;configure-https-balancing&#34;&gt;Configure HTTPS balancing&lt;/h4&gt;
+&lt;/div&gt;&lt;h3 id=&#34;configure-https-balancing&#34;&gt;Configure HTTPS balancing&lt;/h3&gt;
 &lt;p&gt;Next we need to create a frontend which will be bound to &lt;code&gt;localhost:8443&lt;/code&gt; and will manage redirect based on domain. It will allow to host web apps for multiple domains. Also backend for &lt;code&gt;localhost:8443&lt;/code&gt; should be created, it will be used later to connect from port frontend which will be listened on incoming port 443.&lt;/p&gt;
 &lt;p&gt;In this example connection is redirected to corresponding web app based on domain SNI check, for example:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
