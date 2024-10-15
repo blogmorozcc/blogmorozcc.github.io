@@ -2,23 +2,23 @@
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction SSH key-based authentication is a method of securely logging into a remote system or server using cryptographic keys instead of passwords. It works based on public-key cryptography, where a pair of keys is generated—a public key and a private key. The public key is stored on the server, and the private key is kept secure on the client side.
-How it works? Key Generation: The user generates a pair of cryptographic keys—a public key and a private key.'><title>Configure SSH authorization based on RSA key</title>
+How it works? Key Generation: The user generates a pair of cryptographic keys—a public key and a private key. The private key is kept securely on the user&rsquo;s computer, while the public key is placed on the server.
+'><title>Configure SSH authorization based on RSA key</title>
 
 <link rel='canonical' href='https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Configure SSH authorization based on RSA key'>
 <meta property='og:description' content='Introduction SSH key-based authentication is a method of securely logging into a remote system or server using cryptographic keys instead of passwords. It works based on public-key cryptography, where a pair of keys is generated—a public key and a private key. The public key is stored on the server, and the private key is kept secure on the client side.
-How it works? Key Generation: The user generates a pair of cryptographic keys—a public key and a private key.'>
+How it works? Key Generation: The user generates a pair of cryptographic keys—a public key and a private key. The private key is kept securely on the user&rsquo;s computer, while the public key is placed on the server.
+'>
 <meta property='og:url' content='https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/'>
 <meta property='og:site_name' content='The IT Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='SSH' /><meta property='article:tag' content='RSA' /><meta property='article:tag' content='Authentication' /><meta property='article:published_time' content='2024-03-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-10T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/header.jpg' />
 <meta name="twitter:title" content="Configure SSH authorization based on RSA key">
 <meta name="twitter:description" content="Introduction SSH key-based authentication is a method of securely logging into a remote system or server using cryptographic keys instead of passwords. It works based on public-key cryptography, where a pair of keys is generated—a public key and a private key. The public key is stored on the server, and the private key is kept secure on the client side.
-How it works? Key Generation: The user generates a pair of cryptographic keys—a public key and a private key."><meta name="twitter:card" content="summary_large_image">
+How it works? Key Generation: The user generates a pair of cryptographic keys—a public key and a private key. The private key is kept securely on the user&rsquo;s computer, while the public key is placed on the server.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/header.jpg' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -60,7 +60,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -242,8 +242,8 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
     <header class="article-header">
         <div class="article-image">
             <a href="/post/configure-ssh-authorization-based-on-rsa-key/">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_800x0_resize_q75_box.jpg"
-                        srcset="/post/configure-ssh-authorization-based-on-rsa-key/header_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_800x0_resize_q75_box.jpg 800w, /post/configure-ssh-authorization-based-on-rsa-key/header_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_1600x0_resize_q75_box.jpg 1600w"
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header_hu4267428183617922169.jpg"
+                        srcset="/post/configure-ssh-authorization-based-on-rsa-key/header_hu4267428183617922169.jpg 800w, /post/configure-ssh-authorization-based-on-rsa-key/header_hu15854052177998909179.jpg 1600w"
                         width="800" 
                         height="500" 
                         loading="lazy"
@@ -404,7 +404,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
 <p><img src="/post/configure-ssh-authorization-based-on-rsa-key/keygen1.png"
 	width="774"
 	height="91"
-	srcset="/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_480x0_resize_box_3.png 480w, /post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_1024x0_resize_box_3.png 1024w"
+	srcset="/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu11925161998479240497.png 480w, /post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu1177734199855009109.png 1024w"
 	loading="lazy"
 	
 		alt="Example of setting the SSH key filename"
@@ -426,7 +426,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
 <p><img src="/post/configure-ssh-authorization-based-on-rsa-key/keygen2.png"
 	width="768"
 	height="448"
-	srcset="/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_480x0_resize_box_3.png 480w, /post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_1024x0_resize_box_3.png 1024w"
+	srcset="/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hu15828200097434397956.png 480w, /post/configure-ssh-authorization-based-on-rsa-key/keygen2_hu2905700349151381536.png 1024w"
 	loading="lazy"
 	
 		alt="Example of successful SSH key generation"
@@ -554,7 +554,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
         
         
             <div class="article-image">
-                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu38aeca524a31a58e580a8f8774f7f217_36945_250x150_fill_box_smart1_3.png" 
+                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu16171695807235886636.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -578,7 +578,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
         
         
             <div class="article-image">
-                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_huae4787578a5876ddb42874325345f68a_470994_250x150_fill_box_smart1_3.png" 
+                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_hu12471396964104110934.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -602,7 +602,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
         
         
             <div class="article-image">
-                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu228a1f9ac33fe18663808d2fd8f88170_216388_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu17688405383480260002.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -626,7 +626,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
         
         
             <div class="article-image">
-                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu760727812907467930.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -650,7 +650,7 @@ How it works? Key Generation: The user generates a pair of cryptographic keys—
         
         
             <div class="article-image">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2499082915750007904.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"

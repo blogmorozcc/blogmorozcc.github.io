@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &amp;ldquo;AUTOMATIC1111&amp;rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&amp;rsquo;s capabilities.'><title>How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &ldquo;AUTOMATIC1111&rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&rsquo;s capabilities.
+'><title>How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)</title>
 
 <link rel='canonical' href='http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)'>
-<meta property='og:description' content='Introduction Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &amp;ldquo;AUTOMATIC1111&amp;rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&amp;rsquo;s capabilities.'>
+<meta property='og:description' content='Introduction Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &ldquo;AUTOMATIC1111&rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&rsquo;s capabilities.
+'>
 <meta property='og:url' content='http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/'>
 <meta property='og:site_name' content='The IT Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='AUTOMATIC1111' /><meta property='article:tag' content='Stable Diffusion' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='AMD' /><meta property='article:tag' content='ROCM' /><meta property='article:tag' content='GPU' /><meta property='article:tag' content='Virtio' /><meta property='article:tag' content='Ubuntu Server' /><meta property='article:published_time' content='2024-06-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-01T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.png' />
 <meta name="twitter:title" content="How to run Stable Diffusion in VM on AMD GPU (AUTOMATIC1111 &#43; KVM &#43; GPU Passthrough)">
-<meta name="twitter:description" content="Introduction Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &amp;ldquo;AUTOMATIC1111&amp;rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&amp;rsquo;s capabilities."><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Introduction Stable Diffusion is a deep learning, text-to-image model developed by Stability AI. It is primarily used to generate detailed images based on text prompts. The model belongs to the class of generative models called diffusion models, which iteratively denoise a random signal to produce an image. AUTOMATIC1111 refers to a popular web-based user interface (UI) implementation for interacting with Stable Diffusion. Developed by an individual or group under the pseudonym &ldquo;AUTOMATIC1111&rdquo;, it provides a robust and user-friendly way to utilize Stable Diffusion&rsquo;s capabilities.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.png' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -57,7 +57,7 @@
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -239,8 +239,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/">
-                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header_hu3aafa9004173c931941da8e2c440d12d_732838_800x0_resize_box_3.png"
-                        srcset="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header_hu3aafa9004173c931941da8e2c440d12d_732838_800x0_resize_box_3.png 800w, /post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header_hu3aafa9004173c931941da8e2c440d12d_732838_1600x0_resize_box_3.png 1600w"
+                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header_hu6978416414322802966.png"
+                        srcset="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header_hu6978416414322802966.png 800w, /post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header_hu17006784613053467479.png 1600w"
                         width="800" 
                         height="386" 
                         loading="lazy"
@@ -446,7 +446,7 @@
 <p><img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch.png"
 	width="1047"
 	height="395"
-	srcset="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_480x0_resize_box_3.png 480w, /post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu133252618004603506.png 480w, /post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu17688080236442681459.png 1024w"
 	loading="lazy"
 	
 		alt="Running AUTOMATIC1111 instance."
@@ -520,7 +520,7 @@
         
         
             <div class="article-image">
-                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hu14601158863065631491.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -544,7 +544,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu7125471459882845826.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -568,7 +568,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2499082915750007904.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -592,7 +592,7 @@
         
         
             <div class="article-image">
-                <img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.6d6a0291a0418a1d58cc90f270165a8b_huaf7132429931ddcde60d8d9ee0a89d27_286083_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.6d6a0291a0418a1d58cc90f270165a8b_hu15574673738566040222.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -612,23 +612,23 @@
             
                 
 <article class="has-image">
-    <a href="/post/making-an-adapter-to-connect-3.5mm-sound-jack-line-output-to-microphone-input/">
+    <a href="/post/arch-linux-install-guide-uefi--encrypted-lvm/">
         
         
             <div class="article-image">
-                <img src="/post/making-an-adapter-to-connect-3.5mm-sound-jack-line-output-to-microphone-input/header.6675a4c8bc7ae06f78a0c60a693108f8_hu09653fa7ce9b51005759a944b821a120_1841099_250x150_fill_box_smart1_3.png" 
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.093eb5c133b47e79a4c02d373a4df404_hu1856714276247148550.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post Making an adapter to connect 3.5mm sound jack line output to microphone input"
+                        alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)"
                         
-                        data-hash="md5-ZnWkyLx64G94oMYKaTEI&#43;A==">
+                        data-hash="md5-CT61wTO0fnmkwC03Ok30BA==">
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Making an adapter to connect 3.5mm sound jack line output to microphone input</h2>
+            <h2 class="article-title">Arch Linux install guide (UEFI &#43; encrypted LVM)</h2>
         </div>
     </a>
 </article>

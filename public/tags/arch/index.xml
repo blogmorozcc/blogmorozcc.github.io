@@ -6,7 +6,16 @@
         <description>Recent content in Arch on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/arch/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/arch/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Arch Linux install guide (UEFI &#43; encrypted LVM)</title>
+        <link>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</guid>
+        <description>&lt;img src="http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/header.png" alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+</description>
+        </item>
+        <item>
         <title>Install Linux ZEN kernel on Arch Linux to improve performance</title>
         <link>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>

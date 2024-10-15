@@ -2,23 +2,23 @@
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='OpenVPN overview OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.
-Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission.'><title>Easy deploy OpenVPN service on any Linux server using custom script</title>
+Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission. It supports various encryption algorithms such as AES (Advanced Encryption Standard), which is widely trusted for its security. It uses SSL/TLS for key exchange, ensuring that even if the connection is intercepted, the data cannot be easily decrypted. Cross-Platform Compatibility: OpenVPN is compatible with multiple operating systems, including Windows, Linux, macOS, iOS, and Android. This makes it a versatile choice for a wide range of devices. Authentication: It supports multiple authentication methods, including username/password, certificate-based, and multi-factor authentication (MFA). This flexibility allows for enhanced security tailored to different use cases. Configurability and Flexibility: OpenVPN can be configured to run on any port, using either TCP or UDP, which helps it avoid network restrictions and makes it easier to penetrate firewalls. It supports both site-to-site VPNs, which connect entire networks, and client-to-server VPNs, which connect individual devices to a network. Scalability: OpenVPN can be scaled to support a large number of users and complex network configurations, making it suitable for both small businesses and large enterprises. Open Source: Being open-source means that the software&rsquo;s code is publicly available for review, making it more transparent and allowing the community to contribute to its security and development. Support for Various Network Topologies: It can be used in routed or bridged configurations and can create secure connections over NAT. Bypass Restrictions: OpenVPN is effective at bypassing network restrictions, making it a popular choice for users in regions with heavy internet censorship. Advantages and Disadvantages Advantages:
+'><title>Easy deploy OpenVPN service on any Linux server using custom script</title>
 
 <link rel='canonical' href='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Easy deploy OpenVPN service on any Linux server using custom script'>
 <meta property='og:description' content='OpenVPN overview OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.
-Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission.'>
+Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission. It supports various encryption algorithms such as AES (Advanced Encryption Standard), which is widely trusted for its security. It uses SSL/TLS for key exchange, ensuring that even if the connection is intercepted, the data cannot be easily decrypted. Cross-Platform Compatibility: OpenVPN is compatible with multiple operating systems, including Windows, Linux, macOS, iOS, and Android. This makes it a versatile choice for a wide range of devices. Authentication: It supports multiple authentication methods, including username/password, certificate-based, and multi-factor authentication (MFA). This flexibility allows for enhanced security tailored to different use cases. Configurability and Flexibility: OpenVPN can be configured to run on any port, using either TCP or UDP, which helps it avoid network restrictions and makes it easier to penetrate firewalls. It supports both site-to-site VPNs, which connect entire networks, and client-to-server VPNs, which connect individual devices to a network. Scalability: OpenVPN can be scaled to support a large number of users and complex network configurations, making it suitable for both small businesses and large enterprises. Open Source: Being open-source means that the software&rsquo;s code is publicly available for review, making it more transparent and allowing the community to contribute to its security and development. Support for Various Network Topologies: It can be used in routed or bridged configurations and can create secure connections over NAT. Bypass Restrictions: OpenVPN is effective at bypassing network restrictions, making it a popular choice for users in regions with heavy internet censorship. Advantages and Disadvantages Advantages:
+'>
 <meta property='og:url' content='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/'>
 <meta property='og:site_name' content='The IT Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Debian' /><meta property='article:tag' content='VPN' /><meta property='article:tag' content='OpenVPN' /><meta property='article:tag' content='Automation' /><meta property='article:published_time' content='2024-06-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-06T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png' />
 <meta name="twitter:title" content="Easy deploy OpenVPN service on any Linux server using custom script">
 <meta name="twitter:description" content="OpenVPN overview OpenVPN is a popular open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections. It is widely used for its flexibility, strong security, and ability to traverse network address translators (NATs) and firewalls. An OpenVPN server, in particular, is a server configured to handle OpenVPN connections, allowing clients to connect securely over a network, typically the Internet.
-Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission."><meta name="twitter:card" content="summary_large_image">
+Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encryption methods to secure data transmission. It supports various encryption algorithms such as AES (Advanced Encryption Standard), which is widely trusted for its security. It uses SSL/TLS for key exchange, ensuring that even if the connection is intercepted, the data cannot be easily decrypted. Cross-Platform Compatibility: OpenVPN is compatible with multiple operating systems, including Windows, Linux, macOS, iOS, and Android. This makes it a versatile choice for a wide range of devices. Authentication: It supports multiple authentication methods, including username/password, certificate-based, and multi-factor authentication (MFA). This flexibility allows for enhanced security tailored to different use cases. Configurability and Flexibility: OpenVPN can be configured to run on any port, using either TCP or UDP, which helps it avoid network restrictions and makes it easier to penetrate firewalls. It supports both site-to-site VPNs, which connect entire networks, and client-to-server VPNs, which connect individual devices to a network. Scalability: OpenVPN can be scaled to support a large number of users and complex network configurations, making it suitable for both small businesses and large enterprises. Open Source: Being open-source means that the software&rsquo;s code is publicly available for review, making it more transparent and allowing the community to contribute to its security and development. Support for Various Network Topologies: It can be used in routed or bridged configurations and can create secure connections over NAT. Bypass Restrictions: OpenVPN is effective at bypassing network restrictions, making it a popular choice for users in regions with heavy internet censorship. Advantages and Disadvantages Advantages:
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.png' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -60,7 +60,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -242,8 +242,8 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
     <header class="article-header">
         <div class="article-image">
             <a href="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/">
-                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_huae4787578a5876ddb42874325345f68a_470994_800x0_resize_box_3.png"
-                        srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_huae4787578a5876ddb42874325345f68a_470994_800x0_resize_box_3.png 800w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_huae4787578a5876ddb42874325345f68a_470994_1600x0_resize_box_3.png 1600w"
+                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_hu4837932886203210466.png"
+                        srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_hu4837932886203210466.png 800w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header_hu29084237844600800.png 1600w"
                         width="800" 
                         height="400" 
                         loading="lazy"
@@ -424,7 +424,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722.png"
 	width="980"
 	height="208"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hu11835490991283329849.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hu16730718594315454199.png 1024w"
 	loading="lazy"
 	
 	
@@ -438,7 +438,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828.png"
 	width="978"
 	height="94"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hu9650783926718849735.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hu7076724111708133051.png 1024w"
 	loading="lazy"
 	
 	
@@ -452,7 +452,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037.png"
 	width="980"
 	height="126"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hu9611146055587325175.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hu3691886562778154573.png 1024w"
 	loading="lazy"
 	
 	
@@ -466,7 +466,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121.png"
 	width="980"
 	height="127"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hu4849275297742617897.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hu13553429190500592506.png 1024w"
 	loading="lazy"
 	
 	
@@ -480,7 +480,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216.png"
 	width="978"
 	height="124"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hu10625142996558916314.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hu6971832501653071497.png 1024w"
 	loading="lazy"
 	
 	
@@ -494,7 +494,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303.png"
 	width="980"
 	height="336"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hu5458968244409787573.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hu4895425890596583214.png 1024w"
 	loading="lazy"
 	
 	
@@ -508,7 +508,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414.png"
 	width="980"
 	height="60"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu15790650347970908598.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu16304101232571851280.png 1024w"
 	loading="lazy"
 	
 	
@@ -522,7 +522,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504.png"
 	width="980"
 	height="183"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu10578866037176762233.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu2119003778766715629.png 1024w"
 	loading="lazy"
 	
 	
@@ -536,7 +536,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600.png"
 	width="978"
 	height="80"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_hu11580938189810458216.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_hu357255550679396012.png 1024w"
 	loading="lazy"
 	
 	
@@ -551,7 +551,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317.png"
 	width="978"
 	height="83"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hu9273606914115903615.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hu14888182707493261668.png 1024w"
 	loading="lazy"
 	
 	
@@ -564,7 +564,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352.png"
 	width="980"
 	height="123"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu9943214028975678341.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu10911092971922333105.png 1024w"
 	loading="lazy"
 	
 	
@@ -588,7 +588,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <p><img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1.png"
 	width="436"
 	height="875"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_hu3562169309634839186.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_hu68721785652129530.png 1024w"
 	loading="lazy"
 	
 		alt="Add new OpenVPN profile."
@@ -602,7 +602,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2.png"
 	width="436"
 	height="873"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu2237769961639447552.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu15477384149532312955.png 1024w"
 	loading="lazy"
 	
 		alt="Confirm import."
@@ -616,7 +616,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
 <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3.png"
 	width="436"
 	height="875"
-	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_480x0_resize_box_3.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_1024x0_resize_box_3.png 1024w"
+	srcset="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_hu6425126588364808073.png 480w, /post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_hu13466588910935383036.png 1024w"
 	loading="lazy"
 	
 		alt="Verify connection to OpenVPN server."
@@ -670,7 +670,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
         
         
             <div class="article-image">
-                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu38aeca524a31a58e580a8f8774f7f217_36945_250x150_fill_box_smart1_3.png" 
+                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu16171695807235886636.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -694,7 +694,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
         
         
             <div class="article-image">
-                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu228a1f9ac33fe18663808d2fd8f88170_216388_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu17688405383480260002.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -718,7 +718,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
         
         
             <div class="article-image">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu9137267704124055770.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -742,7 +742,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
         
         
             <div class="article-image">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2499082915750007904.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -766,7 +766,7 @@ Key Features of OpenVPN Server Encryption and Security: OpenVPN uses robust encr
         
         
             <div class="article-image">
-                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu1926450258490511575.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"

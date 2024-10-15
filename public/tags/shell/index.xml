@@ -56,7 +56,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install_hu16319569058414486143.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/install_hu17026989244868686411.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of installing ZSH on Arch Linux&#34;
@@ -73,7 +73,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hu8008018449894362887.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hu3940105042198436986.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Making ZSH the default shell&#34;
@@ -90,7 +90,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hu17940928290311322650.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hu6921689312724243087.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Initial configuration of ZSH shell&#34;
@@ -113,7 +113,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_hu871790017501581268.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_hu12955064899744155195.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Initial configuration of ZSH shell&#34;
@@ -130,7 +130,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu14295633495722725417.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu10919407002149610267.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Initial configuration of ZSH shell&#34;
@@ -179,7 +179,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings.png&#34;
 	width=&#34;1071&#34;
 	height=&#34;787&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_hu9694421732731324455.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_hu3273641325484970774.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Terminal font settings example&#34;
@@ -197,7 +197,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hu15826549651525161109.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hu17293742031610451915.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;The process of cloning Powerlevel10k repository files&#34;
@@ -215,7 +215,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu13693703339301562036.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu3272083076423258357.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Changing the theme in .zshrc&#34;
@@ -234,7 +234,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu14647890607765473019.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu12916032424740068985.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Diamond symbol&#34;
@@ -248,7 +248,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu9751960176649098559.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu14246614376662757853.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Lock symbol&#34;
@@ -262,7 +262,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hu13096881449815345485.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hu4848622254458839411.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Up arrow symbol&#34;
@@ -276,7 +276,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu14595665827381223676.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu6862238543720249433.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fit between symbols&#34;
@@ -294,7 +294,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu7810763447598317949.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu15240634993479004947.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt style&#34;
@@ -309,7 +309,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_hu13480525587687881263.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_hu11510552093618873547.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Character set&#34;
@@ -324,7 +324,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu3212630298607614649.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu8081279486841776765.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Current time&#34;
@@ -339,7 +339,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu1106611752234159087.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu11819483448750854193.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt separator&#34;
@@ -353,7 +353,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu17576042267831462595.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu6188375074469396435.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt heads&#34;
@@ -367,7 +367,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu16670261253079561425.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu6318791708389598093.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt tails&#34;
@@ -381,7 +381,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu15002581450688704941.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu3205523818161259799.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt height&#34;
@@ -395,7 +395,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu7723982711197033938.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu17296952711085936608.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt connection&#34;
@@ -409,7 +409,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu513418425873758178.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu15690474411121508744.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt frame&#34;
@@ -423,7 +423,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu14686703418519690005.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu17969102435850539471.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt spacing&#34;
@@ -437,7 +437,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hu1998138706324677875.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hu3041714828162936621.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Icons&#34;
@@ -451,7 +451,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu12791683234706094381.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu15815265824928675402.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt flow&#34;
@@ -465,7 +465,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu2705684876085937982.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu9728215556108321926.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Transient prompt&#34;
@@ -480,7 +480,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu15961203548783550839.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu10913828289890945984.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Instant prompt&#34;
@@ -495,7 +495,7 @@
 &lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hu6865751627043823751.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hu7456758735046415555.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Apply changes&#34;
@@ -510,7 +510,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;451&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu2521739151346119347.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu13822021505482669128.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Installed p10k theme&#34;
@@ -529,7 +529,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;725&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1472991700397276475.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu4712046500841468626.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Plugins bundled with Oh My ZSH by default&#34;
@@ -547,7 +547,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;725&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu12010488412420697145.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu15598172462293331661.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Changing the plugins in .zshrc&#34;
@@ -567,7 +567,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;725&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_hu5204135660965548430.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_hu6554821613715315821.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Cloning the zsh-autosuggestions plugin&#34;
@@ -586,7 +586,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;370&#34;
-	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_480x0_resize_box_3.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu8796157645427583894.png 480w, http://localhost:1313/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu14425750983685760164.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Testing the zsh-autosuggestions plugin&#34;

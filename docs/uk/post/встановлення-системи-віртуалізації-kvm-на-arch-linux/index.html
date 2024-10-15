@@ -3,25 +3,25 @@
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Вступ KVM, що означає Kernel-based Virtual Machine (віртуальна машина на базі ядра), є рішенням для віртуалізації в операційних системах Linux. Воно дозволяє запускати кілька віртуальних машин (ВМ) на одній фізичній машині за допомогою вбудованих у сучасні процесори функцій віртуалізації апаратного забезпечення.
 Ось розбір того, що пропонує KVM:
-Гіпервізор: KVM діє як гіпервізор, що є частиною програмного забезпечення, яке створює та запускає віртуальні машини. Воно використовує розширення віртуалізації, які присутні в сучасних процесорах (такі як Intel VT-x або AMD-V), для забезпечення апаратно-допомаганої віртуалізації.'><title>Встановлення системи віртуалізації KVM на Arch Linux</title>
+Гіпервізор: KVM діє як гіпервізор, що є частиною програмного забезпечення, яке створює та запускає віртуальні машини. Воно використовує розширення віртуалізації, які присутні в сучасних процесорах (такі як Intel VT-x або AMD-V), для забезпечення апаратно-допомаганої віртуалізації.
+'><title>Встановлення системи віртуалізації KVM на Arch Linux</title>
 
 <link rel='canonical' href='https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Встановлення системи віртуалізації KVM на Arch Linux'>
 <meta property='og:description' content='Вступ KVM, що означає Kernel-based Virtual Machine (віртуальна машина на базі ядра), є рішенням для віртуалізації в операційних системах Linux. Воно дозволяє запускати кілька віртуальних машин (ВМ) на одній фізичній машині за допомогою вбудованих у сучасні процесори функцій віртуалізації апаратного забезпечення.
 Ось розбір того, що пропонує KVM:
-Гіпервізор: KVM діє як гіпервізор, що є частиною програмного забезпечення, яке створює та запускає віртуальні машини. Воно використовує розширення віртуалізації, які присутні в сучасних процесорах (такі як Intel VT-x або AMD-V), для забезпечення апаратно-допомаганої віртуалізації.'>
+Гіпервізор: KVM діє як гіпервізор, що є частиною програмного забезпечення, яке створює та запускає віртуальні машини. Воно використовує розширення віртуалізації, які присутні в сучасних процесорах (такі як Intel VT-x або AMD-V), для забезпечення апаратно-допомаганої віртуалізації.
+'>
 <meta property='og:url' content='https://blog.moroz.cc/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/'>
 <meta property='og:site_name' content='Блог про IT'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='Віртуалізація' /><meta property='article:published_time' content='2024-03-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-15T00:00:00&#43;00:00'/><meta property='og:image' content='https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/header.png' />
 <meta name="twitter:title" content="Встановлення системи віртуалізації KVM на Arch Linux">
 <meta name="twitter:description" content="Вступ KVM, що означає Kernel-based Virtual Machine (віртуальна машина на базі ядра), є рішенням для віртуалізації в операційних системах Linux. Воно дозволяє запускати кілька віртуальних машин (ВМ) на одній фізичній машині за допомогою вбудованих у сучасні процесори функцій віртуалізації апаратного забезпечення.
 Ось розбір того, що пропонує KVM:
-Гіпервізор: KVM діє як гіпервізор, що є частиною програмного забезпечення, яке створює та запускає віртуальні машини. Воно використовує розширення віртуалізації, які присутні в сучасних процесорах (такі як Intel VT-x або AMD-V), для забезпечення апаратно-допомаганої віртуалізації."><meta name="twitter:card" content="summary_large_image">
+Гіпервізор: KVM діє як гіпервізор, що є частиною програмного забезпечення, яке створює та запускає віртуальні машини. Воно використовує розширення віртуалізації, які присутні в сучасних процесорах (такі як Intel VT-x або AMD-V), для забезпечення апаратно-допомаганої віртуалізації.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://blog.moroz.cc/post/how-to-install-kvm-on-arch-linux/header.png' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -63,7 +63,7 @@
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -245,8 +245,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8-%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%97-kvm-%D0%BD%D0%B0-arch-linux/">
-                <img src="/post/how-to-install-kvm-on-arch-linux/header_hu9582e9719e96abf49c172162d020cea7_78147_800x0_resize_box_3.png"
-                        srcset="/post/how-to-install-kvm-on-arch-linux/header_hu9582e9719e96abf49c172162d020cea7_78147_800x0_resize_box_3.png 800w, /post/how-to-install-kvm-on-arch-linux/header_hu9582e9719e96abf49c172162d020cea7_78147_1600x0_resize_box_3.png 1600w"
+                <img src="/post/how-to-install-kvm-on-arch-linux/header_hu5976065695787800371.png"
+                        srcset="/post/how-to-install-kvm-on-arch-linux/header_hu5976065695787800371.png 800w, /post/how-to-install-kvm-on-arch-linux/header_hu2988887362388005884.png 1600w"
                         width="800" 
                         height="419" 
                         loading="lazy"
@@ -449,7 +449,7 @@
         
         
             <div class="article-image">
-                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hu14601158863065631491.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -473,7 +473,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.7c20b2784b6bda086e9624c99b0ff5a9_hu3aafa9004173c931941da8e2c440d12d_732838_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.7c20b2784b6bda086e9624c99b0ff5a9_hu9184250775236328727.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -497,7 +497,7 @@
         
         
             <div class="article-image">
-                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_250x150_fill_box_smart1_3.png" 
+                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4808927919241056216.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -521,7 +521,7 @@
         
         
             <div class="article-image">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu9137267704124055770.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -545,7 +545,7 @@
         
         
             <div class="article-image">
-                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hu1059685424483156457.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"

@@ -3,25 +3,25 @@
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Вступ Прокидання GPU в KVM відноситься до процесу безпосереднього призначення фізичного GPU (графічного пристрою) віртуальній машині, що працює на гіпервізорі KVM. Це дозволяє віртуальній машині мати виключний доступ до GPU, обійшовши практично віртуалізаційний шар гіпервізора.
 Для багатьох це може звучати складно, але з Linux та KVM це насправді легко, і налаштування включає наступні 5 кроків:
-Перевірка GPU. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу.'><title>Прокидання відеокарти PCI до Windows KVM на Arch Linux</title>
+Перевірка GPU. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу. Це часто потребує підтримки VT-d (віртуалізаційна технологія Intel для прямого введення/виведення) або AMD-Vi (AMD віртуалізація I/O) на процесорі, а також IOMMU (одиниця управління пам&rsquo;яттю введення/виведення) на материнській платі.
+'><title>Прокидання відеокарти PCI до Windows KVM на Arch Linux</title>
 
 <link rel='canonical' href='http://localhost:1313/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Прокидання відеокарти PCI до Windows KVM на Arch Linux'>
 <meta property='og:description' content='Вступ Прокидання GPU в KVM відноситься до процесу безпосереднього призначення фізичного GPU (графічного пристрою) віртуальній машині, що працює на гіпервізорі KVM. Це дозволяє віртуальній машині мати виключний доступ до GPU, обійшовши практично віртуалізаційний шар гіпервізора.
 Для багатьох це може звучати складно, але з Linux та KVM це насправді легко, і налаштування включає наступні 5 кроків:
-Перевірка GPU. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу.'>
+Перевірка GPU. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу. Це часто потребує підтримки VT-d (віртуалізаційна технологія Intel для прямого введення/виведення) або AMD-Vi (AMD віртуалізація I/O) на процесорі, а також IOMMU (одиниця управління пам&rsquo;яттю введення/виведення) на материнській платі.
+'>
 <meta property='og:url' content='http://localhost:1313/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/'>
 <meta property='og:site_name' content='Блог про IT'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='KVM' /><meta property='article:tag' content='Віртуалізація' /><meta property='article:tag' content='PCI Passthrough' /><meta property='article:tag' content='GPU' /><meta property='article:tag' content='IOMMU' /><meta property='article:tag' content='VT-d' /><meta property='article:tag' content='AMD-Vi' /><meta property='article:tag' content='VFIO' /><meta property='article:published_time' content='2024-03-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-03-18T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.webp' />
 <meta name="twitter:title" content="Прокидання відеокарти PCI до Windows KVM на Arch Linux">
 <meta name="twitter:description" content="Вступ Прокидання GPU в KVM відноситься до процесу безпосереднього призначення фізичного GPU (графічного пристрою) віртуальній машині, що працює на гіпервізорі KVM. Це дозволяє віртуальній машині мати виключний доступ до GPU, обійшовши практично віртуалізаційний шар гіпервізора.
 Для багатьох це може звучати складно, але з Linux та KVM це насправді легко, і налаштування включає наступні 5 кроків:
-Перевірка GPU. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу."><meta name="twitter:card" content="summary_large_image">
+Перевірка GPU. Перший крок - переконатися, що GPU, який ви хочете передати, сумісний з вашим обладнанням і підтримує необхідні функції для прохідного доступу. Це часто потребує підтримки VT-d (віртуалізаційна технологія Intel для прямого введення/виведення) або AMD-Vi (AMD віртуалізація I/O) на процесорі, а також IOMMU (одиниця управління пам&rsquo;яттю введення/виведення) на материнській платі.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.webp' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -63,7 +63,7 @@
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -245,8 +245,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D0%BF%D1%80%D0%BE%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F-%D0%B2%D1%96%D0%B4%D0%B5%D0%BE%D0%BA%D0%B0%D1%80%D1%82%D0%B8-pci-%D0%B4%D0%BE-windows-kvm-%D0%BD%D0%B0-arch-linux/">
-                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_800x0_resize_q75_h2_box_2.webp"
-                        srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_800x0_resize_q75_h2_box_2.webp 800w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hued49b8fc40a4ce925bd267fd9ac65523_97296_1600x0_resize_q75_h2_box_2.webp 1600w"
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hu13100115247543102963.webp"
+                        srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hu13100115247543102963.webp 800w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header_hu395806703679824036.webp 1600w"
                         width="800" 
                         height="450" 
                         loading="lazy"
@@ -390,7 +390,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware.jpg"
 	width="3746"
 	height="2036"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_480x0_resize_q75_box.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_1024x0_resize_q75_box.jpg 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu5316848306174236222.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu2324413773942828971.jpg 1024w"
 	loading="lazy"
 	
 		alt="Обладнання PCIE - Робоча станція з двома відеокартами"
@@ -410,7 +410,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png"
 	width="1920"
 	height="1092"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_hu14537860528276522273.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_hu14410412353474061933.png 1024w"
 	loading="lazy"
 	
 		alt="Приклад налаштувань віртуалізації на материнській платі MSI Z490 і процесорі Intel"
@@ -425,7 +425,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png"
 	width="1920"
 	height="1096"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu4801827362415809405.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu14994768946575286753.png 1024w"
 	loading="lazy"
 	
 		alt="Приклад налаштувань ініціалізації GPU на материнській платі MSI Z490"
@@ -629,7 +629,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1.png"
 	width="493"
 	height="493"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hu18073896031278788223.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hu6602310145448245060.png 1024w"
 	loading="lazy"
 	
 		alt="Virt Manager - Локальний образ для встановлення ОС"
@@ -646,7 +646,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2.png"
 	width="494"
 	height="491"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu11950223325433741524.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu6122348967997760476.png 1024w"
 	loading="lazy"
 	
 		alt="Virt Manager - Шлях до ISO та тип операційної системи"
@@ -663,7 +663,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3.png"
 	width="494"
 	height="492"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu10945930333721977693.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu9887751238817905722.png 1024w"
 	loading="lazy"
 	
 		alt="Virt Manager - Виділення системних ресурсів"
@@ -680,7 +680,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4.png"
 	width="491"
 	height="490"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hu7867447878356202190.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hu10148646427734098499.png 1024w"
 	loading="lazy"
 	
 		alt="Virt Manager - Виділення дискового простору"
@@ -701,7 +701,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5.png"
 	width="492"
 	height="490"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu17891980543552084179.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu3597440930435823089.png 1024w"
 	loading="lazy"
 	
 		alt="Virt Manager - Назва ВМ, віртуальний мережевий адаптер"
@@ -718,7 +718,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6.png"
 	width="1015"
 	height="802"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_480x0_resize_box_3.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_1024x0_resize_box_3.png 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu12238543899330835909.png 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu3686758649475576161.png 1024w"
 	loading="lazy"
 	
 		alt="Virt Manager - Конфігураціятипу та прошивки чіпсета (Q35 UEFI)."
@@ -808,7 +808,7 @@
 <p><img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result.jpg"
 	width="4080"
 	height="1292"
-	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_480x0_resize_q75_box.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_1024x0_resize_q75_box.jpg 1024w"
+	srcset="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu7478169995235364455.jpg 480w, /post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu8454564593016997709.jpg 1024w"
 	loading="lazy"
 	
 		alt="Результат GPU Passthrough: Windows ВМ ліворуч, Linux host праворуч"
@@ -887,7 +887,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.7c20b2784b6bda086e9624c99b0ff5a9_hu3aafa9004173c931941da8e2c440d12d_732838_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/header.7c20b2784b6bda086e9624c99b0ff5a9_hu9184250775236328727.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -911,7 +911,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu7125471459882845826.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -935,7 +935,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2499082915750007904.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -959,7 +959,7 @@
         
         
             <div class="article-image">
-                <img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.6d6a0291a0418a1d58cc90f270165a8b_huaf7132429931ddcde60d8d9ee0a89d27_286083_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/assembling-a-pikvm-v2-device-for-remote-kvm-over-ip-control-of-a-computer-or-server/header.6d6a0291a0418a1d58cc90f270165a8b_hu15574673738566040222.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -983,7 +983,7 @@
         
         
             <div class="article-image">
-                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_250x150_fill_box_smart1_3.png" 
+                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4808927919241056216.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"

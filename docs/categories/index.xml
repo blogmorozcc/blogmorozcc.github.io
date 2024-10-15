@@ -6,7 +6,23 @@
         <description>Recent content in Categories on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 10 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/categories/linux/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Software</title>
+        <link>https://blog.moroz.cc/categories/software/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/categories/software/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>DIY</title>
         <link>https://blog.moroz.cc/categories/diy/</link>
         <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
@@ -31,14 +47,6 @@
         <description></description>
         </item>
         <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/categories/linux/</link>
-        <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/categories/linux/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Networking</title>
         <link>https://blog.moroz.cc/categories/networking/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
@@ -60,14 +68,6 @@
         <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/categories/virtualization/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Software</title>
-        <link>https://blog.moroz.cc/categories/software/</link>
-        <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/categories/software/</guid>
         <description></description>
         </item>
         <item>

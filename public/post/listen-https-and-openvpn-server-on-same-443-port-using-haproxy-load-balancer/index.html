@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Purpose of having OpenVPN and Web server at port 443 Let&amp;rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.'><title>Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Purpose of having OpenVPN and Web server at port 443 Let&rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.
+'><title>Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer</title>
 
 <link rel='canonical' href='http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer'>
-<meta property='og:description' content='Introduction Purpose of having OpenVPN and Web server at port 443 Let&amp;rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.'>
+<meta property='og:description' content='Introduction Purpose of having OpenVPN and Web server at port 443 Let&rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.
+'>
 <meta property='og:url' content='http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/'>
 <meta property='og:site_name' content='The IT Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HAProxy' /><meta property='article:tag' content='VPN' /><meta property='article:tag' content='OpenVPN' /><meta property='article:tag' content='Load balancing' /><meta property='article:tag' content='HTTPS' /><meta property='article:tag' content='SSL Termination' /><meta property='article:tag' content='Network traffic' /><meta property='article:tag' content='Web Server' /><meta property='article:published_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.png' />
 <meta name="twitter:title" content="Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer">
-<meta name="twitter:description" content="Introduction Purpose of having OpenVPN and Web server at port 443 Let&amp;rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator."><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Introduction Purpose of having OpenVPN and Web server at port 443 Let&rsquo;s imagine that you have the OpenVPN server listening on port 1194, and you are connecting from some public or work network not controlled by you. In this case there may be a situation where only outcoming connections to common ports are allowed (for example 80 and 443 so user can only surf the web), so you can not connect to your OpenVPN server and encrypt your traffic from network administrator.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.png' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -57,7 +57,7 @@
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -239,8 +239,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/">
-                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu38aeca524a31a58e580a8f8774f7f217_36945_800x0_resize_box_3.png"
-                        srcset="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu38aeca524a31a58e580a8f8774f7f217_36945_800x0_resize_box_3.png 800w, /post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu38aeca524a31a58e580a8f8774f7f217_36945_1600x0_resize_box_3.png 1600w"
+                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu6908995645726870352.png"
+                        srcset="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu6908995645726870352.png 800w, /post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header_hu17563851938275514246.png 1600w"
                         width="800" 
                         height="288" 
                         loading="lazy"
@@ -705,7 +705,7 @@
         
         
             <div class="article-image">
-                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_huae4787578a5876ddb42874325345f68a_470994_250x150_fill_box_smart1_3.png" 
+                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_hu12471396964104110934.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -729,7 +729,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu228a1f9ac33fe18663808d2fd8f88170_216388_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.ac375709dccec2830b7f72fcdb862d56_hu17688405383480260002.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -753,7 +753,7 @@
         
         
             <div class="article-image">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu9137267704124055770.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -777,7 +777,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2499082915750007904.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -801,7 +801,7 @@
         
         
             <div class="article-image">
-                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu1926450258490511575.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"

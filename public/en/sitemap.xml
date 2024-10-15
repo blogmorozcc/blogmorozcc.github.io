@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -15,14 +15,40 @@
                 href="http://localhost:1313/"
                 />
   </url><url>
-    <loc>http://localhost:1313/tags/3.5mm-jack/</loc>
-    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/tags/arch/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/arch/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/arch/"
+                />
   </url><url>
-    <loc>http://localhost:1313/tags/adapter/</loc>
-    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/automation/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/backup/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/backup/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/backup/"
+                />
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="uk"
@@ -33,6 +59,67 @@
                 hreflang="en"
                 href="http://localhost:1313/categories/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/tags/linux/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/linux/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/categories/linux/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/categories/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/categories/linux/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/post/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/categories/software/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-10-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="uk"
+                href="http://localhost:1313/uk/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/3.5mm-jack/</loc>
+    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/adapter/</loc>
+    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/diy/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
@@ -62,34 +149,8 @@
     <loc>http://localhost:1313/tags/mic-in/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
-    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/post/"
-                />
-  </url><url>
     <loc>http://localhost:1313/tags/sound/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-06-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/"
-                />
   </url><url>
     <loc>http://localhost:1313/categories/cybersecurity/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
@@ -118,19 +179,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="http://localhost:1313/tags/https/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/categories/linux/</loc>
-    <lastmod>2024-06-07T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/categories/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/categories/linux/"
                 />
   </url><url>
     <loc>http://localhost:1313/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/</loc>
@@ -196,9 +244,6 @@
   </url><url>
     <loc>http://localhost:1313/tags/web-server/</loc>
     <lastmod>2024-06-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/automation/</loc>
-    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/debian/</loc>
     <lastmod>2024-06-06T00:00:00+00:00</lastmod>
@@ -589,19 +634,6 @@
                 href="http://localhost:1313/tags/vnc/"
                 />
   </url><url>
-    <loc>http://localhost:1313/tags/arch/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/arch/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/arch/"
-                />
-  </url><url>
     <loc>http://localhost:1313/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</loc>
     <lastmod>2024-03-25T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -617,19 +649,6 @@
   </url><url>
     <loc>http://localhost:1313/tags/kernel/</loc>
     <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/linux/</loc>
-    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/linux/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/linux/"
-                />
   </url><url>
     <loc>http://localhost:1313/tags/zen/</loc>
     <lastmod>2024-03-25T00:00:00+00:00</lastmod>
@@ -826,9 +845,6 @@
     <lastmod>2023-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/office/</loc>
-    <lastmod>2023-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/software/</loc>
     <lastmod>2023-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/wps-office/</loc>
@@ -1192,19 +1208,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="http://localhost:1313/post/automatic-server-backup-to-the-mega.nz-cloud/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/backup/</loc>
-    <lastmod>2016-10-02T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="uk"
-                href="http://localhost:1313/uk/tags/backup/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/tags/backup/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/cloud/</loc>

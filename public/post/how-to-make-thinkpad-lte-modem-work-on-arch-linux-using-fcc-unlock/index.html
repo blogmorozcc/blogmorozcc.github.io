@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
-FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP.'><title>How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction It&rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
+FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP. This locks prevents the WWAN module from being put online until some specific unlock procedure (usually a magic command sent to the module) is done. You can read more details about the FCC lock/unlock procedure here.
+'><title>How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock</title>
 
 <link rel='canonical' href='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock'>
-<meta property='og:description' content='Introduction It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
-FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP.'>
+<meta property='og:description' content='Introduction It&rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
+FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP. This locks prevents the WWAN module from being put online until some specific unlock procedure (usually a magic command sent to the module) is done. You can read more details about the FCC lock/unlock procedure here.
+'>
 <meta property='og:url' content='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/'>
 <meta property='og:site_name' content='The IT Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Hardware' /><meta property='article:tag' content='4G' /><meta property='article:tag' content='LTE' /><meta property='article:tag' content='Modem Manager' /><meta property='article:tag' content='mmcli' /><meta property='article:tag' content='FCC' /><meta property='article:tag' content='Quectel' /><meta property='article:tag' content='Quectel EM120R' /><meta property='article:published_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-12-13T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg' />
 <meta name="twitter:title" content="How to make ThinkPad LTE Modem work on Arch Linux using FCC unlock">
-<meta name="twitter:description" content="Introduction It&amp;rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
-FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP."><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Introduction It&rsquo;s neat to have a laptop with both WiFi and LTE, as this actually provides a reserved connectivity channel. ThinkPads are generally well-supported on Linux, and many users successfully use LTE modems on these laptops without any additional configuration. However, some newer models are bundled with Quectel LTE modems that have FCC lock.
+FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN modules shipped by several different laptop manufacturers like Lenovo, Dell, or HP. This locks prevents the WWAN module from being put online until some specific unlock procedure (usually a magic command sent to the module) is done. You can read more details about the FCC lock/unlock procedure here.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.jpg' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -60,7 +60,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -242,8 +242,8 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
     <header class="article-header">
         <div class="article-image">
             <a href="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg"
-                        srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_800x0_resize_q75_box.jpg 800w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu2d109c230a8b683de6314808740ea101_247945_1600x0_resize_q75_box.jpg 1600w"
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu7184406125626301108.jpg"
+                        srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu7184406125626301108.jpg 800w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header_hu1814996818832792247.jpg 1600w"
                         width="800" 
                         height="450" 
                         loading="lazy"
@@ -357,7 +357,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci.png"
 	width="1041"
 	height="682"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu83154317091813632.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu14672337068054282106.png 1024w"
 	loading="lazy"
 	
 		alt="Getting a list of PCI devices"
@@ -414,7 +414,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list.png"
 	width="1041"
 	height="374"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu2543466286844266223.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu3604823120267100130.png 1024w"
 	loading="lazy"
 	
 		alt="List of WWAN modems"
@@ -431,7 +431,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect.png"
 	width="1041"
 	height="374"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu17805828263244588124.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu5794861202941292329.png 1024w"
 	loading="lazy"
 	
 		alt="Example of WWAN connection"
@@ -448,7 +448,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect.png"
 	width="1041"
 	height="374"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hu8627825695735044247.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hu11610595834589246902.png 1024w"
 	loading="lazy"
 	
 		alt="Example of terminating WWAN connection"
@@ -465,7 +465,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1.png"
 	width="1395"
 	height="874"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_hu7641189460699999285.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_hu13721148267612313432.png 1024w"
 	loading="lazy"
 	
 		alt="KDE Plasma connection settings"
@@ -480,7 +480,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type.png"
 	width="630"
 	height="754"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hu12960805188586841891.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hu17741140778307879522.png 1024w"
 	loading="lazy"
 	
 		alt="Network type selection"
@@ -495,7 +495,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device.png"
 	width="630"
 	height="514"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hu342452318292701624.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hu343819412391645221.png 1024w"
 	loading="lazy"
 	
 		alt="Broadband device selection"
@@ -510,7 +510,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country.png"
 	width="630"
 	height="514"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu6764269497973036168.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu17685770106000305087.png 1024w"
 	loading="lazy"
 	
 		alt="ISP selection"
@@ -525,7 +525,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp.png"
 	width="630"
 	height="514"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_hu13339472348891529882.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_hu1926502442888136663.png 1024w"
 	loading="lazy"
 	
 		alt="ISP selection"
@@ -540,7 +540,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn.png"
 	width="630"
 	height="514"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_hu10863447262233840395.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_hu2692629814502580310.png 1024w"
 	loading="lazy"
 	
 		alt="APN settings"
@@ -555,7 +555,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success.png"
 	width="630"
 	height="514"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_hu9960050189596307985.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_hu17261950274074582125.png 1024w"
 	loading="lazy"
 	
 		alt="Finish step"
@@ -570,7 +570,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
 <p><img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray.png"
 	width="445"
 	height="489"
-	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu8808923636170307316.png 480w, /post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu9694984646918539446.png 1024w"
 	loading="lazy"
 	
 		alt="KDE Plasma network applet LTE connection"
@@ -633,7 +633,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
         
         
             <div class="article-image">
-                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hu14601158863065631491.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -657,7 +657,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
         
         
             <div class="article-image">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu9137267704124055770.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -681,7 +681,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
         
         
             <div class="article-image">
-                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu07d9fa8bf00f81164ad47a9c5dedba00_591360_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/automatic-server-backup-to-the-mega.nz-cloud/header.a4913d71bbdf913635839c23ac357216_hu1926450258490511575.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -705,7 +705,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
         
         
             <div class="article-image">
-                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu9370f1f3ff0baab462d9f98d73fd8fc5_63678_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/port-forwarding-using-an-ssh-tunnel/header.ba1bd033dec16974a69fd513b7d55a51_hu760727812907467930.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -729,7 +729,7 @@ FCC Lock What is FCC Lock The FCC lock is a software lock integrated in WWAN mod
         
         
             <div class="article-image">
-                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu38aeca524a31a58e580a8f8774f7f217_36945_250x150_fill_box_smart1_3.png" 
+                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu16171695807235886636.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"

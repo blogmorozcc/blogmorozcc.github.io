@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="uk" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&amp;rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
-Зміна конфігураційного файлу Щоб налаштувати запам&amp;rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте.'><title>Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
+Зміна конфігураційного файлу Щоб налаштувати запам&rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте.
+'><title>Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції</title>
 
 <link rel='canonical' href='http://localhost:1313/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції'>
-<meta property='og:description' content='Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&amp;rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
-Зміна конфігураційного файлу Щоб налаштувати запам&amp;rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте.'>
+<meta property='og:description' content='Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
+Зміна конфігураційного файлу Щоб налаштувати запам&rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте.
+'>
 <meta property='og:url' content='http://localhost:1313/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/'>
 <meta property='og:site_name' content='Блог про IT'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Bootloader' /><meta property='article:tag' content='systemd-boot' /><meta property='article:published_time' content='2023-11-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-22T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.png' />
 <meta name="twitter:title" content="Налаштування systemd-boot для запам&#39;ятовування останньої вибраної опції">
-<meta name="twitter:description" content="Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&amp;rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
-Зміна конфігураційного файлу Щоб налаштувати запам&amp;rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте."><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Введення Використовуючи systemd-boot як завантажувач, більш зручно, щоб система запам’ятовувала останню вибрану опцію під час кожного наступного завантаження. Це особливо корисно для користувачів, які використовують різниі операційні системи або ядра Linux. Налаштувавши systemd-boot на запам&rsquo;ятовування останньої вибраної опції завантаження, ви можете спростити процес завантаження та уникнути необхідності вручну вибирати потрібний параметр кожного разу, коли система перезавантажується.
+Зміна конфігураційного файлу Щоб налаштувати запам&rsquo;ятовування systemd-boot, потрібно змінити файл конфігурації `loader.conf``. Точне розташування цього файлу може відрізнятися залежно від дистрибутива Linux, який ви використовуєте.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header.png' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -60,7 +60,7 @@
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -242,8 +242,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/uk/post/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-systemd-boot-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BE%D0%B2%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F-%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8C%D0%BE%D1%97-%D0%B2%D0%B8%D0%B1%D1%80%D0%B0%D0%BD%D0%BE%D1%97-%D0%BE%D0%BF%D1%86%D1%96%D1%97/">
-                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu0e765b8aca8d9ba54a80770b06516939_1619_800x0_resize_box_3.png"
-                        srcset="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu0e765b8aca8d9ba54a80770b06516939_1619_800x0_resize_box_3.png 800w, /post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu0e765b8aca8d9ba54a80770b06516939_1619_1600x0_resize_box_3.png 1600w"
+                <img src="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu14653610208628974395.png"
+                        srcset="/post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu14653610208628974395.png 800w, /post/how-to-make-systemd-boot-remember-the-last-selected-entry/header_hu6469287937942129732.png 1600w"
                         width="800" 
                         height="443" 
                         loading="lazy"
@@ -397,7 +397,7 @@
         
         
             <div class="article-image">
-                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4b29e357e57d8fe0ebc72c8e749e5da1_83937_250x150_fill_box_smart1_3.png" 
+                <img src="/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/header.06a2bc293767e549a4b64f70745b2cfa_hu4808927919241056216.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -421,7 +421,7 @@
         
         
             <div class="article-image">
-                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hued49b8fc40a4ce925bd267fd9ac65523_97296_250x150_fill_q75_h2_box_smart1_2.webp" 
+                <img src="/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/header.4cbc9527d35aee0d88851c8b34c4d218_hu14601158863065631491.webp" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -445,7 +445,7 @@
         
         
             <div class="article-image">
-                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu9582e9719e96abf49c172162d020cea7_78147_250x150_fill_box_smart1_3.png" 
+                <img src="/post/how-to-install-kvm-on-arch-linux/header.20b50ea9aa0e9ad031e6dce695cc3b79_hu7125471459882845826.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -469,7 +469,7 @@
         
         
             <div class="article-image">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu9137267704124055770.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -493,13 +493,13 @@
         
         
             <div class="article-image">
-                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.5703acaab52d919d5bcffdf1559f9843_hue96a0cab901c05107ef04317fe9cfdbe_381439_250x150_fill_box_smart1_3.png" 
+                <img src="/post/arch-linux-install-guide-uefi--encrypted-lvm/header.093eb5c133b47e79a4c02d373a4df404_hu1856714276247148550.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
                         alt="Featured image of post Встановлення Arch Linux (UEFI &#43; зашифрований LVM)"
                         
-                        data-hash="md5-VwOsqrUtkZ1bz/3xVZ&#43;YQw==">
+                        data-hash="md5-CT61wTO0fnmkwC03Ok30BA==">
                 
             </div>
         
