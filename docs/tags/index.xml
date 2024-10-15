@@ -6,7 +6,39 @@
         <description>Recent content in Tags on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 10 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Arch</title>
+        <link>https://blog.moroz.cc/tags/arch/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/arch/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Automation</title>
+        <link>https://blog.moroz.cc/tags/automation/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/automation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Backup</title>
+        <link>https://blog.moroz.cc/tags/backup/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/backup/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://blog.moroz.cc/tags/linux/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>3.5mm Jack</title>
         <link>https://blog.moroz.cc/tags/3.5mm-jack/</link>
         <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
@@ -116,14 +148,6 @@
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/web-server/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Automation</title>
-        <link>https://blog.moroz.cc/tags/automation/</link>
-        <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/automation/</guid>
         <description></description>
         </item>
         <item>
@@ -319,27 +343,11 @@
         <description></description>
         </item>
         <item>
-        <title>Arch</title>
-        <link>https://blog.moroz.cc/tags/arch/</link>
-        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/arch/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Kernel</title>
         <link>https://blog.moroz.cc/tags/kernel/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/kernel/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://blog.moroz.cc/tags/linux/</link>
-        <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/linux/</guid>
         <description></description>
         </item>
         <item>
@@ -636,14 +644,6 @@
         <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
         
         <guid>https://blog.moroz.cc/tags/tor/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Backup</title>
-        <link>https://blog.moroz.cc/tags/backup/</link>
-        <pubDate>Sun, 02 Oct 2016 00:00:00 +0000</pubDate>
-        
-        <guid>https://blog.moroz.cc/tags/backup/</guid>
         <description></description>
         </item>
         <item>

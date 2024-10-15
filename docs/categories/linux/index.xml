@@ -6,7 +6,696 @@
         <description>Recent content in Linux on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Fri, 07 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Implementation of custom A/B update and rootfs backup system on Arch Linux</title>
+        <link>https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/header.png" alt="Featured image of post Implementation of custom A/B update and rootfs backup system on Arch Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;An A/B update and backup system is a mechanism used primarily on Android devices to ensure safer and more reliable system updates. The approach involves having two partitions (A and B) for system data, allowing the device to switch between them during updates. Let&amp;rsquo;s try to understand how it works and what makes it beneficial.&lt;/p&gt;
+&lt;h3 id=&#34;how-ab-update-system-works&#34;&gt;How A/B Update System Works&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Two System Partitions: Devices are set up with two copies of key partitions (A and B), which contain the operating system and related files. Only one partition is active at a time, meaning the device is always running on either A or B.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Non-Disruptive Updates: When an update is downloaded, it’s installed on the inactive partition (e.g., if you’re on A, it will be installed on B). This allows you to continue using the device while the update is being applied.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Safe Switching: Once the update is complete, the system reboots into the updated partition (in this case, B). If something goes wrong during the boot, the system will automatically switch back to the previously working partition (A). This rollback mechanism is crucial for preventing a device from becoming unusable due to a failed update.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Consistency and Speed: Updates are quicker because they don’t disrupt your device’s normal operations. You can use the device while the update is being installed in the background. Then, when you’re ready, you just need a quick reboot to switch partitions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;benefits-of-ab-update-system&#34;&gt;Benefits of A/B Update System&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Safety: If the new update is corrupted or incompatible, the device can revert to the other partition. This makes system updates more reliable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Minimal Downtime: Updates are installed in the background, so you only need to reboot to complete the process. You don’t have to wait for the installation to happen during reboot.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Seamless Experience: The device can handle switching automatically, often without the user needing to take additional steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;ab-backup-system&#34;&gt;A/B Backup System&lt;/h3&gt;
+&lt;p&gt;Although A/B primarily refers to system updates, a similar concept can apply to backup systems. For instance, some backup tools might use alternate partitions or snapshots to store backups, ensuring that you have a fallback option in case of system failures.&lt;/p&gt;
+&lt;p&gt;This approach is especially used in modern &lt;a class=&#34;link&#34; href=&#34;https://source.android.com/docs/core/ota/ab&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Android system A/B OTA updates&lt;/a&gt;, but it can also be found in other contexts where high reliability and system availability are crucial.&lt;/p&gt;
+&lt;h2 id=&#34;benefits-of-ab-specific-to-arch-linux&#34;&gt;Benefits of A/B specific to Arch Linux&lt;/h2&gt;
+&lt;p&gt;Implementing an A/B update system on Arch Linux could offer several advantages, particularly for users who value stability, reliability, and quick recovery options. Here’s why this approach might be beneficial for Arch Linux specifically:&lt;/p&gt;
+&lt;h3 id=&#34;improved-system-stability&#34;&gt;Improved System Stability&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Rolling Release Model: Arch Linux is a rolling-release distribution, which means updates are frequent and bring both new features and potential changes that can lead to system instability. With an A/B system, you can update the inactive partition and quickly switch back to a stable setup if an issue arises.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Reliability: An A/B system can help maintain system uptime and stability by allowing quick rollback to a previously working state if an update introduces a bug or compatibility issue.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;safety-in-testing-and-experimentation&#34;&gt;Safety in Testing and Experimentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Arch Users Are Often Power Users: Many Arch users like to customize and experiment with their setups. The A/B system would allow you to try new configurations or packages on one partition while keeping a safe, functional setup on the other. If something goes wrong, you can reboot into the stable environment without having to troubleshoot complex issues.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Easy System Recovery: With a backup partition always available, users can test experimental or non-standard updates (such as kernel patches or desktop environment changes) with less risk. If an update fails or breaks the system, you can boot into the untouched partition and keep working.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;quicker-update-rollbacks&#34;&gt;Quicker Update Rollbacks&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Effortless Reversion: Arch doesn’t have an inherent rollback feature built-in, so reverting to previous versions can be tedious. An A/B system would allow for quick switching between versions with no need to manually downgrade packages or restore from backups.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Bootloader Integration: Since you use systemd-boot, the A/B update system could integrate well with this bootloader, allowing you to select which partition to boot into directly from the boot menu.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;downside-of-ab-update-and-backup-systems&#34;&gt;Downside of A/B update and backup systems&lt;/h2&gt;
+&lt;p&gt;The main downside of an A/B update and backup system is increase in disk space usage. An A/B system would require additional storage space, effectively doubling the space required for system partitions. For users with limited disk space, this could be a drawback.&lt;/p&gt;
+&lt;h2 id=&#34;implementing-my-own-ab-update-and-backup-system&#34;&gt;Implementing my own A/B update and backup system&lt;/h2&gt;
+&lt;p&gt;I inspired the idea of an A/B update and backup system approach for backups and OS updates from Android and some immutable GNU/Linux distributions. I daily drive Arch Linux on my two own personal computers and prefer to have the latest updates. But on the other side I want to make my system as reliable as possible, and in case update ocassionaly break my system - I want to have a way to quickly rollback without doing install and configuration from scratch.&lt;/p&gt;
+&lt;h3 id=&#34;understanding-the-requirements&#34;&gt;Understanding the requirements&lt;/h3&gt;
+&lt;p&gt;First of all, I came up with the basic requirements that my custom A/B update and backup system must have:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Both A and B partitions should be bootable, including the ability to choose any partition (A or B) manually during boot.&lt;/li&gt;
+&lt;li&gt;Ability to use different kernel versions for both A or B partitions.&lt;/li&gt;
+&lt;li&gt;Only the root / partition should be copied during A/B update or backup procedure. I have /home on separate partition and it should be untouched during backup process.&lt;/li&gt;
+&lt;li&gt;Solution should be compatible with LUKS encryption for security.&lt;/li&gt;
+&lt;li&gt;I want to have a single script for backup and restore operations (copy A to B, and copy B to A).&lt;/li&gt;
+&lt;li&gt;Script should be able to detect the source and destination partitions automatically, without providing additional arguments.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/scheme.png&#34;
+	width=&#34;1097&#34;
+	height=&#34;1143&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/scheme_hu18026895704027529802.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/scheme_hu4528006048314213157.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;A/B update and backup system principal mechanism&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;95&#34;
+		data-flex-basis=&#34;230px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;choosing-components&#34;&gt;Choosing components&lt;/h3&gt;
+&lt;p&gt;After understanding the requirements, the next important step is to find the right components that are able to meet those requirements and allow to implement the system. I have chosen &lt;code&gt;rsync&lt;/code&gt; utility for doing backups as it is ideal for regular and incremental backups. It only copies changed files, making it efficient and faster for repeat backups. You can also easily exclude certain directories (like /home and /boot) and maintain a backup that is ready to be restored at the file level.&lt;/p&gt;
+&lt;h3 id=&#34;partitioning-disk&#34;&gt;Partitioning disk&lt;/h3&gt;
+&lt;p&gt;I already had a working Arch Linux system with configured LUKS encrytion and separate partitions for root (&lt;code&gt;/&lt;/code&gt;) and home (&lt;code&gt;/home&lt;/code&gt;). For more details you can check my &lt;a class=&#34;link&#34; href=&#34;https://blog.moroz.cc/post/arch-linux-install-guide-uefi--encrypted-lvm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Arch Linux install guide (UEFI + encrypted LVM)&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So I needed to shrink the &lt;code&gt;/home&lt;/code&gt; logical volume and create the second logical volume for the B root partition. My main root logical volume is 50Gb, so the second one should be exactly the same size.&lt;/p&gt;
+&lt;p&gt;This step should not be perform directly from my installed Arch system, because we need to perform the shrink operation. I used Arch Linux live install media for all the partitioning operations.&lt;/p&gt;
+&lt;h4 id=&#34;unlock-the-luks-container&#34;&gt;Unlock the LUKS container.&lt;/h4&gt;
+&lt;p&gt;I have encrypted LUKS container on &lt;code&gt;/dev/nvme0n1p2&lt;/code&gt;, so first need to decrypt it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cryptsetup luksOpen /dev/nvme0n1p2 luks&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;shrink-the-home-logical-volume&#34;&gt;Shrink the home logical volume&lt;/h4&gt;
+&lt;p&gt;In my case the volume group is named as &lt;code&gt;vg0&lt;/code&gt; and contains a logical volume &lt;code&gt;lv_home&lt;/code&gt; for the &lt;code&gt;/home&lt;/code&gt; partition. The full path to the home logical volume in my case is &lt;code&gt;/dev/mapper/vg0-lv_home&lt;/code&gt;. It needs to be shrinked in 50Gb amount in size, so there will be enough space for the second root partition. This can be performed with the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lvresize -L -50G /dev/mapper/vg0-lv_home&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After the shrink operation it is also recommended to run &lt;code&gt;resize2fs&lt;/code&gt; and &lt;code&gt;e2fsck&lt;/code&gt; to ensure that filesystem is healthy and resized correctly:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;resize2fs /dev/mapper/vg0-lv_home
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;e2fsck -f /dev/mapper/vg0-lv_home&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;create-a-second-root-partition&#34;&gt;Create a second root partition&lt;/h4&gt;
+&lt;p&gt;The last step of partitioning is to create a second &amp;ldquo;B&amp;rdquo; root partition. I decided to name the volume as &lt;code&gt;lv_root_2&lt;/code&gt;, so the command is the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lvcreate -L 50G -n lv_root_2 vg0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then the created partition should be formatted with exactly the same filesystem like already existing root partition. I already use ext4 filesystem, so the &amp;ldquo;B&amp;rdquo; root partition also should have ext4 filesystem.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkfs.ext4 /dev/mapper/lv_root_2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, the new partition layout of the system looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/partitions.png&#34;
+	width=&#34;1039&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/partitions_hu7558437358515381162.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/partitions_hu11048232625777182021.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;A/B update and backup system partitions, logical volumes layout.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;207&#34;
+		data-flex-basis=&#34;498px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;configure-bootloader&#34;&gt;Configure bootloader&lt;/h3&gt;
+&lt;p&gt;In my case, I already use &lt;code&gt;systemd-boot&lt;/code&gt; bootloader for my Arch Linux setup. It perfectly meets the requirements, as it allows booting different kernels. So to make the bootloader boot different kernels for different partitions (either &amp;ldquo;A&amp;rdquo; or &amp;ldquo;B&amp;rdquo;) the existing boot entries for partition &amp;ldquo;A&amp;rdquo; should be duplicated and modified to use with partition B.&lt;/p&gt;
+&lt;p&gt;The boot loader entries are stored at &lt;code&gt;/boot/loader/entries&lt;/code&gt; directory, for ease of use navigate with &lt;code&gt;cd&lt;/code&gt; into it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /boot/loader/entries&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then let&amp;rsquo;s see what bootloader entries do we have:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -al&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I have two bootloader entries for existing parition &amp;ldquo;A&amp;rdquo; for loading &lt;code&gt;linux-zen&lt;/code&gt; and &lt;code&gt;linux-lts&lt;/code&gt; kernels that are stored in files &lt;code&gt;arch-zen.conf&lt;/code&gt; and &lt;code&gt;arch-lts.conf&lt;/code&gt; respectively. If you are using only one kernel version you will probaly have only one bootloader entry.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot1.png&#34;
+	width=&#34;1039&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot1_hu4785233378607969330.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot1_hu15724962336650974305.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Existing bootloader entries for partition &amp;ldquo;A&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;207&#34;
+		data-flex-basis=&#34;498px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;For convenience it is better to rename them to &lt;code&gt;arch-zen-a.conf&lt;/code&gt; and &lt;code&gt;arch-lts-a.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv arch-zen.conf arch-zen-a.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv arch-lts.conf arch-lts-a.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that I used &lt;code&gt;sudo nano arch-zen-a.conf&lt;/code&gt; and &lt;code&gt;sudo nano arch-lts-a.conf&lt;/code&gt; to modify this two files, added prefix &lt;code&gt;[Partition A]&lt;/code&gt; to both titles that allows to understand what partition is used for the boot option.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-a.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-a_hu6673478298592396111.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-a_hu14155926419589777046.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for LTS kernel on partition &amp;ldquo;A&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-a.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-a_hu1108977642596772464.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-a_hu15697669330591279989.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for ZEN kernel on partition &amp;ldquo;A&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next both for of the files &lt;code&gt;arch-zen-a.conf&lt;/code&gt; and &lt;code&gt;arch-lts-a.conf&lt;/code&gt; should be duplicated for partition &amp;ldquo;B&amp;rdquo;, it can be achieved by making a copy:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp arch-zen-a.conf arch-zen-b.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp arch-lts-a.conf arch-lts-b.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Than use similar command for &amp;ldquo;B&amp;rdquo; voluem entries &lt;code&gt;sudo nano arch-zen-b.conf&lt;/code&gt;, &lt;code&gt;sudo nano arch-lts-b.conf&lt;/code&gt; to change the title from &amp;ldquo;[Partition A]&amp;rdquo; to &amp;ldquo;[Partition B]&amp;rdquo; and change root partition from &lt;code&gt;/dev/vg0/lv_root&lt;/code&gt; to &lt;code&gt;/dev/vg0/lv_root_2&lt;/code&gt; in both of the files.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-b.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-b_hu8493241458509209425.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-b_hu13539187266101592348.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for LTS kernel on partition &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-b.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-b_hu11949643183411468776.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-b_hu7787071308164298950.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for ZEN kernel on partition &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Finally the bootloader entries directory will look exactly like this for my usecase:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot2.png&#34;
+	width=&#34;1034&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot2_hu14462101249319033462.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot2_hu15424265614249234587.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Final structure of bootloader entries for partitions &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;206&#34;
+		data-flex-basis=&#34;496px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;configure-fstab&#34;&gt;Configure fstab&lt;/h3&gt;
+&lt;p&gt;The fstab (File System Table) is a configuration file in Unix-like operating systems (like Linux) that defines how disk partitions, storage devices, and other file systems should be mounted at boot time. The file is located at &lt;code&gt;/etc/fstab&lt;/code&gt; and is read by the system during the boot process.&lt;/p&gt;
+&lt;p&gt;For different root partitions &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo; there will be different UUIDs for main and backup root partition:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The main root partition is mounted at &lt;code&gt;/&lt;/code&gt; mountpoint.&lt;/li&gt;
+&lt;li&gt;I defined that the backup root partition will be mounted at &lt;code&gt;/mnt/root&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Considering that there are &amp;ldquo;A&amp;rdquo; (lv_root) and &amp;ldquo;B&amp;rdquo; (lv_root_2) partitions, there are 2 possible scenarios:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If OS is booted from &amp;ldquo;A&amp;rdquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;/&lt;/code&gt; is &lt;code&gt;lv_root&lt;/code&gt; volume;&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;/mnt/root&lt;/code&gt; is &lt;code&gt;lv_root_2&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;during the backup operation &amp;ldquo;A&amp;rdquo; will be copied/restored to &amp;ldquo;B&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If OS is booted from &amp;ldquo;B&amp;rdquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;/&lt;/code&gt; is &lt;code&gt;lv_root_2&lt;/code&gt; volume;&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;/mnt/root&lt;/code&gt; is &lt;code&gt;lv_root&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;during the backup operation &amp;ldquo;B&amp;rdquo; will be copied/restored to &amp;ldquo;A&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I ended up with a solution of having different &lt;code&gt;fstab&lt;/code&gt; files for &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo; partition (&lt;code&gt;fstabA&lt;/code&gt; and &lt;code&gt;fstabB&lt;/code&gt; respectively), and it will be responsibility of the backup script to replace the main &lt;code&gt;fstab&lt;/code&gt; file with either &lt;code&gt;fstabA&lt;/code&gt; or &lt;code&gt;fstabB&lt;/code&gt; depending on the scenario described above.&lt;/p&gt;
+&lt;p&gt;First of all there is need to identify UUIDs of &lt;code&gt;lv_root&lt;/code&gt; and &lt;code&gt;lv_root_2&lt;/code&gt; for fstab:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo blkid /dev/mapper/vg0-lv_root
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo blkid /dev/mapper/vg0-lv_root_2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To sum up, in my case UUIDs are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For partition &amp;ldquo;A&amp;rdquo; (lv_root) - &lt;code&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For partition &amp;ldquo;B&amp;rdquo; (lv_root_2) - &lt;code&gt;9e3adc66-842f-4bec-aba0-85414eab7a07&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/blkid.png&#34;
+	width=&#34;1042&#34;
+	height=&#34;440&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/blkid_hu8883179688405949836.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/blkid_hu10247167299147494616.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Identifying UUIDs of &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;236&#34;
+		data-flex-basis=&#34;568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next, have a look at the original &lt;code&gt;/etc/fstab&lt;/code&gt; file on my system:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05       /               ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;911cf69d-2ecb-4f2f-a9d5-491f44418922       /home           ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The partition &amp;ldquo;A&amp;rdquo; is already defined in it, so the partition B should be added by corresponding UUID, and the final look of the modified &lt;code&gt;/etc/fstab&lt;/code&gt; file is the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05       /               ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;911cf69d-2ecb-4f2f-a9d5-491f44418922       /home           ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root_2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;9e3adc66-842f-4bec-aba0-85414eab7a07       /mnt/root       ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The next step is to make 2 copies of &lt;code&gt;/etc/fstab&lt;/code&gt; file to &lt;code&gt;/etc/fstabA&lt;/code&gt; and &lt;code&gt;/etc/fstabB&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp /etc/fstab /etc/fstabA
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp /etc/fstab /etc/fstabB&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After duplicating the files, &lt;code&gt;fstabA&lt;/code&gt; file is correct (as it has &amp;ldquo;A&amp;rdquo; partiton as root), but in &lt;code&gt;fstabB&lt;/code&gt; file the partitions should be changed, so partition &amp;ldquo;B&amp;rdquo; is &lt;code&gt;/&lt;/code&gt;, and &amp;ldquo;A&amp;rdquo; is &lt;code&gt;/mnt/root&lt;/code&gt;. It is easy to do by just swapping UUIDs for corresponding mount in &lt;code&gt;/etc/fstabB&lt;/code&gt; file, so the final look of the file is:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root_2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;9e3adc66-842f-4bec-aba0-85414eab7a07       /               ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;911cf69d-2ecb-4f2f-a9d5-491f44418922       /home           ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root_2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05       /mnt/root       ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After all the modifications are done it is recommended to reboot the computer, and make sure all partitions can be correctly mounted.&lt;/p&gt;
+&lt;h3 id=&#34;make-partitions-identifiable&#34;&gt;Make partitions identifiable&lt;/h3&gt;
+&lt;p&gt;One of the requirements for the backup script is to have it automatically detect the what is the currently used root partition, and what is the backup partition. To make the partitions identifiable, I decided to keep it simple and just create a text file &lt;code&gt;rootid&lt;/code&gt; at the root of each partition, which contains corresponding partition letter (can be either &amp;ldquo;A&amp;rdquo; or &amp;ldquo;B&amp;rdquo;).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /rootid
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /mnt/root/rootid&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As the result, script will be able to read 2 files &lt;code&gt;/rootid&lt;/code&gt; and &lt;code&gt;/mnt/rootid&lt;/code&gt; and explicitly detect what partition is used as root and backup.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/rootid.png&#34;
+	width=&#34;1042&#34;
+	height=&#34;440&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/rootid_hu10764027515167526504.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/rootid_hu10582134314316273040.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Identifying &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo; labels.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;236&#34;
+		data-flex-basis=&#34;568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;implementing-backup-script&#34;&gt;Implementing backup script&lt;/h3&gt;
+&lt;p&gt;To properly make a working bootable backup the script should implement the following steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Identify the root and backup partition.&lt;/li&gt;
+&lt;li&gt;Determine the operation mode by identified partitions, the possible values are:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;AB&amp;rdquo; - when partition &amp;ldquo;A&amp;rdquo; is booted and should be copied to &amp;ldquo;B&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;BA&amp;rdquo; - when partition &amp;ldquo;B&amp;rdquo; is booted and should be copied to &amp;ldquo;A&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Perform the full backup for current root partition to backup partition using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Replace the &lt;code&gt;fstab&lt;/code&gt; file on backup partition with the correct variant:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;for the &amp;ldquo;AB&amp;rdquo; mode use &lt;code&gt;fstabB&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;for the &amp;ldquo;BA&amp;rdquo; mode use &lt;code&gt;fstabA&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Create default linux root filesystem symlinks on the backup root partition.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Let&amp;rsquo;s do the step by step implementation of each operation.&lt;/p&gt;
+&lt;h4 id=&#34;identify-partitions-and-operation-mode&#34;&gt;Identify partitions and operation mode&lt;/h4&gt;
+&lt;p&gt;It is straightforward and requires reading &lt;code&gt;/rootid&lt;/code&gt; and &lt;code&gt;/mnt/root/rootid&lt;/code&gt; files, and the use string concat to determine the operation mode:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /mnt/root/rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;perform-the-rsync-backup&#34;&gt;Perform the rsync backup&lt;/h4&gt;
+&lt;p&gt;At this point I wrote &lt;code&gt;rsync&lt;/code&gt; based command that is designed to backup mirror the root file system &lt;code&gt;/&lt;/code&gt; to &lt;code&gt;/mnt/root&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync -aHAXiv --progress --inplace --delete --exclude&lt;span class=&#34;o&#34;&gt;={&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/boot&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/home&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/proc&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sys&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/tmp&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/run&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/media&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lost+found&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/rootid&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib64&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sbin&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; / /mnt/root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break down each option to understand what it does and why:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-a&lt;/code&gt; (Archive Mode): Enables archive mode, which is a combination of options &lt;code&gt;-rlptgoD&lt;/code&gt;. It ensures that:
+&lt;ul&gt;
+&lt;li&gt;Recursive &lt;code&gt;-r&lt;/code&gt;: The command will copy directories recursively.&lt;/li&gt;
+&lt;li&gt;Links &lt;code&gt;-l&lt;/code&gt;: Symbolic links are copied as symbolic links.&lt;/li&gt;
+&lt;li&gt;Permissions &lt;code&gt;-p&lt;/code&gt;: Preserves file permissions.&lt;/li&gt;
+&lt;li&gt;Modification Times &lt;code&gt;-t&lt;/code&gt;: Keeps original file modification times.&lt;/li&gt;
+&lt;li&gt;Group &lt;code&gt;-g&lt;/code&gt;: Maintains group ownership.&lt;/li&gt;
+&lt;li&gt;Owner &lt;code&gt;-o&lt;/code&gt;: Retains owner information (requires root privileges).&lt;/li&gt;
+&lt;li&gt;Devices &lt;code&gt;-D&lt;/code&gt;: Preserves device and special files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: Preserves hard links.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt;: Preserves ACLs (Access Control Lists), which define more granular permissions than standard file permissions.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-X&lt;/code&gt;: Preserves extended attributes, which can contain metadata for certain files and directories.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-i&lt;/code&gt;: Displays a detailed list of changes for each file, providing more visibility into the operation.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-v&lt;/code&gt;: Increases verbosity, giving you information about the files being transferred.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--progress&lt;/code&gt;: Shows progress for each file during the transfer, useful for monitoring long operations.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--inplace&lt;/code&gt;: Updates destination files in place, rather than creating a temporary file and moving it into place. This is useful for large files or if disk space is limited.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--delete&lt;/code&gt;: Deletes files in the destination (/mnt/root) that no longer exist in the source (/). This makes the destination a true mirror of the source by removing any extra files.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--exclude={&amp;quot;/boot&amp;quot;,&amp;quot;/home&amp;quot;,&amp;quot;/dev&amp;quot;,&amp;quot;/proc&amp;quot;,&amp;quot;/sys&amp;quot;,&amp;quot;/tmp&amp;quot;,&amp;quot;/run&amp;quot;,&amp;quot;/mnt&amp;quot;,&amp;quot;/media&amp;quot;,&amp;quot;/lost+found&amp;quot;,&amp;quot;/rootid&amp;quot;,&amp;quot;/bin&amp;quot;,&amp;quot;/lib&amp;quot;,&amp;quot;/lib64&amp;quot;,&amp;quot;/sbin&amp;quot;}&lt;/code&gt;: Excludes certain directories from being copied:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/boot&lt;/code&gt;: Boot-related files, which may not be necessary for the backup, especially if you’re using a separate /boot partition.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home&lt;/code&gt;: User data, which might be backed up separately or is irrelevant for a root system backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev&lt;/code&gt;: Device files that dynamically represent hardware (e.g., /dev/sda), which do not need to be backed up.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/proc&lt;/code&gt; and &lt;code&gt;/sys&lt;/code&gt;: Virtual filesystems representing system and process information, populated by the kernel at runtime and not meant to be copied.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/tmp&lt;/code&gt;: Temporary files, which don’t need to be included in a backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/run&lt;/code&gt;: Runtime data, which is also dynamically generated at boot.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/mnt&lt;/code&gt; and &lt;code&gt;/media&lt;/code&gt;: These are typically used for mounting other filesystems, which do not need to be part of a root system backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lost+found&lt;/code&gt;: Contains files recovered from file system errors; not necessary for a root backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/rootid&lt;/code&gt;: Identifier file for root and backup partitions.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt;, &lt;code&gt;/lib&lt;/code&gt;, &lt;code&gt;/lib64&lt;/code&gt;, and &lt;code&gt;/sbin&lt;/code&gt;: On modern Linux system those are symlinks and not the directories, so I decided to exclide them and make symlinks manually after backup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;replace-the-fstab-file&#34;&gt;Replace the fstab file&lt;/h4&gt;
+&lt;p&gt;This is also kind of straightforward step that requires checking for the operation mode and replacing the &lt;code&gt;/mnt/root/etc/fstab/&lt;/code&gt; file according to the rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for the &amp;ldquo;AB&amp;rdquo; mode use &lt;code&gt;/mnt/root/etc/fstabB&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;for the &amp;ldquo;BA&amp;rdquo; mode use &lt;code&gt;/mnt/root/etc/fstabA&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The bash script snippet for this is the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;fstab_path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt/root/etc/fstab&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;AB&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for AB mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cp /mnt/root/etc/fstabB /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BA&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for BA mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cp /mnt/root/etc/fstabA /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Error: Unknown mode &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;create-linux-filesystem-symlinks&#34;&gt;Create linux filesystem symlinks&lt;/h4&gt;
+&lt;p&gt;On many modern Linux distributions, including Arch Linux, &lt;code&gt;/bin&lt;/code&gt;, &lt;code&gt;/lib&lt;/code&gt;, &lt;code&gt;/lib64&lt;/code&gt;, and &lt;code&gt;/sbin&lt;/code&gt; are symbolic links, rather than separate directories. This change is part of the move towards a simplified filesystem layout that merges &lt;code&gt;/bin&lt;/code&gt;, &lt;code&gt;/lib&lt;/code&gt;, and &lt;code&gt;/sbin&lt;/code&gt; with their counterparts in &lt;code&gt;/usr&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt; → &lt;code&gt;/usr/bin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib&lt;/code&gt; → &lt;code&gt;/usr/lib&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib64&lt;/code&gt; → &lt;code&gt;/usr/lib64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/sbin&lt;/code&gt; → &lt;code&gt;/usr/sbin&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This unification helps streamline the filesystem by centralizing executables and libraries within the /usr directory, reducing redundancy and simplifying maintenance.&lt;/p&gt;
+&lt;p&gt;To create the symlinks after the backup was performed, this command snippet should be used:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/bin /mnt/root/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/lib /mnt/root/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/lib /mnt/root/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/sbin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/bin /mnt/root/sbin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;final-script-version&#34;&gt;Final script version&lt;/h4&gt;
+&lt;p&gt;Finally I added some verbose logging messages and checks to the script to make it more stable and user-friendly. It is meant to be executed with sudo privileges, because it is making a full copy of root filesystem. The final version of the script is placed in &lt;code&gt;/opt/rootbackup.sh&lt;/code&gt; and looks like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Starting backup script...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Step 1: Read the content of /rootid and /mnt/root/rootid&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /mnt/root/rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Boot partition ID: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$boot_id&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup partition ID: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$backup_id&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Operation mode: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Step 2: Perform the rsync backup with progress and verbosity&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Starting rsync backup from / to /mnt/root...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync -aHAXiv --progress --inplace --delete --exclude&lt;span class=&#34;o&#34;&gt;={&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/boot&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/home&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/proc&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sys&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/tmp&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/run&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/media&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lost+found&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/rootid&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib64&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sbin&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; / /mnt/root
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$?&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup was successful.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Path to the fstab file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nv&#34;&gt;fstab_path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt/root/etc/fstab&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;AB&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for AB mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        cp /mnt/root/etc/fstabB /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BA&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for BA mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        cp /mnt/root/etc/fstabA /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Error: Unknown mode &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Final output to confirm changes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Successfully updated /mnt/root/etc/fstab.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Updated fstab contents:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cat &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$fstab_path&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Links creation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Creating symlinks:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/sbin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/bin /mnt/root/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/lib /mnt/root/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/lib /mnt/root/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/sbin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/bin /mnt/root/sbin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup failed with rsync. Exiting.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup script completed.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;running-updates&#34;&gt;Running updates&lt;/h3&gt;
+&lt;p&gt;After implementing all the steps for the A/B update and backup system, the typical update process is the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Run the backup script: &lt;code&gt;sudo /opt/rootbackup.sh&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Do the full system update: &lt;code&gt;sudo pacman -Syu&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Finally I created a custom A/B update and backup system that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Detects which root partition you are currently using (Partition A or B).&lt;/li&gt;
+&lt;li&gt;Backs up the active root partition to the alternate root partition using rsync, ensuring that changes in your main root partition are mirrored to the backup partition.&lt;/li&gt;
+&lt;li&gt;Updates /etc/fstab on the backup partition to prepare it for booting, with the correct root partition and mount points.
+Efficient Incremental Backup with Rsync:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The script uses rsync to perform an incremental backup, which only copies changed files and allows for the &lt;code&gt;--inplace&lt;/code&gt; option to save disk space during backup. Additionally, we exclude directories like &lt;code&gt;/home&lt;/code&gt;, &lt;code&gt;/boot&lt;/code&gt;, and others that don’t need to be part of the backup.
+This approach ensures that the backup partition remains an up-to-date, bootable copy of your main system, while saving on both time and storage space.&lt;/p&gt;
+&lt;p&gt;With this setup, I have both peace of mind and flexibility. I can continue working on my system without worrying about software updates or configuration changes that might lead to a broken setup. And in the event of a problem, I have a ready-to-go recovery partition that will minimize downtime and restore your productivity quickly!&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Listen HTTPS and OpenVPN server on same 443 port using HAProxy load balancer</title>
         <link>https://blog.moroz.cc/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/</link>
         <pubDate>Fri, 07 Jun 2024 00:00:00 +0000</pubDate>
@@ -422,7 +1111,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722.png&#34;
 	width=&#34;980&#34;
 	height=&#34;208&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hue120906d5779c133d8c9ef7e4be515ba_44703_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hu11835490991283329849.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093722_hu16730718594315454199.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -436,7 +1125,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828.png&#34;
 	width=&#34;978&#34;
 	height=&#34;94&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hudbac6ce67961df537df5fc5fbb88fb5a_20059_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hu9650783926718849735.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_093828_hu7076724111708133051.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -450,7 +1139,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037.png&#34;
 	width=&#34;980&#34;
 	height=&#34;126&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hufc2b2ff07a9b4769077823c1ba8702cb_17514_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hu9611146055587325175.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094037_hu3691886562778154573.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -464,7 +1153,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121.png&#34;
 	width=&#34;980&#34;
 	height=&#34;127&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hue59f5e9f7c2084da43948fe187d49531_18706_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hu4849275297742617897.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094121_hu13553429190500592506.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -478,7 +1167,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216.png&#34;
 	width=&#34;978&#34;
 	height=&#34;124&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hue58a57f86e9779577380048448d0b527_17047_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hu10625142996558916314.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094216_hu6971832501653071497.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -492,7 +1181,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303.png&#34;
 	width=&#34;980&#34;
 	height=&#34;336&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hue452dd730e17a8a28807860ad809d695_76930_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hu5458968244409787573.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094303_hu4895425890596583214.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -506,7 +1195,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414.png&#34;
 	width=&#34;980&#34;
 	height=&#34;60&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu9ffd5bbd03c9239a361334de9f55b1b4_12783_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu15790650347970908598.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094414_hu16304101232571851280.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -520,7 +1209,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504.png&#34;
 	width=&#34;980&#34;
 	height=&#34;183&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu05868ea27eab6ece4f0d7515a93f5f0c_35908_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu10578866037176762233.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094504_hu2119003778766715629.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -534,7 +1223,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600.png&#34;
 	width=&#34;978&#34;
 	height=&#34;80&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_huf5b80f09e81a0d7ddd41018be7c8b1cc_15585_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_hu11580938189810458216.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_094600_hu357255550679396012.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -549,7 +1238,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317.png&#34;
 	width=&#34;978&#34;
 	height=&#34;83&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hudbb958d56fca3c7a6b9ab3d20a5e9455_12108_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hu9273606914115903615.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095317_hu14888182707493261668.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -562,7 +1251,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352.png&#34;
 	width=&#34;980&#34;
 	height=&#34;123&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu7e9fb509aa29553852fda6c295391e23_23676_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu9943214028975678341.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/Screenshot_20240607_095352_hu10911092971922333105.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -586,7 +1275,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1.png&#34;
 	width=&#34;436&#34;
 	height=&#34;875&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_huf143cc52642040a857dfead4020b93c2_98832_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_hu3562169309634839186.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a1_hu68721785652129530.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Add new OpenVPN profile.&#34;
@@ -600,7 +1289,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2.png&#34;
 	width=&#34;436&#34;
 	height=&#34;873&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu3d60133e06dd6f18a80797b2e8b63fa6_128144_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu2237769961639447552.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a2_hu15477384149532312955.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Confirm import.&#34;
@@ -614,7 +1303,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3.png&#34;
 	width=&#34;436&#34;
 	height=&#34;875&#34;
-	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_huf143cc52642040a857dfead4020b93c2_76814_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_hu6425126588364808073.png 480w, https://blog.moroz.cc/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/a3_hu13466588910935383036.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Verify connection to OpenVPN server.&#34;
@@ -729,7 +1418,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302.png&#34;
 	width=&#34;1324&#34;
 	height=&#34;884&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hu10926007443499300719.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hu821624361233680090.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Pi-hole authentication web page.&#34;
@@ -744,7 +1433,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446.png&#34;
 	width=&#34;1324&#34;
 	height=&#34;884&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu5648179359832049729.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu9476532913898545638.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Pi-hole admin interface.&#34;
@@ -762,7 +1451,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820.png&#34;
 	width=&#34;980&#34;
 	height=&#34;307&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu12284886920787672499.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu17430702722528012465.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Correctly listened tcp/udp port 53 on host server.&#34;
@@ -778,7 +1467,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254.png&#34;
 	width=&#34;1324&#34;
 	height=&#34;884&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu15803226095731717228.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu10220070801246660490.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;DNS Settings&#34;
@@ -793,7 +1482,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540.png&#34;
 	width=&#34;1324&#34;
 	height=&#34;884&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_hu12110411488895704587.png 480w, https://blog.moroz.cc/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_hu9165105089036697994.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Pi-hole queries&#34;
@@ -1036,7 +1725,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch.png&#34;
 	width=&#34;1047&#34;
 	height=&#34;395&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu7767396bc0a300c4a77346294e8113f9_23785_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu133252618004603506.png 480w, https://blog.moroz.cc/post/how-to-run-stable-diffusion-in-vm-on-amd-gpu-automatic1111--kvm--gpu-passthrough/a1111-launch_hu17688080236442681459.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Running AUTOMATIC1111 instance.&#34;
@@ -1208,7 +1897,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware.jpg&#34;
 	width=&#34;3746&#34;
 	height=&#34;2036&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu97ab0ced7aba4c11837f469742ea3a36_1335483_1024x0_resize_q75_box.jpg 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu5316848306174236222.jpg 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_hardware_hu2324413773942828971.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;PCIE Hardware - Desktop workstation with 2 GPUs&#34;
@@ -1228,7 +1917,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization.png&#34;
 	width=&#34;1920&#34;
 	height=&#34;1092&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_huf7014b7053b344cd9708e2f10498c428_803597_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_hu14537860528276522273.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_virtualization_hu14410412353474061933.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of Virtualization settings on MSI Z490 motherboard and Intel CPU&#34;
@@ -1243,7 +1932,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority.png&#34;
 	width=&#34;1920&#34;
 	height=&#34;1096&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu64bd15e6f51b66c8d6bf8931fb02e17f_754389_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu4801827362415809405.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/bios_gpu_init_priority_hu14994768946575286753.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of GPU initialization settings on MSI Z490 motherboard&#34;
@@ -1447,7 +2136,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1.png&#34;
 	width=&#34;493&#34;
 	height=&#34;493&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hud1da5726c23f6ca5ceeeedf63d3929ba_30710_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hu18073896031278788223.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm1_hu6602310145448245060.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Virt Manager - Local install media&#34;
@@ -1464,7 +2153,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2.png&#34;
 	width=&#34;494&#34;
 	height=&#34;491&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu8b2a172ea9cf6f94d3260c46e03c9cc9_29983_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu11950223325433741524.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm2_hu6122348967997760476.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Virt Manager - ISO path and OS type&#34;
@@ -1481,7 +2170,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3.png&#34;
 	width=&#34;494&#34;
 	height=&#34;492&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu7e09e21a5b0ae0216eddeaa7e4eadbde_21842_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu10945930333721977693.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm3_hu9887751238817905722.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Virt Manager - System resources allocation&#34;
@@ -1498,7 +2187,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4.png&#34;
 	width=&#34;491&#34;
 	height=&#34;490&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hub8dd65feaf891b32fb4a17ed6ad50dbb_26623_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hu7867447878356202190.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm4_hu10148646427734098499.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Virt Manager - Storage allocation&#34;
@@ -1519,7 +2208,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5.png&#34;
 	width=&#34;492&#34;
 	height=&#34;490&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu8bb678709bd41e61d47911e8b1ccbfdd_37141_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu17891980543552084179.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm5_hu3597440930435823089.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Virt Manager - VM name, network seelction&#34;
@@ -1536,7 +2225,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6.png&#34;
 	width=&#34;1015&#34;
 	height=&#34;802&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu04fc1b4bbb4415316705e4c130490e44_71785_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu12238543899330835909.png 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/vm6_hu3686758649475576161.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Virt Manager - VM Chipset and Firmware (Q35 UEFI).&#34;
@@ -1626,7 +2315,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result.jpg&#34;
 	width=&#34;4080&#34;
 	height=&#34;1292&#34;
-	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_480x0_resize_q75_box.jpg 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu40470e4ad5c8bfabf5c3a6e3ec8ddc81_1848343_1024x0_resize_q75_box.jpg 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu7478169995235364455.jpg 480w, https://blog.moroz.cc/post/gpu-pci-passthrough-to-windows-kvm-on-arch-linux/gpu_passthrough_result_hu8454564593016997709.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Final GPU Passthrough result: Windows VM on the left, Linux host on the right&#34;
@@ -1805,7 +2494,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen1.png&#34;
 	width=&#34;774&#34;
 	height=&#34;91&#34;
-	srcset=&#34;https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu8d6d15052f779ad7368122857a68f8d0_12959_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu11925161998479240497.png 480w, https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen1_hu1177734199855009109.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of setting the SSH key filename&#34;
@@ -1827,7 +2516,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen2.png&#34;
 	width=&#34;768&#34;
 	height=&#34;448&#34;
-	srcset=&#34;https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hub535883082eb7eeeed4bf165e660476e_51704_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hu15828200097434397956.png 480w, https://blog.moroz.cc/post/configure-ssh-authorization-based-on-rsa-key/keygen2_hu2905700349151381536.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of successful SSH key generation&#34;
@@ -2177,7 +2866,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error.png&#34;
 	width=&#34;1341&#34;
 	height=&#34;459&#34;
-	srcset=&#34;https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu8e4e92b7cf4700e037c8e42b427c12f1_46916_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu8e4e92b7cf4700e037c8e42b427c12f1_46916_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu12284287272146779194.png 480w, https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu9020300781713916832.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Missing formula fonts error message for WPS Office&#34;
@@ -2232,7 +2921,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula.png&#34;
 	width=&#34;1346&#34;
 	height=&#34;418&#34;
-	srcset=&#34;https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hub6332841ae24cdfeb3c7bc7df7f83e7d_56315_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hub6332841ae24cdfeb3c7bc7df7f83e7d_56315_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hu17372414151895098867.png 480w, https://blog.moroz.cc/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hu13785561141123817785.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;WPS Office formula displaying after the fix&#34;
@@ -2267,7 +2956,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci.png&#34;
 	width=&#34;1041&#34;
 	height=&#34;682&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu55b678af0fc1263b46630a347bb69219_143338_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu83154317091813632.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/fcc-lspci_hu14672337068054282106.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Getting a list of PCI devices&#34;
@@ -2324,7 +3013,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list.png&#34;
 	width=&#34;1041&#34;
 	height=&#34;374&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu03f8e66fefdc366a566025eb1d302892_42142_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu2543466286844266223.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-list_hu3604823120267100130.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;List of WWAN modems&#34;
@@ -2341,7 +3030,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect.png&#34;
 	width=&#34;1041&#34;
 	height=&#34;374&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu03f8e66fefdc366a566025eb1d302892_41156_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu17805828263244588124.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-connect_hu5794861202941292329.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of WWAN connection&#34;
@@ -2358,7 +3047,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect.png&#34;
 	width=&#34;1041&#34;
 	height=&#34;374&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hub5d36765c907e73e55f9e58a59745d82_41397_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hu8627825695735044247.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/mmcli-disconnect_hu11610595834589246902.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of terminating WWAN connection&#34;
@@ -2375,7 +3064,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1.png&#34;
 	width=&#34;1395&#34;
 	height=&#34;874&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_huecb6ab7d8c7c816c2cdbc7922572a54a_94373_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_hu7641189460699999285.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-connections-1_hu13721148267612313432.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;KDE Plasma connection settings&#34;
@@ -2390,7 +3079,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type.png&#34;
 	width=&#34;630&#34;
 	height=&#34;754&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hudd02d394181990c707bf74b90a8593f4_49426_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hu12960805188586841891.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-net-type_hu17741140778307879522.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Network type selection&#34;
@@ -2405,7 +3094,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device.png&#34;
 	width=&#34;630&#34;
 	height=&#34;514&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hub22880698d781809659ba8bd66930a4a_72054_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hu342452318292701624.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-broadband-device_hu343819412391645221.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Broadband device selection&#34;
@@ -2420,7 +3109,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country.png&#34;
 	width=&#34;630&#34;
 	height=&#34;514&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu3c8b049f70b7554b8a6286b0104fa1c3_52423_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu6764269497973036168.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-country_hu17685770106000305087.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;ISP selection&#34;
@@ -2435,7 +3124,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp.png&#34;
 	width=&#34;630&#34;
 	height=&#34;514&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_huf88af34e1148716b23dddec51660d031_51590_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_hu13339472348891529882.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-isp_hu1926502442888136663.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;ISP selection&#34;
@@ -2450,7 +3139,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn.png&#34;
 	width=&#34;630&#34;
 	height=&#34;514&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_huf6c782d6b516a1343e1b578c5a92e515_65472_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_hu10863447262233840395.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-apn_hu2692629814502580310.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;APN settings&#34;
@@ -2465,7 +3154,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success.png&#34;
 	width=&#34;630&#34;
 	height=&#34;514&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_huf1ad9a565989b4eb39e548602712f577_54163_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_hu9960050189596307985.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-nm-success_hu17261950274074582125.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Finish step&#34;
@@ -2480,7 +3169,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray.png&#34;
 	width=&#34;445&#34;
 	height=&#34;489&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu77d48f2a53b26b5d1c812e1bbe7fee8f_19985_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu8808923636170307316.png 480w, https://blog.moroz.cc/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/kde-lte-tray_hu9694984646918539446.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;KDE Plasma network applet LTE connection&#34;
@@ -2545,7 +3234,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install_hucafa932fe34aa2aefc06669b2ce09936_92625_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install_hu16319569058414486143.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/install_hu17026989244868686411.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Example of installing ZSH on Arch Linux&#34;
@@ -2562,7 +3251,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hucd7c8c8dcb3abd05de9a0cb16ec2c932_32586_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hu8008018449894362887.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-default_hu3940105042198436986.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Making ZSH the default shell&#34;
@@ -2579,7 +3268,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hue5a7b1fe6f9e3e85faca99de2e52cb54_61939_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hu17940928290311322650.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-initial_hu6921689312724243087.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Initial configuration of ZSH shell&#34;
@@ -2602,7 +3291,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_huc8b2a7fa426712a9a95c7f33af61d746_74342_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_hu871790017501581268.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-post-install_hu12955064899744155195.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Initial configuration of ZSH shell&#34;
@@ -2619,7 +3308,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu735e9fc6391b6696a5f1aa2991778b91_105259_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu14295633495722725417.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-default-themes_hu10919407002149610267.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Initial configuration of ZSH shell&#34;
@@ -2668,7 +3357,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings.png&#34;
 	width=&#34;1071&#34;
 	height=&#34;787&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_huf28f54ecfbfd6e75658b462ef6a5e6d5_69982_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_hu9694421732731324455.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/terminal-font-settings_hu3273641325484970774.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Terminal font settings example&#34;
@@ -2686,7 +3375,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hud87dec74a9b290eee495b65a06b6da96_67279_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hu15826549651525161109.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-clone_hu17293742031610451915.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;The process of cloning Powerlevel10k repository files&#34;
@@ -2704,7 +3393,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu444b9bf8f8c0816ba7e910f5e503f0bc_105932_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu13693703339301562036.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-theme_hu3272083076423258357.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Changing the theme in .zshrc&#34;
@@ -2723,7 +3412,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu5df48a8d27ea69710e532745c137ca62_53213_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu14647890607765473019.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard1_hu12916032424740068985.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Diamond symbol&#34;
@@ -2737,7 +3426,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu6f0cd1958318bda0a0c2527eb0688f21_36402_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu9751960176649098559.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard2_hu14246614376662757853.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Lock symbol&#34;
@@ -2751,7 +3440,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hud3f521dad57f998257631809fd2f958b_38202_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hu13096881449815345485.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard3_hu4848622254458839411.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Up arrow symbol&#34;
@@ -2765,7 +3454,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu79c7b88ba6609fe3ea9aa3e5b7f2caaa_44510_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu14595665827381223676.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard4_hu6862238543720249433.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fit between symbols&#34;
@@ -2783,7 +3472,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu83ebd306967e2adccb040e2320919b82_49290_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu7810763447598317949.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard5_hu15240634993479004947.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt style&#34;
@@ -2798,7 +3487,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_huc63312345da93fed4d1af709621727dc_38228_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_hu13480525587687881263.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard6_hu11510552093618873547.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Character set&#34;
@@ -2813,7 +3502,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu7a5a398f21b33c8de053a9b277bfb3fc_49890_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu3212630298607614649.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard7_hu8081279486841776765.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Current time&#34;
@@ -2828,7 +3517,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu0f6751770b3b8eb45d693b59c2bb2620_53872_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu1106611752234159087.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard8_hu11819483448750854193.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt separator&#34;
@@ -2842,7 +3531,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu780910768a79574c99f82acd18503a1e_52206_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu17576042267831462595.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard9_hu6188375074469396435.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt heads&#34;
@@ -2856,7 +3545,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu492d63ace7bdc5c29b8f33412d8bdb6d_59347_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu16670261253079561425.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard10_hu6318791708389598093.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt tails&#34;
@@ -2870,7 +3559,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu7727d1a3bc90adaf67deeae2d5b48105_38874_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu15002581450688704941.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard11_hu3205523818161259799.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt height&#34;
@@ -2884,7 +3573,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu1331c40d79d151cd198896d5776eebcb_46879_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu7723982711197033938.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard12_hu17296952711085936608.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt connection&#34;
@@ -2898,7 +3587,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu19db19216477ad421729edf3b03b89ae_50072_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu513418425873758178.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard13_hu15690474411121508744.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt frame&#34;
@@ -2912,7 +3601,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu70c92de427c1cac44e3a510bb6ce33f2_48159_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu14686703418519690005.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard14_hu17969102435850539471.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt spacing&#34;
@@ -2926,7 +3615,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hue23d745b51a89edcd054e5894abb895c_41584_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hu1998138706324677875.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard15_hu3041714828162936621.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Icons&#34;
@@ -2940,7 +3629,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu20c5d24bf70c084778ecc6394edc845c_44074_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu12791683234706094381.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard16_hu15815265824928675402.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prompt flow&#34;
@@ -2954,7 +3643,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu928b99f4e540481f36dc0b4e57d4a9d5_65125_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu2705684876085937982.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard17_hu9728215556108321926.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Transient prompt&#34;
@@ -2969,7 +3658,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu82b3cf9d1fbbf2d15339e0f08f49f9a3_52857_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu15961203548783550839.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard18_hu10913828289890945984.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Instant prompt&#34;
@@ -2984,7 +3673,7 @@
 &lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;775&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hua81f56547fae34b5102af9fe3d02b7bd_37660_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hu6865751627043823751.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-wizard19_hu7456758735046415555.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Apply changes&#34;
@@ -2999,7 +3688,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;451&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu783d97fd3472b20bb03b6b1b0b183f69_18161_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu2521739151346119347.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/powerlevel10k-installed_hu13822021505482669128.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Installed p10k theme&#34;
@@ -3018,7 +3707,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;725&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1e2546ccecb5e364fb54d4404ab21fc5_93683_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu1472991700397276475.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/oh-my-zsh-bundled-plugins_hu4712046500841468626.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Plugins bundled with Oh My ZSH by default&#34;
@@ -3036,7 +3725,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;725&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu1668c57df5d1de99cbbcd9215c7b448c_91428_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu12010488412420697145.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zshrc-plugins_hu15598172462293331661.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Changing the plugins in .zshrc&#34;
@@ -3056,7 +3745,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;725&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_huc135d074d0282176b69879af7fde0c94_68266_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_hu5204135660965548430.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-clone_hu6554821613715315821.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Cloning the zsh-autosuggestions plugin&#34;
@@ -3075,7 +3764,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works.png&#34;
 	width=&#34;1014&#34;
 	height=&#34;370&#34;
-	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu085f7f070d1b0509c4937d1a680a8616_18924_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu8796157645427583894.png 480w, https://blog.moroz.cc/post/how-to-install-and-configure-zsh-shell-in-linux/zsh-autosuggestions-works_hu14425750983685760164.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Testing the zsh-autosuggestions plugin&#34;
@@ -3328,7 +4017,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings.png&#34;
 	width=&#34;699&#34;
 	height=&#34;544&#34;
-	srcset=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hudb69b076fe35d50bc51ed5e0372b7156_1524576_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hu11427208177207947148.png 480w, https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_settings_hu4281495183684973742.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Setting up OBS streaming&#34;
@@ -3343,7 +4032,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start.png&#34;
 	width=&#34;502&#34;
 	height=&#34;230&#34;
-	srcset=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu972c5f8f4acf1f2b0dd324d45ad2dfd1_463370_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu8797753931377690106.png 480w, https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/obs_stream_start_hu12147834678313867950.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Start OBS streaming&#34;
@@ -3376,7 +4065,7 @@
 &lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1.png&#34;
 	width=&#34;521&#34;
 	height=&#34;428&#34;
-	srcset=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_480x0_resize_box_3.png 480w, https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hudb0ad48cd9d0258b52775b8aa30997dd_894369_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hu3889354402891093539.png 480w, https://blog.moroz.cc/post/deploying-an-rtmp-server-for-streaming-using-nginx-rtmp/vlc_play_1_hu10458992350386334799.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;VLC Network Play&#34;

@@ -6,7 +6,16 @@
         <description>Recent content in Software on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Fri, 15 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/software/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/software/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Arch Linux install guide (UEFI &#43; encrypted LVM)</title>
+        <link>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/</guid>
+        <description>&lt;img src="http://localhost:1313/post/arch-linux-install-guide-uefi--encrypted-lvm/header.png" alt="Featured image of post Arch Linux install guide (UEFI &#43; encrypted LVM)" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+</description>
+        </item>
+        <item>
         <title>Fix missing formula fonts for WPS Office on Linux</title>
         <link>http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/</link>
         <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
@@ -20,7 +29,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error.png&#34;
 	width=&#34;1341&#34;
 	height=&#34;459&#34;
-	srcset=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu8e4e92b7cf4700e037c8e42b427c12f1_46916_480x0_resize_box_3.png 480w, http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu8e4e92b7cf4700e037c8e42b427c12f1_46916_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu12284287272146779194.png 480w, http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_error_hu9020300781713916832.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Missing formula fonts error message for WPS Office&#34;
@@ -75,7 +84,7 @@
 &lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula.png&#34;
 	width=&#34;1346&#34;
 	height=&#34;418&#34;
-	srcset=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hub6332841ae24cdfeb3c7bc7df7f83e7d_56315_480x0_resize_box_3.png 480w, http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hub6332841ae24cdfeb3c7bc7df7f83e7d_56315_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hu17372414151895098867.png 480w, http://localhost:1313/post/fix-missing-formula-fonts-for-wps-office-on-linux/wps_formula_hu13785561141123817785.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;WPS Office formula displaying after the fix&#34;

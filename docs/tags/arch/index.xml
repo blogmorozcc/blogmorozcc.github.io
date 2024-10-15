@@ -6,7 +6,696 @@
         <description>Recent content in Arch on The IT Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <lastBuildDate>Mon, 25 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/arch/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.moroz.cc/tags/arch/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Implementation of custom A/B update and rootfs backup system on Arch Linux</title>
+        <link>https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/</link>
+        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/</guid>
+        <description>&lt;img src="https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/header.png" alt="Featured image of post Implementation of custom A/B update and rootfs backup system on Arch Linux" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;An A/B update and backup system is a mechanism used primarily on Android devices to ensure safer and more reliable system updates. The approach involves having two partitions (A and B) for system data, allowing the device to switch between them during updates. Let&amp;rsquo;s try to understand how it works and what makes it beneficial.&lt;/p&gt;
+&lt;h3 id=&#34;how-ab-update-system-works&#34;&gt;How A/B Update System Works&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Two System Partitions: Devices are set up with two copies of key partitions (A and B), which contain the operating system and related files. Only one partition is active at a time, meaning the device is always running on either A or B.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Non-Disruptive Updates: When an update is downloaded, it’s installed on the inactive partition (e.g., if you’re on A, it will be installed on B). This allows you to continue using the device while the update is being applied.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Safe Switching: Once the update is complete, the system reboots into the updated partition (in this case, B). If something goes wrong during the boot, the system will automatically switch back to the previously working partition (A). This rollback mechanism is crucial for preventing a device from becoming unusable due to a failed update.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Consistency and Speed: Updates are quicker because they don’t disrupt your device’s normal operations. You can use the device while the update is being installed in the background. Then, when you’re ready, you just need a quick reboot to switch partitions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;benefits-of-ab-update-system&#34;&gt;Benefits of A/B Update System&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Safety: If the new update is corrupted or incompatible, the device can revert to the other partition. This makes system updates more reliable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Minimal Downtime: Updates are installed in the background, so you only need to reboot to complete the process. You don’t have to wait for the installation to happen during reboot.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Seamless Experience: The device can handle switching automatically, often without the user needing to take additional steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;ab-backup-system&#34;&gt;A/B Backup System&lt;/h3&gt;
+&lt;p&gt;Although A/B primarily refers to system updates, a similar concept can apply to backup systems. For instance, some backup tools might use alternate partitions or snapshots to store backups, ensuring that you have a fallback option in case of system failures.&lt;/p&gt;
+&lt;p&gt;This approach is especially used in modern &lt;a class=&#34;link&#34; href=&#34;https://source.android.com/docs/core/ota/ab&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Android system A/B OTA updates&lt;/a&gt;, but it can also be found in other contexts where high reliability and system availability are crucial.&lt;/p&gt;
+&lt;h2 id=&#34;benefits-of-ab-specific-to-arch-linux&#34;&gt;Benefits of A/B specific to Arch Linux&lt;/h2&gt;
+&lt;p&gt;Implementing an A/B update system on Arch Linux could offer several advantages, particularly for users who value stability, reliability, and quick recovery options. Here’s why this approach might be beneficial for Arch Linux specifically:&lt;/p&gt;
+&lt;h3 id=&#34;improved-system-stability&#34;&gt;Improved System Stability&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Rolling Release Model: Arch Linux is a rolling-release distribution, which means updates are frequent and bring both new features and potential changes that can lead to system instability. With an A/B system, you can update the inactive partition and quickly switch back to a stable setup if an issue arises.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Reliability: An A/B system can help maintain system uptime and stability by allowing quick rollback to a previously working state if an update introduces a bug or compatibility issue.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;safety-in-testing-and-experimentation&#34;&gt;Safety in Testing and Experimentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Arch Users Are Often Power Users: Many Arch users like to customize and experiment with their setups. The A/B system would allow you to try new configurations or packages on one partition while keeping a safe, functional setup on the other. If something goes wrong, you can reboot into the stable environment without having to troubleshoot complex issues.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Easy System Recovery: With a backup partition always available, users can test experimental or non-standard updates (such as kernel patches or desktop environment changes) with less risk. If an update fails or breaks the system, you can boot into the untouched partition and keep working.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;quicker-update-rollbacks&#34;&gt;Quicker Update Rollbacks&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Effortless Reversion: Arch doesn’t have an inherent rollback feature built-in, so reverting to previous versions can be tedious. An A/B system would allow for quick switching between versions with no need to manually downgrade packages or restore from backups.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Bootloader Integration: Since you use systemd-boot, the A/B update system could integrate well with this bootloader, allowing you to select which partition to boot into directly from the boot menu.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;downside-of-ab-update-and-backup-systems&#34;&gt;Downside of A/B update and backup systems&lt;/h2&gt;
+&lt;p&gt;The main downside of an A/B update and backup system is increase in disk space usage. An A/B system would require additional storage space, effectively doubling the space required for system partitions. For users with limited disk space, this could be a drawback.&lt;/p&gt;
+&lt;h2 id=&#34;implementing-my-own-ab-update-and-backup-system&#34;&gt;Implementing my own A/B update and backup system&lt;/h2&gt;
+&lt;p&gt;I inspired the idea of an A/B update and backup system approach for backups and OS updates from Android and some immutable GNU/Linux distributions. I daily drive Arch Linux on my two own personal computers and prefer to have the latest updates. But on the other side I want to make my system as reliable as possible, and in case update ocassionaly break my system - I want to have a way to quickly rollback without doing install and configuration from scratch.&lt;/p&gt;
+&lt;h3 id=&#34;understanding-the-requirements&#34;&gt;Understanding the requirements&lt;/h3&gt;
+&lt;p&gt;First of all, I came up with the basic requirements that my custom A/B update and backup system must have:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Both A and B partitions should be bootable, including the ability to choose any partition (A or B) manually during boot.&lt;/li&gt;
+&lt;li&gt;Ability to use different kernel versions for both A or B partitions.&lt;/li&gt;
+&lt;li&gt;Only the root / partition should be copied during A/B update or backup procedure. I have /home on separate partition and it should be untouched during backup process.&lt;/li&gt;
+&lt;li&gt;Solution should be compatible with LUKS encryption for security.&lt;/li&gt;
+&lt;li&gt;I want to have a single script for backup and restore operations (copy A to B, and copy B to A).&lt;/li&gt;
+&lt;li&gt;Script should be able to detect the source and destination partitions automatically, without providing additional arguments.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/scheme.png&#34;
+	width=&#34;1097&#34;
+	height=&#34;1143&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/scheme_hu18026895704027529802.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/scheme_hu4528006048314213157.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;A/B update and backup system principal mechanism&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;95&#34;
+		data-flex-basis=&#34;230px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;choosing-components&#34;&gt;Choosing components&lt;/h3&gt;
+&lt;p&gt;After understanding the requirements, the next important step is to find the right components that are able to meet those requirements and allow to implement the system. I have chosen &lt;code&gt;rsync&lt;/code&gt; utility for doing backups as it is ideal for regular and incremental backups. It only copies changed files, making it efficient and faster for repeat backups. You can also easily exclude certain directories (like /home and /boot) and maintain a backup that is ready to be restored at the file level.&lt;/p&gt;
+&lt;h3 id=&#34;partitioning-disk&#34;&gt;Partitioning disk&lt;/h3&gt;
+&lt;p&gt;I already had a working Arch Linux system with configured LUKS encrytion and separate partitions for root (&lt;code&gt;/&lt;/code&gt;) and home (&lt;code&gt;/home&lt;/code&gt;). For more details you can check my &lt;a class=&#34;link&#34; href=&#34;https://blog.moroz.cc/post/arch-linux-install-guide-uefi--encrypted-lvm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Arch Linux install guide (UEFI + encrypted LVM)&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So I needed to shrink the &lt;code&gt;/home&lt;/code&gt; logical volume and create the second logical volume for the B root partition. My main root logical volume is 50Gb, so the second one should be exactly the same size.&lt;/p&gt;
+&lt;p&gt;This step should not be perform directly from my installed Arch system, because we need to perform the shrink operation. I used Arch Linux live install media for all the partitioning operations.&lt;/p&gt;
+&lt;h4 id=&#34;unlock-the-luks-container&#34;&gt;Unlock the LUKS container.&lt;/h4&gt;
+&lt;p&gt;I have encrypted LUKS container on &lt;code&gt;/dev/nvme0n1p2&lt;/code&gt;, so first need to decrypt it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cryptsetup luksOpen /dev/nvme0n1p2 luks&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;shrink-the-home-logical-volume&#34;&gt;Shrink the home logical volume&lt;/h4&gt;
+&lt;p&gt;In my case the volume group is named as &lt;code&gt;vg0&lt;/code&gt; and contains a logical volume &lt;code&gt;lv_home&lt;/code&gt; for the &lt;code&gt;/home&lt;/code&gt; partition. The full path to the home logical volume in my case is &lt;code&gt;/dev/mapper/vg0-lv_home&lt;/code&gt;. It needs to be shrinked in 50Gb amount in size, so there will be enough space for the second root partition. This can be performed with the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lvresize -L -50G /dev/mapper/vg0-lv_home&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After the shrink operation it is also recommended to run &lt;code&gt;resize2fs&lt;/code&gt; and &lt;code&gt;e2fsck&lt;/code&gt; to ensure that filesystem is healthy and resized correctly:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;resize2fs /dev/mapper/vg0-lv_home
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;e2fsck -f /dev/mapper/vg0-lv_home&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;create-a-second-root-partition&#34;&gt;Create a second root partition&lt;/h4&gt;
+&lt;p&gt;The last step of partitioning is to create a second &amp;ldquo;B&amp;rdquo; root partition. I decided to name the volume as &lt;code&gt;lv_root_2&lt;/code&gt;, so the command is the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lvcreate -L 50G -n lv_root_2 vg0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then the created partition should be formatted with exactly the same filesystem like already existing root partition. I already use ext4 filesystem, so the &amp;ldquo;B&amp;rdquo; root partition also should have ext4 filesystem.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkfs.ext4 /dev/mapper/lv_root_2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, the new partition layout of the system looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/partitions.png&#34;
+	width=&#34;1039&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/partitions_hu7558437358515381162.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/partitions_hu11048232625777182021.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;A/B update and backup system partitions, logical volumes layout.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;207&#34;
+		data-flex-basis=&#34;498px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;configure-bootloader&#34;&gt;Configure bootloader&lt;/h3&gt;
+&lt;p&gt;In my case, I already use &lt;code&gt;systemd-boot&lt;/code&gt; bootloader for my Arch Linux setup. It perfectly meets the requirements, as it allows booting different kernels. So to make the bootloader boot different kernels for different partitions (either &amp;ldquo;A&amp;rdquo; or &amp;ldquo;B&amp;rdquo;) the existing boot entries for partition &amp;ldquo;A&amp;rdquo; should be duplicated and modified to use with partition B.&lt;/p&gt;
+&lt;p&gt;The boot loader entries are stored at &lt;code&gt;/boot/loader/entries&lt;/code&gt; directory, for ease of use navigate with &lt;code&gt;cd&lt;/code&gt; into it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /boot/loader/entries&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then let&amp;rsquo;s see what bootloader entries do we have:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -al&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I have two bootloader entries for existing parition &amp;ldquo;A&amp;rdquo; for loading &lt;code&gt;linux-zen&lt;/code&gt; and &lt;code&gt;linux-lts&lt;/code&gt; kernels that are stored in files &lt;code&gt;arch-zen.conf&lt;/code&gt; and &lt;code&gt;arch-lts.conf&lt;/code&gt; respectively. If you are using only one kernel version you will probaly have only one bootloader entry.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot1.png&#34;
+	width=&#34;1039&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot1_hu4785233378607969330.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot1_hu15724962336650974305.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Existing bootloader entries for partition &amp;ldquo;A&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;207&#34;
+		data-flex-basis=&#34;498px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;For convenience it is better to rename them to &lt;code&gt;arch-zen-a.conf&lt;/code&gt; and &lt;code&gt;arch-lts-a.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv arch-zen.conf arch-zen-a.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv arch-lts.conf arch-lts-a.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that I used &lt;code&gt;sudo nano arch-zen-a.conf&lt;/code&gt; and &lt;code&gt;sudo nano arch-lts-a.conf&lt;/code&gt; to modify this two files, added prefix &lt;code&gt;[Partition A]&lt;/code&gt; to both titles that allows to understand what partition is used for the boot option.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-a.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-a_hu6673478298592396111.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-a_hu14155926419589777046.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for LTS kernel on partition &amp;ldquo;A&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-a.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-a_hu1108977642596772464.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-a_hu15697669330591279989.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for ZEN kernel on partition &amp;ldquo;A&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next both for of the files &lt;code&gt;arch-zen-a.conf&lt;/code&gt; and &lt;code&gt;arch-lts-a.conf&lt;/code&gt; should be duplicated for partition &amp;ldquo;B&amp;rdquo;, it can be achieved by making a copy:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp arch-zen-a.conf arch-zen-b.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp arch-lts-a.conf arch-lts-b.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Than use similar command for &amp;ldquo;B&amp;rdquo; voluem entries &lt;code&gt;sudo nano arch-zen-b.conf&lt;/code&gt;, &lt;code&gt;sudo nano arch-lts-b.conf&lt;/code&gt; to change the title from &amp;ldquo;[Partition A]&amp;rdquo; to &amp;ldquo;[Partition B]&amp;rdquo; and change root partition from &lt;code&gt;/dev/vg0/lv_root&lt;/code&gt; to &lt;code&gt;/dev/vg0/lv_root_2&lt;/code&gt; in both of the files.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-b.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-b_hu8493241458509209425.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-lts-b_hu13539187266101592348.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for LTS kernel on partition &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;
+&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-b.png&#34;
+	width=&#34;1194&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-b_hu11949643183411468776.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot-zen-b_hu7787071308164298950.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Boot entry for ZEN kernel on partition &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;573px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Finally the bootloader entries directory will look exactly like this for my usecase:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot2.png&#34;
+	width=&#34;1034&#34;
+	height=&#34;500&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot2_hu14462101249319033462.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/boot2_hu15424265614249234587.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Final structure of bootloader entries for partitions &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;206&#34;
+		data-flex-basis=&#34;496px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;configure-fstab&#34;&gt;Configure fstab&lt;/h3&gt;
+&lt;p&gt;The fstab (File System Table) is a configuration file in Unix-like operating systems (like Linux) that defines how disk partitions, storage devices, and other file systems should be mounted at boot time. The file is located at &lt;code&gt;/etc/fstab&lt;/code&gt; and is read by the system during the boot process.&lt;/p&gt;
+&lt;p&gt;For different root partitions &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo; there will be different UUIDs for main and backup root partition:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The main root partition is mounted at &lt;code&gt;/&lt;/code&gt; mountpoint.&lt;/li&gt;
+&lt;li&gt;I defined that the backup root partition will be mounted at &lt;code&gt;/mnt/root&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Considering that there are &amp;ldquo;A&amp;rdquo; (lv_root) and &amp;ldquo;B&amp;rdquo; (lv_root_2) partitions, there are 2 possible scenarios:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If OS is booted from &amp;ldquo;A&amp;rdquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;/&lt;/code&gt; is &lt;code&gt;lv_root&lt;/code&gt; volume;&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;/mnt/root&lt;/code&gt; is &lt;code&gt;lv_root_2&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;during the backup operation &amp;ldquo;A&amp;rdquo; will be copied/restored to &amp;ldquo;B&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If OS is booted from &amp;ldquo;B&amp;rdquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;/&lt;/code&gt; is &lt;code&gt;lv_root_2&lt;/code&gt; volume;&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;/mnt/root&lt;/code&gt; is &lt;code&gt;lv_root&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;during the backup operation &amp;ldquo;B&amp;rdquo; will be copied/restored to &amp;ldquo;A&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I ended up with a solution of having different &lt;code&gt;fstab&lt;/code&gt; files for &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo; partition (&lt;code&gt;fstabA&lt;/code&gt; and &lt;code&gt;fstabB&lt;/code&gt; respectively), and it will be responsibility of the backup script to replace the main &lt;code&gt;fstab&lt;/code&gt; file with either &lt;code&gt;fstabA&lt;/code&gt; or &lt;code&gt;fstabB&lt;/code&gt; depending on the scenario described above.&lt;/p&gt;
+&lt;p&gt;First of all there is need to identify UUIDs of &lt;code&gt;lv_root&lt;/code&gt; and &lt;code&gt;lv_root_2&lt;/code&gt; for fstab:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo blkid /dev/mapper/vg0-lv_root
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo blkid /dev/mapper/vg0-lv_root_2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To sum up, in my case UUIDs are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For partition &amp;ldquo;A&amp;rdquo; (lv_root) - &lt;code&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For partition &amp;ldquo;B&amp;rdquo; (lv_root_2) - &lt;code&gt;9e3adc66-842f-4bec-aba0-85414eab7a07&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/blkid.png&#34;
+	width=&#34;1042&#34;
+	height=&#34;440&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/blkid_hu8883179688405949836.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/blkid_hu10247167299147494616.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Identifying UUIDs of &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo;.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;236&#34;
+		data-flex-basis=&#34;568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Next, have a look at the original &lt;code&gt;/etc/fstab&lt;/code&gt; file on my system:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05       /               ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;911cf69d-2ecb-4f2f-a9d5-491f44418922       /home           ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The partition &amp;ldquo;A&amp;rdquo; is already defined in it, so the partition B should be added by corresponding UUID, and the final look of the modified &lt;code&gt;/etc/fstab&lt;/code&gt; file is the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05       /               ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;911cf69d-2ecb-4f2f-a9d5-491f44418922       /home           ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root_2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;9e3adc66-842f-4bec-aba0-85414eab7a07       /mnt/root       ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The next step is to make 2 copies of &lt;code&gt;/etc/fstab&lt;/code&gt; file to &lt;code&gt;/etc/fstabA&lt;/code&gt; and &lt;code&gt;/etc/fstabB&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp /etc/fstab /etc/fstabA
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp /etc/fstab /etc/fstabB&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After duplicating the files, &lt;code&gt;fstabA&lt;/code&gt; file is correct (as it has &amp;ldquo;A&amp;rdquo; partiton as root), but in &lt;code&gt;fstabB&lt;/code&gt; file the partitions should be changed, so partition &amp;ldquo;B&amp;rdquo; is &lt;code&gt;/&lt;/code&gt;, and &amp;ldquo;A&amp;rdquo; is &lt;code&gt;/mnt/root&lt;/code&gt;. It is easy to do by just swapping UUIDs for corresponding mount in &lt;code&gt;/etc/fstabB&lt;/code&gt; file, so the final look of the file is:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root_2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;9e3adc66-842f-4bec-aba0-85414eab7a07       /               ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;911cf69d-2ecb-4f2f-a9d5-491f44418922       /home           ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# /dev/mapper/vg0-lv_root_2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;UUID&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;afb5ef09-0dd9-4002-977c-dd4d26782d05       /mnt/root       ext4            rw,relatime     &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;After all the modifications are done it is recommended to reboot the computer, and make sure all partitions can be correctly mounted.&lt;/p&gt;
+&lt;h3 id=&#34;make-partitions-identifiable&#34;&gt;Make partitions identifiable&lt;/h3&gt;
+&lt;p&gt;One of the requirements for the backup script is to have it automatically detect the what is the currently used root partition, and what is the backup partition. To make the partitions identifiable, I decided to keep it simple and just create a text file &lt;code&gt;rootid&lt;/code&gt; at the root of each partition, which contains corresponding partition letter (can be either &amp;ldquo;A&amp;rdquo; or &amp;ldquo;B&amp;rdquo;).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /rootid
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /mnt/root/rootid&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As the result, script will be able to read 2 files &lt;code&gt;/rootid&lt;/code&gt; and &lt;code&gt;/mnt/rootid&lt;/code&gt; and explicitly detect what partition is used as root and backup.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/rootid.png&#34;
+	width=&#34;1042&#34;
+	height=&#34;440&#34;
+	srcset=&#34;https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/rootid_hu10764027515167526504.png 480w, https://blog.moroz.cc/post/implementation-of-custom-a/b-update-and-rootfs-backup-system-on-arch-linux/rootid_hu10582134314316273040.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Identifying &amp;ldquo;A&amp;rdquo; and &amp;ldquo;B&amp;rdquo; labels.&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;236&#34;
+		data-flex-basis=&#34;568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;implementing-backup-script&#34;&gt;Implementing backup script&lt;/h3&gt;
+&lt;p&gt;To properly make a working bootable backup the script should implement the following steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Identify the root and backup partition.&lt;/li&gt;
+&lt;li&gt;Determine the operation mode by identified partitions, the possible values are:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;AB&amp;rdquo; - when partition &amp;ldquo;A&amp;rdquo; is booted and should be copied to &amp;ldquo;B&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;BA&amp;rdquo; - when partition &amp;ldquo;B&amp;rdquo; is booted and should be copied to &amp;ldquo;A&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Perform the full backup for current root partition to backup partition using &lt;code&gt;rsync&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Replace the &lt;code&gt;fstab&lt;/code&gt; file on backup partition with the correct variant:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;for the &amp;ldquo;AB&amp;rdquo; mode use &lt;code&gt;fstabB&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;for the &amp;ldquo;BA&amp;rdquo; mode use &lt;code&gt;fstabA&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Create default linux root filesystem symlinks on the backup root partition.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Let&amp;rsquo;s do the step by step implementation of each operation.&lt;/p&gt;
+&lt;h4 id=&#34;identify-partitions-and-operation-mode&#34;&gt;Identify partitions and operation mode&lt;/h4&gt;
+&lt;p&gt;It is straightforward and requires reading &lt;code&gt;/rootid&lt;/code&gt; and &lt;code&gt;/mnt/root/rootid&lt;/code&gt; files, and the use string concat to determine the operation mode:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /mnt/root/rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;perform-the-rsync-backup&#34;&gt;Perform the rsync backup&lt;/h4&gt;
+&lt;p&gt;At this point I wrote &lt;code&gt;rsync&lt;/code&gt; based command that is designed to backup mirror the root file system &lt;code&gt;/&lt;/code&gt; to &lt;code&gt;/mnt/root&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync -aHAXiv --progress --inplace --delete --exclude&lt;span class=&#34;o&#34;&gt;={&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/boot&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/home&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/proc&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sys&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/tmp&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/run&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/media&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lost+found&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/rootid&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib64&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sbin&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; / /mnt/root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break down each option to understand what it does and why:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-a&lt;/code&gt; (Archive Mode): Enables archive mode, which is a combination of options &lt;code&gt;-rlptgoD&lt;/code&gt;. It ensures that:
+&lt;ul&gt;
+&lt;li&gt;Recursive &lt;code&gt;-r&lt;/code&gt;: The command will copy directories recursively.&lt;/li&gt;
+&lt;li&gt;Links &lt;code&gt;-l&lt;/code&gt;: Symbolic links are copied as symbolic links.&lt;/li&gt;
+&lt;li&gt;Permissions &lt;code&gt;-p&lt;/code&gt;: Preserves file permissions.&lt;/li&gt;
+&lt;li&gt;Modification Times &lt;code&gt;-t&lt;/code&gt;: Keeps original file modification times.&lt;/li&gt;
+&lt;li&gt;Group &lt;code&gt;-g&lt;/code&gt;: Maintains group ownership.&lt;/li&gt;
+&lt;li&gt;Owner &lt;code&gt;-o&lt;/code&gt;: Retains owner information (requires root privileges).&lt;/li&gt;
+&lt;li&gt;Devices &lt;code&gt;-D&lt;/code&gt;: Preserves device and special files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: Preserves hard links.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt;: Preserves ACLs (Access Control Lists), which define more granular permissions than standard file permissions.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-X&lt;/code&gt;: Preserves extended attributes, which can contain metadata for certain files and directories.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-i&lt;/code&gt;: Displays a detailed list of changes for each file, providing more visibility into the operation.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-v&lt;/code&gt;: Increases verbosity, giving you information about the files being transferred.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--progress&lt;/code&gt;: Shows progress for each file during the transfer, useful for monitoring long operations.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--inplace&lt;/code&gt;: Updates destination files in place, rather than creating a temporary file and moving it into place. This is useful for large files or if disk space is limited.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--delete&lt;/code&gt;: Deletes files in the destination (/mnt/root) that no longer exist in the source (/). This makes the destination a true mirror of the source by removing any extra files.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--exclude={&amp;quot;/boot&amp;quot;,&amp;quot;/home&amp;quot;,&amp;quot;/dev&amp;quot;,&amp;quot;/proc&amp;quot;,&amp;quot;/sys&amp;quot;,&amp;quot;/tmp&amp;quot;,&amp;quot;/run&amp;quot;,&amp;quot;/mnt&amp;quot;,&amp;quot;/media&amp;quot;,&amp;quot;/lost+found&amp;quot;,&amp;quot;/rootid&amp;quot;,&amp;quot;/bin&amp;quot;,&amp;quot;/lib&amp;quot;,&amp;quot;/lib64&amp;quot;,&amp;quot;/sbin&amp;quot;}&lt;/code&gt;: Excludes certain directories from being copied:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/boot&lt;/code&gt;: Boot-related files, which may not be necessary for the backup, especially if you’re using a separate /boot partition.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home&lt;/code&gt;: User data, which might be backed up separately or is irrelevant for a root system backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev&lt;/code&gt;: Device files that dynamically represent hardware (e.g., /dev/sda), which do not need to be backed up.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/proc&lt;/code&gt; and &lt;code&gt;/sys&lt;/code&gt;: Virtual filesystems representing system and process information, populated by the kernel at runtime and not meant to be copied.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/tmp&lt;/code&gt;: Temporary files, which don’t need to be included in a backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/run&lt;/code&gt;: Runtime data, which is also dynamically generated at boot.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/mnt&lt;/code&gt; and &lt;code&gt;/media&lt;/code&gt;: These are typically used for mounting other filesystems, which do not need to be part of a root system backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lost+found&lt;/code&gt;: Contains files recovered from file system errors; not necessary for a root backup.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/rootid&lt;/code&gt;: Identifier file for root and backup partitions.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt;, &lt;code&gt;/lib&lt;/code&gt;, &lt;code&gt;/lib64&lt;/code&gt;, and &lt;code&gt;/sbin&lt;/code&gt;: On modern Linux system those are symlinks and not the directories, so I decided to exclide them and make symlinks manually after backup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;replace-the-fstab-file&#34;&gt;Replace the fstab file&lt;/h4&gt;
+&lt;p&gt;This is also kind of straightforward step that requires checking for the operation mode and replacing the &lt;code&gt;/mnt/root/etc/fstab/&lt;/code&gt; file according to the rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for the &amp;ldquo;AB&amp;rdquo; mode use &lt;code&gt;/mnt/root/etc/fstabB&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;for the &amp;ldquo;BA&amp;rdquo; mode use &lt;code&gt;/mnt/root/etc/fstabA&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The bash script snippet for this is the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;fstab_path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt/root/etc/fstab&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;AB&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for AB mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cp /mnt/root/etc/fstabB /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BA&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for BA mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cp /mnt/root/etc/fstabA /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Error: Unknown mode &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;create-linux-filesystem-symlinks&#34;&gt;Create linux filesystem symlinks&lt;/h4&gt;
+&lt;p&gt;On many modern Linux distributions, including Arch Linux, &lt;code&gt;/bin&lt;/code&gt;, &lt;code&gt;/lib&lt;/code&gt;, &lt;code&gt;/lib64&lt;/code&gt;, and &lt;code&gt;/sbin&lt;/code&gt; are symbolic links, rather than separate directories. This change is part of the move towards a simplified filesystem layout that merges &lt;code&gt;/bin&lt;/code&gt;, &lt;code&gt;/lib&lt;/code&gt;, and &lt;code&gt;/sbin&lt;/code&gt; with their counterparts in &lt;code&gt;/usr&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt; → &lt;code&gt;/usr/bin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib&lt;/code&gt; → &lt;code&gt;/usr/lib&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib64&lt;/code&gt; → &lt;code&gt;/usr/lib64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/sbin&lt;/code&gt; → &lt;code&gt;/usr/sbin&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This unification helps streamline the filesystem by centralizing executables and libraries within the /usr directory, reducing redundancy and simplifying maintenance.&lt;/p&gt;
+&lt;p&gt;To create the symlinks after the backup was performed, this command snippet should be used:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/bin /mnt/root/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/lib /mnt/root/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/lib /mnt/root/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/sbin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ln -s usr/bin /mnt/root/sbin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;final-script-version&#34;&gt;Final script version&lt;/h4&gt;
+&lt;p&gt;Finally I added some verbose logging messages and checks to the script to make it more stable and user-friendly. It is meant to be executed with sudo privileges, because it is making a full copy of root filesystem. The final version of the script is placed in &lt;code&gt;/opt/rootbackup.sh&lt;/code&gt; and looks like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Starting backup script...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Step 1: Read the content of /rootid and /mnt/root/rootid&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;cat /mnt/root/rootid&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;boot_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;backup_id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Boot partition ID: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$boot_id&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup partition ID: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$backup_id&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Operation mode: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Step 2: Perform the rsync backup with progress and verbosity&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Starting rsync backup from / to /mnt/root...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rsync -aHAXiv --progress --inplace --delete --exclude&lt;span class=&#34;o&#34;&gt;={&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/boot&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/home&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/proc&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sys&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/tmp&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/run&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/media&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lost+found&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/rootid&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib64&amp;#34;&lt;/span&gt;,&lt;span class=&#34;s2&#34;&gt;&amp;#34;/sbin&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; / /mnt/root
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$?&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup was successful.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Path to the fstab file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nv&#34;&gt;fstab_path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/mnt/root/etc/fstab&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;AB&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for AB mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        cp /mnt/root/etc/fstabB /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BA&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Patching fstab for BA mode...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        rm /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        cp /mnt/root/etc/fstabA /mnt/root/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Error: Unknown mode &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$mode&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Final output to confirm changes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Successfully updated /mnt/root/etc/fstab.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Updated fstab contents:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cat &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$fstab_path&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Links creation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Creating symlinks:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    rm /mnt/root/sbin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/bin /mnt/root/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/lib /mnt/root/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/lib -&amp;gt; /mnt/root/lib64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/lib /mnt/root/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/bin -&amp;gt; /mnt/root/sbin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ln -s usr/bin /mnt/root/sbin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup failed with rsync. Exiting.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Backup script completed.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;running-updates&#34;&gt;Running updates&lt;/h3&gt;
+&lt;p&gt;After implementing all the steps for the A/B update and backup system, the typical update process is the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Run the backup script: &lt;code&gt;sudo /opt/rootbackup.sh&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Do the full system update: &lt;code&gt;sudo pacman -Syu&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Finally I created a custom A/B update and backup system that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Detects which root partition you are currently using (Partition A or B).&lt;/li&gt;
+&lt;li&gt;Backs up the active root partition to the alternate root partition using rsync, ensuring that changes in your main root partition are mirrored to the backup partition.&lt;/li&gt;
+&lt;li&gt;Updates /etc/fstab on the backup partition to prepare it for booting, with the correct root partition and mount points.
+Efficient Incremental Backup with Rsync:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The script uses rsync to perform an incremental backup, which only copies changed files and allows for the &lt;code&gt;--inplace&lt;/code&gt; option to save disk space during backup. Additionally, we exclude directories like &lt;code&gt;/home&lt;/code&gt;, &lt;code&gt;/boot&lt;/code&gt;, and others that don’t need to be part of the backup.
+This approach ensures that the backup partition remains an up-to-date, bootable copy of your main system, while saving on both time and storage space.&lt;/p&gt;
+&lt;p&gt;With this setup, I have both peace of mind and flexibility. I can continue working on my system without worrying about software updates or configuration changes that might lead to a broken setup. And in the event of a problem, I have a ready-to-go recovery partition that will minimize downtime and restore your productivity quickly!&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Install Linux ZEN kernel on Arch Linux to improve performance</title>
         <link>https://blog.moroz.cc/post/install-linux-zen-kernel-on-arch-linux-to-improve-performance/</link>
         <pubDate>Mon, 25 Mar 2024 00:00:00 +0000</pubDate>

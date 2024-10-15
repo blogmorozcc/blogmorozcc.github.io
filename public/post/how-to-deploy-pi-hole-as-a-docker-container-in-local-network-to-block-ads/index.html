@@ -2,23 +2,23 @@
 <html lang="en" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Introduction Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.
-What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines.'><title>How to deploy Pi-hole as a docker container in local network to block ads</title>
+What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines. It intercepts DNS requests from devices on your local network and filters out domains known to serve ads, tracking, and malicious content.
+'><title>How to deploy Pi-hole as a docker container in local network to block ads</title>
 
 <link rel='canonical' href='http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/'>
 
 <link rel="stylesheet" href="/scss/style.min.f9492f1b593f586197671599a91241c9d5199e42c2d23a91f5f34890c8f01f38.css"><meta property='og:title' content='How to deploy Pi-hole as a docker container in local network to block ads'>
 <meta property='og:description' content='Introduction Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.
-What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines.'>
+What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines. It intercepts DNS requests from devices on your local network and filters out domains known to serve ads, tracking, and malicious content.
+'>
 <meta property='og:url' content='http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/'>
 <meta property='og:site_name' content='The IT Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Docker' /><meta property='article:tag' content='Docker Compose' /><meta property='article:tag' content='Containerization' /><meta property='article:tag' content='Pi-hole' /><meta property='article:tag' content='DNS' /><meta property='article:tag' content='Homelab' /><meta property='article:tag' content='Ad block' /><meta property='article:published_time' content='2024-06-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-04T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.png' />
 <meta name="twitter:title" content="How to deploy Pi-hole as a docker container in local network to block ads">
 <meta name="twitter:description" content="Introduction Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It is designed to block advertisements and trackers at the network level, meaning any device connected to your network can benefit from it without needing additional software.
-What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines."><meta name="twitter:card" content="summary_large_image">
+What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS (Domain Name System) sinkhole. It is typically run on a low-power device, like a Raspberry Pi, but can also be installed on other hardware or within virtual machines. It intercepts DNS requests from devices on your local network and filters out domains known to serve ads, tracking, and malicious content.
+"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header.png' />
-  
-
-
     </head>
     <body class="
     article-page
@@ -60,7 +60,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
                     
                     
                         
-                        <img src="/img/00017-1934920406-1_hu0cd6fab3aa04119128d42f705dfb9f8a_317861_300x0_resize_box_3.png" width="300"
+                        <img src="/img/00017-1934920406-1_hu6352075014529694357.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -242,8 +242,8 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
     <header class="article-header">
         <div class="article-image">
             <a href="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/">
-                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu228a1f9ac33fe18663808d2fd8f88170_216388_800x0_resize_box_3.png"
-                        srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu228a1f9ac33fe18663808d2fd8f88170_216388_800x0_resize_box_3.png 800w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu228a1f9ac33fe18663808d2fd8f88170_216388_1600x0_resize_box_3.png 1600w"
+                <img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu2398513585130455635.png"
+                        srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu2398513585130455635.png 800w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/header_hu4811125462777803458.png 1600w"
                         width="800" 
                         height="450" 
                         loading="lazy"
@@ -434,7 +434,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
 <p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302.png"
 	width="1324"
 	height="884"
-	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hufde2ff0e41aad0998a67afeb037a1ef6_115612_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hu10926007443499300719.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122302_hu821624361233680090.png 1024w"
 	loading="lazy"
 	
 		alt="Pi-hole authentication web page."
@@ -449,7 +449,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
 <p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446.png"
 	width="1324"
 	height="884"
-	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu492051f15466ee8f22fa8a3530769f52_123189_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu5648179359832049729.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122446_hu9476532913898545638.png 1024w"
 	loading="lazy"
 	
 		alt="Pi-hole admin interface."
@@ -467,7 +467,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
 <p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820.png"
 	width="980"
 	height="307"
-	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu0f8a7d04326354003d3fb242ee33b0b1_39667_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu12284886920787672499.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_122820_hu17430702722528012465.png 1024w"
 	loading="lazy"
 	
 		alt="Correctly listened tcp/udp port 53 on host server."
@@ -483,7 +483,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
 <p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254.png"
 	width="1324"
 	height="884"
-	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu96d73087aed81f8c3991bbeae86b4fa5_150138_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu15803226095731717228.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123254_hu10220070801246660490.png 1024w"
 	loading="lazy"
 	
 		alt="DNS Settings"
@@ -498,7 +498,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
 <p><img src="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540.png"
 	width="1324"
 	height="884"
-	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_480x0_resize_box_3.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_huf7c4848fedafcc0f9ae0ce6b1f9d8d3f_168352_1024x0_resize_box_3.png 1024w"
+	srcset="/post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_hu12110411488895704587.png 480w, /post/how-to-deploy-pi-hole-as-a-docker-container-in-local-network-to-block-ads/Screenshot_20240604_123540_hu9165105089036697994.png 1024w"
 	loading="lazy"
 	
 		alt="Pi-hole queries"
@@ -557,7 +557,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
         
         
             <div class="article-image">
-                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu38aeca524a31a58e580a8f8774f7f217_36945_250x150_fill_box_smart1_3.png" 
+                <img src="/post/listen-https-and-openvpn-server-on-same-443-port-using-haproxy-load-balancer/header.64332b7f20e41333bff1516c3b20bd60_hu16171695807235886636.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -581,7 +581,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
         
         
             <div class="article-image">
-                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_huae4787578a5876ddb42874325345f68a_470994_250x150_fill_box_smart1_3.png" 
+                <img src="/post/easy-deploy-openvpn-service-on-any-linux-server-using-custom-script/header.a6ffcc8140c308937484ec46a7029bf1_hu12471396964104110934.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -605,7 +605,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
         
         
             <div class="article-image">
-                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu7e01c4855c80de0ee2ab35b4b9e2ae18_52924_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/configure-ssh-authorization-based-on-rsa-key/header.8a470e41e37067e7bbb48f31a3e99611_hu9137267704124055770.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -629,7 +629,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
         
         
             <div class="article-image">
-                <img src="/post/what-is-docker-and-docker-compose-and-how-to-install-and-use-it-on-debian/header.7288771413f2882dc424a80a992e84bd_hub514da7001493284666285be454a18d2_432280_250x150_fill_box_smart1_3.png" 
+                <img src="/post/what-is-docker-and-docker-compose-and-how-to-install-and-use-it-on-debian/header.7288771413f2882dc424a80a992e84bd_hu11898014747202672035.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
@@ -653,7 +653,7 @@ What is Pi-hole? Pi-hole is an open-source software project that serves as a DNS
         
         
             <div class="article-image">
-                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2d109c230a8b683de6314808740ea101_247945_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/post/how-to-make-thinkpad-lte-modem-work-on-arch-linux-using-fcc-unlock/header.72792dba77904cd868ceaac404913421_hu2499082915750007904.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy"
